@@ -1,0 +1,36 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Product" {
+    entity Product
+    class UniqueInternalCode
+    class Photo
+}
+
+
+
+
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription : ????
+    -<<VO>> ExtendedDescription : ????
+    -<<VO>> TechnicalDescription : ????
+
+}
+
+
+
+
+class UniqueInternalCode << (V,#FF8B40) value object >>
+class Photo << (V,#FF8B40) value object >>
+
+Product --> "1" UniqueInternalCode : has
+Product --> "1..*" Photo
+
+
+
+@enduml

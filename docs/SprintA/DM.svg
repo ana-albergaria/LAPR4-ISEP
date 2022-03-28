@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="304px" preserveAspectRatio="none" style="width:353px;height:304px;" version="1.1" viewBox="0 0 353 304" width="353px" zoomAndPan="magnify"><defs><filter height="300%" id="f1txo6muoe4wqa" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[cd1e467dd42714edd782c72995bbc617]
+cluster <<aggregate>> Product--><polygon fill="#FFFFFF" filter="url(#f1txo6muoe4wqa)" points="16,6,185,6,192,29.6094,336,29.6094,336,297,16,297,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="192" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="163" x="20" y="22.5332">&lt;&lt;aggregate&gt;&gt; Product</text><!--MD5=[72136138052d025cffdce3c22fbd185f]
+class Product--><rect codeLine="17" fill="#F5F5DC" filter="url(#f1txo6muoe4wqa)" height="112.7891" id="Product" style="stroke:#A80036;stroke-width:1.5;" width="180" x="77" y="42"/><ellipse cx="141.75" cy="69.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M140.25,70.6406 L140.25,72.6406 L144.25,72.6406 L144.25,71.6406 L144.25,71.1563 L144.875,70.6406 L145.25,70.6406 L145.625,70.6406 L146.25,71.1563 L146.25,71.6406 L146.25,74.6406 L138.25,74.6406 L137.7656,74.6406 L137.25,74.0156 L137.25,73.6406 L137.25,73.2656 L137.7656,72.6406 L138.25,72.6406 L138.25,72.6406 L138.25,66.6406 L138.25,66.6406 L137.7656,66.6406 L137.25,66.0156 L137.25,65.6406 L137.25,65.2656 L137.7656,64.6406 L138.25,64.6406 L146.25,64.6406 L146.25,67.6406 L146.25,68.125 L145.625,68.6406 L145.25,68.6406 L144.875,68.6406 L144.25,68.125 L144.25,67.6406 L144.25,66.6406 L140.25,66.6406 L140.25,68.6406 L141.25,68.6406 L141.25,68.1563 L141.25,68.1563 L141.875,67.6406 L142.25,67.6406 L142.625,67.6406 L143.25,68.1563 L143.25,68.6406 L143.25,70.6406 L143.25,71.125 L142.625,71.6406 L142.625,71.6406 L142.25,71.6406 L141.875,71.6406 L141.25,71.125 L141.25,71.125 L141.25,70.6406 L140.25,70.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="161.75" y="59.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="165.75" y="74.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="42" x="162.25" y="89.6445">Product</text><line style="stroke:#A80036;stroke-width:1.5;" x1="78" x2="256" y1="97.2813" y2="97.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="148" x="83" y="112.7002">-«VO» ShortDescription : ????</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="167" x="83" y="126.5361">-«VO» ExtendedDescription : ????</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="168" x="83" y="140.3721">-«VO» TechnicalDescription : ????</text><line style="stroke:#A80036;stroke-width:1.5;" x1="78" x2="256" y1="146.7891" y2="146.7891"/><!--MD5=[bcd52e17685b8c6ef90ac5de173a2d81]
+class UniqueInternalCode--><rect codeLine="27" fill="#F5F5DC" filter="url(#f1txo6muoe4wqa)" height="48.1875" id="UniqueInternalCode" style="stroke:#A80036;stroke-width:1.5;" width="143" x="32.5" y="233"/><ellipse cx="47.5" cy="253.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M47.5,256.375 L49.0313,250.8438 L49.0313,250.8438 L48.5156,250.8438 L48,250.2188 L48,249.8438 L48,249.4688 L48.5156,248.8438 L49.0313,248.8438 L50.9063,248.8438 L51.4844,248.8438 L52,249.4688 L52,249.8438 L52,250.2188 L51.4844,250.8438 L51.4844,250.8438 L51.0313,250.8438 L48.6875,258.8438 L46.3125,258.8438 L43.8438,250.8438 L43.5156,250.8438 L43.5156,250.8438 L43,250.2188 L43,249.8438 L43,249.4688 L43.5156,248.8438 L44.0938,248.8438 L45.9688,248.8438 L46.4844,248.8438 L47,249.4688 L47,249.8438 L47,250.2188 L46.4844,250.8438 L45.9688,250.8438 L45.9688,250.8438 L47.5,256.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="76.5" y="250.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="111" x="61.5" y="265.5508">UniqueInternalCode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="33.5" x2="174.5" y1="273.1875" y2="273.1875"/><!--MD5=[a805b40f8193e3b705560a3818c5c109]
+class Photo--><rect codeLine="28" fill="#F5F5DC" filter="url(#f1txo6muoe4wqa)" height="48.1875" id="Photo" style="stroke:#A80036;stroke-width:1.5;" width="109" x="210.5" y="233"/><ellipse cx="225.5" cy="253.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M225.5,256.375 L227.0313,250.8438 L227.0313,250.8438 L226.5156,250.8438 L226,250.2188 L226,249.8438 L226,249.4688 L226.5156,248.8438 L227.0313,248.8438 L228.9063,248.8438 L229.4844,248.8438 L230,249.4688 L230,249.8438 L230,250.2188 L229.4844,250.8438 L229.4844,250.8438 L229.0313,250.8438 L226.6875,258.8438 L224.3125,258.8438 L221.8438,250.8438 L221.5156,250.8438 L221.5156,250.8438 L221,250.2188 L221,249.8438 L221,249.4688 L221.5156,248.8438 L222.0938,248.8438 L223.9688,248.8438 L224.4844,248.8438 L225,249.4688 L225,249.8438 L225,250.2188 L224.4844,250.8438 L223.9688,250.8438 L223.9688,250.8438 L225.5,256.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="237.5" y="250.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="32" x="262" y="265.5508">Photo</text><line style="stroke:#A80036;stroke-width:1.5;" x1="211.5" x2="318.5" y1="273.1875" y2="273.1875"/><!--MD5=[d5e50d5e9f373aebb7ed82ef75d5b71c]
+link Product to UniqueInternalCode--><path codeLine="30" d="M144.61,155.12 C134.66,179.84 123.38,207.87 115.23,228.09 " fill="none" id="Product-to-UniqueInternalCode" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="113.34,232.8,120.4146,225.948,115.2092,228.1626,112.9947,222.9572,113.34,232.8" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="21" x="132" y="199.4951">has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="107.8365" y="222.0649">1</text><!--MD5=[d712a9affdb0a2e6fd883f05aa145395]
+link Product to Photo--><path codeLine="31" d="M201.83,155.12 C217.38,179.95 235.01,208.1 247.69,228.35 " fill="none" id="Product-to-Photo" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="250.47,232.8,249.092,223.048,247.82,228.56,242.308,227.288,250.47,232.8" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="224.1842" y="222.0649">1..*</text><!--MD5=[9253ba003b4ad23353b8076c48f99275]
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Product" {
+    entity Product
+    class UniqueInternalCode
+    class Photo
+}
+
+
+
+
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription : ????
+    -<<VO>> ExtendedDescription : ????
+    -<<VO>> TechnicalDescription : ????
+
+}
+
+
+
+
+class UniqueInternalCode << (V,#FF8B40) value object >>
+class Photo << (V,#FF8B40) value object >>
+
+Product - -> "1" UniqueInternalCode : has
+Product - -> "1..*" Photo
+
+
+
+@enduml
+
+PlantUML version 1.2021.4(Sun Apr 04 09:49:39 BST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>
