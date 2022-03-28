@@ -5,31 +5,104 @@ hide empty attributes
 skinparam classBackgroundColor beige
 skinparam ArrowColor #222222
 
+/'Value Objects represented by C'/
+/'class UniqueInternalCode <<value object >>
+class Photo <<value object >>'/
+
 package "<<aggregate>> Product" {
     entity Product
     class UniqueInternalCode
     class Photo
+    class Barcode
+    class OptionalProductionCode
 }
 
+package "<<aggregate>> Category" {
+    entity Category
+    class SuperCategory
+}
 
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+}
+
+package "<<aggregate>> Costumer" {
+    entity Costumer
+}
 
 
 
 entity Product <<entity>> <<root>> {
-    -<<VO>> ShortDescription : ????
-    -<<VO>> ExtendedDescription : ????
-    -<<VO>> TechnicalDescription : ????
-
+    -<<VO>> ShortDescription
+    -<<VO>> ExtendedDescription
+    -<<VO>> TechnicalDescription
+    -<<VO>> BrandName
+    -<<VO>> Reference
+    -<<VO>> PriceWithoutTaxes
+    -<<VO>> Status /'Available, Temporarily Unavailable, Unavailable'/
+    -<<VO>> Weight
+    -<<VO>> Volume
 }
 
+class UniqueInternalCode <<(V,#FF8B40) value object>>
+class Photo <<(V,#FF8B40) value object>>
+class Barcode <<(V,#FF8B40) value object>>
+class OptionalProductionCode <<(V,#FF8B40) value object>>
 
 
+entity Category <<entity>> <<root>> {
+    -<<VO>> AlphanumericCode
+    -<<VO>> Description
+}
 
-class UniqueInternalCode << (V,#FF8B40) value object >>
-class Photo << (V,#FF8B40) value object >>
+class SuperCategory <<(V,#FF8B40) value object>>
+
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId /'automatically generated'/
+    -<<VO>> DateTime /'automatically generated na hora do registo do sistema'/
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -<<VO>> Status /'(CONFIRM WITH CLIENT: registered, payment pending, being prepared on the warehouse, dispatched, delivered by carrier, received by customer)'/
+}
+
+/'Representa-se atributos de value objects?'/
+class Shipment <<(V,#FF8B40) value object>> {
+    -method
+    -cost
+}
+
+class Payment <<(V,#FF8B40) value object>> {
+    -method
+    -status
+}
+
+entity Costumer <<entity>> <<root>> {}
 
 Product --> "1" UniqueInternalCode : has
 Product --> "1..*" Photo
+Product --> "1" Barcode
+Product --> "0..1" OptionalProductionCode
+Product --> "1" Category : belongs to
+
+Category --> "0..1" SuperCategory : belongs to
+
+Order --> "1" Costumer : ordered by
+Order --> "1..*" Product : composed by
+Order --> "1" Shipment : has info about
+Order --> "1" Payment : has info about
+
+
+
+
+
 
 
 
