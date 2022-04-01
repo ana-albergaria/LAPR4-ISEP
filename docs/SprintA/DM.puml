@@ -32,6 +32,8 @@ package "<<aggregate>> Order" {
 package "<<aggregate>> Costumer" {
     entity Costumer
     class Address
+    class BirthDate
+    class Gender
 }
 
 package "<<aggregate>> Survey" {
@@ -139,9 +141,13 @@ entity Costumer <<entity>> <<root>> {
     - <<VO>> VAT
     - <<VO>> Email
     - <<VO>> PhoneNumber
-    - <<VO>> BirthDate /'optional'/
-    - <<VO>> Gender /'optional'/
+    /'- <<VO>> BirthDate'/ /'optional'/
+    /'- <<VO>> Gender'/ /'optional'/
 }
+
+class BirthDate <<(V,#FF8B40) value object>> {}
+class Gender <<(V,#FF8B40) value object>> {}
+
 
 entity Employee <<entity>> <<root>> {
     - <<VO>> EmployeeID
@@ -282,6 +288,8 @@ Order --> "1" Payment : has info about
 
 Costumer --> "1..*" Address : has
 Costumer --> "*" Survey: answers
+Costumer --> "0..1" BirthDate
+Costumer --> "0..1" Gender
 
 Salesclerk --> "*" Costumer
 Salesclerk --> "*" Order
@@ -291,11 +299,11 @@ Salesclerk --> "1..*" Category
 
 SalesManager --> "*" Costumer
 SalesManager --> "*" Order
-SalesManager --|> Employee
+SalesManager -|> Employee
 SalesManager --> "1..*" Product
 SalesManager --> "1..*" Category
 SalesManager --> "1..*" Survey
-SalesManager --> "1..*" Report
+SalesManager ---> "1..*" Report
 
 User --> "1..*" Role
 User --> "0..1" Employee
