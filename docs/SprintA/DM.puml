@@ -15,6 +15,7 @@ package "<<aggregate>> Product" {
     class Photo
     class Barcode
     class OptionalProductionCode
+    class Bin
 }
 
 package "<<aggregate>> Category" {
@@ -30,9 +31,56 @@ package "<<aggregate>> Order" {
 
 package "<<aggregate>> Costumer" {
     entity Costumer
+    class Address
 }
 
+package "<<aggregate>> Survey" {
+    entity Survey
+    class Section
+    class Question
+}
 
+package "<<aggregate>> Employee" {
+    entity Employee
+}
+
+package "<<aggregate>> Salesclerk" {
+    entity Salesclerk
+}
+
+package "<<aggregate>> SalesManager" {
+    entity SalesManager
+}
+
+package "<<aggregate>> User" {
+    entity User
+    class Role
+}
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    class AGVDock
+    class AGVPosition
+    class Model
+    class Square
+}
+
+package "<<aggregate>> Report" {
+    entity Report
+}
+
+package "<<aggregate>> Tax" {
+    entity Tax
+}
+
+/' package "<<aggregate>> Bin" {
+    entity Bin
+    class Warehouse
+    class Corridor
+    class Row
+    class Shelf
+    class StorageArea
+} '/
 
 entity Product <<entity>> <<root>> {
     -<<VO>> ShortDescription
@@ -44,6 +92,7 @@ entity Product <<entity>> <<root>> {
     -<<VO>> Status /'Available, Temporarily Unavailable, Unavailable'/
     -<<VO>> Weight
     -<<VO>> Volume
+    -<<VO>> Tax
 }
 
 class UniqueInternalCode <<(V,#FF8B40) value object>>
@@ -84,7 +133,139 @@ class Payment <<(V,#FF8B40) value object>> {
     -status
 }
 
-entity Costumer <<entity>> <<root>> {}
+entity Costumer <<entity>> <<root>> {
+    - <<VO>> CostumerID
+    - <<VO>> Name
+    - <<VO>> VAT
+    - <<VO>> Email
+    - <<VO>> PhoneNumber
+    - <<VO>> BirthDate /'optional'/
+    - <<VO>> Gender /'optional'/
+}
+
+entity Employee <<entity>> <<root>> {
+    - <<VO>> EmployeeID
+}
+
+entity Salesclerk <<entity>> <<root>> {
+
+}
+
+entity SalesManager <<entity>> <<root>> {
+
+}
+
+entity User <<entity>> <<root>> {
+    - <<VO>> isActive
+}
+
+entity User
+note left: the User can either be human or an external system.
+
+entity Survey <<(V,#FF8B40) value object>> {
+    - <<VO>> AlphanumericCode
+    - <<VO>> TopicQuestionnaire
+    - <<VO>> InitialDate
+    - <<VO>> FinalDate
+    - <<VO>> TargetAudienceRules
+    - <<VO>> Title
+    - <<VO>> WelcomeMessage
+    - <<VO>> FinalMessage
+}
+
+entity AGV <<entity>> <<root>> {
+    - <<VO>> AgvID
+    - <<VO>> AutonomyStatus /' number of hours left until it runs out of battery '/
+    - <<VO>> TaskStatus /' free charging or occupied '/
+}
+
+entity Report <<entity>> <<root>> {
+
+}
+
+class Model <<(V,#FF8B40) value object>> {
+    - ModelID
+    - ShortDescription
+    - MaxWeight
+}
+
+class AGVDock <<(V,#FF8B40) value object>> {
+    - DockID
+    - AccessibilityDirection
+}
+
+class AGVPosition <<(V,#FF8B40) value object>> {
+
+}
+
+class Square <<(V,#FF8B40) value object>> {
+    - lSquare
+    - wSquare
+}
+
+class Bin <<(V,#FF8B40) value object>> {
+    - Size
+    - x
+    - y
+    - z
+}
+
+class Section <<(V,#FF8B40) value object>> {
+    - SectionID
+    - SectionTitle
+    - SectionDescription
+    - Obligatoriness
+}
+
+class Question <<(V,#FF8B40) value object>> {
+    - QuestionID
+    - QuestionText
+    - QuestionInstruction /' optional '/
+    - Obligatoriness
+    - ExtraInfo /' optional '/
+    - QuestionType /' (free text, multiple choices, multiple choice with input  value, ordering/ranking choices, single choice, singe choice with input value,   numeric, sorting options, scaling options) '/
+    - StatisticalReport
+}
+
+/' class Warehouse <<(V,#FF8B40) value object>> {
+    - WarehousePlant <<VO>>
+    - Status <<VO>>
+    - Description <<VO>>
+    - WarehouseLength <<VO>>
+    - WarehouseWidth <<VO>>
+}
+
+class Corridor <<(V,#FF8B40) value object>> {
+    - CorridorID <<VO>>
+    - BeginSquare <<VO>>
+    - EndSquare <<VO>>
+    - DepthSquare <<VO>>
+    - AccessibilityDirection <<VO>>
+}
+
+class Row <<(V,#FF8B40) value object>> {
+    - RowID <<VO>>
+}
+
+class Shelf <<(V,#FF8B40) value object>> {
+    - ShelfID <<VO>>
+}
+
+class StorageArea <<(V,#FF8B40) value object>> {
+    - StorageAreaID <<VO>>
+} '/
+
+class Address <<(V,#FF8B40) value object>> {
+
+}
+
+class Role <<(V,#FF8B40) value object>> {
+
+}
+
+/' class TaxService <<(S, orchid) value object>> {
+
+} '/
 
 Product --> "1" UniqueInternalCode : has
 Product --> "1..*" Photo
@@ -99,11 +280,56 @@ Order --> "1..*" Product : composed by
 Order --> "1" Shipment : has info about
 Order --> "1" Payment : has info about
 
+Costumer --> "1..*" Address : has
+Costumer --> "*" Survey: answers
 
+Salesclerk --> "*" Costumer
+Salesclerk --> "*" Order
+Salesclerk --|> Employee
+Salesclerk --> "1..*" Product
+Salesclerk --> "1..*" Category
 
+SalesManager --> "*" Costumer
+SalesManager --> "*" Order
+SalesManager --|> Employee
+SalesManager --> "1..*" Product
+SalesManager --> "1..*" Category
+SalesManager --> "1..*" Survey
+SalesManager --> "1..*" Report
 
+User --> "1..*" Role
+User --> "0..1" Employee
+User --> "0..1" Costumer
 
+/' Warehouse --> "1..*" Corridor
 
+Corridor --> "1..*" Row
 
+Row --> "1..*" Shelf
+
+StorageArea --> "1" Row
+StorageArea --> "1" Shelf
+StorageArea --> "1..*" Bin '/
+
+Product --> "1" Bin
+Product --> "1" Tax
+
+AGV --> "1" Model
+AGV --> "1" AGVDock
+AGV --> "1..*" Order
+AGV --> "1" AGVPosition
+
+AGVDock --> "3" Square
+
+AGVPosition --> "1" Square
+
+Report --> "1" Survey
+Report --> "*" Order
+
+Survey --> "1..*" Section
+
+Section --> "1..*" Question
+
+/' TaxService ..> Tax '/
 
 @enduml
