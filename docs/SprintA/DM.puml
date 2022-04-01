@@ -69,9 +69,9 @@ package "<<aggregate>> Report" {
     entity Report
 }
 
-package "<<aggregate>> Tax" {
+/'package "<<aggregate>> Tax" {
     entity Tax
-}
+}'/
 
 /' package "<<aggregate>> Bin" {
     entity Bin
@@ -312,7 +312,7 @@ StorageArea --> "1" Shelf
 StorageArea --> "1..*" Bin '/
 
 Product --> "1" Bin
-Product --> "1" Tax
+/'Product --> "1" Tax'/
 
 AGV --> "1" Model
 AGV --> "1" AGVDock
