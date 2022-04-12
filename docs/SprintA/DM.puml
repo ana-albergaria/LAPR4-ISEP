@@ -71,6 +71,18 @@ package "<<aggregate>> Report" {
     entity Report
 }
 
+package "<<aggragte>> Task" {
+    entity Task
+}
+
+package "<<aggregate>> MomentInfo" {
+    entity MomentInfo
+}
+
+package "<<aggregate>> Answer" {
+    entity Answer
+}
+
 /'package "<<aggregate>> Tax" {
     entity Tax
 }'/
@@ -187,6 +199,26 @@ entity AGV <<entity>> <<root>> {
 
 entity Report <<entity>> <<root>> {
 
+}
+
+entity Task <<entity>> <<root>>{
+    - <<VO>> TaskID
+    - <<VO>> OrderId
+    - <<VO>> AgvID
+}
+
+entity MomentInfo <<entity>> <<root>> {
+    - <<VO>> OrderId
+    - <<VO>> ProductId
+    - <<VO>> GeneratedTime
+    - <<VO>> PriceWithoutTaxes
+
+    /'- <<VO>> Weight'/
+}
+
+entity Answer <<entity>> <<root>> {
+    - <<VO>> QuestionID
+  /'- <<VO>> resposta tipo?'/
 }
 
 class Model <<(V,#FF8B40) value object>> {
@@ -337,6 +369,15 @@ Report --> "*" Order
 Survey --> "1..*" Section
 
 Section --> "1..*" Question
+
+Order --> "1" Task
+AGV --> "1" Task
+
+Product --> "1..*" MomentInfo
+Order --> "1..*" MomentInfo
+
+Survey --> "*" Answer
+Report --> "*" Answer
 
 /' TaxService ..> Tax '/
 
