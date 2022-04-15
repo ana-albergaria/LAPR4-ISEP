@@ -12,7 +12,38 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>org.example.MainApp</mainClass>
+        <!-- EAPLI Framework -->
+        <eapli.framework.core.version>v18.1.0_CORE</eapli.framework.core.version>
+        <eapli.framework.authz.version>v17.4.0_AUTHZ</eapli.framework.authz.version>
+        <eapli.framework.pubsub.version>v16.7.0_PUBSUB</eapli.framework.pubsub.version>
     </properties>
+
+    <dependencies>
+        <!-- EAPLI Framework Modules -->
+        <dependency>
+            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+            <artifactId>eapli.framework.core</artifactId>
+            <version>${eapli.framework.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+            <artifactId>eapli.framework.infrastructure.authz</artifactId>
+            <version>${eapli.framework.authz.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+            <artifactId>eapli.framework.infrastructure.pubsub</artifactId>
+            <version>${eapli.framework.pubsub.version}</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <!-- EAPLI Framework Repository -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
