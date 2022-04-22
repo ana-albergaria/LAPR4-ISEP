@@ -15,7 +15,6 @@ package "<<aggregate>> Product" {
     class Photo
     class Barcode
     class OptionalProductionCode
-    class Bin
 }
 
 package "<<aggregate>> Category" {
@@ -61,10 +60,8 @@ package "<<aggregate>> User" {
 
 package "<<aggregate>> AGV" {
     entity AGV
-    class AGVDock
-    class AGVPosition
+    /'class AGVPosition'/
     class Model
-    class Square
 }
 
 package "<<aggregate>> Report" {
@@ -83,18 +80,28 @@ package "<<aggregate>> Answer" {
     entity Answer
 }
 
+package "<<aggregate>> WarehousePlant" {
+    entity WarehousePlant
+    class Aisle
+    class Row
+    class Shelf
+}
+
+package "<<aggregate>> Square" {
+    entity Square
+}
+
+package "<<aggregate>> AGVDock" {
+    entity AGVDock
+}
+
 /'package "<<aggregate>> Tax" {
     entity Tax
 }'/
 
-/' package "<<aggregate>> Bin" {
+package "<<aggregate>> Bin" {
     entity Bin
-    class Warehouse
-    class Corridor
-    class Row
-    class Shelf
-    class StorageArea
-} '/
+}
 
 entity Product <<entity>> <<root>> {
     -<<VO>> ShortDescription
@@ -227,25 +234,25 @@ class Model <<(V,#FF8B40) value object>> {
     - MaxWeight
 }
 
-class AGVDock <<(V,#FF8B40) value object>> {
+entity AGVDock <<entity>> <<root>> {
     - DockID
     - AccessibilityDirection
 }
 
-class AGVPosition <<(V,#FF8B40) value object>> {
+/'class AGVPosition <<(V,#FF8B40) value object>> {
 
-}
+}'/
 
-class Square <<(V,#FF8B40) value object>> {
+entity Square <<entity>> <<root>> {
     - lSquare
     - wSquare
 }
 
-class Bin <<(V,#FF8B40) value object>> {
+entity Bin <<entity>> <<root>> {
     - Size
-    - x
-    - y
-    - z
+    - AisleID
+    - RowID
+    - ShelfID
 }
 
 class Section <<(V,#FF8B40) value object>> {
@@ -265,6 +272,34 @@ class Question <<(V,#FF8B40) value object>> {
     - StatisticalReport
 }
 
+entity WarehousePlant <<entity>> <<root>> {
+    - <<VO>> WareHouseName
+    - <<VO>> Length
+    - <<VO>> Width
+    - <<VO>> SquareSize
+    - <<VO>> Unit
+}
+
+class Aisle <<(V,#FF8B40) value object>> {
+    - AisleID <<VO>>
+    - BeginSquare <<VO>>
+    - EndSquare <<VO>>
+    - DepthSquare <<VO>>
+    - Accessibility <<VO>>
+}
+
+class Row <<(V,#FF8B40) value object>> {
+    - RowID <<VO>>
+    - BeginSquare <<VO>>
+    - EndSquare <<VO>>
+    - AisleID <<VO>>
+}
+
+class Shelf <<(V,#FF8B40) value object>> {
+    - ShelfID <<VO>>
+    - RowID <<VO>>
+}
+
 /' class Warehouse <<(V,#FF8B40) value object>> {
     - WarehousePlant <<VO>>
     - Status <<VO>>
@@ -279,14 +314,6 @@ class Corridor <<(V,#FF8B40) value object>> {
     - EndSquare <<VO>>
     - DepthSquare <<VO>>
     - AccessibilityDirection <<VO>>
-}
-
-class Row <<(V,#FF8B40) value object>> {
-    - RowID <<VO>>
-}
-
-class Shelf <<(V,#FF8B40) value object>> {
-    - ShelfID <<VO>>
 }
 
 class StorageArea <<(V,#FF8B40) value object>> {
@@ -341,27 +368,30 @@ User --> "1..*" Role
 User --> "0..1" Employee
 User --> "0..1" Costumer
 
-/' Warehouse --> "1..*" Corridor
-
-Corridor --> "1..*" Row
-
+WarehousePlant --> "1..*" Aisle
+Aisle --> "1..*" Row
 Row --> "1..*" Shelf
-
-StorageArea --> "1" Row
+WarehousePlant --> "1" Square
+WarehousePlant --> "1" AGVDock
+/'StorageArea --> "1" Row
 StorageArea --> "1" Shelf
 StorageArea --> "1..*" Bin '/
 
 Product --> "1" Bin
 /'Product --> "1" Tax'/
 
+Bin --> "1" WarehousePlant
+
 AGV --> "1" Model
-AGV --> "1" AGVDock
+
+
 AGV --> "1..*" Order
-AGV --> "1" AGVPosition
+/'AGV --> "1" AGVPosition'/
+AGV --> "1" AGVDock
 
 AGVDock --> "3" Square
 
-AGVPosition --> "1" Square
+/'AGVPosition --> "1" Square'/
 
 Report --> "1" Survey
 Report --> "*" Order
