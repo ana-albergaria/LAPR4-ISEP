@@ -1,157 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eapli</groupId>
-    <artifactId>ss4icompany</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>base</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>lei21_22_s4_2df_01</name>
-
     <properties>
+		<eapli.framework.core.version>v18.1.0_CORE</eapli.framework.core.version>
+		<eapli.framework.authz.version>v17.4.0_AUTHZ</eapli.framework.authz.version>
+		<eapli.framework.pubsub.version>v16.7.0_PUBSUB</eapli.framework.pubsub.version>
+        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>org.example.MainApp</mainClass>
-        <!-- EAPLI Framework -->
-        <eapli.framework.core.version>v18.1.0_CORE</eapli.framework.core.version>
-        <eapli.framework.authz.version>v17.4.0_AUTHZ</eapli.framework.authz.version>
-        <eapli.framework.pubsub.version>v16.7.0_PUBSUB</eapli.framework.pubsub.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
     </properties>
 
     <modules>
-        <module>ss4icompany.core</module>
+        <module>base.app.backoffice.console</module>
+        <module>base.app.user.console</module>
+        <module>base.app.other.console</module>
+        <module>base.app.common.console</module>
+        <module>base.app.bootstrap</module>
+        <module>base.bootstrappers</module>
+        <module>base.core</module>
+        <module>base.persistence.impl</module>
     </modules>
 
     <dependencies>
-        <!-- EAPLI Framework Modules -->
+		<dependency>
+			<groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+			<artifactId>eapli.framework.core</artifactId>
+			<version>${eapli.framework.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+			<artifactId>eapli.framework.infrastructure.authz</artifactId>
+			<version>${eapli.framework.authz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bitbucket.pag_isep.eapliframework</groupId>
+			<artifactId>eapli.framework.infrastructure.pubsub</artifactId>
+			<version>${eapli.framework.pubsub.version}</version>
+		</dependency>
+		
+		<!-- keep junit4 for now -->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- support junit5 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		
         <dependency>
-            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
-            <artifactId>eapli.framework.core</artifactId>
-            <version>${eapli.framework.core.version}</version>
-        </dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>runtime</scope>
+        </dependency>	
         <dependency>
-            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
-            <artifactId>eapli.framework.infrastructure.authz</artifactId>
-            <version>${eapli.framework.authz.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bitbucket.pag_isep.eapliframework</groupId>
-            <artifactId>eapli.framework.infrastructure.pubsub</artifactId>
-            <version>${eapli.framework.pubsub.version}</version>
-        </dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency><!--Necessary to avoid drop-and-create failure with latest spring boot version-->
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.4.14.Final</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <repositories>
-        <!-- EAPLI Framework Repository -->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
     </repositories>
-
-    <organization>
-        <!-- Used as the 'Vendor' for JNLP generation -->
-        <name>Your Organisation</name>
-    </organization>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.200</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.eclipse.persistence </groupId>
-                        <artifactId>eclipselink</artifactId>
-                        <version>2.7.10</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>unpack-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <excludeScope>system</excludeScope>
-                            <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
-                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>unpack-dependencies</id>
-                        
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>${java.home}/../bin/javafxpackager</executable>
-                            <arguments>
-                                <argument>-createjar</argument>
-                                <argument>-nocss2bin</argument>
-                                <argument>-appclass</argument>
-                                <argument>${mainClass}</argument>
-                                <argument>-srcdir</argument>
-                                <argument>${project.build.directory}/classes</argument>
-                                <argument>-outdir</argument>
-                                <argument>${project.build.directory}</argument>
-                                <argument>-outfile</argument>
-                                <argument>${project.build.finalName}.jar</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>default-cli</id>
-                        <goals>
-                            <goal>exec</goal>                            
-                        </goals>
-                        <configuration>
-                            <executable>${java.home}/bin/java</executable>
-                            <!--suppress UnresolvedMavenProperty -->
-                            <commandlineArgs>${runfx.args}</commandlineArgs>
-                        </configuration>
-                    </execution>
-                </executions>  
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <compilerArguments>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <bootclasspath>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</bootclasspath>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
-                <configuration>
-                    <additionalClasspathElements>
-                        <additionalClasspathElement>${java.home}/lib/jfxrt.jar</additionalClasspathElement>
-                    </additionalClasspathElements>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
