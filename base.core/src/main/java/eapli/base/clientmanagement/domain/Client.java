@@ -13,6 +13,10 @@ import java.util.Set;
 @Entity
 public class Client implements AggregateRoot<Long>, Serializable {
 
+    public enum Gender {
+        FEMININE, MASCULINE, OTHER;
+    }
+
     private static final long serialVersionUID = 1L;
 
     @Version
@@ -33,10 +37,12 @@ public class Client implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar birthdate;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @ElementCollection
     private Set<Address> addresses;
+
 
     /**
      * Constructor for Client with the minimum attributes.
@@ -46,17 +52,33 @@ public class Client implements AggregateRoot<Long>, Serializable {
      * @param email the costumer email
      * @param phoneNumber the costumer phone number
      */
-    public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber) {
+    public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber, final Set<Address> addresses) {
         Preconditions.noneNull(name, vat, email, phoneNumber);
+        Preconditions.noneNull(addresses, "The Client must have at least one address.");
 
         this.name = name;
         this.vat = vat;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.addresses = addresses;
     }
 
     protected Client() {
         //for ORM only
+    }
+
+    public void addGender(final Gender gender) {
+        if (gender == null) {
+            throw new IllegalArgumentException();
+        }
+        this.gender = gender;
+    }
+
+    public void insertBirthDate(final Calendar birthdate) {
+        if (birthdate == null) {
+            throw new IllegalArgumentException();
+        }
+        this.birthdate = birthdate;
     }
 
     @Override

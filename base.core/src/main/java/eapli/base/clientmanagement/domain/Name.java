@@ -12,7 +12,9 @@ import java.util.regex.Pattern;
 public class Name implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
     private static final Pattern VALID_NAME_REGEX = Pattern.compile("^[A-Z][a-zA-Z ',.\\-]*$", 2);
-    private static final Integer SURNAMES_VALID_LENGTH = 50;
+    private static final Integer MIN_LENGTH = 3;
+    private static final Integer FIRST_NAMES_MAX_LENGTH = 30;
+    private static final Integer SURNAMES_MAX_LENGTH = 50;
     private final String firstNames;
     private final String surnames;
 
@@ -21,8 +23,14 @@ public class Name implements ValueObject, Serializable {
         Preconditions.nonEmpty(surnames, "First name and last name should neither be null nor empty");
         Preconditions.matches(VALID_NAME_REGEX, firstNames, "Invalid First Name(s): " + firstNames);
         Preconditions.matches(VALID_NAME_REGEX, surnames, "Invalid Surname(s): " + surnames);
-        if(surnames.length() < SURNAMES_VALID_LENGTH)
-            throw new IllegalArgumentException("Surname(s) are too short.");
+        if(firstNames.length() < MIN_LENGTH)
+            throw new IllegalArgumentException("First Name is too short.");
+        if(firstNames.length() > FIRST_NAMES_MAX_LENGTH)
+            throw new IllegalArgumentException("First Name is too long.");
+        if(surnames.length() < MIN_LENGTH)
+            throw new IllegalArgumentException("Surname is too short.");
+        if(surnames.length() > SURNAMES_MAX_LENGTH)
+            throw new IllegalArgumentException("Surname is too long.");
         this.firstNames = firstNames;
         this.surnames = surnames;
     }
