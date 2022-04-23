@@ -82,9 +82,18 @@ package "<<aggregate>> Answer" {
 
 package "<<aggregate>> WarehousePlant" {
     entity WarehousePlant
-    class Aisle
-    class Row
-    class Shelf
+}
+
+package "<<aggregate>> Aisle" {
+    entity Aisle
+}
+
+package "<<aggregate>> Row" {
+    entity Row
+}
+
+package "<<aggregate>> Shelf" {
+    entity Shelf
 }
 
 package "<<aggregate>> Square" {
@@ -280,7 +289,7 @@ entity WarehousePlant <<entity>> <<root>> {
     - <<VO>> Unit
 }
 
-class Aisle <<(V,#FF8B40) value object>> {
+entity Aisle <<entity>> <<root>> {
     - AisleID <<VO>>
     - BeginSquare <<VO>>
     - EndSquare <<VO>>
@@ -288,14 +297,14 @@ class Aisle <<(V,#FF8B40) value object>> {
     - Accessibility <<VO>>
 }
 
-class Row <<(V,#FF8B40) value object>> {
+entity Row <<entity>> <<root>> {
     - RowID <<VO>>
     - BeginSquare <<VO>>
     - EndSquare <<VO>>
     - AisleID <<VO>>
 }
 
-class Shelf <<(V,#FF8B40) value object>> {
+entity Shelf <<entity>> <<root>> {
     - ShelfID <<VO>>
     - RowID <<VO>>
 }
@@ -370,14 +379,15 @@ User --> "0..1" Costumer
 
 WarehousePlant --> "1..*" Aisle
 Aisle --> "1..*" Row
+Aisle --> "1" Square
 Row --> "1..*" Shelf
-WarehousePlant --> "1" Square
+Row --> "1" Square
 WarehousePlant --> "1" AGVDock
 /'StorageArea --> "1" Row
 StorageArea --> "1" Shelf
 StorageArea --> "1..*" Bin '/
 
-Product --> "1" Bin
+Bin --> "1" Product
 /'Product --> "1" Tax'/
 
 Bin --> "1" WarehousePlant
