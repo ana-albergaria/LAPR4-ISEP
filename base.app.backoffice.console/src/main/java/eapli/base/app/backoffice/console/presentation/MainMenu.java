@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -159,7 +160,7 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
-            final Menu costumersMenu = buildCostumerMenu();
+            final Menu costumersMenu = buildClientMenu();
             mainMenu.addSubMenu(COSTUMERS_OPTION, costumersMenu);
         }
 
@@ -195,11 +196,11 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-    private Menu buildCostumerMenu() {
-        final Menu menu = new Menu("Costumers");
+    private Menu buildClientMenu() {
+        final Menu menu = new Menu("Clients >");
 
                                                         //alterar para a UI do Register Costumer
-        menu.addItem(REGISTER_COSTUMER_OPTION, "Register Costumer", new AddUserUI()::show);
+        menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
 
         return menu;
     }

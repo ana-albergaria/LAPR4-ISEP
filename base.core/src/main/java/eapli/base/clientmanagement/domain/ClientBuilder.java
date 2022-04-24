@@ -55,7 +55,7 @@ public class ClientBuilder implements DomainFactory<Client> {
     private Client buildOrThrow() {
         if (theClient != null) {
             return theClient;
-        } else if (name != null && vat != null && email != null && phoneNumber != null && !addresses.isEmpty()) {
+        } else if (name != null && vat != null && email != null && phoneNumber != null /*&& !addresses.isEmpty()*/) {
             theClient = new Client(name, vat, email, phoneNumber, addresses);
             return theClient;
         } else {

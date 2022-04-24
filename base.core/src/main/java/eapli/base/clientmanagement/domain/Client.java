@@ -24,7 +24,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long costumerId;
+    private Long clientId;
 
     private Name name;
 
@@ -54,7 +54,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
      */
     public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber, final Set<Address> addresses) {
         Preconditions.noneNull(name, vat, email, phoneNumber);
-        Preconditions.noneNull(addresses, "The Client must have at least one address.");
+        //Preconditions.noneNull(addresses, "The Client must have at least one address.");
         //usar o Preconditions.ensure para fazer verificações à data
         this.name = name;
         this.vat = vat;
@@ -93,7 +93,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     @Override
     public Long identity() {
-        return this.costumerId;
+        return this.clientId;
     }
 
 }

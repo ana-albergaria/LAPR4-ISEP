@@ -28,8 +28,8 @@ public class RegisterClientController {
                 .withEmail(new Email(email))
                 .withPhoneNumber(new PhoneNumber(phoneNumber))
                 .withVAT(new VAT(vat))
-                .withBirthdate(birthDate)
-                .withGender(gender)
+                //.withBirthdate(birthDate)
+                //.withGender(gender)
                 .build();
 
         return repository.save(newClient);
