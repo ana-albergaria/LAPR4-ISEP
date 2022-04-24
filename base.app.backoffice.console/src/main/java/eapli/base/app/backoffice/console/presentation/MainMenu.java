@@ -63,6 +63,9 @@ public class MainMenu extends AbstractUI {
     // SETTINGS
     private static final int SET_KITCHEN_ALERT_LIMIT_OPTION = 1;
 
+    // COSTUMERS
+    private static final int REGISTER_COSTUMER_OPTION = 1;
+
     // DISH TYPES
     private static final int DISH_TYPE_REGISTER_OPTION = 1;
     private static final int DISH_TYPE_LIST_OPTION = 2;
@@ -102,6 +105,9 @@ public class MainMenu extends AbstractUI {
     private static final int TRACEABILITY_OPTION = 6;
     private static final int MEALS_OPTION = 7;
     private static final int REPORTING_DISHES_OPTION = 8;
+
+    // MAIN MENU SALES CLERK
+    private static final int COSTUMERS_OPTION = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -152,6 +158,11 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
         }
 
+        if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
+            final Menu costumersMenu = buildCostumerMenu();
+            mainMenu.addSubMenu(COSTUMERS_OPTION, costumersMenu);
+        }
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -180,6 +191,15 @@ public class MainMenu extends AbstractUI {
         menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request",
                 new AcceptRefuseSignupRequestAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
+    private Menu buildCostumerMenu() {
+        final Menu menu = new Menu("Costumers");
+
+                                                        //alterar para a UI do Register Costumer
+        menu.addItem(REGISTER_COSTUMER_OPTION, "Register Costumer", new AddUserUI()::show);
 
         return menu;
     }

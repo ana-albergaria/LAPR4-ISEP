@@ -20,6 +20,7 @@
  */
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
@@ -58,6 +59,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public ClientUserRepository clientUsers() {
         return clientUsers(null);
+    }
+
+    /* Acrescentei - Dúvida */
+    @Override
+    public ClientRepository clients() {
+        return new InMemoryClientRepository();
     }
 
     @Override

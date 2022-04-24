@@ -21,6 +21,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -53,6 +54,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public JpaClientUserRepository clientUsers() {
         return new JpaClientUserRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    /* Acrescentei - Dúvida */
+    @Override
+    public ClientRepository clients() {
+        return new JpaClientRepository();
     }
 
     @Override
