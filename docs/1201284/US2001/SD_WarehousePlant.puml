@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor "Warehouse Employee" as WE
+participant SetUpPlantUI as UI <<presentation>>
+participant SetUpPlantController as Controller <<application>>
+participant PlantBuilder as Builder <<builder>>
+participant "plant:Plant" as Domain1 <<domain>>
+participant "aisle:Aisle" as Domain2 <<domain>>
+participant "row:Row" as Domain3 <<domain>>
+participant "shelf:Shelf" as Domain4 <<domain>>
+participant "agvDock:AGVDock" as Domain5 <<domain>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database PlantRepository as Repository <<repository>>
+
+
+
+activate WE
+WE -> UI : inicia processo de configuração da Planta
+activate UI
+UI -> Controller : create
+UI -> WE : solicita ficheiro JSON com as informações necessárias
+deactivate UI
+
+WE -> UI : introduz ficheiro JSON
+activate UI
+
+UI -> Controller : setUpPlant(file)
+activate Controller
+Controller -> Builder : create
+Controller -> Builder : setWarehouseName(name)
+Controller -> Builder : setWarehouseLength(length)
+Controller -> Builder : setWarehouseWidth(width)
+Controller -> Builder : setWarehouseSquareSize(squareSize)
+Controller -> Builder : setWarehouseUnit(unit)
+
+Controller -> Builder : createPlant()
+activate Builder
+Builder -> Domain1 : create(name, length, width, squareSize, unit)
+Domain1 -> Builder : plant
+Builder -> Controller : plant
+deactivate Builder
+
+Controller -> Builder : createAisle()
+activate Builder
+Builder -> Domain2 : create(beginSquare, endSquare, depthSquare, accessibility)
+Domain2 -> Builder : aisle
+Builder -> Controller : aisle
+deactivate Builder
+
+Controller -> Builder : createRow()
+activate Builder
+Builder -> Domain3 : create(aisleID, beginSquare, endSquare)
+Domain3 -> Builder : row
+Builder -> Controller : row
+deactivate Builder
+
+Controller -> Builder : createShelf()
+activate Builder
+Builder -> Domain4 : create(rowID)
+Domain4 -> Builder: shelf
+Builder -> Controller : shelf
+deactivate Builder
+
+Controller -> Builder : createAGVDock()
+activate Builder
+Builder -> Domain5 : create(beginSquare, endSquare, accessibilityDirection)
+Domain5 -> Builder : agvDock
+Builder -> Controller : agvDock
+deactivate Builder
+
+Controller -> Persistence : repositories()
+activate Persistence
+Persistence -> Factory : create
+Persistence -> Controller : factory
+deactivate Persistence
+Controller -> Factory : plants()
+activate Factory
+Factory -> Repository : create
+Factory -> Controller : plantRepository
+deactivate Factory
+Controller->Repository : save(plant)
+Controller->Repository : save(aisle)
+Controller->Repository : save(row)
+Controller->Repository : save(shelf)
+Controller->Repository : save(agvDock)
+Controller->UI: user
+deactivate Controller
+
+
+
+UI -> WE : informa sucesso da operação
+deactivate WE
+
+@enduml
