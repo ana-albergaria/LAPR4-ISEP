@@ -32,15 +32,15 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaTransactionalRepo
  *
  * @author Paulo Gandra de Sousa
  */
-/* package */ class BasepaRepositoryBase<T, K, I>
+/* package */ class BaseJpaRepositoryBase<T, K, I>
         extends JpaTransactionalRepository<T, K, I> {
 
-    BasepaRepositoryBase(final String persistenceUnitName, final String identityFieldName) {
+    BaseJpaRepositoryBase(final String persistenceUnitName, final String identityFieldName) {
         super(persistenceUnitName, Application.settings().getExtendedPersistenceProperties(),
                 identityFieldName);
     }
 
-    BasepaRepositoryBase(final String identityFieldName) {
+    BaseJpaRepositoryBase(final String identityFieldName) {
         super(Application.settings().getPersistenceUnitName(),
                 Application.settings().getExtendedPersistenceProperties(), identityFieldName);
     }

@@ -54,7 +54,7 @@ public class Address implements ValueObject, Serializable {
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
-        } else if (!(o instanceof PhoneNumber)) {
+        } else if (!(o instanceof Address)) {
             return false;
         } else {
             Address that = (Address) o;

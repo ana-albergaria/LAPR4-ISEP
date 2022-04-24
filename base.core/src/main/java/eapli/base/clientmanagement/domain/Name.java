@@ -18,7 +18,7 @@ public class Name implements ValueObject, Serializable {
     private final String firstNames;
     private final String surnames;
 
-    protected Name(final String firstNames, final String surnames) {
+    public Name(final String firstNames, final String surnames) {
         Preconditions.nonEmpty(firstNames);
         Preconditions.nonEmpty(surnames, "First name and last name should neither be null nor empty");
         Preconditions.matches(VALID_NAME_REGEX, firstNames, "Invalid First Name(s): " + firstNames);

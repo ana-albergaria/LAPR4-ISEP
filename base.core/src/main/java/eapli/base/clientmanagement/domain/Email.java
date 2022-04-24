@@ -14,7 +14,7 @@ public class Email implements ValueObject, Serializable {
 
     private final String email;
 
-    protected Email(final String address) {
+    public Email(final String address) {
         Preconditions.nonEmpty(address, "Email address  should neither be null nor empty");
         Preconditions.ensure(StringPredicates.isEmail(address), "Invalid E-mail format");
         this.email = address;
