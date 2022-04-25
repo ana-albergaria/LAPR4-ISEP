@@ -31,11 +31,11 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private ExtendedDescription extendedDescription;
 
-    private TechnicalDescription technicalDescription;
+    private TechnicalDescription technicalDescription; //optional
 
-    private BrandName brandName;
+    private BrandName brandName; //optional
 
-    private Reference reference;
+    private Reference reference; //optional
 
     private Price priceWithoutTaxes;
 
@@ -48,24 +48,22 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Price tax;
 
-    private Code productionCode;
+    private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
     @ManyToOne(optional = false)
     private ProductCategory productCategory;
 
     @ElementCollection
-    private Set<Photo> photos; //TENHO DE CRIAR PHOTO
+    private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
 
     //+BARCODE
 
     /**
      * Constructor for Product with the minimum attributes.
+     * @param uniqueInternalCode the product unique internal code
      * @param shortDescription the product short description
      * @param extendedDescription the product extended description
-     * @param technicalDescription the product technical description
-     * @param brandName the product brand name
-     * @param reference the product reference
      * @param priceWithoutTaxes the product price without taxes
      * @param status the product status
      * @param weight the product weight
@@ -73,36 +71,39 @@ public class Product implements AggregateRoot<Code>, Serializable {
      * @param tax the product tax
      * @param productCategory the product category
      */
-    protected Product(final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
-                      final TechnicalDescription technicalDescription, final BrandName brandName, final Reference reference,
+    protected Product(final Code uniqueInternalCode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
                       final Price priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
                       final Price tax, final ProductCategory productCategory){
-        Preconditions.noneNull(shortDescription,extendedDescription,technicalDescription,brandName,reference,priceWithoutTaxes,status,weight,volume,tax,productCategory); //o optionalProductionCode não está incluido
-        this.uniqueInternalCode=null; //TEM DE SER GERADO
+        Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,tax,productCategory);
+        this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
         this.extendedDescription=extendedDescription;
-        this.technicalDescription=technicalDescription;
-        this.brandName=brandName;
-        this.reference=reference;
         this.priceWithoutTaxes=priceWithoutTaxes;
         this.status=status;
         this.weight=weight;
         this.volume=volume;
         this.tax=tax;
         this.productCategory=null; //TENHO DE APRESENTAR AS CATEGORIAS PARA ESCOLHER
-        //1 or + photos
     }
 
     protected Product(){
 
     }
 
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
+    @Override
+    public Code identity() {
+        return this.uniqueInternalCode;
+    }
+
     /*
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
     public void addProductionCode(final String productionCode) {
-        if (productionCode==null) { //ou nao está no formato certo
-            throw new IllegalArgumentException("Production Code cannot be null!");
-        } else if (!isLetters(productionCode.substring(0, 3))){
+        if (!isLetters(productionCode.substring(0, 3))){
             throw new IllegalArgumentException("Production Code needs to start with 4 letters!");
         } else if (productionCode.charAt(4)!='.'){
             throw new IllegalArgumentException("Production Code needs to have a dot as the 5th character!");
@@ -132,15 +133,5 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return true;
     }
     */
-
-    @Override
-    public boolean sameAs(Object other) {
-        return DomainEntities.areEqual(this, other);
-    }
-
-    @Override
-    public Code identity() {
-        return this.uniqueInternalCode;
-    }
 
 }
