@@ -4,12 +4,18 @@ import eapli.framework.validations.Preconditions;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
 public class ProductCategory {
+
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version;
 
     @XmlElement
     @EmbeddedId
