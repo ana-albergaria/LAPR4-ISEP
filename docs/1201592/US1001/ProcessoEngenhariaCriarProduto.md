@@ -41,6 +41,58 @@ A interpretação feita deste requisito foi no sentido de criar um novo produto 
 >
 >A7: "...the width, length and height of a product is specified in millimeters..." "...the weight of the product is specified in grams."
 
+>Q8: "Reference refers to the brand reference or product reference?"
+> 
+>A8: "The intent was to express that a product has a brand name (e.g.: "Samsung", "Nokia", "Bic") and the product reference set by the brand, which is an alphanumeric code (max. 23 chars)."
+
+>Q9: "The development team wonders whether in a product registration the attributes "photo", "internal code", "short description", "extended description", "technical description", "brand", "reference", "production code" are mandatory and how big they are?"
+>
+>A9: "Some information regarding each of those attributes:
+>
+> photo: it might be of any common format (e.g. png, jpeg, svg); 
+> 
+> short description: not empty having 30 chars maximum; 
+> 
+> extended description: not empty with a minimum of 20 chars and 100 chars maximum; 
+> 
+> technical description: multiple lines of text, preferably with no limit or the biggest possible. 
+> 
+> brand: not empty having 50 chars maximum; 
+> 
+> reference: not empty alphanumeric code with at 23 chars maximum; 
+> 
+> production code: not empty alphanumeric code with at 23 chars maximum however it might meet a given regular expression defined/configured at deployment time. 
+> 
+> internal code: not empty alphanumeric code with at 23 chars maximum however it might meet a given regular expression defined/configured at deployment time. 
+> 
+> Mandatory attributes: internal code, short and extended description. 
+> 
+> In accordance with the specification document, other atributes might also be mandatory."
+
+>Q10: "Are the internal code, production code and reference generated or entered?"
+>
+>A10: "That information is all entered/typed by the user."
+
+>Q11: "About the photo in the product, we would like to know how it is associated to the product. Should we write the path to it, or should a window open to import the photo into the program?"
+>
+>A11: "From a usability perspective, it would be better having a window (or any other way) to select the photo file to be uploaded. However, if by some reason that option is not viable by now the user can write the path but the system must validate it."
+
+>Q12: "Given that all the units of a product are located in a single warehouse, should in the moment of creation of the product the sales clerk chose one of the available? If so should it indicate the aisle, row and shelf, where the products are located?"
+>
+>A12: "Yes, the product location might be specified during US 1001. In this context, it is worth recalling the following:
+> 
+>"The products’ location in the warehouse, which corresponds to a storage area i.e., the aisle identifier, the row identifier, and the shelf identifier. All these identifiers are numeric. Products with an unknown location cannot the ordered." (cf. specifications document)."
+
+>Q13: "Does the project support more than 1 currency, and if so which currencies should it support?"
+> 
+>A13: "Yes! The project must be prepared to easily support several currencies. The system should work adopting a base currency (e.g.: EUR) and, according to the customer location, be able to present prices on other currencies (e.g. USD) using an external currency converter. During the prototype development, using a currency converter should not be a major concern."
+
+>Q14: "When creating a new Product, what Currency should we use?"
+>
+>A14: "It should be used the system base currency, which must be defined at system deployment time."
+
+
+
 ## 2.2. Regras de Negócio
 
 * A referência de um produto tem que ser única no sistema;

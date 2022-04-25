@@ -1,17 +1,15 @@
 package eapli.base.productmanagement.domain;
 
-import eapli.base.clientmanagement.domain.Address;
-import eapli.base.clientmanagement.domain.Client;
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Set;
 
-@XmlRootElement
 @Entity
-public class Product {
+public class Product implements AggregateRoot<Code>, Serializable {
 
     public enum Status {
         AVAILABLE, TEMPORARILY_UNAVAILABLE, UNAVAILABLE;
@@ -134,5 +132,15 @@ public class Product {
         return true;
     }
     */
+
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
+    @Override
+    public Code identity() {
+        return this.uniqueInternalCode;
+    }
 
 }
