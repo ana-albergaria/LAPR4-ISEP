@@ -22,42 +22,42 @@ public class Product {
     @Version
     private Long version;
 
-    @Id
+    @EmbeddedId
     //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
-    private String uniqueInternalCode;
+    private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
-    private String shortDescription;
+    private ShortDescription shortDescription;
 
-    private String extendedDescription;
+    private ExtendedDescription extendedDescription;
 
-    private String technicalDescription;
+    private TechnicalDescription technicalDescription;
 
-    private String brandName;
+    private BrandName brandName;
 
-    private String reference;
+    private Reference reference;
 
-    private Double priceWithoutTaxes;
+    private Price priceWithoutTaxes;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private Double weight;
+    private Weight weight;
 
-    private Double volume;
+    private Volume volume;
 
-    private Double tax;
+    private Price tax;
 
-    private String productionCode;
+    private Code productionCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
     @ManyToOne(optional = false)
     private ProductCategory productCategory;
 
-    //@ElementCollection
-    //private Set<Photo> photos; //TENHO DE CRIAR PHOTO
+    @ElementCollection
+    private Set<Photo> photos; //TENHO DE CRIAR PHOTO
 
     //+BARCODE
 
@@ -75,10 +75,10 @@ public class Product {
      * @param tax the product tax
      * @param productCategory the product category
      */
-    protected Product(final String shortDescription, final String extendedDescription,
-                      final String technicalDescription, final String brandName, final String reference,
-                      final Double priceWithoutTaxes, final Status status, final Double weight, final Double volume,
-                      final Double tax, final ProductCategory productCategory){
+    protected Product(final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
+                      final TechnicalDescription technicalDescription, final BrandName brandName, final Reference reference,
+                      final Price priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
+                      final Price tax, final ProductCategory productCategory){
         Preconditions.noneNull(shortDescription,extendedDescription,technicalDescription,brandName,reference,priceWithoutTaxes,status,weight,volume,tax,productCategory); //o optionalProductionCode não está incluido
         this.uniqueInternalCode=null; //TEM DE SER GERADO
         this.shortDescription=shortDescription;
@@ -95,18 +95,44 @@ public class Product {
         //1 or + photos
     }
 
-    //+productionCode
-
     protected Product(){
 
     }
 
-    //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
+    /*
+    //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
     public void addProductionCode(final String productionCode) {
-        if (productionCode == null) { //ou nao está no formato certo
-            throw new IllegalArgumentException();
+        if (productionCode==null) { //ou nao está no formato certo
+            throw new IllegalArgumentException("Production Code cannot be null!");
+        } else if (!isLetters(productionCode.substring(0, 3))){
+            throw new IllegalArgumentException("Production Code needs to start with 4 letters!");
+        } else if (productionCode.charAt(4)!='.'){
+            throw new IllegalArgumentException("Production Code needs to have a dot as the 5th character!");
+        } else if (!isDigits(productionCode.substring(5,9))){
+            throw new IllegalArgumentException("Production Code needs to end with 5 digits!");
         }
         this.productionCode = productionCode;
     }
+
+    public boolean isLetters(String string) {
+        char[] chars = string.toCharArray();
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isDigits(String string) {
+        char[] chars = string.toCharArray();
+        for (char c : chars) {
+            if(!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    */
 
 }
