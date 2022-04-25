@@ -54,7 +54,7 @@ public class Client implements AggregateRoot<Long>, Serializable {
      */
     public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber, final Set<Address> addresses) {
         Preconditions.noneNull(name, vat, email, phoneNumber);
-        //Preconditions.noneNull(addresses, "The Client must have at least one address.");
+        Preconditions.noneNull(addresses, "The Client must have at least one address.");
         //usar o Preconditions.ensure para fazer verificações à data
         this.name = name;
         this.vat = vat;
@@ -68,16 +68,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
     }
 
     public void addGender(final Gender gender) {
-        if (gender == null) {
-            throw new IllegalArgumentException();
-        }
         this.gender = gender;
     }
 
     public void insertBirthDate(final Calendar birthdate) {
-        if (birthdate == null) {
-            throw new IllegalArgumentException();
-        }
         this.birthdate = birthdate;
     }
 
