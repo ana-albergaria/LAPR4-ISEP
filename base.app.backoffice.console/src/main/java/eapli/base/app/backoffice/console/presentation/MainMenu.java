@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -110,6 +111,10 @@ public class MainMenu extends AbstractUI {
     // MAIN MENU SALES CLERK
     private static final int COSTUMERS_OPTION = 2;
 
+    // WAREHOUSE EMPLOYEE
+    private static final int CONFIGURE_AVAILABLE_AGVS = 1;
+    private static final int AVAILABLE_AGVS_INFORMATIONS = 2;
+
     private static final String SEPARATOR_LABEL = "--------------";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -164,6 +169,11 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(COSTUMERS_OPTION, costumersMenu);
         }
 
+        if(authz.isAuthenticatedUserAuthorizedTo(BaseRoles.WAREHOUSE_EMPLOYEE)){
+            final Menu warehouseEmployeeMenu = buildWarehouseEmployee();
+            mainMenu.addSubMenu(AVAILABLE_AGVS_INFORMATIONS, warehouseEmployeeMenu);
+        }
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -205,7 +215,13 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu buildWarehouseEmployee(){
+        final Menu menu = new Menu("Warehouse Employee >");
 
+        menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
+
+        return menu;
+    }
 
 
 
