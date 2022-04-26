@@ -32,8 +32,12 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
         this.description=description;
     }
 
-    public static ProductCategory valueOf(String readLine) {
-        throw new IllegalStateException("APAGAR E MUDAR NA UI");
+    public String getAlphanumericCode() {
+        return alphanumericCode;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
