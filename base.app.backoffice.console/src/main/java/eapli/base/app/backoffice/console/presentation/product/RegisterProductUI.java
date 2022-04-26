@@ -1,10 +1,12 @@
 package eapli.base.app.backoffice.console.presentation.product;
 
 import eapli.base.productmanagement.application.RegisterProductController;
+import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 
 
 public class RegisterProductUI extends AbstractUI {
@@ -13,6 +15,10 @@ public class RegisterProductUI extends AbstractUI {
 
     @Override
     protected boolean doShow(){
+        final Iterable<ProductCategory> productCategories = theController.productCategories();
+        final SelectWidget<ProductCategory> selector = new SelectWidget<>("Select a product category", productCategories, new ProductCategoryPrinter());
+        selector.show();
+        final ProductCategory productCategory = selector.selectedElement();
         final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
         final String shortDescription = Console.readLine("Short Description: ");
         final String extendedDescription = Console.readLine("Extended Description: ");
@@ -21,7 +27,6 @@ public class RegisterProductUI extends AbstractUI {
         final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
         final Double volume = Double.valueOf(Console.readLine("Volume: "));
         final Double tax = Double.valueOf(Console.readLine("Tax: "));
-        final ProductCategory productCategory = ProductCategory.valueOf(Console.readLine("Product Category: "));
         try{
             this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, tax, productCategory);
