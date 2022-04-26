@@ -157,7 +157,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return priceWithoutTaxes;
     }
 
-    /*public Money getPriceWithoutTaxesOnDate(final Calendar date) {
+    /*public OurMoney getPriceWithoutTaxesOnDate(final Calendar date) {
         return priceWithoutTaxes.onDate(date);
     }*/
 
@@ -177,7 +177,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return tax;
     }
 
-    /*public Money getTaxOnDate(final Calendar date) {
+    /*public OurMoney getTaxOnDate(final Calendar date) {
         return tax.onDate(date);
     }*/
 

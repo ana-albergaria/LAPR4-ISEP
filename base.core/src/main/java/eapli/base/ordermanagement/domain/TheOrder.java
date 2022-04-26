@@ -3,6 +3,7 @@ package eapli.base.ordermanagement.domain;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.general.domain.model.Money;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     /**
      * Map where:
-     * > Key: a String containing the Product Reference
+     * > Key: a String containing the Product Unique Internal Code
      * > Value: is its quantity
      */
     @ElementCollection
@@ -45,7 +46,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     /**
      * Map where:
-     * > Key: a String containing the Product Reference
+     * > Key: a String containing the Product Unique Internal Code
      * > Value: is its unitary price
      */
     @ElementCollection
@@ -55,14 +56,19 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Column(name = "unitary_price")
     private Map<String, Double> unitaryPricesPerProduct = new HashMap<>();
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "no_taxes_currency"))
+    })
+    private Money totalAmountWithoutTaxes;
 
-    // TEMOS DE SER NÓS A FAZER COPY PASTE DA CLASSE MONEY SENÃO DÁ ERROS A CORRER A BASE DE DADOS
-    @ElementCollection
-    List<Money> list = new ArrayList<>();
-
-    //private eapli.base.ordermanagement.domain.Money totalAmountWithoutTaxes;
-
-    //private Money totalAmountWithTaxes;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "taxes_currency"))
+    })
+    private Money totalAmountWithTaxes;
 
     //CONFIRMAR SHIPMENT
     @Enumerated(EnumType.STRING)
