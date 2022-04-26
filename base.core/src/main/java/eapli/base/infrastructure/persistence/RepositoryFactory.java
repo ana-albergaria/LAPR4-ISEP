@@ -24,6 +24,9 @@ import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.warehousemanagement.repositories.PlantRepository;
+
+import eapli.base.productmanagement.repositories.ProductCategoryRepository;
+import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -72,7 +75,13 @@ public interface RepositoryFactory {
 
     ClientRepository clients();
 
+
     PlantRepository plants();
+
+    ProductRepository products();
+
+    ProductCategoryRepository productCategories();
+    
     /**
      *
      * @param autoTx

@@ -1,89 +1,137 @@
 package eapli.base.productmanagement.domain;
 
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Set;
 
-@XmlRootElement
 @Entity
-public class Product {
+public class Product implements AggregateRoot<Code>, Serializable {
 
+    public enum Status {
+        AVAILABLE, TEMPORARILY_UNAVAILABLE, UNAVAILABLE;
+    }
 
+    private static final long serialVersionUID = 1L;
 
-    @XmlElement
+    @Version
+    private Long version;
+
     @EmbeddedId
     //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
-    private String uniqueInternalCode;
+    private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
-    @XmlElement
-    private String shortDescription;
+    private ShortDescription shortDescription;
 
-    @XmlElement
-    private String extendedDescription;
+    private ExtendedDescription extendedDescription;
 
-    @XmlElement
-    private String technicalDescription;
+    private TechnicalDescription technicalDescription; //optional
 
-    @XmlElement
-    private String brandName;
+    private BrandName brandName; //optional
 
-    @XmlElement
-    private String reference;
+    private Reference reference; //optional
 
-    @XmlElement
-    private Double priceWithoutTaxes;
+    private Price priceWithoutTaxes;
 
-    @XmlElement
-    private Integer status; //1-Available, 2-Temporarily Unavailable, 3-Unavailable
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    @XmlElement
-    private Double weight;
+    private Weight weight;
 
-    @XmlElement
-    private Double volume;
+    private Volume volume;
 
-    @XmlElement
-    private Double tax;
+    private Price tax;
 
-    @XmlElement
-    private String optionalProductionCode;
-    //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OR NULL
+    private Code productionCode; //optional
+    //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
-    @XmlElement
     @ManyToOne(optional = false)
     private ProductCategory productCategory;
 
-    //+PHOTO
+    @ElementCollection
+    private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
 
     //+BARCODE
 
-    protected Product(final String shortDescription, final String extendedDescription,
-                      final String technicalDescription, final String brandName, final String reference,
-                      final Double priceWithoutTaxes, final Integer status, final Double weight, final Double volume,
-                      final Double tax, final ProductCategory productCategory, final String optionalProductionCode){
-        Preconditions.noneNull(shortDescription,extendedDescription,technicalDescription,brandName,reference,priceWithoutTaxes,status,weight,volume,tax,productCategory); //o optionalProductionCode não está incluido
-        this.uniqueInternalCode=null; //TEM DE SER GERADO
+    /**
+     * Constructor for Product with the minimum attributes.
+     * @param uniqueInternalCode the product unique internal code
+     * @param shortDescription the product short description
+     * @param extendedDescription the product extended description
+     * @param priceWithoutTaxes the product price without taxes
+     * @param status the product status
+     * @param weight the product weight
+     * @param volume the product volume
+     * @param tax the product tax
+     * @param productCategory the product category
+     */
+    protected Product(final Code uniqueInternalCode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
+                      final Price priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
+                      final Price tax, final ProductCategory productCategory){
+        Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,tax,productCategory);
+        this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
         this.extendedDescription=extendedDescription;
-        this.technicalDescription=technicalDescription;
-        this.brandName=brandName;
-        this.reference=reference;
         this.priceWithoutTaxes=priceWithoutTaxes;
         this.status=status;
         this.weight=weight;
         this.volume=volume;
         this.tax=tax;
         this.productCategory=null; //TENHO DE APRESENTAR AS CATEGORIAS PARA ESCOLHER
-        this.optionalProductionCode=null; //PODE SER NULL OU SER GERADO
     }
 
     protected Product(){
 
     }
+
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
+    @Override
+    public Code identity() {
+        return this.uniqueInternalCode;
+    }
+
+    /*
+    //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
+    public void addProductionCode(final String productionCode) {
+        if (!isLetters(productionCode.substring(0, 3))){
+            throw new IllegalArgumentException("Production Code needs to start with 4 letters!");
+        } else if (productionCode.charAt(4)!='.'){
+            throw new IllegalArgumentException("Production Code needs to have a dot as the 5th character!");
+        } else if (!isDigits(productionCode.substring(5,9))){
+            throw new IllegalArgumentException("Production Code needs to end with 5 digits!");
+        }
+        this.productionCode = productionCode;
+    }
+
+    public boolean isLetters(String string) {
+        char[] chars = string.toCharArray();
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isDigits(String string) {
+        char[] chars = string.toCharArray();
+        for (char c : chars) {
+            if(!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    */
 
 }

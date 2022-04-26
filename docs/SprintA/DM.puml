@@ -28,8 +28,8 @@ package "<<aggregate>> Order" {
     class Payment
 }
 
-package "<<aggregate>> Costumer" {
-    entity Costumer
+package "<<aggregate>> Client" {
+    entity Client
     class Address
     class BirthDate
     class Gender
@@ -163,8 +163,8 @@ class Payment <<(V,#FF8B40) value object>> {
     -status
 }
 
-entity Costumer <<entity>> <<root>> {
-    - <<VO>> CostumerID
+entity Client <<entity>> <<root>> {
+    - <<VO>> ClientID
     - <<VO>> Name
     - <<VO>> VAT
     - <<VO>> Email
@@ -190,6 +190,9 @@ entity SalesManager <<entity>> <<root>> {
 }
 
 entity User <<entity>> <<root>> {
+    - <<VO>> Name
+    - <<VO>> Password
+    - <<VO>> Email
     - <<VO>> isActive
 }
 
@@ -352,23 +355,24 @@ Product --> "1" Category : belongs to
 
 Category --> "0..1" SuperCategory : belongs to
 
-Order --> "1" Costumer : ordered by
+Order --> "1" Client : ordered by
 Order --> "1..*" Product : composed by
 Order --> "1" Shipment : has info about
 Order --> "1" Payment : has info about
 
-Costumer --> "1..*" Address : has
-Costumer --> "*" Survey: answers
-Costumer --> "0..1" BirthDate
-Costumer --> "0..1" Gender
+Client --> "1..*" Address : has
+Client --> "*" Survey: answers
+Client --> "0..1" BirthDate
+Client --> "0..1" Gender
 
-Salesclerk --> "*" Costumer
+Employee --> "*" Client : registers a
+/'Salesclerk --> "*" Client'/
 Salesclerk --> "*" Order
 Salesclerk --|> Employee
 Salesclerk --> "1..*" Product
 Salesclerk --> "1..*" Category
 
-SalesManager --> "*" Costumer
+/'SalesManager --> "*" Client'/
 SalesManager --> "*" Order
 SalesManager -|> Employee
 SalesManager --> "1..*" Product
@@ -377,8 +381,8 @@ SalesManager --> "1..*" Survey
 SalesManager ---> "1..*" Report
 
 User --> "1..*" Role
-User --> "0..1" Employee
-User --> "0..1" Costumer
+User "1" <-- Employee
+User --> "0..1" Client
 
 WarehousePlant --> "1..*" Aisle
 Aisle --> "1..*" Row

@@ -14,7 +14,7 @@ public class Address implements ValueObject, Serializable {
 
     private static final Pattern VALID_POSTAL_CODE_REGEX = Pattern.compile("[0-9]{4}-[0-9]{3}");
 
-    private final String streeName;
+    private final String streetName;
 
     private final String doorNumber;
 
@@ -34,7 +34,7 @@ public class Address implements ValueObject, Serializable {
         Preconditions.isPositive(Integer.parseInt(doorNumber), "Door Number cannot be negative.");
         Preconditions.matches(VALID_POSTAL_CODE_REGEX, postalCode, "The Postal Code does not follow standards");
 
-        this.streeName = streetName;
+        this.streetName = streetName;
         this.doorNumber = doorNumber;
         this.postalCode = postalCode;
         this.city = city;
@@ -42,7 +42,7 @@ public class Address implements ValueObject, Serializable {
     }
 
     protected Address() {
-        this.streeName = this.doorNumber = this.postalCode = this.city = this.country = "";
+        this.streetName = this.doorNumber = this.postalCode = this.city = this.country = "";
         //for ORM purposes
     }
 
@@ -58,7 +58,7 @@ public class Address implements ValueObject, Serializable {
             return false;
         } else {
             Address that = (Address) o;
-            return this.streeName.equals(that.streeName) && this.doorNumber.equals(that.doorNumber)
+            return this.streetName.equals(that.streetName) && this.doorNumber.equals(that.doorNumber)
                     && this.postalCode.equals(that.postalCode) && this.city.equals(that.city)
                     && this.country.equals(that.country);
         }
@@ -66,11 +66,11 @@ public class Address implements ValueObject, Serializable {
 
     @Override
     public int hashCode() {
-        return (new HashCoder()).with(this.streeName).with(doorNumber).with(postalCode).with(city).with(country).code();
+        return (new HashCoder()).with(this.streetName).with(doorNumber).with(postalCode).with(city).with(country).code();
     }
 
     public String toString() {
-        return this.streeName + ", nº" + this.doorNumber + "\n" + this.postalCode + " - " + this.city + ", " + this.country;
+        return this.streetName + ", nº" + this.doorNumber + "\n" + this.postalCode + " - " + this.city + ", " + this.country;
     }
 }
 

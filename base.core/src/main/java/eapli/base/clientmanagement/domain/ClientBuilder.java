@@ -3,6 +3,7 @@ package eapli.base.clientmanagement.domain;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ClientBuilder implements DomainFactory<Client> {
@@ -17,7 +18,7 @@ public class ClientBuilder implements DomainFactory<Client> {
 
     private PhoneNumber phoneNumber;
 
-    private Set<Address> addresses;
+    private Set<Address> addresses = new HashSet();
 
     public ClientBuilder named(final Name name) {
         this.name = name;
@@ -47,7 +48,6 @@ public class ClientBuilder implements DomainFactory<Client> {
     }
 
     public ClientBuilder withAddress(final Address address) {
-        buildOrThrow();
         this.addresses.add(address);
         return this;
     }
@@ -55,7 +55,7 @@ public class ClientBuilder implements DomainFactory<Client> {
     private Client buildOrThrow() {
         if (theClient != null) {
             return theClient;
-        } else if (name != null && vat != null && email != null && phoneNumber != null /*&& !addresses.isEmpty()*/) {
+        } else if (name != null && vat != null && email != null && phoneNumber != null && !addresses.isEmpty()) {
             theClient = new Client(name, vat, email, phoneNumber, addresses);
             return theClient;
         } else {
@@ -64,14 +64,18 @@ public class ClientBuilder implements DomainFactory<Client> {
     }
 
     public ClientBuilder withGender(final Client.Gender gender) {
-        buildOrThrow();
-        theClient.addGender(gender);
+        if(gender != null) {
+            buildOrThrow();
+            theClient.addGender(gender);
+        }
         return this;
     }
 
     public ClientBuilder withBirthdate(final Calendar birthdate) {
-        buildOrThrow();
-        theClient.insertBirthDate(birthdate);
+        if(birthdate != null) {
+            buildOrThrow();
+            theClient.insertBirthDate(birthdate);
+        }
         return this;
     }
 

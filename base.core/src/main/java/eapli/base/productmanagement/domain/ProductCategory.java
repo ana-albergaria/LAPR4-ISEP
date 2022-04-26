@@ -1,21 +1,25 @@
 package eapli.base.productmanagement.domain;
 
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Version;
+import java.io.Serializable;
 
-@XmlRootElement
 @Entity
-public class ProductCategory {
+public class ProductCategory implements AggregateRoot<String>, Serializable {
 
-    @XmlElement
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version;
+
     @EmbeddedId
     private String alphanumericCode;
 
-    @XmlElement
     private String description;
 
     protected ProductCategory(){
@@ -28,4 +32,13 @@ public class ProductCategory {
         this.description=description;
     }
 
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
+    @Override
+    public String identity() {
+        return this.alphanumericCode;
+    }
 }
