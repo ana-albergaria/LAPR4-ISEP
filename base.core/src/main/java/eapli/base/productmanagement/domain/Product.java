@@ -2,6 +2,7 @@ package eapli.base.productmanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.general.domain.model.Money;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
@@ -40,6 +41,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Reference reference; //optional
 
+    @Embedded
     private Money priceWithoutTaxes;
 
     @Enumerated(EnumType.STRING)
@@ -49,6 +51,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Volume volume;
 
+    @Embedded
     private Money tax;
 
     private Code productionCode; //optional
@@ -154,9 +157,9 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return priceWithoutTaxes;
     }
 
-    public Money getPriceWithoutTaxesOnDate(final Calendar date) {
+    /*public Money getPriceWithoutTaxesOnDate(final Calendar date) {
         return priceWithoutTaxes.onDate(date);
-    }
+    }*/
 
     public Status getStatus() {
         return status;
@@ -174,9 +177,9 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return tax;
     }
 
-    public Money getTaxOnDate(final Calendar date) {
+    /*public Money getTaxOnDate(final Calendar date) {
         return tax.onDate(date);
-    }
+    }*/
 
     public Optional<Code> getProductionCode() {
         return Optional.ofNullable(productionCode);
@@ -194,7 +197,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return photos.add(photo); //add(new ProductPhoto(photo)) ???
     }
 
-    
+
 
     /*
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."

@@ -1,6 +1,7 @@
 package eapli.base.productmanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
+import eapli.framework.general.domain.model.Money;
 
 import javax.persistence.ElementCollection;
 import java.util.Set;

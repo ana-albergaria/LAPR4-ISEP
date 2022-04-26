@@ -32,6 +32,10 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
         this.description=description;
     }
 
+    public static ProductCategory valueOf(String readLine) {
+        throw new IllegalStateException("APAGAR E MUDAR NA UI");
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);

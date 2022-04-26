@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.product;
 
 import eapli.base.productmanagement.application.RegisterProductController;
+import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -20,7 +21,7 @@ public class RegisterProductUI extends AbstractUI {
         final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
         final Double volume = Double.valueOf(Console.readLine("Volume: "));
         final Double tax = Double.valueOf(Console.readLine("Tax: "));
-        final String productCategory = Console.readLine("Product Category: ");
+        final ProductCategory productCategory = ProductCategory.valueOf(Console.readLine("Product Category: "));
         try{
             this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, tax, productCategory);
