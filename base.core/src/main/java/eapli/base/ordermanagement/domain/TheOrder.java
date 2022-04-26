@@ -13,6 +13,11 @@ import java.util.*;
 public class TheOrder implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    public enum Status {
+        REGISTERED, PAYMENT_PENDING, TO_BE_PREPARED, BEING_PREPARED_ON_WAREHOUSE,
+        READY_FOR_PACKAGING, READY_FOR_CARRIER_DISPATCHING, DISPATCHED, DELIVERED_BY_CARRIER, RECEIVED_BY_COSTUMER;
+    }
+
     @Version
     private Long version;
 
@@ -26,7 +31,27 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
-    //FALTA COLOCAR TYPED/SELECT BILLING AND DELIVERING ADDRESS
+    //TYPED/SELECT BILLING AND DELIVERING ADDRESS?
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "billing_streetName")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "billing_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "billing_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
+            @AttributeOverride(name = "country", column = @Column(name = "billing_country"))
+    })
+    private Address billingAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "shipping_streetName")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "shipping_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "shipping_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "shipping_city")),
+            @AttributeOverride(name = "country", column = @Column(name = "shipping_country"))
+    })
+    private Address shippingAddress;
 
     // COMENTAR PORQUE O PRODUCT AINDA NÃO É PERSISTIDO
     /*@OneToMany
@@ -89,8 +114,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
-
-    //FALTA STATUS DA ORDER
+    
 
     protected TheOrder() {
         //for ORM purposes
