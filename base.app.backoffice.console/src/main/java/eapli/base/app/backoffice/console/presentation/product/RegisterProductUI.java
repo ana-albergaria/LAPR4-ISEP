@@ -17,7 +17,7 @@ public class RegisterProductUI extends AbstractUI {
         final String extendedDescription = Console.readLine("Extended Description: ");
         final Double priceWithoutTaxes = Double.valueOf(Console.readLine("Price Without Taxes: "));
         final String status = Console.readLine("Status: ");
-        final Double weight = Double.valueOf(Console.readLine("Weight: "));
+        final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
         final Double volume = Double.valueOf(Console.readLine("Volume: "));
         final Double tax = Double.valueOf(Console.readLine("Tax: "));
         final String productCategory = Console.readLine("Product Category: ");
