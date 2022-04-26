@@ -3,7 +3,6 @@ package eapli.base.ordermanagement.domain;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import javassist.compiler.ast.Pair;
 
 import javax.persistence.*;
 import java.io.Serializable;
