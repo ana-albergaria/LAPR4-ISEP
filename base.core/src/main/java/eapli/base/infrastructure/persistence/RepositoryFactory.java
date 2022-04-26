@@ -23,6 +23,7 @@ package eapli.base.infrastructure.persistence;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.warehousemanagement.repositories.PlantRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -70,6 +71,8 @@ public interface RepositoryFactory {
     ClientUserRepository clientUsers();
 
     ClientRepository clients();
+
+    PlantRepository plants();
     /**
      *
      * @param autoTx

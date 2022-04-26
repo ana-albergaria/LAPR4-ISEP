@@ -38,8 +38,11 @@ entity Shelf <<entity>> <<root>> {
 }
 
 entity AGVDock <<entity>> <<root>> {
-    - DockID
-    - AccessibilityDirection
+    - DockID <<VO>>
+    - BeginSquare <<VO>>
+    - EndSquare <<VO>>
+    - DepthSquare <<VO>>
+    - AccessibilityDirection <<VO>>
 }
 
 entity Aisle <<entity>> <<root>> {
