@@ -1,10 +1,8 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import eapli.framework.general.domain.model.Money;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,9 +27,9 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     //FALTA COLOCAR TYPED/SELECT BILLING AND DELIVERING ADDRESS
 
-    // COMENTAR DEPOIS PORQUE O PRODUCT AINDA NÃO É PERSISTIDO
-    @OneToMany
-    private Set<Product> products = new HashSet<>();
+    // COMENTAR PORQUE O PRODUCT AINDA NÃO É PERSISTIDO
+    /*@OneToMany
+    private Set<Product> products = new HashSet<>();*/
 
     /**
      * Map where:

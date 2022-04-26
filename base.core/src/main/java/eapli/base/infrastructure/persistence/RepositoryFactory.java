@@ -23,12 +23,8 @@ package eapli.base.infrastructure.persistence;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
-<<<<<<< HEAD
 import eapli.base.ordermanagement.repositories.OrderRepository;
-=======
 import eapli.base.warehousemanagement.repositories.PlantRepository;
-
->>>>>>> 26f9adfdd80c1adcae883cfde7cbf08c69addbdf
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -85,13 +81,9 @@ public interface RepositoryFactory {
     ProductRepository products();
 
     ProductCategoryRepository productCategories();
-<<<<<<< HEAD
 
     OrderRepository orders();
 
-=======
-    
->>>>>>> 26f9adfdd80c1adcae883cfde7cbf08c69addbdf
     /**
      *
      * @param autoTx
