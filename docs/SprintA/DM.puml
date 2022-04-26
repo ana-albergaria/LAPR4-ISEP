@@ -247,8 +247,11 @@ class Model <<(V,#FF8B40) value object>> {
 }
 
 entity AGVDock <<entity>> <<root>> {
-    - DockID
-    - AccessibilityDirection
+    - <<VO>> DockID
+    - <<VO>> BeginSquare
+    - <<VO>> EndSquare
+    - <<VO>> DepthSquare
+    - <<VO>> AccessibilityDirection
 }
 
 /'class AGVPosition <<(V,#FF8B40) value object>> {
@@ -256,15 +259,15 @@ entity AGVDock <<entity>> <<root>> {
 }'/
 
 entity Square <<entity>> <<root>> {
-    - lSquare
-    - wSquare
+    - <<VO>> lSquare
+    - <<VO>> wSquare
 }
 
 entity Bin <<entity>> <<root>> {
-    - Size
-    - AisleID
-    - RowID
-    - ShelfID
+    - <<VO>> Size
+    - <<VO>> AisleID
+    - <<VO>> RowID
+    - <<VO>> ShelfID
 }
 
 class Section <<(V,#FF8B40) value object>> {

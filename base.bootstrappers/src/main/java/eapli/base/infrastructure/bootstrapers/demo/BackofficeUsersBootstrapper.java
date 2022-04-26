@@ -23,6 +23,7 @@ package eapli.base.infrastructure.bootstrapers.demo;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import eapli.base.infrastructure.bootstrapers.UsersBootstrapperBase;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
@@ -42,6 +43,7 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
         registerKitchenManager("kitchen", PASSWORD1, "Oven", "Stove", "Oven.and.stove@emai.l.com");
         registerMenuManager("chef", PASSWORD1, "Master", "Chef", "master.chef@emai.l.com");
         registerSalesClerk("sales_clerk", PASSWORD1, "Sales", "Clerk", "salesclerk@emai.l.com");
+        registerWarehouseEmployee("warehouse_employee", PASSWORD1, "Warehouse", "Employee", "warehouseemployee@email.l.com");
         return true;
     }
 
@@ -73,6 +75,14 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implement
                                      final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.SALES_CLERK);
+
+        registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void registerWarehouseEmployee(final String username, final String password,
+                                           final String firstName, final String lastName, final String email){
+        final Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.WAREHOUSE_EMPLOYEE);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }
