@@ -114,7 +114,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
-    
+
 
     protected TheOrder() {
         //for ORM purposes

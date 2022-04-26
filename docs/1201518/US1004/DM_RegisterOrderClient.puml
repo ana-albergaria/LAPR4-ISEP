@@ -1,0 +1,126 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+}
+
+package "<<aggregate>> Client" {
+    entity Client
+    class Address
+    class BirthDate
+    class Gender
+}
+
+package "<<aggregate>> Employee" {
+    entity Employee
+}
+
+package "<<aggregate>> User" {
+    entity User
+    class Role
+}
+
+package "<<aggregate>> Product" {
+    entity Product
+    class UniqueInternalCode
+    class Photo
+    class Barcode
+    class OptionalProductionCode
+}
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription
+    -<<VO>> ExtendedDescription
+    -<<VO>> TechnicalDescription
+    -<<VO>> BrandName
+    -<<VO>> Reference
+    -<<VO>> PriceWithoutTaxes
+    -<<VO>> Status /'Available, Temporarily Unavailable, Unavailable'/
+    -<<VO>> Weight
+    -<<VO>> Volume
+    -<<VO>> Tax
+}
+
+class UniqueInternalCode <<(V,#FF8B40) value object>>
+class Photo <<(V,#FF8B40) value object>>
+class Barcode <<(V,#FF8B40) value object>>
+class OptionalProductionCode <<(V,#FF8B40) value object>>
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId /'automatically generated'/
+    -<<VO>> DateTime /'automatically generated na hora do registo do sistema'/
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -Status /'(CONFIRM WITH CLIENT: registered, payment pending, being prepared on the warehouse, dispatched, delivered by carrier, received by customer)'/
+}
+
+class Shipment <<(V,#FF8B40) value object>> {
+    -method
+    -cost
+}
+
+class Payment <<(V,#FF8B40) value object>> {
+    -method
+    -status
+}
+
+entity Client <<entity>> <<root>> {
+    - <<VO>> ClientID
+    - <<VO>> Name
+    - <<VO>> VAT
+    - <<VO>> Email
+    - <<VO>> PhoneNumber
+    /'- <<VO>> BirthDate'/ /'optional'/
+    /'- <<VO>> Gender'/ /'optional'/
+}
+
+class BirthDate <<(V,#FF8B40) value object>> {}
+class Gender <<(V,#FF8B40) value object>> {}
+
+entity Employee <<entity>> <<root>> {
+    - <<VO>> EmployeeID
+}
+
+entity User <<entity>> <<root>> {
+    - <<VO>> Name
+    - <<VO>> Password
+    - <<VO>> Email
+    - <<VO>> isActive
+}
+
+class Role <<(V,#FF8B40) value object>> {
+
+}
+
+Order --> "1" Client : ordered by
+Order --> "1..*" Product : composed by
+Order --> "1" Shipment : has info about
+Order --> "1" Payment : has info about
+
+Client --> "1..*" Address : has
+Client --> "0..1" BirthDate
+Client --> "0..1" Gender
+
+Employee --> "*" Order : registers a
+
+User --> "1..*" Role
+User "1" <-- Employee
+
+Product --> "1" UniqueInternalCode : has
+Product --> "1..*" Photo
+Product --> "1" Barcode
+Product --> "0..1" OptionalProductionCode
+
+@enduml

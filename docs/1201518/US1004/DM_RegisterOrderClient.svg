@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1108px" preserveAspectRatio="none" style="width:1497px;height:1108px;" version="1.1" viewBox="0 0 1497 1108" width="1497px" zoomAndPan="magnify"><defs><filter height="300%" id="f1d7l4gd1inpb" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[9dd4458791199fa45785259e7581e7a7]
+cluster <<aggregate>> Order--><polygon fill="#FFFFFF" filter="url(#f1d7l4gd1inpb)" points="81,403,236,403,243,426.6094,367,426.6094,367,912,81,912,81,403" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="81" x2="243" y1="426.6094" y2="426.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="149" x="85" y="419.5332">&lt;&lt;aggregate&gt;&gt; Order</text><!--MD5=[20e996825fabf2618e164db4892593a3]
+cluster <<aggregate>> Client--><polygon fill="#FFFFFF" filter="url(#f1d7l4gd1inpb)" points="391,748,546,748,553,771.6094,790,771.6094,790,1101,391,1101,391,748" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="391" x2="553" y1="771.6094" y2="771.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="149" x="395" y="764.5332">&lt;&lt;aggregate&gt;&gt; Client</text><!--MD5=[db53c58abe70499843a85815d88add8b]
+cluster <<aggregate>> Employee--><polygon fill="#FFFFFF" filter="url(#f1d7l4gd1inpb)" points="197,216,379,216,386,239.6094,389,239.6094,389,353,197,353,197,216" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="197" x2="386" y1="239.6094" y2="239.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="176" x="201" y="232.5332">&lt;&lt;aggregate&gt;&gt; Employee</text><!--MD5=[597c9b6a35d8038d4b40fd8870ba90aa]
+cluster <<aggregate>> User--><polygon fill="#FFFFFF" filter="url(#f1d7l4gd1inpb)" points="16,6,163,6,170,29.6094,173,29.6094,173,334.5,16,334.5,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="170" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="141" x="20" y="22.5332">&lt;&lt;aggregate&gt;&gt; User</text><!--MD5=[cd1e467dd42714edd782c72995bbc617]
+cluster <<aggregate>> Product--><polygon fill="#FFFFFF" filter="url(#f1d7l4gd1inpb)" points="814,713,983,713,990,736.6094,1480,736.6094,1480,1101,814,1101,814,713" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="814" x2="990" y1="736.6094" y2="736.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="163" x="818" y="729.5332">&lt;&lt;aggregate&gt;&gt; Product</text><!--MD5=[cf4d6237fcae255cd2e1656cf84a30e2]
+class Order--><rect codeLine="55" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="209.6406" id="Order" style="stroke:#A80036;stroke-width:1.5;" width="173" x="177.5" y="439"/><ellipse cx="240.25" cy="466.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M238.75,467.6406 L238.75,469.6406 L242.75,469.6406 L242.75,468.6406 L242.75,468.1563 L243.375,467.6406 L243.75,467.6406 L244.125,467.6406 L244.75,468.1563 L244.75,468.6406 L244.75,471.6406 L236.75,471.6406 L236.2656,471.6406 L235.75,471.0156 L235.75,470.6406 L235.75,470.2656 L236.2656,469.6406 L236.75,469.6406 L236.75,469.6406 L236.75,463.6406 L236.75,463.6406 L236.2656,463.6406 L235.75,463.0156 L235.75,462.6406 L235.75,462.2656 L236.2656,461.6406 L236.75,461.6406 L244.75,461.6406 L244.75,464.6406 L244.75,465.125 L244.125,465.6406 L243.75,465.6406 L243.375,465.6406 L242.75,465.125 L242.75,464.6406 L242.75,463.6406 L238.75,463.6406 L238.75,465.6406 L239.75,465.6406 L239.75,465.1563 L239.75,465.1563 L240.375,464.6406 L240.75,464.6406 L241.125,464.6406 L241.75,465.1563 L241.75,465.6406 L241.75,467.6406 L241.75,468.125 L241.125,468.6406 L241.125,468.6406 L240.75,468.6406 L240.375,468.6406 L239.75,468.125 L239.75,468.125 L239.75,467.6406 L238.75,467.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="258.75" y="456.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="262.75" y="471.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="31" x="264.75" y="486.6445">Order</text><line style="stroke:#A80036;stroke-width:1.5;" x1="178.5" x2="349.5" y1="494.2813" y2="494.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="71" x="183.5" y="509.7002">-«VO» OrderId</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="79" x="183.5" y="523.5361">-«VO» DateTime</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="104" x="183.5" y="537.3721">-«VO» BillingAddress</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="116" x="183.5" y="551.208">-«VO» DeliveryAddress</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="161" x="183.5" y="565.0439">-«VO» TotalAmountWithoutTaxes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="183.5" y="578.8799">-«VO» TotalAmountWithTaxes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="91" x="183.5" y="592.7158">-«VO» TotalWeight</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="94" x="183.5" y="606.5518">-«VO» TotalVolume</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="78" x="183.5" y="620.3877">-«VO» Operator</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="35" x="183.5" y="634.2236">-Status</text><line style="stroke:#A80036;stroke-width:1.5;" x1="178.5" x2="349.5" y1="640.6406" y2="640.6406"/><!--MD5=[962bf8d17154efae8864e2ec046f4b93]
+class Shipment--><rect codeLine="68" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="83.8594" id="Shipment" style="stroke:#A80036;stroke-width:1.5;" width="109" x="97.5" y="812"/><ellipse cx="112.5" cy="832.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M112.5,835.375 L114.0313,829.8438 L114.0313,829.8438 L113.5156,829.8438 L113,829.2188 L113,828.8438 L113,828.4688 L113.5156,827.8438 L114.0313,827.8438 L115.9063,827.8438 L116.4844,827.8438 L117,828.4688 L117,828.8438 L117,829.2188 L116.4844,829.8438 L116.4844,829.8438 L116.0313,829.8438 L113.6875,837.8438 L111.3125,837.8438 L108.8438,829.8438 L108.5156,829.8438 L108.5156,829.8438 L108,829.2188 L108,828.8438 L108,828.4688 L108.5156,827.8438 L109.0938,827.8438 L110.9688,827.8438 L111.4844,827.8438 L112,828.4688 L112,828.8438 L112,829.2188 L111.4844,829.8438 L110.9688,829.8438 L110.9688,829.8438 L112.5,835.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="124.5" y="829.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="53" x="138.5" y="844.5508">Shipment</text><line style="stroke:#A80036;stroke-width:1.5;" x1="98.5" x2="205.5" y1="852.1875" y2="852.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="39" x="103.5" y="867.6064">-method</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="25" x="103.5" y="881.4424">-cost</text><line style="stroke:#A80036;stroke-width:1.5;" x1="98.5" x2="205.5" y1="887.8594" y2="887.8594"/><!--MD5=[764fca796ce7f635542948d8fc39db5e]
+class Payment--><rect codeLine="73" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="83.8594" id="Payment" style="stroke:#A80036;stroke-width:1.5;" width="109" x="241.5" y="812"/><ellipse cx="256.5" cy="832.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M256.5,835.375 L258.0313,829.8438 L258.0313,829.8438 L257.5156,829.8438 L257,829.2188 L257,828.8438 L257,828.4688 L257.5156,827.8438 L258.0313,827.8438 L259.9063,827.8438 L260.4844,827.8438 L261,828.4688 L261,828.8438 L261,829.2188 L260.4844,829.8438 L260.4844,829.8438 L260.0313,829.8438 L257.6875,837.8438 L255.3125,837.8438 L252.8438,829.8438 L252.5156,829.8438 L252.5156,829.8438 L252,829.2188 L252,828.8438 L252,828.4688 L252.5156,827.8438 L253.0938,827.8438 L254.9688,827.8438 L255.4844,827.8438 L256,828.4688 L256,828.8438 L256,829.2188 L255.4844,829.8438 L254.9688,829.8438 L254.9688,829.8438 L256.5,835.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="268.5" y="829.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="48" x="285" y="844.5508">Payment</text><line style="stroke:#A80036;stroke-width:1.5;" x1="242.5" x2="349.5" y1="852.1875" y2="852.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="39" x="247.5" y="867.6064">-method</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34" x="247.5" y="881.4424">-status</text><line style="stroke:#A80036;stroke-width:1.5;" x1="242.5" x2="349.5" y1="887.8594" y2="887.8594"/><!--MD5=[ed6624c6556d5e7b1bd23032162d20b7]
+class Client--><rect codeLine="78" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="140.4609" id="Client" style="stroke:#A80036;stroke-width:1.5;" width="114" x="412" y="784"/><ellipse cx="446.35" cy="811.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M444.85,812.6406 L444.85,814.6406 L448.85,814.6406 L448.85,813.6406 L448.85,813.1563 L449.475,812.6406 L449.85,812.6406 L450.225,812.6406 L450.85,813.1563 L450.85,813.6406 L450.85,816.6406 L442.85,816.6406 L442.3656,816.6406 L441.85,816.0156 L441.85,815.6406 L441.85,815.2656 L442.3656,814.6406 L442.85,814.6406 L442.85,814.6406 L442.85,808.6406 L442.85,808.6406 L442.3656,808.6406 L441.85,808.0156 L441.85,807.6406 L441.85,807.2656 L442.3656,806.6406 L442.85,806.6406 L450.85,806.6406 L450.85,809.6406 L450.85,810.125 L450.225,810.6406 L449.85,810.6406 L449.475,810.6406 L448.85,810.125 L448.85,809.6406 L448.85,808.6406 L444.85,808.6406 L444.85,810.6406 L445.85,810.6406 L445.85,810.1563 L445.85,810.1563 L446.475,809.6406 L446.85,809.6406 L447.225,809.6406 L447.85,810.1563 L447.85,810.6406 L447.85,812.6406 L447.85,813.125 L447.225,813.6406 L447.225,813.6406 L446.85,813.6406 L446.475,813.6406 L445.85,813.125 L445.85,813.125 L445.85,812.6406 L444.85,812.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="462.65" y="801.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="466.65" y="816.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="32" x="468.15" y="831.6445">Client</text><line style="stroke:#A80036;stroke-width:1.5;" x1="413" x2="525" y1="839.2813" y2="839.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70" x="418" y="854.7002">-«VO» ClientID</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="62" x="418" y="868.5361">-«VO» Name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="57" x="418" y="882.3721">-«VO» VAT</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59" x="418" y="896.208">-«VO» Email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="102" x="418" y="910.0439">-«VO» PhoneNumber</text><line style="stroke:#A80036;stroke-width:1.5;" x1="413" x2="525" y1="916.4609" y2="916.4609"/><!--MD5=[0f39e4cb6f03951afbf6d14bd2505654]
+class Address--><rect codeLine="15" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="40" id="Address" style="stroke:#A80036;stroke-width:1.5;" width="78" x="407" y="1041"/><ellipse cx="422" cy="1057" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M424,1053.5 Q424.2031,1053 424.4375,1052.75 Q424.6719,1052.5 424.9375,1052.5 Q425.4063,1052.5 425.7031,1052.7813 Q426,1053.0625 426,1053.7188 L426,1055.2813 Q426,1055.9375 425.7188,1056.2188 Q425.4375,1056.5 425,1056.5 Q424.6094,1056.5 424.3594,1056.3281 Q424.1094,1056.1563 424,1055.7031 Q423.9531,1055.3906 423.7813,1055.2188 Q423.4688,1054.8906 422.9063,1054.7031 Q422.3438,1054.5 421.7813,1054.5 Q421.0781,1054.5 420.4844,1054.7813 Q419.9063,1055.0625 419.4531,1055.6875 Q419,1056.3125 419,1057.1719 L419,1058.0938 Q419,1059.125 419.8438,1059.8125 Q420.6875,1060.5 422.1875,1060.5 Q423.0781,1060.5 423.7031,1060.2969 Q424.0625,1060.1875 424.4688,1059.8281 Q424.7344,1059.625 424.875,1059.5625 Q425.0156,1059.5 425.1875,1059.5 Q425.5156,1059.5 425.75,1059.7656 Q426,1060.0156 426,1060.375 Q426,1060.7188 425.6563,1061.125 Q425.1563,1061.7188 424.3594,1062.0469 Q423.3125,1062.5 422.0313,1062.5 Q420.5313,1062.5 419.3281,1061.9063 Q418.3594,1061.4375 417.6719,1060.4219 Q417,1059.4063 417,1058.2031 L417,1057.1094 Q417,1055.8594 417.5938,1054.7656 Q418.2031,1053.6719 419.25,1053.0938 Q420.3125,1052.5 421.5,1052.5 Q422.2188,1052.5 422.8438,1052.75 Q423.4688,1053 424,1053.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="46" x="436" y="1061.9102">Address</text><line style="stroke:#A80036;stroke-width:1.5;" x1="408" x2="484" y1="1073" y2="1073"/><!--MD5=[ec957f90f125634d426aef890efece94]
+class BirthDate--><rect codeLine="88" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="BirthDate" style="stroke:#A80036;stroke-width:1.5;" width="109" x="520.5" y="1037"/><ellipse cx="535.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M535.5,1060.375 L537.0313,1054.8438 L537.0313,1054.8438 L536.5156,1054.8438 L536,1054.2188 L536,1053.8438 L536,1053.4688 L536.5156,1052.8438 L537.0313,1052.8438 L538.9063,1052.8438 L539.4844,1052.8438 L540,1053.4688 L540,1053.8438 L540,1054.2188 L539.4844,1054.8438 L539.4844,1054.8438 L539.0313,1054.8438 L536.6875,1062.8438 L534.3125,1062.8438 L531.8438,1054.8438 L531.5156,1054.8438 L531.5156,1054.8438 L531,1054.2188 L531,1053.8438 L531,1053.4688 L531.5156,1052.8438 L532.0938,1052.8438 L533.9688,1052.8438 L534.4844,1052.8438 L535,1053.4688 L535,1053.8438 L535,1054.2188 L534.4844,1054.8438 L533.9688,1054.8438 L533.9688,1054.8438 L535.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="547.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="51" x="562.5" y="1069.5508">BirthDate</text><line style="stroke:#A80036;stroke-width:1.5;" x1="521.5" x2="628.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[a4ea2dcb44ebd57046df9af95d8b8c12]
+class Gender--><rect codeLine="89" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="Gender" style="stroke:#A80036;stroke-width:1.5;" width="109" x="664.5" y="1037"/><ellipse cx="679.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M679.5,1060.375 L681.0313,1054.8438 L681.0313,1054.8438 L680.5156,1054.8438 L680,1054.2188 L680,1053.8438 L680,1053.4688 L680.5156,1052.8438 L681.0313,1052.8438 L682.9063,1052.8438 L683.4844,1052.8438 L684,1053.4688 L684,1053.8438 L684,1054.2188 L683.4844,1054.8438 L683.4844,1054.8438 L683.0313,1054.8438 L680.6875,1062.8438 L678.3125,1062.8438 L675.8438,1054.8438 L675.5156,1054.8438 L675.5156,1054.8438 L675,1054.2188 L675,1053.8438 L675,1053.4688 L675.5156,1052.8438 L676.0938,1052.8438 L677.9688,1052.8438 L678.4844,1052.8438 L679,1053.4688 L679,1053.8438 L679,1054.2188 L678.4844,1054.8438 L677.9688,1054.8438 L677.9688,1054.8438 L679.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="691.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="41" x="711.5" y="1069.5508">Gender</text><line style="stroke:#A80036;stroke-width:1.5;" x1="665.5" x2="772.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[7421f545a0d8420c5bec41e74b387d9c]
+class Employee--><rect codeLine="91" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="85.1172" id="Employee" style="stroke:#A80036;stroke-width:1.5;" width="102" x="213" y="252"/><ellipse cx="234.75" cy="279.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M233.25,280.6406 L233.25,282.6406 L237.25,282.6406 L237.25,281.6406 L237.25,281.1563 L237.875,280.6406 L238.25,280.6406 L238.625,280.6406 L239.25,281.1563 L239.25,281.6406 L239.25,284.6406 L231.25,284.6406 L230.7656,284.6406 L230.25,284.0156 L230.25,283.6406 L230.25,283.2656 L230.7656,282.6406 L231.25,282.6406 L231.25,282.6406 L231.25,276.6406 L231.25,276.6406 L230.7656,276.6406 L230.25,276.0156 L230.25,275.6406 L230.25,275.2656 L230.7656,274.6406 L231.25,274.6406 L239.25,274.6406 L239.25,277.6406 L239.25,278.125 L238.625,278.6406 L238.25,278.6406 L237.875,278.6406 L237.25,278.125 L237.25,277.6406 L237.25,276.6406 L233.25,276.6406 L233.25,278.6406 L234.25,278.6406 L234.25,278.1563 L234.25,278.1563 L234.875,277.6406 L235.25,277.6406 L235.625,277.6406 L236.25,278.1563 L236.25,278.6406 L236.25,280.6406 L236.25,281.125 L235.625,281.6406 L235.625,281.6406 L235.25,281.6406 L234.875,281.6406 L234.25,281.125 L234.25,281.125 L234.25,280.6406 L233.25,280.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="256.25" y="269.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="260.25" y="284.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="55" x="250.25" y="299.6445">Employee</text><line style="stroke:#A80036;stroke-width:1.5;" x1="214" x2="314" y1="307.2813" y2="307.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="90" x="219" y="322.7002">-«VO» EmployeeID</text><line style="stroke:#A80036;stroke-width:1.5;" x1="214" x2="314" y1="329.1172" y2="329.1172"/><!--MD5=[3fd616f346a44cd59a91eb10b19e157c]
+class User--><rect codeLine="95" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="126.625" id="User" style="stroke:#A80036;stroke-width:1.5;" width="97" x="56.5" y="42"/><ellipse cx="83.2" cy="69.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M81.7,70.6406 L81.7,72.6406 L85.7,72.6406 L85.7,71.6406 L85.7,71.1563 L86.325,70.6406 L86.7,70.6406 L87.075,70.6406 L87.7,71.1563 L87.7,71.6406 L87.7,74.6406 L79.7,74.6406 L79.2156,74.6406 L78.7,74.0156 L78.7,73.6406 L78.7,73.2656 L79.2156,72.6406 L79.7,72.6406 L79.7,72.6406 L79.7,66.6406 L79.7,66.6406 L79.2156,66.6406 L78.7,66.0156 L78.7,65.6406 L78.7,65.2656 L79.2156,64.6406 L79.7,64.6406 L87.7,64.6406 L87.7,67.6406 L87.7,68.125 L87.075,68.6406 L86.7,68.6406 L86.325,68.6406 L85.7,68.125 L85.7,67.6406 L85.7,66.6406 L81.7,66.6406 L81.7,68.6406 L82.7,68.6406 L82.7,68.1563 L82.7,68.1563 L83.325,67.6406 L83.7,67.6406 L84.075,67.6406 L84.7,68.1563 L84.7,68.6406 L84.7,70.6406 L84.7,71.125 L84.075,71.6406 L84.075,71.6406 L83.7,71.6406 L83.325,71.6406 L82.7,71.125 L82.7,71.125 L82.7,70.6406 L81.7,70.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="97.8" y="59.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="101.8" y="74.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="27" x="105.8" y="89.6445">User</text><line style="stroke:#A80036;stroke-width:1.5;" x1="57.5" x2="152.5" y1="97.2813" y2="97.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="62" x="62.5" y="112.7002">-«VO» Name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85" x="62.5" y="126.5361">-«VO» Password</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59" x="62.5" y="140.3721">-«VO» Email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="74" x="62.5" y="154.208">-«VO» isActive</text><line style="stroke:#A80036;stroke-width:1.5;" x1="57.5" x2="152.5" y1="160.625" y2="160.625"/><!--MD5=[a3638c1e5b65d287ecad7f06f5c0f212]
+class Role--><rect codeLine="102" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="Role" style="stroke:#A80036;stroke-width:1.5;" width="109" x="47.5" y="270.5"/><ellipse cx="62.5" cy="290.5938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M62.5,293.875 L64.0313,288.3438 L64.0313,288.3438 L63.5156,288.3438 L63,287.7188 L63,287.3438 L63,286.9688 L63.5156,286.3438 L64.0313,286.3438 L65.9063,286.3438 L66.4844,286.3438 L67,286.9688 L67,287.3438 L67,287.7188 L66.4844,288.3438 L66.4844,288.3438 L66.0313,288.3438 L63.6875,296.3438 L61.3125,296.3438 L58.8438,288.3438 L58.5156,288.3438 L58.5156,288.3438 L58,287.7188 L58,287.3438 L58,286.9688 L58.5156,286.3438 L59.0938,286.3438 L60.9688,286.3438 L61.4844,286.3438 L62,286.9688 L62,287.3438 L62,287.7188 L61.4844,288.3438 L60.9688,288.3438 L60.9688,288.3438 L62.5,293.875 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="74.5" y="287.957">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="26" x="102" y="303.0508">Role</text><line style="stroke:#A80036;stroke-width:1.5;" x1="48.5" x2="155.5" y1="310.6875" y2="310.6875"/><!--MD5=[72136138052d025cffdce3c22fbd185f]
+class Product--><rect codeLine="37" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="209.6406" id="Product" style="stroke:#A80036;stroke-width:1.5;" width="147" x="989.5" y="749"/><ellipse cx="1037.75" cy="776.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1036.25,777.6406 L1036.25,779.6406 L1040.25,779.6406 L1040.25,778.6406 L1040.25,778.1563 L1040.875,777.6406 L1041.25,777.6406 L1041.625,777.6406 L1042.25,778.1563 L1042.25,778.6406 L1042.25,781.6406 L1034.25,781.6406 L1033.7656,781.6406 L1033.25,781.0156 L1033.25,780.6406 L1033.25,780.2656 L1033.7656,779.6406 L1034.25,779.6406 L1034.25,779.6406 L1034.25,773.6406 L1034.25,773.6406 L1033.7656,773.6406 L1033.25,773.0156 L1033.25,772.6406 L1033.25,772.2656 L1033.7656,771.6406 L1034.25,771.6406 L1042.25,771.6406 L1042.25,774.6406 L1042.25,775.125 L1041.625,775.6406 L1041.25,775.6406 L1040.875,775.6406 L1040.25,775.125 L1040.25,774.6406 L1040.25,773.6406 L1036.25,773.6406 L1036.25,775.6406 L1037.25,775.6406 L1037.25,775.1563 L1037.25,775.1563 L1037.875,774.6406 L1038.25,774.6406 L1038.625,774.6406 L1039.25,775.1563 L1039.25,775.6406 L1039.25,777.6406 L1039.25,778.125 L1038.625,778.6406 L1038.625,778.6406 L1038.25,778.6406 L1037.875,778.6406 L1037.25,778.125 L1037.25,778.125 L1037.25,777.6406 L1036.25,777.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="1057.75" y="766.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="1061.75" y="781.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="42" x="1058.25" y="796.6445">Product</text><line style="stroke:#A80036;stroke-width:1.5;" x1="990.5" x2="1135.5" y1="804.2813" y2="804.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="115" x="995.5" y="819.7002">-«VO» ShortDescription</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="134" x="995.5" y="833.5361">-«VO» ExtendedDescription</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="135" x="995.5" y="847.3721">-«VO» TechnicalDescription</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="91" x="995.5" y="861.208">-«VO» BrandName</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="86" x="995.5" y="875.0439">-«VO» Reference</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="125" x="995.5" y="888.8799">-«VO» PriceWithoutTaxes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="66" x="995.5" y="902.7158">-«VO» Status</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="68" x="995.5" y="916.5518">-«VO» Weight</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="71" x="995.5" y="930.3877">-«VO» Volume</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="53" x="995.5" y="944.2236">-«VO» Tax</text><line style="stroke:#A80036;stroke-width:1.5;" x1="990.5" x2="1135.5" y1="950.6406" y2="950.6406"/><!--MD5=[bcd52e17685b8c6ef90ac5de173a2d81]
+class UniqueInternalCode--><rect codeLine="50" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="UniqueInternalCode" style="stroke:#A80036;stroke-width:1.5;" width="143" x="830.5" y="1037"/><ellipse cx="845.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M845.5,1060.375 L847.0313,1054.8438 L847.0313,1054.8438 L846.5156,1054.8438 L846,1054.2188 L846,1053.8438 L846,1053.4688 L846.5156,1052.8438 L847.0313,1052.8438 L848.9063,1052.8438 L849.4844,1052.8438 L850,1053.4688 L850,1053.8438 L850,1054.2188 L849.4844,1054.8438 L849.4844,1054.8438 L849.0313,1054.8438 L846.6875,1062.8438 L844.3125,1062.8438 L841.8438,1054.8438 L841.5156,1054.8438 L841.5156,1054.8438 L841,1054.2188 L841,1053.8438 L841,1053.4688 L841.5156,1052.8438 L842.0938,1052.8438 L843.9688,1052.8438 L844.4844,1052.8438 L845,1053.4688 L845,1053.8438 L845,1054.2188 L844.4844,1054.8438 L843.9688,1054.8438 L843.9688,1054.8438 L845.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="874.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="111" x="859.5" y="1069.5508">UniqueInternalCode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="831.5" x2="972.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[a805b40f8193e3b705560a3818c5c109]
+class Photo--><rect codeLine="51" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="Photo" style="stroke:#A80036;stroke-width:1.5;" width="109" x="1008.5" y="1037"/><ellipse cx="1023.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1023.5,1060.375 L1025.0313,1054.8438 L1025.0313,1054.8438 L1024.5156,1054.8438 L1024,1054.2188 L1024,1053.8438 L1024,1053.4688 L1024.5156,1052.8438 L1025.0313,1052.8438 L1026.9063,1052.8438 L1027.4844,1052.8438 L1028,1053.4688 L1028,1053.8438 L1028,1054.2188 L1027.4844,1054.8438 L1027.4844,1054.8438 L1027.0313,1054.8438 L1024.6875,1062.8438 L1022.3125,1062.8438 L1019.8438,1054.8438 L1019.5156,1054.8438 L1019.5156,1054.8438 L1019,1054.2188 L1019,1053.8438 L1019,1053.4688 L1019.5156,1052.8438 L1020.0938,1052.8438 L1021.9688,1052.8438 L1022.4844,1052.8438 L1023,1053.4688 L1023,1053.8438 L1023,1054.2188 L1022.4844,1054.8438 L1021.9688,1054.8438 L1021.9688,1054.8438 L1023.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="1035.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="32" x="1060" y="1069.5508">Photo</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1009.5" x2="1116.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[e59bda2572a266093cda22ac34510ea0]
+class Barcode--><rect codeLine="52" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="Barcode" style="stroke:#A80036;stroke-width:1.5;" width="109" x="1152.5" y="1037"/><ellipse cx="1167.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1167.5,1060.375 L1169.0313,1054.8438 L1169.0313,1054.8438 L1168.5156,1054.8438 L1168,1054.2188 L1168,1053.8438 L1168,1053.4688 L1168.5156,1052.8438 L1169.0313,1052.8438 L1170.9063,1052.8438 L1171.4844,1052.8438 L1172,1053.4688 L1172,1053.8438 L1172,1054.2188 L1171.4844,1054.8438 L1171.4844,1054.8438 L1171.0313,1054.8438 L1168.6875,1062.8438 L1166.3125,1062.8438 L1163.8438,1054.8438 L1163.5156,1054.8438 L1163.5156,1054.8438 L1163,1054.2188 L1163,1053.8438 L1163,1053.4688 L1163.5156,1052.8438 L1164.0938,1052.8438 L1165.9688,1052.8438 L1166.4844,1052.8438 L1167,1053.4688 L1167,1053.8438 L1167,1054.2188 L1166.4844,1054.8438 L1165.9688,1054.8438 L1165.9688,1054.8438 L1167.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="1179.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="46" x="1197" y="1069.5508">Barcode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1153.5" x2="1260.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[16c2971d993ebb1063075f6e007e1adb]
+class OptionalProductionCode--><rect codeLine="53" fill="#F5F5DC" filter="url(#f1d7l4gd1inpb)" height="48.1875" id="OptionalProductionCode" style="stroke:#A80036;stroke-width:1.5;" width="167" x="1296.5" y="1037"/><ellipse cx="1311.5" cy="1057.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1311.5,1060.375 L1313.0313,1054.8438 L1313.0313,1054.8438 L1312.5156,1054.8438 L1312,1054.2188 L1312,1053.8438 L1312,1053.4688 L1312.5156,1052.8438 L1313.0313,1052.8438 L1314.9063,1052.8438 L1315.4844,1052.8438 L1316,1053.4688 L1316,1053.8438 L1316,1054.2188 L1315.4844,1054.8438 L1315.4844,1054.8438 L1315.0313,1054.8438 L1312.6875,1062.8438 L1310.3125,1062.8438 L1307.8438,1054.8438 L1307.5156,1054.8438 L1307.5156,1054.8438 L1307,1054.2188 L1307,1053.8438 L1307,1053.4688 L1307.5156,1052.8438 L1308.0938,1052.8438 L1309.9688,1052.8438 L1310.4844,1052.8438 L1311,1053.4688 L1311,1053.8438 L1311,1054.2188 L1310.4844,1054.8438 L1309.9688,1054.8438 L1309.9688,1054.8438 L1311.5,1060.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="1352.5" y="1054.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="135" x="1325.5" y="1069.5508">OptionalProductionCode</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1297.5" x2="1462.5" y1="1077.1875" y2="1077.1875"/><!--MD5=[b4eabd1a63a4ad1f2f93b60573323bf1]
+link Order to Client--><path codeLine="106" d="M348.88,649.2 C356.22,659.13 363.37,669.16 370,679 C391.48,710.86 412.88,747.66 430.25,779.18 " fill="none" id="Order-to-Client" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="432.78,783.79,431.9685,773.9746,430.3797,779.4038,424.9506,777.8151,432.78,783.79" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61" x="379" y="693.4951">ordered by</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="421.6839" y="773.2141">1</text><!--MD5=[5df16df72a49edaa4f00919f1e597f76]
+link Order to Product--><path codeLine="107" d="M350.58,565.61 C456.39,592.09 639.85,642.22 790,705 C858.09,733.47 931.43,773.82 984.93,805.19 " fill="none" id="Order-to-Product" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="989.39,807.82,983.6595,799.8099,985.08,805.2855,979.6043,806.706,989.39,807.82" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="78" x="763" y="693.4951">composed by</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="961.4209" y="800.185">1..*</text><!--MD5=[3b8460d43649065ec6b873117ac06c59]
+link Order to Shipment--><path codeLine="108" d="M199.95,649.13 C195.15,659.03 190.73,669.08 187,679 C171.27,720.78 162.14,771 157.17,806.72 " fill="none" id="Order-to-Shipment" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="156.47,811.88,161.6688,803.515,157.1571,806.9274,153.7447,802.4157,156.47,811.88" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="188" y="693.4951">has info about</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="149.6307" y="801.1148">1</text><!--MD5=[2dd35b9e342a33989aa9b5490e0b19cd]
+link Order to Payment--><path codeLine="109" d="M274.83,649.27 C280.38,702.66 286.86,764.98 291.17,806.5 " fill="none" id="Order-to-Payment" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="291.71,811.71,294.7627,802.3462,291.1955,806.7365,286.8051,803.1694,291.71,811.71" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="280" y="693.4951">has info about</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="283.4685" y="801.2294">1</text><!--MD5=[bd708f2371c655af07b49ddbdb30848a]
+link Client to Address--><path codeLine="111" d="M461.25,924.12 C456.92,962.69 451.79,1008.35 448.73,1035.7 " fill="none" id="Client-to-Address" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="448.14,1040.92,453.1175,1032.4215,448.6969,1035.9511,445.1672,1031.5305,448.14,1040.92" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="21" x="454" y="1003.4951">has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="425.8311" y="1030.2183">1..*</text><!--MD5=[99b7f2e33ea89fd20c87f9c330650e94]
+link Client to BirthDate--><path codeLine="112" d="M504.74,924.12 C523.83,961.04 546.27,1004.44 560.56,1032.08 " fill="none" id="Client-to-BirthDate" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="562.96,1036.71,562.3746,1026.8786,560.6613,1032.2697,555.2702,1030.5564,562.96,1036.71" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="535.056" y="1025.9518">0..1</text><!--MD5=[9af618af3725fb546e7826293b8a691d]
+link Client to Gender--><path codeLine="113" d="M526.04,901.77 C575.68,942.48 645.86,1000.03 686.48,1033.33 " fill="none" id="Client-to-Gender" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="690.8,1036.88,686.3726,1028.0824,686.9321,1033.7115,681.303,1034.271,690.8,1036.88" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="658.755" y="1026.1654">0..1</text><!--MD5=[c2914b4a672fac54a344b435f240d3ed]
+link Employee to Order--><path codeLine="115" d="M264,337.21 C264,363.79 264,399.58 264,433.85 " fill="none" id="Employee-to-Order" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="264,438.9,268,429.9,264,433.9,260,429.9,264,438.9" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61" x="265" y="383.4951">registers a</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="5" x="258.8164" y="428.1154">*</text><!--MD5=[70c37dc9bfbc8656942103c36f1181e4]
+link User to Role--><path codeLine="117" d="M104,169.03 C103.48,201.54 102.86,239.69 102.46,265.1 " fill="none" id="User-to-Role" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="102.37,270.32,106.5237,261.3899,102.4557,265.3207,98.5249,261.2528,102.37,270.32" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="79.9023" y="259.59">1..*</text><!--MD5=[1e9705534ea2f5f3045e58998aa20e5a]
+reverse link User to Employee--><path codeLine="118" d="M157,167.66 C180.45,195.24 207.54,227.1 228.59,251.86 " fill="none" id="User-backto-Employee" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="153.57,163.62,156.3521,173.0677,156.8087,167.4293,162.4471,167.8859,153.57,163.62" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="161.5432" y="168.8454">1</text><!--MD5=[d5e50d5e9f373aebb7ed82ef75d5b71c]
+link Product to UniqueInternalCode--><path codeLine="120" d="M989.33,948.8 C965.27,979.44 940.38,1011.13 923.37,1032.8 " fill="none" id="Product-to-UniqueInternalCode" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="920.07,1036.99,928.7749,1032.383,923.1585,1033.0579,922.4836,1027.4415,920.07,1036.99" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="21" x="955" y="1003.4951">has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="916.8036" y="1026.3036">1</text><!--MD5=[d712a9affdb0a2e6fd883f05aa145395]
+link Product to Photo--><path codeLine="121" d="M1063,959 C1063,985.82 1063,1012.5 1063,1031.69 " fill="none" id="Product-to-Photo" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="1063,1036.9,1067,1027.9,1063,1031.9,1059,1027.9,1063,1036.9" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="1040.4375" y="1026.1905">1..*</text><!--MD5=[d52d4675e9eec1727cacff8adb24bf93]
+link Product to Barcode--><path codeLine="122" d="M1136.05,959 C1155.21,986.28 1174.27,1013.41 1187.8,1032.67 " fill="none" id="Product-to-Barcode" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="1190.78,1036.9,1188.8776,1027.2366,1187.905,1032.8092,1182.3324,1031.8366,1190.78,1036.9" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="1178.7268" y="1026.1905">1</text><!--MD5=[61712d362b04d8a79bc9a31dd5d3054d]
+link Product to OptionalProductionCode--><path codeLine="123" d="M1136.52,902.55 C1199.86,943.5 1288.89,1001.08 1339.89,1034.06 " fill="none" id="Product-to-OptionalProductionCode" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="1344.1,1036.78,1338.7122,1028.5355,1339.9006,1034.0661,1334.37,1035.2545,1344.1,1036.78" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="1310.0819" y="1026.0398">0..1</text><!--MD5=[4271241f28db58436c58efebb814050a]
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+}
+
+package "<<aggregate>> Client" {
+    entity Client
+    class Address
+    class BirthDate
+    class Gender
+}
+
+package "<<aggregate>> Employee" {
+    entity Employee
+}
+
+package "<<aggregate>> User" {
+    entity User
+    class Role
+}
+
+package "<<aggregate>> Product" {
+    entity Product
+    class UniqueInternalCode
+    class Photo
+    class Barcode
+    class OptionalProductionCode
+}
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription
+    -<<VO>> ExtendedDescription
+    -<<VO>> TechnicalDescription
+    -<<VO>> BrandName
+    -<<VO>> Reference
+    -<<VO>> PriceWithoutTaxes
+    -<<VO>> Status /'Available, Temporarily Unavailable, Unavailable'/
+    -<<VO>> Weight
+    -<<VO>> Volume
+    -<<VO>> Tax
+}
+
+class UniqueInternalCode <<(V,#FF8B40) value object>>
+class Photo <<(V,#FF8B40) value object>>
+class Barcode <<(V,#FF8B40) value object>>
+class OptionalProductionCode <<(V,#FF8B40) value object>>
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId /'automatically generated'/
+    -<<VO>> DateTime /'automatically generated na hora do registo do sistema'/
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -Status /'(CONFIRM WITH CLIENT: registered, payment pending, being prepared on the warehouse, dispatched, delivered by carrier, received by customer)'/
+}
+
+class Shipment <<(V,#FF8B40) value object>> {
+    -method
+    -cost
+}
+
+class Payment <<(V,#FF8B40) value object>> {
+    -method
+    -status
+}
+
+entity Client <<entity>> <<root>> {
+    - <<VO>> ClientID
+    - <<VO>> Name
+    - <<VO>> VAT
+    - <<VO>> Email
+    - <<VO>> PhoneNumber
+    /'- <<VO>> BirthDate'/ /'optional'/
+    /'- <<VO>> Gender'/ /'optional'/
+}
+
+class BirthDate <<(V,#FF8B40) value object>> {}
+class Gender <<(V,#FF8B40) value object>> {}
+
+entity Employee <<entity>> <<root>> {
+    - <<VO>> EmployeeID
+}
+
+entity User <<entity>> <<root>> {
+    - <<VO>> Name
+    - <<VO>> Password
+    - <<VO>> Email
+    - <<VO>> isActive
+}
+
+class Role <<(V,#FF8B40) value object>> {
+
+}
+
+Order - -> "1" Client : ordered by
+Order - -> "1..*" Product : composed by
+Order - -> "1" Shipment : has info about
+Order - -> "1" Payment : has info about
+
+Client - -> "1..*" Address : has
+Client - -> "0..1" BirthDate
+Client - -> "0..1" Gender
+
+Employee - -> "*" Order : registers a 
+
+User - -> "1..*" Role
+User "1" <- - Employee
+
+Product - -> "1" UniqueInternalCode : has
+Product - -> "1..*" Photo
+Product - -> "1" Barcode
+Product - -> "0..1" OptionalProductionCode
+
+@enduml
+
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+}
+
+package "<<aggregate>> Client" {
+    entity Client
+    class Address
+    class BirthDate
+    class Gender
+}
+
+package "<<aggregate>> Employee" {
+    entity Employee
+}
+
+package "<<aggregate>> User" {
+    entity User
+    class Role
+}
+
+package "<<aggregate>> Product" {
+    entity Product
+    class UniqueInternalCode
+    class Photo
+    class Barcode
+    class OptionalProductionCode
+}
+
+entity Product <<entity>> <<root>> {
+    -<<VO>> ShortDescription
+    -<<VO>> ExtendedDescription
+    -<<VO>> TechnicalDescription
+    -<<VO>> BrandName
+    -<<VO>> Reference
+    -<<VO>> PriceWithoutTaxes
+    -<<VO>> Status 
+    -<<VO>> Weight
+    -<<VO>> Volume
+    -<<VO>> Tax
+}
+
+class UniqueInternalCode <<(V,#FF8B40) value object>>
+class Photo <<(V,#FF8B40) value object>>
+class Barcode <<(V,#FF8B40) value object>>
+class OptionalProductionCode <<(V,#FF8B40) value object>>
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId 
+    -<<VO>> DateTime 
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -Status 
+}
+
+class Shipment <<(V,#FF8B40) value object>> {
+    -method
+    -cost
+}
+
+class Payment <<(V,#FF8B40) value object>> {
+    -method
+    -status
+}
+
+entity Client <<entity>> <<root>> {
+    - <<VO>> ClientID
+    - <<VO>> Name
+    - <<VO>> VAT
+    - <<VO>> Email
+    - <<VO>> PhoneNumber
+}
+
+class BirthDate <<(V,#FF8B40) value object>> {}
+class Gender <<(V,#FF8B40) value object>> {}
+
+entity Employee <<entity>> <<root>> {
+    - <<VO>> EmployeeID
+}
+
+entity User <<entity>> <<root>> {
+    - <<VO>> Name
+    - <<VO>> Password
+    - <<VO>> Email
+    - <<VO>> isActive
+}
+
+class Role <<(V,#FF8B40) value object>> {
+
+}
+
+Order - -> "1" Client : ordered by
+Order - -> "1..*" Product : composed by
+Order - -> "1" Shipment : has info about
+Order - -> "1" Payment : has info about
+
+Client - -> "1..*" Address : has
+Client - -> "0..1" BirthDate
+Client - -> "0..1" Gender
+
+Employee - -> "*" Order : registers a 
+
+User - -> "1..*" Role
+User "1" <- - Employee
+
+Product - -> "1" UniqueInternalCode : has
+Product - -> "1..*" Photo
+Product - -> "1" Barcode
+Product - -> "0..1" OptionalProductionCode
+
+@enduml
+
+PlantUML version 1.2021.4(Sun Apr 04 09:49:39 BST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>
