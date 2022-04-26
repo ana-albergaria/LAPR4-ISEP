@@ -3,6 +3,7 @@ package eapli.base.ordermanagement.domain;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import javassist.compiler.ast.Pair;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -50,14 +51,17 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
      */
     @ElementCollection
     @CollectionTable(name = "unitary_prices_per_product",
-            joinColumns = @JoinColumn(name = "order_id_2"))
+            joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyColumn(name = "product_reference")
     @Column(name = "unitary_price")
     private Map<String, Double> unitaryPricesPerProduct = new HashMap<>();
 
 
     // TEMOS DE SER NÓS A FAZER COPY PASTE DA CLASSE MONEY SENÃO DÁ ERROS A CORRER A BASE DE DADOS
-    //private Money totalAmountWithoutTaxes;
+    @ElementCollection
+    List<Money> list = new ArrayList<>();
+
+    //private eapli.base.ordermanagement.domain.Money totalAmountWithoutTaxes;
 
     //private Money totalAmountWithTaxes;
 
@@ -80,6 +84,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
+
+    //FALTA STATUS DA ORDER
 
     protected TheOrder() {
         //for ORM purposes
