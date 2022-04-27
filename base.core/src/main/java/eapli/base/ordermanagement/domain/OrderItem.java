@@ -19,8 +19,8 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
     @GeneratedValue
     private Long orderItemId;
 
-    /*private int quantity;
-    @ManyToOne
+    private int quantity;
+    /*@ManyToOne
     private Product item;
 
     public OrderItem(final int qty, final Product item) {
