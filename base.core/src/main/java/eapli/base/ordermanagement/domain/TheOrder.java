@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.productmanagement.domain.Code;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -56,18 +57,20 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @OneToMany
     Set<OrderItem> items = new HashSet<>();
 
-    //ALTERAR MAP
+
     /**
      * Map where:
-     * > Key: a String containing the Product Unique Internal Code
-     * > Value: is its quantity
+     * > Key: Unique Internal Code of Product
+     * > Value: an Order Item entity
+     *
+     * Might be useful for future US's, namely related to the Shopping Cart
      */
-    @ElementCollection
-    @CollectionTable(name = "quantities_per_product",
-            joinColumns = @JoinColumn(name = "order_id"))
-    @MapKeyColumn(name = "product_reference")
-    @Column(name = "quantity")
-    private Map<String, Integer> quantitiesPerProduct = new HashMap<>();
+    @OneToMany
+    @JoinTable(name = "map_items",
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")})
+    @MapKeyJoinColumn(name = "product_code")
+    private Map<Code, OrderItem> mapItems = new HashMap<>();
 
     @Embedded
     @AttributeOverrides({
