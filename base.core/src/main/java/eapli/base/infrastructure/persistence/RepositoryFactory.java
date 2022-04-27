@@ -24,7 +24,12 @@ import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+<<<<<<< HEAD
 import eapli.base.warehousemanagement.repositories.*;
+=======
+import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.base.warehousemanagement.repositories.PlantRepository;
+>>>>>>> a9b9d1b1dc3e389b1bc2f55b708ac153885c54af
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -75,6 +80,7 @@ public interface RepositoryFactory {
 
     ClientRepository clients();
 
+    AGVRepository agvs();
 
     PlantRepository plants();
 

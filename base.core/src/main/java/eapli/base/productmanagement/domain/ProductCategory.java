@@ -32,6 +32,14 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
         this.description=description;
     }
 
+    public String getAlphanumericCode() {
+        return alphanumericCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);

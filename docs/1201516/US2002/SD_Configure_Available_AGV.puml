@@ -1,0 +1,126 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor ":WarehouseEmployee" as WE
+participant "AGVUI" as UI <<presentation>>
+participant "AGVController" as Controller <<application>>
+participant "AGV Builder" as Builder <<builder>>
+participant "agv: AGV" as AGV <<domain>>
+participant "agvDock: AGVDock" as Dock <<domain>>
+participant PersistenceContext as Persistence <<persistence>>
+participant RepositoryFactory as Factory <<factory>>
+database AGVRepository as Repository <<repository>>
+
+activate WE
+
+WE -> UI: Begin the process to register an AGV
+
+activate UI
+
+UI -> Controller: create
+
+activate Controller
+deactivate Controller
+
+UI --> WE: Asks for the required data in order to register the AGV (agvID, autonomyStatus, taskStatus, \n modelID, shortDescription, maxWeight, \n dockID, beginSquare, endSquare, depthSquare, accessibilityDirection)
+
+deactivate UI
+
+WE -> UI: Inputs the required data
+
+activate UI
+
+UI -> Controller: registerAGV(agvID, autonomyStatus, taskStatus, \n modelID, shortDescription, maxWeight, \n dockID, beginSquare, endSquare, depthSquare, accessibilityDirection)
+
+activate Controller
+
+Controller -> Builder: create
+Controller -> Builder: setAgvID(agvID)
+Controller -> Builder: setAutonomyStatus(autonomyStatus)
+Controller -> Builder: setTaskStatus(taskStatus)
+Controller -> Builder: setModelID(modelID)
+Controller -> Builder: setShortDescription(shortDescription)
+Controller -> Builder: setMaxWeight(maxWeight)
+Controller -> Builder: createAGV()
+
+activate Builder
+
+Builder -> AGV: createAGV(agvID, autonomyStatus, taskStatus, \n modelID, shortDescription, maxWeight)
+AGV -> Builder: agv
+
+Builder -> Controller: agv
+
+deactivate Builder
+
+Controller -> Builder: createAGVDock()
+
+activate Builder
+
+Builder -> Dock: createAGVDock(dockID, beginSquare, endSquare, depthSquare, accessibilityDirection)
+Dock -> Builder: agvDock
+
+Builder -> Controller: agvDock
+
+deactivate Builder
+
+Controller -> Persistence: repositories()
+
+activate Persistence
+
+Persistence -> Factory: create
+Persistence -> Controller: factory
+
+deactivate Persistence
+
+Controller -> Factory: agvs()
+
+activate Factory
+
+Factory -> Repository: create
+Factory -> Controller: agvRepository
+
+deactivate Factory
+
+Controller -> Repository: save(agv)
+
+Controller -> UI: user
+
+deactivate Controller
+
+UI -> WE: successfully creates one or more AGV
+
+deactivate UI
+
+WE -> UI: Wants to configure the available AGVs in the Warehouse
+
+activate UI
+
+UI -> Controller: configureAvailableAGVs()
+
+activate Controller
+
+loop for each available AGV in the Warehouse
+
+Controller -> Builder: id = getAgvID()
+Controller -> Builder: autonomyStatus = getAutonomyStatus()
+Controller -> Builder: taskStatus = getTaskStatus()
+Controller -> Builder: model = getModelID()
+Controller -> Builder: shortDescription = getShortDescription()
+Controller -> Builder: maxWeight = getMaxWeight()
+Controller -> Builder: agvDock = getAGVDock()
+
+end
+
+Controller -> UI: user
+
+deactivate Controller
+
+UI -> WE: shows the basic information about the AGV(s) that are available
+
+deactivate UI
+
+deactivate WE
+
+@enduml

@@ -2,9 +2,8 @@ package eapli.base.ordermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
-public class OrderVolume implements ValueObject, Serializable {
+public class Payment implements ValueObject, Serializable {
+
 }

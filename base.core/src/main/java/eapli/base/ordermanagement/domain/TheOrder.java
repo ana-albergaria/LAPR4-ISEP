@@ -3,6 +3,7 @@ package eapli.base.ordermanagement.domain;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.general.domain.model.Money;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,15 +26,34 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
-    //FALTA COLOCAR TYPED/SELECT BILLING AND DELIVERING ADDRESS
+    private OrderStatus status;
 
-    // COMENTAR PORQUE O PRODUCT AINDA NÃO É PERSISTIDO
-    /*@OneToMany
-    private Set<Product> products = new HashSet<>();*/
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "billing_streetName")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "billing_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "billing_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
+            @AttributeOverride(name = "country", column = @Column(name = "billing_country"))
+    })
+    private Address billingAddress;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "streetName", column = @Column(name = "shipping_streetName")),
+            @AttributeOverride(name = "doorNumber", column = @Column(name = "shipping_doorNumber")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "shipping_postalCode")),
+            @AttributeOverride(name = "city", column = @Column(name = "shipping_city")),
+            @AttributeOverride(name = "country", column = @Column(name = "shipping_country"))
+    })
+    private Address shippingAddress;
+
+    @OneToMany
+    Set<OrderItem> items = new HashSet<>();
 
     /**
      * Map where:
-     * > Key: a String containing the Product Reference
+     * > Key: a String containing the Product Unique Internal Code
      * > Value: is its quantity
      */
     @ElementCollection
@@ -43,25 +63,20 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Column(name = "quantity")
     private Map<String, Integer> quantitiesPerProduct = new HashMap<>();
 
-    /**
-     * Map where:
-     * > Key: a String containing the Product Reference
-     * > Value: is its unitary price
-     */
-    @ElementCollection
-    @CollectionTable(name = "unitary_prices_per_product",
-            joinColumns = @JoinColumn(name = "order_id_2"))
-    @MapKeyColumn(name = "product_reference")
-    @Column(name = "unitary_price")
-    private Map<String, Double> unitaryPricesPerProduct = new HashMap<>();
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "no_taxes_currency"))
+    })
+    private Money totalAmountWithoutTaxes;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "taxes_currency"))
+    })
+    private Money totalAmountWithTaxes;
 
-    // TEMOS DE SER NÓS A FAZER COPY PASTE DA CLASSE MONEY SENÃO DÁ ERROS A CORRER A BASE DE DADOS
-    //private Money totalAmountWithoutTaxes;
-
-    //private Money totalAmountWithTaxes;
-
-    //CONFIRMAR SHIPMENT
     @Enumerated(EnumType.STRING)
     private Shipment shipment;
 
@@ -80,6 +95,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
+
 
     protected TheOrder() {
         //for ORM purposes

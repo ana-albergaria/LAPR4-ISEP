@@ -2,10 +2,14 @@ package eapli.base.productmanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.general.domain.model.Money;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -37,7 +41,8 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Reference reference; //optional
 
-    private Price priceWithoutTaxes;
+    @Embedded
+    private Money priceWithoutTaxes;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -46,7 +51,8 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Volume volume;
 
-    private Price tax;
+    @Embedded
+    private Money tax;
 
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
@@ -72,8 +78,8 @@ public class Product implements AggregateRoot<Code>, Serializable {
      * @param productCategory the product category
      */
     protected Product(final Code uniqueInternalCode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
-                      final Price priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
-                      final Price tax, final ProductCategory productCategory){
+                      final Money priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
+                      final Money tax, final ProductCategory productCategory){
         Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,tax,productCategory);
         this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
@@ -91,14 +97,107 @@ public class Product implements AggregateRoot<Code>, Serializable {
     }
 
     @Override
+    public boolean equals(final Object o){
+        return DomainEntities.areEqual(this,o);
+    }
+
+    @Override
+    public int hashCode(){
+        return DomainEntities.hashCode(this);
+    }
+
+    @Override
     public boolean sameAs(Object other) {
-        return DomainEntities.areEqual(this, other);
+        if (!(other instanceof Product)) {
+            return false;
+        }
+
+        final var that = (Product) other;
+        if (this == that) {
+            return true;
+        }
+
+        return identity().equals(that.identity());
+    }
+
+    public ProductCategory getProductCategory(){
+        return productCategory;
     }
 
     @Override
     public Code identity() {
-        return this.uniqueInternalCode;
+        return uniqueInternalCode;
     }
+
+    public Code getUniqueInternalCode() {
+        return uniqueInternalCode;
+    }
+
+    public ShortDescription getShortDescription() {
+        return shortDescription;
+    }
+
+    public ExtendedDescription getExtendedDescription() {
+        return extendedDescription;
+    }
+
+    public Optional<TechnicalDescription> getTechnicalDescription() {
+        return Optional.ofNullable(technicalDescription);
+    }
+
+    public Optional<BrandName> getBrandName() {
+        return Optional.ofNullable(brandName);
+    }
+
+    public Optional<Reference> getReference() {
+        return Optional.ofNullable(reference);
+    }
+
+    public Money getPriceWithoutTaxes() {
+        return priceWithoutTaxes;
+    }
+
+    /*public OurMoney getPriceWithoutTaxesOnDate(final Calendar date) {
+        return priceWithoutTaxes.onDate(date);
+    }*/
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Weight getWeight() {
+        return weight;
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public Money getTax() {
+        return tax;
+    }
+
+    /*public OurMoney getTaxOnDate(final Calendar date) {
+        return tax.onDate(date);
+    }*/
+
+    public Optional<Code> getProductionCode() {
+        return Optional.ofNullable(productionCode);
+    }
+
+    public Set<Photo> photos() {
+        return Collections.unmodifiableSet(photos);
+    }
+
+    //+método para mudar priceWithoutTaxes
+
+    //+método para mudar tax
+
+    public boolean addPhoto(final Photo photo){
+        return photos.add(photo); //add(new ProductPhoto(photo)) ???
+    }
+
+
 
     /*
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
