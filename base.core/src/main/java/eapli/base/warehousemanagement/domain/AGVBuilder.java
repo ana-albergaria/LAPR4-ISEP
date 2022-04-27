@@ -1,12 +1,13 @@
 package eapli.base.warehousemanagement.domain;
 
-import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.DomainFactory;
 
 public class AGVBuilder implements DomainFactory<AGV> {
     private AGV theAGV;
 
     private AgvDock theAGVDock;
+
+    private Long agvID;
 
     private AutonomyStatus autonomyStatus;
 
@@ -30,6 +31,11 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AgvDockBuilder agvDockBuilder = new AgvDockBuilder();
 
+    public AGVBuilder withID(final Long agvID){
+        this.agvID = agvID;
+        return this;
+    }
+
     public AGVBuilder withAutonomy(final AutonomyStatus autonomyStatus){
         this.autonomyStatus = autonomyStatus;
         return this;
@@ -45,8 +51,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
         return this;
     }
 
-    public AGVBuilder withAGVDock(final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
-        this.theAGVDock = agvDockBuilder.hasBegin(beginSquare).hasEnd(endSquare).hasDepth(depthSquare).build();
+    public AGVBuilder withAGVDock(final String agvDockID, final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
+        this.theAGVDock = agvDockBuilder.hasDockID(agvDockID).hasBegin(beginSquare).hasEnd(endSquare).hasDepth(depthSquare).hasAccessibility(accessibilityDirection).build();
         return this;
     }
 
@@ -56,8 +62,8 @@ public class AGVBuilder implements DomainFactory<AGV> {
     private AGV buildOrThrow() {
         if (theAGV != null) {
             return theAGV;
-        } else if (autonomyStatus != null && taskStatus != null && theModel != null && theAGVDock != null) {
-            theAGV = new AGV(autonomyStatus, taskStatus, theModel, theAGVDock);
+        } else if (agvID != null && autonomyStatus != null && taskStatus != null && theModel != null && theAGVDock != null) {
+            theAGV = new AGV(agvID, autonomyStatus, taskStatus, theModel, theAGVDock);
             return theAGV;
         } else {
             throw new IllegalStateException();
@@ -68,5 +74,29 @@ public class AGVBuilder implements DomainFactory<AGV> {
         final AGV agv = buildOrThrow();
         theAGV = null;
         return agv;
+    }
+
+    public Long getAgvID(){
+        return theAGV.getAgvID();
+    }
+
+    public AutonomyStatus getAutonomyStatus() {
+        return theAGV.getAutonomyStatus();
+    }
+
+    public TaskStatus getTaskStatus() {
+        return theAGV.getTaskStatus();
+    }
+
+    public String getModelID() {
+        return theAGV.getModelID().toString();
+    }
+
+    public Accessibility getAccessibilityDirection() {
+        return accessibilityDirection;
+    }
+
+    public AgvDock getAGVDock(){
+        return theAGV.getAgvDock();
     }
 }

@@ -1,28 +1,28 @@
 package eapli.base.app.backoffice.console.presentation.agv;
 
-import eapli.base.warehousemanagement.application.AGVController;
-import eapli.base.warehousemanagement.domain.Accessibility;
-import eapli.base.warehousemanagement.domain.AutonomyStatus;
-import eapli.base.warehousemanagement.domain.Square;
-import eapli.base.warehousemanagement.domain.TaskStatus;
+import eapli.base.warehousemanagement.application.RegisterAGVController;
+import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 public class RegisterAGVUI extends AbstractUI {
 
-    private final AGVController controller = new AGVController();
+    private final RegisterAGVController controller = new RegisterAGVController();
 
+    private final AGVBuilder builder = new AGVBuilder();
 
     @Override
     protected boolean doShow() {
         String option = "";
         do {
-            final String autonomyStatus = Console.readLine("Autonomy OrderStatus:");
-            final String taskStatus = Console.readLine("Task OrderStatus:");
+            final Long agvID = Console.readLong("AGV ID:");
+            final String autonomyStatus = Console.readLine("Autonomy Status:");
+            final String taskStatus = Console.readLine("Task Status:");
             final String modelID = Console.readLine("Model ID:");
             final String shortDescription = Console.readLine("Short Description:");
             final Double maxWeight = Console.readDouble("Max Weight:");
+            final String agvDockID = Console.readLine("AGV Dock ID:");
             final Integer beginSquareLength = Console.readInteger("Begin Square Length:");
             final Integer beginSquareWidth = Console.readInteger("Begin Square Width:");
             final Integer endSquareLength = Console.readInteger("End Square Length:");
@@ -38,12 +38,11 @@ public class RegisterAGVUI extends AbstractUI {
             Square depthSquare = new Square(depthSquareLength, depthSquareWidth);
             Accessibility accessibilityDirection = new Accessibility(accessibilityDir);
 
-
             try {
-                this.controller.registerAGV(autonomy, task, modelID, shortDescription, maxWeight, beginSquare, endSquare, depthSquare, accessibilityDirection);
-                System.out.println("Client created with success!");
+                this.controller.registerAGV(agvID, autonomy, task, modelID, shortDescription, maxWeight, agvDockID, beginSquare, endSquare, depthSquare, accessibilityDirection);
+                System.out.println("AGV created with success!");
             } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
-                System.out.println("You tried to enter a client which already exists in the database.");
+                System.out.println("You tried to enter an AGV that already exists in the database.");
             }
 
             option = Console.readLine("Do you want to register more AGVs? \n Yes - Y | No - N");
