@@ -15,6 +15,9 @@ package "<<aggregate>> Product" {
     class Photo
     class Barcode
     class OptionalProductionCode
+    class TechnicalDescription
+    class BrandName
+    class Reference
 }
 
 package "<<aggregate>> Category" {
@@ -115,9 +118,6 @@ package "<<aggregate>> Bin" {
 entity Product <<entity>> <<root>> {
     -<<VO>> ShortDescription
     -<<VO>> ExtendedDescription
-    -<<VO>> TechnicalDescription
-    -<<VO>> BrandName
-    -<<VO>> Reference
     -<<VO>> PriceWithoutTaxes
     -<<VO>> Status /'Available, Temporarily Unavailable, Unavailable'/
     -<<VO>> Weight
@@ -126,6 +126,9 @@ entity Product <<entity>> <<root>> {
 }
 
 class UniqueInternalCode <<(V,#FF8B40) value object>>
+class TechnicalDescription <<(V,#FF8B40) value object>>
+class BrandName <<(V,#FF8B40) value object>>
+class Reference <<(V,#FF8B40) value object>>
 class Photo <<(V,#FF8B40) value object>>
 class Barcode <<(V,#FF8B40) value object>>
 class OptionalProductionCode <<(V,#FF8B40) value object>>
@@ -348,10 +351,13 @@ class Role <<(V,#FF8B40) value object>> {
 } '/
 
 Product --> "1" UniqueInternalCode : has
-Product --> "1..*" Photo
+Product --> "*" Photo
 Product --> "1" Barcode
 Product --> "0..1" OptionalProductionCode
 Product --> "1" Category : belongs to
+Product --> "0..1" TechnicalDescription
+Product --> "0..1" BrandName
+Product --> "0..1" Reference
 
 Category --> "0..1" SuperCategory : belongs to
 

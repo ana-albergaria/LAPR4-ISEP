@@ -14,6 +14,27 @@ import java.util.Set;
 @Entity
 public class Product implements AggregateRoot<Code>, Serializable {
 
+    public void changeTechnicalDescription(TechnicalDescription newTechnicalDescription) {
+        Preconditions.nonNull(newTechnicalDescription);
+        technicalDescription = newTechnicalDescription;
+    }
+
+    public void changeBrandName(BrandName newBrandName) {
+        Preconditions.nonNull(newBrandName);
+        brandName = newBrandName;
+
+    }
+
+    public void changeReference(Reference newReference) {
+        Preconditions.nonNull(newReference);
+        reference = newReference;
+    }
+
+    public void changeProductionCode(Code newProductionCode) {
+        Preconditions.nonNull(newProductionCode);
+        productionCode = newProductionCode;
+    }
+
     public enum Status {
         AVAILABLE, TEMPORARILY_UNAVAILABLE, UNAVAILABLE;
     }
@@ -62,6 +83,8 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     @ElementCollection
     private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
+
+    private Barcode barcode;
 
     //+BARCODE
 

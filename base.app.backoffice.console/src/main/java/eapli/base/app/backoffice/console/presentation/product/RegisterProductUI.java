@@ -20,6 +20,7 @@ public class RegisterProductUI extends AbstractUI {
         selector.show();
         final ProductCategory productCategory = selector.selectedElement();
         final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
+        final String barcode = Console.readLine("Barcode: ");
         final String shortDescription = Console.readLine("Short Description: ");
         final String extendedDescription = Console.readLine("Extended Description: ");
         final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
@@ -28,7 +29,7 @@ public class RegisterProductUI extends AbstractUI {
         final double volume = Console.readDouble("Volume: ");
         final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
         try{
-            this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
+            this.theController.registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory);
             System.out.println("Product successfully created!");
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e){

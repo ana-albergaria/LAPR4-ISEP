@@ -3,7 +3,6 @@ package eapli.base.productmanagement.domain;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.Money;
 
-import javax.persistence.ElementCollection;
 import java.util.Set;
 
 public class ProductBuilder implements DomainFactory<Product> {
@@ -11,6 +10,8 @@ public class ProductBuilder implements DomainFactory<Product> {
     private Product theProduct;
 
     private Code uniqueInternalCode;
+
+    private Barcode barcode;
 
     private ShortDescription shortDescription;
 
@@ -62,6 +63,15 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
+    public ProductBuilder ofBarcode(final String barcode){
+        return ofBarcode(Barcode.valueOf(barcode));
+    }
+
+    public ProductBuilder ofBarcode(final Barcode barcode){
+        this.barcode=barcode;
+        return this;
+    }
+
     public ProductBuilder initialyPricedAs(final Money priceWithoutTaxes){
         this.priceWithoutTaxes=priceWithoutTaxes;
         return this;
@@ -86,7 +96,7 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
-    public ProductBuilder priceWithTaxesAs(final Money priceWithTaxes){
+    public ProductBuilder afterTaxesPricedAs(final Money priceWithTaxes){
         this.priceWithTaxes=priceWithTaxes;
         return this;
     }
@@ -107,19 +117,44 @@ public class ProductBuilder implements DomainFactory<Product> {
         }
     }
 
-
-
-    private TechnicalDescription technicalDescription; //optional
-
-    private BrandName brandName; //optional
-
-    private Reference reference; //optional
-
-    private Code productionCode; //optional
-
-    private Set<Photo> photos; //optional
-
     //atributos opcionais
+
+    public ProductBuilder withTechnicalDescription(final TechnicalDescription technicalDescription){
+        buildOrThrow();
+        theProduct.changeTechnicalDescription(technicalDescription);
+        return this;
+    }
+
+    public ProductBuilder withBrandName(final BrandName brandName){
+        buildOrThrow();
+        theProduct.changeBrandName(brandName);
+        return this;
+    }
+
+    public ProductBuilder withReference(final Reference reference){
+        buildOrThrow();
+        theProduct.changeReference(reference);
+        return this;
+    }
+
+    public ProductBuilder withProductionCode(final Code productionCode){
+        buildOrThrow();
+        theProduct.changeProductionCode(productionCode);
+        return this;
+    }
+
+    public ProductBuilder withPhotos(final Set<Photo> photos){
+        if (photos != null) {
+            photos.forEach(this::withPhoto);
+        }
+        return this;
+    }
+
+    public ProductBuilder withPhoto(final Photo photo){
+        buildOrThrow();
+        theProduct.addPhoto(photo);
+        return this;
+    }
 
     @Override
     public Product build() {
