@@ -104,6 +104,10 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 
 ![DM_RegisterOrderClient.svg](./DM_RegisterOrderClient.svg)
 
+## 2.2 System Sequence Diagram (SSD)
+
+![SSD_RegisterOrderClient.svg](./SSD_RegisterOrderClient.svg)
+
 # 3. Design
 
 *Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
@@ -113,6 +117,10 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 ## 3.1. Realização da Funcionalidade
 
 *Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
+
+## 3.1.1 Sequence Diagram (SD)
+
+![SD_RegisterOrderClient.svg](./SD_RegisterOrderClient.svg)
 
 ## 3.2. Diagrama de Classes
 

@@ -95,13 +95,15 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 
 *Para além das secções sugeridas, podem ser incluídas outras.*
 
-## 3.1. Sequence Diagram (SD)
 
-![SD_RegisterClient.svg](./SD_RegisterClient.svg)
 
 ## 3.1. Realização da Funcionalidade
 
 *Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
+
+## 3.1.1 Sequence Diagram (SD)
+
+![SD_RegisterClient.svg](./SD_RegisterClient.svg)
 
 ## 3.2. Diagrama de Classes
 
