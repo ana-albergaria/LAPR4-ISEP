@@ -17,7 +17,6 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
     private Long version;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long aisleID;
 
 
@@ -36,8 +35,9 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
     @Embedded
     private Accessibility accessibility;
 
-    public Aisle(Square beginSquare, Square endSquare,Square depthSquare, Accessibility accessibility){
-        Preconditions.noneNull(beginSquare, endSquare, depthSquare, accessibility);
+    public Aisle(Long aisleId, Square beginSquare, Square endSquare,Square depthSquare, Accessibility accessibility){
+        Preconditions.noneNull(aisleId, beginSquare, endSquare, depthSquare, accessibility);
+        this.aisleID=aisleId;
         this.beginSquare=beginSquare;
         this.endSquare=endSquare;
         this.depthSquare=depthSquare;
@@ -45,7 +45,7 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
     }
 
     protected Aisle() {
-
+        this.aisleID=null;
     }
 
 

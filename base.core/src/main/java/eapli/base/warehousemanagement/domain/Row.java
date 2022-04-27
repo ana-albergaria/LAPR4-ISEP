@@ -16,7 +16,6 @@ public class Row implements AggregateRoot<Long>, Serializable {
     private Long version;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rowID;
 
 
@@ -32,10 +31,12 @@ public class Row implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private Aisle aisleID;
 
-    public Row(Square beginSquare, Square endSquare) {
-        Preconditions.noneNull(beginSquare, endSquare);
+    public Row(Long rowID, Square beginSquare, Square endSquare, Aisle aisleID) {
+        Preconditions.noneNull(rowID, beginSquare, endSquare, aisleID);
+        this.rowID=rowID;
         this.beginSquare = beginSquare;
         this.endSquare=endSquare;
+        this.aisleID=aisleID;
     }
 
     protected Row() {

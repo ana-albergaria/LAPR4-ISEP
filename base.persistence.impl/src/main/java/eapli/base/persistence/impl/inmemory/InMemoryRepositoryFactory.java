@@ -28,7 +28,7 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
-import eapli.base.warehousemanagement.repositories.PlantRepository;
+import eapli.base.warehousemanagement.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -91,6 +91,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public PlantRepository plants(){return new InMemoryPlantRepository();}
+
+    @Override
+    public AisleRepository aisles(){return new InMemoryAisleRepository();}
+    @Override
+    public RowRepository rows(){return new InMemoryRowRepository();}
+    @Override
+    public ShelfRepository shelfs(){return new InMemoryShelfRepository();}
+    @Override
+    public AgvDockRepository agvDocks(){return new InMemoryAgvDockRepository();}
 
     @Override
     public SignupRequestRepository signupRequests() {

@@ -17,27 +17,24 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
     private Long version;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long agvDockID;
+    private String agvDockID;
 
 
     @OneToOne
-    @JoinColumn(name = "begin_square_id")
     private Square beginSquare;
 
     @OneToOne
-    @JoinColumn(name = "end_square_id")
     private Square endSquare;
 
     @OneToOne
-    @JoinColumn(name = "depth_square_id")
     private Square depthSquare;
 
     @Embedded
     private Accessibility accessibility;
 
-    public AgvDock(Square beginSquare, Square endSquare,Square depthSquare, Accessibility accessibility){
-        Preconditions.noneNull(beginSquare, endSquare, depthSquare, accessibility);
+    public AgvDock(String agvDockID, Square beginSquare, Square endSquare, Square depthSquare, Accessibility accessibility){
+        Preconditions.noneNull(agvDockID, beginSquare, endSquare, depthSquare, accessibility);
+        this.agvDockID=agvDockID;
         this.beginSquare=beginSquare;
         this.endSquare=endSquare;
         this.depthSquare=depthSquare;
@@ -60,6 +57,6 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
 
     @Override
     public Long identity() {
-        return this.agvDockID;
+        return Long.valueOf(this.agvDockID);
     }
 }

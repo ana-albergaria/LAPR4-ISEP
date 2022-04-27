@@ -3,6 +3,7 @@ package eapli.base.warehousemanagement.domain;
 import eapli.base.warehousemanagement.domain.Row;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,8 +25,9 @@ public class Shelf implements AggregateRoot<Long>, Serializable {
     private Row rowID;
 
 
-    public Shelf(){
-
+    public Shelf(Row rowID){
+        Preconditions.noneNull(rowID);
+        this.rowID=rowID;
     }
 
     @Override

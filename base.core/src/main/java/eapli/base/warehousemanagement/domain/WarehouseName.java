@@ -3,6 +3,7 @@ package eapli.base.warehousemanagement.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
+import org.json.simple.JSONObject;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
