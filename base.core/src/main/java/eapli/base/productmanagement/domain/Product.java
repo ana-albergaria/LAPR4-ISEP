@@ -54,6 +54,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
     @Embedded
     private Money priceWithTaxes;
 
+    @Embedded
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 

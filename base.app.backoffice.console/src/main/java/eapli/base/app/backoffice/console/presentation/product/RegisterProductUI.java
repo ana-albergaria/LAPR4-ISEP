@@ -22,11 +22,11 @@ public class RegisterProductUI extends AbstractUI {
         final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
         final String shortDescription = Console.readLine("Short Description: ");
         final String extendedDescription = Console.readLine("Extended Description: ");
-        final Double priceWithoutTaxes = Double.valueOf(Console.readLine("Price Without Taxes: "));
+        final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
         final String status = Console.readLine("OrderStatus: ");
-        final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
-        final Double volume = Double.valueOf(Console.readLine("Volume: "));
-        final Double priceWithTaxes = Double.valueOf(Console.readLine("Price With Taxes: "));
+        final double weight = Console.readDouble("OrderWeight: ");
+        final double volume = Console.readDouble("Volume: ");
+        final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
         try{
             this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory);

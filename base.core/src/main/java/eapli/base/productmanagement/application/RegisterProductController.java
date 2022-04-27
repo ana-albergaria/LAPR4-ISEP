@@ -21,7 +21,7 @@ public class RegisterProductController {
     private final ProductRepository repository = PersistenceContext.repositories().products();
 
     public Product registerProduct(final String uniqueInternalCode, final String shortDescription, final String extendedDescription,
-                                   final double priceWithoutTaxes, final String status, final Double weight, final Double volume, final double priceWithTaxes, final ProductCategory productCategory){
+                                   final double priceWithoutTaxes, final String status, final double weight, final double volume, final double priceWithTaxes, final ProductCategory productCategory){
         return registerProduct(uniqueInternalCode, shortDescription, extendedDescription, priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory,
                 null, null, null, null, null);
     }
