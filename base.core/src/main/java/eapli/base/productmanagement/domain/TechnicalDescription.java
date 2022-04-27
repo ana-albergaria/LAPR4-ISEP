@@ -36,7 +36,7 @@ public class TechnicalDescription implements ValueObject, Serializable {
             return false;
         } else {
             TechnicalDescription technicalDescription = (TechnicalDescription) o;
-            return !this.value.equals(technicalDescription.value);
+            return this.value.equals(technicalDescription.value);
         }
     }
 

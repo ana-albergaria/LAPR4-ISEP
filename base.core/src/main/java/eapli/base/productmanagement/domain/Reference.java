@@ -41,7 +41,7 @@ public class Reference implements ValueObject, Serializable {
             return false;
         } else {
             Reference reference = (Reference) o;
-            return !this.value.equals(reference.value);
+            return this.value.equals(reference.value);
         }
     }
 

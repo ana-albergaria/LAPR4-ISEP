@@ -43,7 +43,7 @@ public class ExtendedDescription implements ValueObject, Serializable {
             return false;
         } else {
             ExtendedDescription extendedDescription = (ExtendedDescription) o;
-            return !this.value.equals(extendedDescription.value);
+            return this.value.equals(extendedDescription.value);
         }
     }
 

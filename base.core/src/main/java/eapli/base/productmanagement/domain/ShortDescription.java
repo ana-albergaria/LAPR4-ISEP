@@ -40,7 +40,7 @@ public class ShortDescription implements ValueObject, Serializable {
             return false;
         } else {
             ShortDescription shortDescription = (ShortDescription)o;
-            return !this.value.equals(shortDescription.value);
+            return this.value.equals(shortDescription.value);
         }
     }
 

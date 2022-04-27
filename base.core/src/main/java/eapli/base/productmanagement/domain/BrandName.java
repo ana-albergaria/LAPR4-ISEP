@@ -40,7 +40,7 @@ public class BrandName implements ValueObject, Serializable {
             return false;
         } else {
             BrandName brandName = (BrandName) o;
-            return !this.value.equals(brandName.value);
+            return this.value.equals(brandName.value);
         }
     }
 
