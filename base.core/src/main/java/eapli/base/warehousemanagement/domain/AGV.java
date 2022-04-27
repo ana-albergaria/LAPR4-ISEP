@@ -4,16 +4,17 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class AGV implements AggregateRoot<Long> {
+public class AGV implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Version
     private Long version;
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long agvID;
 
     @Embedded
@@ -24,13 +25,16 @@ public class AGV implements AggregateRoot<Long> {
     @AttributeOverride(name = "tStatus", column = @Column(name = "Task"))
     private TaskStatus taskStatus;
 
+    @Embedded
     private Model modelID;
 
     @OneToOne
+    @JoinColumn(name = "AGVDockID", referencedColumnName = "agvDockID")
     private AgvDock agvDock;
 
-    public AGV(final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final Model modelID, final AgvDock agvDock){
-        Preconditions.noneNull(autonomyStatus, taskStatus, modelID);
+    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final Model modelID, final AgvDock agvDock){
+        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID);
+        this.agvID = agvID;
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
         this.modelID = modelID;
@@ -39,6 +43,26 @@ public class AGV implements AggregateRoot<Long> {
 
     protected AGV(){
 
+    }
+
+    public Long getAgvID() {
+        return agvID;
+    }
+
+    public AutonomyStatus getAutonomyStatus() {
+        return autonomyStatus;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public Model getModelID() {
+        return modelID;
+    }
+
+    public AgvDock getAgvDock() {
+        return agvDock;
     }
 
     @Override

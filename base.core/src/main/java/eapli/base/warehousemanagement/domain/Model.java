@@ -14,10 +14,11 @@ public class Model implements ValueObject, Serializable {
 
     private static final Integer MAX_SHORT_DESCRIPTION_LENGTH = 30;
 
-    private final String modelID;
+    private String modelID;
 
-    private final String shortDescription;
-    private final Double maxWeight;
+    private String shortDescription;
+
+    private Double maxWeight;
 
     public Model(String modelID, String shortDescription, Double maxWeight) {
         Preconditions.nonEmpty(modelID, "Model can neither be empty nor null.");
@@ -33,5 +34,10 @@ public class Model implements ValueObject, Serializable {
         this.modelID = null;
         this.shortDescription = null;
         this.maxWeight = null;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Model ID: %s\nShort Description: %s\nMax Weight: %.2f", modelID, shortDescription, maxWeight);
     }
 }
