@@ -2,6 +2,7 @@ package eapli.base.productmanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
+import eapli.framework.validations.Preconditions;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ public class TechnicalDescription implements ValueObject, Serializable {
     private final String value;
 
     public TechnicalDescription(final String value){
+        Preconditions.nonEmpty(value, "Reference should not be empty");
         this.value=value;
     }
 
