@@ -3,35 +3,38 @@ package eapli.base.warehousemanagement.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class AGV implements AggregateRoot<Long> {
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version;
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long agvID;
 
-    private String autonomyStatus;
+    @Embedded
+    @AttributeOverride(name = "autStatus", column = @Column(name = "Autonomy"))
+    private AutonomyStatus autonomyStatus;
 
-    private String taskStatus;
+    @Embedded
+    @AttributeOverride(name = "tStatus", column = @Column(name = "Task"))
+    private TaskStatus taskStatus;
 
-    private String modelID;
+    private Model modelID;
 
-    private String shortDescription;
+    @OneToOne
+    private AgvDock agvDock;
 
-    private Double maxWeight;
-
-    public AGV(final String autonomyStatus, final String taskStatus, final String modelID, final String shortDescription, final Double maxWeight){
-        Preconditions.noneNull(autonomyStatus, taskStatus, modelID, shortDescription, maxWeight);
+    public AGV(final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final Model modelID, final AgvDock agvDock){
+        Preconditions.noneNull(autonomyStatus, taskStatus, modelID);
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
         this.modelID = modelID;
-        this.shortDescription = shortDescription;
-        this.maxWeight = maxWeight;
+        this.agvDock = agvDock;
     }
 
     protected AGV(){
