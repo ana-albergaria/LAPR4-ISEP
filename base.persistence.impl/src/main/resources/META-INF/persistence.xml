@@ -15,6 +15,7 @@
     <class>eapli.base.clientmanagement.domain.Client</class>
     <class>eapli.base.ordermanagement.domain.TheOrder</class>
     <class>eapli.base.warehousemanagement.domain.WarehousePlant</class>
+    <class>eapli.base.warehousemanagement.domain.AGV</class>
     <class>eapli.base.warehousemanagement.domain.AgvDock</class>
     <class>eapli.base.warehousemanagement.domain.Aisle</class>
     <class>eapli.base.warehousemanagement.domain.Row</class>

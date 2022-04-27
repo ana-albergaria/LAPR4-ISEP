@@ -8,9 +8,11 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AgvDock theAGVDock;
 
-    private String autonomyStatus;
+    private AutonomyStatus autonomyStatus;
 
-    private String taskStatus;
+    private TaskStatus taskStatus;
+
+    private Model theModel;
 
     private String modelID;
 
@@ -26,38 +28,36 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private Accessibility accessibilityDirection;
 
-    public AGVBuilder withAutonomy(final String autonomyStatus){
+    private AgvDockBuilder agvDockBuilder = new AgvDockBuilder();
+
+    public AGVBuilder withAutonomy(final AutonomyStatus autonomyStatus){
         this.autonomyStatus = autonomyStatus;
         return this;
     }
 
-    public AGVBuilder withTask(final String taskStatus){
+    public AGVBuilder withTask(final TaskStatus taskStatus){
         this.taskStatus = taskStatus;
         return this;
     }
 
-    public AGVBuilder withModel(final String modelID){
-        this.modelID = modelID;
+    public AGVBuilder withModel(final String modelID, final String shortDescription, final Double maxWeight){
+        this.theModel = new Model(modelID, shortDescription, maxWeight);
         return this;
     }
 
-    public AGVBuilder withDescription(final String shortDescription){
-        this.shortDescription = shortDescription;
+    public AGVBuilder withAGVDock(final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
+        this.theAGVDock = agvDockBuilder.hasBegin(beginSquare).hasEnd(endSquare).hasDepth(depthSquare).build();
         return this;
     }
 
-    public AGVBuilder withMaxWeight(final Double maxWeight){
-        this.maxWeight = maxWeight;
-        return this;
-    }
 
     //TODO check about the need to possibly create AGVDockBuilder for beginSquare, endSquare, depthSquare and accessibilityDirection.
 
     private AGV buildOrThrow() {
         if (theAGV != null) {
             return theAGV;
-        } else if (autonomyStatus != null && taskStatus != null && modelID != null && shortDescription != null && maxWeight != null) {
-            theAGV = new AGV(autonomyStatus, taskStatus, modelID, shortDescription, maxWeight);
+        } else if (autonomyStatus != null && taskStatus != null && theModel != null && theAGVDock != null) {
+            theAGV = new AGV(autonomyStatus, taskStatus, theModel, theAGVDock);
             return theAGV;
         } else {
             throw new IllegalStateException();
