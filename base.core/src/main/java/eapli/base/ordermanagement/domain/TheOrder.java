@@ -4,6 +4,7 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,10 @@ import java.util.*;
 @Entity
 public class TheOrder implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
+
+    public enum SourceChannel {
+        CALL, EMAIL, MEETING;
+    }
 
     @Version
     private Long version;
@@ -51,6 +56,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @OneToMany
     Set<OrderItem> items = new HashSet<>();
 
+    //ALTERAR MAP
     /**
      * Map where:
      * > Key: a String containing the Product Unique Internal Code
@@ -80,7 +86,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Enumerated(EnumType.STRING)
     private Shipment shipment;
 
-    //FALTA COLOCAR PAYMENT - DÚVIDA
+    private Payment payment;
 
     /*
     DÚVIDA ENUNCIADO - ...the shipment cost computation, and the connections to external systems (e.g.: carriers and payment services) should be mock.
@@ -92,10 +98,47 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     //falta implementar value object c metodo pra calcular
     private OrderWeight orderWeight;
 
+    //falta identificar SalesClerk
+
+    @Enumerated(EnumType.STRING)
+    private SourceChannel sourceChannel;
+
+    @Temporal(TemporalType.DATE)
+    private Calendar interactionDate;
+
+    private AdditionalComment additionalComment;
+
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
 
+
+    //NOS CONSTRUTORES FALTA: STATUS, SYSTEM USER, CALCULAR OS AMOUNTS COM TAXAS E SEM TAXAS, O VOLUME E O WEIGHT
+
+    public TheOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Set<OrderItem> items, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment) {
+        this.createdOn = Calendars.now();
+        this.client = client;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+        this.items = items;
+        this.shipment = shipment;
+        this.payment = payment;
+        this.sourceChannel = sourceChannel;
+        this.interactionDate = interactionDate;
+        this.additionalComment = additionalComment;
+    }
+
+    public TheOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Set<OrderItem> items, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate) {
+        this.createdOn = Calendars.now();
+        this.client = client;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+        this.items = items;
+        this.shipment = shipment;
+        this.payment = payment;
+        this.sourceChannel = sourceChannel;
+        this.interactionDate = interactionDate;
+    }
 
     protected TheOrder() {
         //for ORM purposes
