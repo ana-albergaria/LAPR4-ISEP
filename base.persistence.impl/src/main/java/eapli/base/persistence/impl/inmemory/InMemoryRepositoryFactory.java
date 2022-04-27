@@ -78,11 +78,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return new InMemoryAGVRepository();
     }
 
-
-    // FALTA ACRESCENTAR RETURN
     @Override
     public ProductRepository products() {
-        return null;
+        return new InMemoryProductRepository();
     }
 
     //FALTA ACRESCENTAR RETURN

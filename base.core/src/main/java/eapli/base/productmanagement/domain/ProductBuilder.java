@@ -24,7 +24,7 @@ public class ProductBuilder implements DomainFactory<Product> {
 
     private Volume volume;
 
-    private Money tax;
+    private Money priceWithTaxes;
 
     private ProductCategory category;
 
@@ -86,8 +86,8 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
-    public ProductBuilder taxAs(final Money tax){
-        this.tax=tax;
+    public ProductBuilder priceWithTaxesAs(final Money priceWithTaxes){
+        this.priceWithTaxes=priceWithTaxes;
         return this;
     }
 
@@ -98,9 +98,9 @@ public class ProductBuilder implements DomainFactory<Product> {
         if (theProduct!=null){
             return theProduct;
         } else if (category!=null && shortDescription!=null && extendedDescription!=null &&
-        priceWithoutTaxes!=null && status!=null && weight!=null && volume!=null && tax!=null){
+        priceWithoutTaxes!=null && status!=null && weight!=null && volume!=null && priceWithTaxes!=null){
             theProduct = new Product(uniqueInternalCode, shortDescription, extendedDescription,
-                    priceWithoutTaxes, status, weight, volume, tax, category);
+                    priceWithoutTaxes, status, weight, volume, priceWithTaxes, category);
             return theProduct;
         } else {
             throw new IllegalStateException();

@@ -52,7 +52,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
     private Volume volume;
 
     @Embedded
-    private Money tax;
+    private Money priceWithTaxes;
 
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
@@ -74,13 +74,13 @@ public class Product implements AggregateRoot<Code>, Serializable {
      * @param status the product status
      * @param weight the product weight
      * @param volume the product volume
-     * @param tax the product tax
+     * @param priceWithTaxes the product price with taxes
      * @param productCategory the product category
      */
     protected Product(final Code uniqueInternalCode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
                       final Money priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
-                      final Money tax, final ProductCategory productCategory){
-        Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,tax,productCategory);
+                      final Money priceWithTaxes, final ProductCategory productCategory){
+        Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,priceWithTaxes,productCategory);
         this.uniqueInternalCode=uniqueInternalCode;
         this.shortDescription=shortDescription;
         this.extendedDescription=extendedDescription;
@@ -88,7 +88,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
         this.status=status;
         this.weight=weight;
         this.volume=volume;
-        this.tax=tax;
+        this.priceWithTaxes=priceWithTaxes;
         this.productCategory=null; //TENHO DE APRESENTAR AS CATEGORIAS PARA ESCOLHER
     }
 
@@ -173,12 +173,12 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return volume;
     }
 
-    public Money getTax() {
-        return tax;
+    public Money getPriceWithTaxes() {
+        return priceWithTaxes;
     }
 
-    /*public OurMoney getTaxOnDate(final Calendar date) {
-        return tax.onDate(date);
+    /*public OurMoney getPriceWithTaxesOnDate(final Calendar date) {
+        return priceWithTaxes.onDate(date);
     }*/
 
     public Optional<Code> getProductionCode() {
@@ -191,7 +191,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     //+método para mudar priceWithoutTaxes
 
-    //+método para mudar tax
+    //+método para mudar priceWithTaxes
 
     public boolean addPhoto(final Photo photo){
         return photos.add(photo); //add(new ProductPhoto(photo)) ???

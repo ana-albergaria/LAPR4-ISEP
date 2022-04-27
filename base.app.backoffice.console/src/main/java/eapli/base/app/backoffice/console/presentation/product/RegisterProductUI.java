@@ -26,10 +26,10 @@ public class RegisterProductUI extends AbstractUI {
         final String status = Console.readLine("OrderStatus: ");
         final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
         final Double volume = Double.valueOf(Console.readLine("Volume: "));
-        final Double tax = Double.valueOf(Console.readLine("Tax: "));
+        final Double priceWithTaxes = Double.valueOf(Console.readLine("Price With Taxes: "));
         try{
             this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
-                    priceWithoutTaxes, status, weight, volume, tax, productCategory);
+                    priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory);
             System.out.println("Product successfully created!");
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e){
             System.out.println("You tried to enter a product which already exists in the database.");
