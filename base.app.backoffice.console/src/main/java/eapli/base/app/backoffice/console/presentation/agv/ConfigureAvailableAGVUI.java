@@ -12,8 +12,8 @@ public class ConfigureAvailableAGVUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final String autonomyStatus = Console.readLine("Autonomy Status:");
-        final String taskStatus = Console.readLine("Task Status:");
+        final String autonomyStatus = Console.readLine("Autonomy OrderStatus:");
+        final String taskStatus = Console.readLine("Task OrderStatus:");
         final String modelID = Console.readLine("Model ID:");
         final String shortDescription = Console.readLine("Short Description:");
         final Double maxWeight = Console.readDouble("Max Weight:");

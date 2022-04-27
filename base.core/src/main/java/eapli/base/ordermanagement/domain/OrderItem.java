@@ -1,17 +1,27 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.productmanagement.domain.Product;
-import eapli.framework.domain.model.ValueObject;
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-//VALUE OBJECT OU ENTITY?
-public class OrderItem implements ValueObject, Serializable {
+@Entity
+public class OrderItem implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final int quantity;
-    private final Product item;
+    @Version
+    private Long version;
+
+    @Id
+    @GeneratedValue
+    private Long orderItemId;
+
+    /*private int quantity;
+    @ManyToOne
+    private Product item;
 
     public OrderItem(final int qty, final Product item) {
         Preconditions.isPositive(qty);
@@ -19,14 +29,33 @@ public class OrderItem implements ValueObject, Serializable {
 
         quantity = qty;
         this.item = item;
+    }*/
+
+    protected OrderItem() {
+        //for ORM purposes
     }
 
-    public Product product() {
+    /*public Product product() {
         return item;
     }
 
     public int quantity() {
         return quantity;
+    }*/
+
+    @Override
+    public int hashCode() {
+        return DomainEntities.hashCode(this);
+    }
+
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
+    @Override
+    public Long identity() {
+        return this.orderItemId;
     }
 
 }

@@ -13,11 +13,6 @@ import java.util.*;
 public class TheOrder implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum Status {
-        REGISTERED, PAYMENT_PENDING, TO_BE_PREPARED, BEING_PREPARED_ON_WAREHOUSE,
-        READY_FOR_PACKAGING, READY_FOR_CARRIER_DISPATCHING, DISPATCHED, DELIVERED_BY_CARRIER, RECEIVED_BY_COSTUMER;
-    }
-
     @Version
     private Long version;
 
@@ -31,7 +26,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
-    //TYPED/SELECT BILLING AND DELIVERING ADDRESS?
+    private OrderStatus status;
 
     @Embedded
     @AttributeOverrides({
@@ -53,9 +48,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     })
     private Address shippingAddress;
 
-    // COMENTAR PORQUE O PRODUCT AINDA NÃO É PERSISTIDO
-    /*@OneToMany
-    private Set<Product> products = new HashSet<>();*/
+    @OneToMany
+    Set<OrderItem> items = new HashSet<>();
 
     /**
      * Map where:
@@ -68,18 +62,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @MapKeyColumn(name = "product_reference")
     @Column(name = "quantity")
     private Map<String, Integer> quantitiesPerProduct = new HashMap<>();
-
-    /**
-     * Map where:
-     * > Key: a String containing the Product Unique Internal Code
-     * > Value: is its unitary price
-     */
-    @ElementCollection
-    @CollectionTable(name = "unitary_prices_per_product",
-            joinColumns = @JoinColumn(name = "order_id"))
-    @MapKeyColumn(name = "product_reference")
-    @Column(name = "unitary_price")
-    private Map<String, Double> unitaryPricesPerProduct = new HashMap<>();
 
     @Embedded
     @AttributeOverrides({
@@ -95,7 +77,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     })
     private Money totalAmountWithTaxes;
 
-    //CONFIRMAR SHIPMENT
     @Enumerated(EnumType.STRING)
     private Shipment shipment;
 

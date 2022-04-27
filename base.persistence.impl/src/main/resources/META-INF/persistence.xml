@@ -14,6 +14,7 @@
     <class>eapli.base.clientusermanagement.domain.SignupRequest</class>
     <class>eapli.base.clientmanagement.domain.Client</class>
     <class>eapli.base.ordermanagement.domain.TheOrder</class>
+    <class>eapli.base.ordermanagement.domain.OrderItem</class>
 
 
 
