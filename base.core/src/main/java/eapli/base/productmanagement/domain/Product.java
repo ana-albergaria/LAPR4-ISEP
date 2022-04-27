@@ -23,7 +23,7 @@ public class Product implements AggregateRoot<Code>, Serializable {
     @Version
     private Long version;
 
-    @EmbeddedId
+    @Id
     //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
