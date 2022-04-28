@@ -1,4 +1,4 @@
-/*package eapli.base.warehousemanagement.application;
+package eapli.base.warehousemanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -27,4 +27,4 @@ public class RegisterAGVController {
 
         return agvRepostitory.save(newAGV);
     }
-}*/
+}
