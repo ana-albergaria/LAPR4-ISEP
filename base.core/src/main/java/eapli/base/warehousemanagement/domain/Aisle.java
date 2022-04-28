@@ -19,16 +19,19 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
     @Id
     private Long aisleID;
 
-
+    @Transient
     @OneToOne(cascade = CascadeType.ALL)
     private Square beginSquare;
 
+    @Transient
     @OneToOne(cascade = CascadeType.ALL)
     private Square endSquare;
 
+    @Transient
     @OneToOne(cascade = CascadeType.ALL)
     private Square depthSquare;
 
+    @Transient
     @Embedded
     private Accessibility accessibility;
 

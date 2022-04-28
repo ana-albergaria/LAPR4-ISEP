@@ -20,6 +20,7 @@ public class Shelf implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long shelfID;
 
+    @Transient
     @ManyToOne(cascade = CascadeType.ALL)
     private TheRow rowID;
 

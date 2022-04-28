@@ -20,14 +20,19 @@ public class WarehousePlant implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long warehouseID;
 
+    @Transient
     @Embedded
     private WarehouseName warehouseName;
+    @Transient
     @Embedded
     private Length length;
+    @Transient
     @Embedded
     private Width width;
+    @Transient
     @Embedded
     private SquareSize squareSize;
+    @Transient
     @Embedded
     private Unit unit;
 
