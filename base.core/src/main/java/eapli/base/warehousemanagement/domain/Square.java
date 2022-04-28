@@ -4,21 +4,19 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class Square implements AggregateRoot<Long>, Serializable {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int lSquare;
-    private int wSquare;
+    private Long lSquare;
+    private Long wSquare;
 
-    public Square(int lSquare, int wSquare){
+    public Square(Long lSquare, Long wSquare){
         Preconditions.isPositive(lSquare, "Length Square must be positive!");
         Preconditions.isPositive(wSquare, "Width Square must be positive!");
         Preconditions.noneNull(lSquare, wSquare);

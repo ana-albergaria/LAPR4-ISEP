@@ -2,8 +2,8 @@ package eapli.base.warehousemanagement.domain;
 
 import eapli.framework.domain.model.DomainFactory;
 
-public class RowBuilder implements DomainFactory<Row> {
-    private Row row;
+public class RowBuilder implements DomainFactory<TheRow> {
+    private TheRow row;
 
     private Long rowID;
     private Square beginSquare;
@@ -27,18 +27,18 @@ public class RowBuilder implements DomainFactory<Row> {
         return this;
     }
 
-    private Row buildOrThrow(){
+    private TheRow buildOrThrow(){
         if (row!=null) {
             return row;
         } else if (rowID!=null && beginSquare!=null && endSquare!=null && aisleID!=null) {
-            return row = new Row(rowID, beginSquare, endSquare, aisleID);
+            return row = new TheRow(rowID, beginSquare, endSquare, aisleID);
         }else
             throw new IllegalStateException();
     }
 
     @Override
-    public Row build() {
-        final Row fin = buildOrThrow();
+    public TheRow build() {
+        final TheRow fin = buildOrThrow();
         row = null;
         return fin;
     }

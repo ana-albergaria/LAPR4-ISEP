@@ -1,6 +1,5 @@
 package eapli.base.warehousemanagement.domain;
 
-import eapli.base.warehousemanagement.domain.Row;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
@@ -21,13 +20,17 @@ public class Shelf implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long shelfID;
 
-    @ManyToOne
-    private Row rowID;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private TheRow rowID;
 
 
-    public Shelf(Row rowID){
+    public Shelf(TheRow rowID){
         Preconditions.noneNull(rowID);
         this.rowID=rowID;
+    }
+
+    public Shelf() {
+
     }
 
     @Override

@@ -5,9 +5,9 @@ import eapli.framework.domain.model.DomainFactory;
 public class ShelfBuilder implements DomainFactory<Shelf> {
     private Shelf shelf;
 
-    private Row rowID;
+    private TheRow rowID;
 
-    public ShelfBuilder hasRow(Row rowID){
+    public ShelfBuilder hasRow(TheRow rowID){
         this.rowID=rowID;
         return this;
     }

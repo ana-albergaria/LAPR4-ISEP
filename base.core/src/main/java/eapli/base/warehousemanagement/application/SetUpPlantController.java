@@ -45,13 +45,13 @@ public class SetUpPlantController {
             WarehouseName name = new WarehouseName(warehouseName);
 
             Long warehouseLength = (Long) jsonObject.get("Length");
-            Length length = new Length(Math.toIntExact(warehouseLength));
+            Length length = new Length(warehouseLength);
 
             Long warehouseWidth = (Long) jsonObject.get("Width");
-            Width width = new Width(Math.toIntExact(warehouseWidth));
+            Width width = new Width(warehouseWidth);
 
             Long warehouseSquare = (Long) jsonObject.get("Square");
-            SquareSize squareSize = new SquareSize(Math.toIntExact(warehouseSquare));
+            SquareSize squareSize = new SquareSize(warehouseSquare);
 
             String warehouseUnit = (String) jsonObject.get("Unit");
             Unit unit = new Unit(warehouseUnit);
@@ -79,7 +79,7 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseBegin.get("lsquare");
                     Long wsquare = (Long) warehouseBegin.get("wsquare");
 
-                    beginSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                    beginSquare = new Square(lsquare, wsquare);
                     squareRepository.save(beginSquare);
 
                 }
@@ -89,7 +89,7 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseEnd.get("lsquare");
                     Long wsquare = (Long) warehouseEnd.get("wsquare");
 
-                    endSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                    endSquare = new Square(lsquare, wsquare);
                     squareRepository.save(endSquare);
                 }
                 if(aisle.get("depth")!=null){
@@ -98,7 +98,7 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseDepth.get("lsquare");
                     Long wsquare = (Long) warehouseDepth.get("wsquare");
 
-                    depthSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                    depthSquare = new Square(lsquare, wsquare);
                     squareRepository.save(depthSquare);
                 }
                 String warehouseAccessibility = (String) aisle.get("accessibility");
@@ -126,7 +126,7 @@ public class SetUpPlantController {
                         Long lsquare = (Long) warehouseBegin.get("lsquare");
                         Long wsquare = (Long) warehouseBegin.get("wsquare");
 
-                        beginSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                        beginSquare = new Square(lsquare, wsquare);
                         squareRepository.save(beginSquare);
                     }
                     if (row.get("end") != null) {
@@ -135,7 +135,7 @@ public class SetUpPlantController {
                         Long lsquare = (Long) warehouseEnd.get("lsquare");
                         Long wsquare = (Long) warehouseEnd.get("wsquare");
 
-                        endSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                        endSquare = new Square(lsquare, wsquare);
                         squareRepository.save(endSquare);
                     }
                     final var newRow = new RowBuilder()
@@ -155,7 +155,9 @@ public class SetUpPlantController {
                         final var newShelf = new ShelfBuilder().hasRow(newRow).build();
                         repositoryShelf.save(newShelf);
                     }
+
                 }
+
             }
 
             /*
@@ -171,8 +173,8 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseBegin.get("lsquare");
                     Long wsquare = (Long) warehouseBegin.get("wsquare");
 
-                    beginSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                    beginSquare = new Square(lsquare, wsquare);
+                    squareRepository.save(beginSquare);
                 }
                 if(dock.get("end")!=null){
                     JSONObject warehouseEnd = (JSONObject) dock.get("end");
@@ -180,8 +182,8 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseEnd.get("lsquare");
                     Long wsquare = (Long) warehouseEnd.get("wsquare");
 
-                    endSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                    endSquare = new Square(lsquare, wsquare);
+                    squareRepository.save(endSquare);
                 }
                 if(dock.get("depth")!=null){
                     JSONObject warehouseDepth = (JSONObject) dock.get("depth");
@@ -189,8 +191,8 @@ public class SetUpPlantController {
                     Long lsquare = (Long) warehouseDepth.get("lsquare");
                     Long wsquare = (Long) warehouseDepth.get("wsquare");
 
-                    depthSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                    depthSquare = new Square(lsquare, wsquare);
+                    squareRepository.save(depthSquare);
                 }
                 String fileAccessibility = (String) dock.get("accessibility");
                 Accessibility accessibility = new Accessibility(fileAccessibility);

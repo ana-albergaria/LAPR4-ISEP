@@ -20,16 +20,13 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
     private Long aisleID;
 
 
-    @OneToOne
-    @JoinColumn(name = "begin_square_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Square beginSquare;
 
-    @OneToOne
-    @JoinColumn(name = "end_square_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Square endSquare;
 
-    @OneToOne
-    @JoinColumn(name = "depth_square_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Square depthSquare;
 
     @Embedded

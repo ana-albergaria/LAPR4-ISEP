@@ -4,24 +4,25 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class Length {
     private static final long serialVersionUID = 1L;
 
-    private int length;
+    private Long length;
 
-    public Length(int length){
+    public Length(Long length){
         Preconditions.isPositive(length, "Length must be positive!");
 
         this.length=length;
     }
 
     public Length() {
-        this.length= 0;
+        this.length= null;
     }
 
-    public static  Length valueOf(final int length){
+    public static  Length valueOf(final Long length){
         return new Length(length);
     }
 
@@ -32,7 +33,7 @@ public class Length {
             return false;
         } else {
             Length that = (Length) o;
-            return this.length==that.length;
+            return Objects.equals(this.length, that.length);
         }
     }
 
