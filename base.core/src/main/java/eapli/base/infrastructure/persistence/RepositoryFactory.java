@@ -25,6 +25,8 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.warehousemanagement.repositories.*;
+import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.base.warehousemanagement.repositories.PlantRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.domain.repositories.TransactionalContext;

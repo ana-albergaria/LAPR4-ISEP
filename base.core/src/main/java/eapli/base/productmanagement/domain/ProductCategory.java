@@ -4,8 +4,8 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Version;
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
     @Version
     private Long version;
 
-    @EmbeddedId
+    @Id
     private String alphanumericCode;
 
     private String description;

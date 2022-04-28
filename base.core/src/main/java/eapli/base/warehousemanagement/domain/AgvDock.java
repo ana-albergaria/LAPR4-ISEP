@@ -59,4 +59,9 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
     public Long identity() {
         return Long.valueOf(this.agvDockID);
     }
+
+    @Override
+    public String toString(){
+        return this.agvDockID;
+    }
 }

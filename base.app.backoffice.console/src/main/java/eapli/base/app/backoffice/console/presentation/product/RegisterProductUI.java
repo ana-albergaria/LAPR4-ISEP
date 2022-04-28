@@ -20,16 +20,17 @@ public class RegisterProductUI extends AbstractUI {
         selector.show();
         final ProductCategory productCategory = selector.selectedElement();
         final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
+        final String barcode = Console.readLine("Barcode: ");
         final String shortDescription = Console.readLine("Short Description: ");
         final String extendedDescription = Console.readLine("Extended Description: ");
-        final Double priceWithoutTaxes = Double.valueOf(Console.readLine("Price Without Taxes: "));
+        final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
         final String status = Console.readLine("OrderStatus: ");
-        final Double weight = Double.valueOf(Console.readLine("OrderWeight: "));
-        final Double volume = Double.valueOf(Console.readLine("Volume: "));
-        final Double tax = Double.valueOf(Console.readLine("Tax: "));
+        final double weight = Console.readDouble("OrderWeight: ");
+        final double volume = Console.readDouble("Volume: ");
+        final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
         try{
-            this.theController.registerProduct(uniqueInternalCode, shortDescription, extendedDescription,
-                    priceWithoutTaxes, status, weight, volume, tax, productCategory);
+            this.theController.registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription,
+                    priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory);
             System.out.println("Product successfully created!");
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e){
             System.out.println("You tried to enter a product which already exists in the database.");

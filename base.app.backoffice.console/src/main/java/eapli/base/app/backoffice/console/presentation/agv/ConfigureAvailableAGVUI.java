@@ -1,32 +1,27 @@
 package eapli.base.app.backoffice.console.presentation.agv;
 
-import eapli.base.warehousemanagement.application.AGVController;
-import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.base.warehousemanagement.application.ConfigureAvailableAGVController;
+import eapli.base.warehousemanagement.application.RegisterAGVController;
+import eapli.base.warehousemanagement.domain.AgvDock;
+import eapli.base.warehousemanagement.domain.WarehousePlant;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConfigureAvailableAGVUI extends AbstractUI {
 
-    private final AGVController controller = new AGVController();
-
+    private final ConfigureAvailableAGVController controller = new ConfigureAvailableAGVController();
 
     @Override
     protected boolean doShow() {
-        final String autonomyStatus = Console.readLine("Autonomy OrderStatus:");
-        final String taskStatus = Console.readLine("Task OrderStatus:");
-        final String modelID = Console.readLine("Model ID:");
-        final String shortDescription = Console.readLine("Short Description:");
-        final Double maxWeight = Console.readDouble("Max Weight:");
-        final Integer beginSquare = Console.readInteger("Begin Square:");
-        final Integer endSquare = Console.readInteger("End Square:");
-        final Integer depthSquare = Console.readInteger("Depth Square:");
-        final String accessibilityDirection = Console.readLine("Accessibility Direction:");
+        List<String> informations = new ArrayList<>();
 
-        try {
-            this.controller.registerAGV(autonomyStatus, taskStatus, modelID, shortDescription, maxWeight, beginSquare, endSquare, depthSquare, accessibilityDirection);
-            System.out.println("Client created with success!");
-        } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
-            System.out.println("You tried to enter a client which already exists in the database.");
+        informations = controller.getAvailableAGVInformations();
+
+        for(String info : informations){
+            System.out.println(info);
         }
 
         return false;

@@ -3,39 +3,66 @@ package eapli.base.warehousemanagement.domain;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class AGV implements AggregateRoot<Long> {
+public class AGV implements AggregateRoot<Long>, Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version;
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long agvID;
 
-    private String autonomyStatus;
+    @Embedded
+    @AttributeOverride(name = "autStatus", column = @Column(name = "Autonomy"))
+    private AutonomyStatus autonomyStatus;
 
-    private String taskStatus;
+    @Embedded
+    @AttributeOverride(name = "tStatus", column = @Column(name = "Task"))
+    private TaskStatus taskStatus;
 
-    private String modelID;
+    @Embedded
+    private Model modelID;
 
-    private String shortDescription;
+    @OneToOne
+    @JoinColumn(name = "AGVDockID", referencedColumnName = "agvDockID")
+    private AgvDock agvDock;
 
-    private Double maxWeight;
-
-    public AGV(final String autonomyStatus, final String taskStatus, final String modelID, final String shortDescription, final Double maxWeight){
-        Preconditions.noneNull(autonomyStatus, taskStatus, modelID, shortDescription, maxWeight);
+    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final Model modelID, final AgvDock agvDock){
+        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID);
+        this.agvID = agvID;
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
         this.modelID = modelID;
-        this.shortDescription = shortDescription;
-        this.maxWeight = maxWeight;
+        this.agvDock = agvDock;
     }
 
     protected AGV(){
 
+    }
+
+    public Long getAgvID() {
+        return agvID;
+    }
+
+    public AutonomyStatus getAutonomyStatus() {
+        return autonomyStatus;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public Model getModelID() {
+        return modelID;
+    }
+
+    public AgvDock getAgvDock() {
+        return agvDock;
     }
 
     @Override

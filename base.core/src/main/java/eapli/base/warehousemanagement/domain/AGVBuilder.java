@@ -1,6 +1,5 @@
 package eapli.base.warehousemanagement.domain;
 
-import eapli.base.clientmanagement.domain.Client;
 import eapli.framework.domain.model.DomainFactory;
 
 public class AGVBuilder implements DomainFactory<AGV> {
@@ -8,9 +7,13 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private AgvDock theAGVDock;
 
-    private String autonomyStatus;
+    private Long agvID;
 
-    private String taskStatus;
+    private AutonomyStatus autonomyStatus;
+
+    private TaskStatus taskStatus;
+
+    private Model theModel;
 
     private String modelID;
 
@@ -26,38 +29,41 @@ public class AGVBuilder implements DomainFactory<AGV> {
 
     private Accessibility accessibilityDirection;
 
-    public AGVBuilder withAutonomy(final String autonomyStatus){
+    private AgvDockBuilder agvDockBuilder = new AgvDockBuilder();
+
+    public AGVBuilder withID(final Long agvID){
+        this.agvID = agvID;
+        return this;
+    }
+
+    public AGVBuilder withAutonomy(final AutonomyStatus autonomyStatus){
         this.autonomyStatus = autonomyStatus;
         return this;
     }
 
-    public AGVBuilder withTask(final String taskStatus){
+    public AGVBuilder withTask(final TaskStatus taskStatus){
         this.taskStatus = taskStatus;
         return this;
     }
 
-    public AGVBuilder withModel(final String modelID){
-        this.modelID = modelID;
+    public AGVBuilder withModel(final String modelID, final String shortDescription, final Double maxWeight){
+        this.theModel = new Model(modelID, shortDescription, maxWeight);
         return this;
     }
 
-    public AGVBuilder withDescription(final String shortDescription){
-        this.shortDescription = shortDescription;
+    public AGVBuilder withAGVDock(final String agvDockID, final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
+        this.theAGVDock = agvDockBuilder.hasDockID(agvDockID).hasBegin(beginSquare).hasEnd(endSquare).hasDepth(depthSquare).hasAccessibility(accessibilityDirection).build();
         return this;
     }
 
-    public AGVBuilder withMaxWeight(final Double maxWeight){
-        this.maxWeight = maxWeight;
-        return this;
-    }
 
     //TODO check about the need to possibly create AGVDockBuilder for beginSquare, endSquare, depthSquare and accessibilityDirection.
 
     private AGV buildOrThrow() {
         if (theAGV != null) {
             return theAGV;
-        } else if (autonomyStatus != null && taskStatus != null && modelID != null && shortDescription != null && maxWeight != null) {
-            theAGV = new AGV(autonomyStatus, taskStatus, modelID, shortDescription, maxWeight);
+        } else if (agvID != null && autonomyStatus != null && taskStatus != null && theModel != null && theAGVDock != null) {
+            theAGV = new AGV(agvID, autonomyStatus, taskStatus, theModel, theAGVDock);
             return theAGV;
         } else {
             throw new IllegalStateException();
@@ -68,5 +74,29 @@ public class AGVBuilder implements DomainFactory<AGV> {
         final AGV agv = buildOrThrow();
         theAGV = null;
         return agv;
+    }
+
+    public Long getAgvID(){
+        return theAGV.getAgvID();
+    }
+
+    public AutonomyStatus getAutonomyStatus() {
+        return theAGV.getAutonomyStatus();
+    }
+
+    public TaskStatus getTaskStatus() {
+        return theAGV.getTaskStatus();
+    }
+
+    public String getModelID() {
+        return theAGV.getModelID().toString();
+    }
+
+    public Accessibility getAccessibilityDirection() {
+        return accessibilityDirection;
+    }
+
+    public AgvDock getAGVDock(){
+        return theAGV.getAgvDock();
     }
 }

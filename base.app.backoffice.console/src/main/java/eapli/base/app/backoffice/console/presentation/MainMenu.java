@@ -24,6 +24,7 @@
 package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
+import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
@@ -113,9 +114,12 @@ public class MainMenu extends AbstractUI {
     private static final int COSTUMERS_OPTION = 2;
 
     // WAREHOUSE EMPLOYEE
-    private static final int CONFIGURE_AVAILABLE_AGVS = 1;
-    private static final int AVAILABLE_AGVS_INFORMATIONS = 2;
-    private static final int SET_UP_PLANT=3;
+    private static final int REGISTER_AGV = 1;
+    private static final int CONFIGURE_AVAILABLE_AGVS = 2;
+
+    private static final int INSERT_AGV_INFORMATIONS = 2;
+    private static final int AVAILABLE_AGVS_INFORMATIONS = 4;
+    private static final int SET_UP_PLANT=5;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -173,7 +177,7 @@ public class MainMenu extends AbstractUI {
 
         if(authz.isAuthenticatedUserAuthorizedTo(BaseRoles.WAREHOUSE_EMPLOYEE)){
             final Menu warehouseEmployeeMenu = buildWarehouseEmployee();
-            mainMenu.addSubMenu(AVAILABLE_AGVS_INFORMATIONS, warehouseEmployeeMenu);
+            mainMenu.addSubMenu(INSERT_AGV_INFORMATIONS, warehouseEmployeeMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -222,6 +226,9 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
         menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
+        menu.addItem(REGISTER_AGV, "Register AGV", new RegisterAGVUI()::show);
+        menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Show Available AGVs Description", new ConfigureAvailableAGVUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
     }
