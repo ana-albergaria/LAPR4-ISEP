@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
+import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -114,6 +115,7 @@ public class MainMenu extends AbstractUI {
     // WAREHOUSE EMPLOYEE
     private static final int CONFIGURE_AVAILABLE_AGVS = 1;
     private static final int AVAILABLE_AGVS_INFORMATIONS = 2;
+    private static final int SET_UP_PLANT=3;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -219,6 +221,7 @@ public class MainMenu extends AbstractUI {
         final Menu menu = new Menu("Warehouse Employee >");
 
         menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
+        menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
 
         return menu;
     }
