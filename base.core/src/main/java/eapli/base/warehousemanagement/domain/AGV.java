@@ -80,4 +80,9 @@ public class AGV implements AggregateRoot<Long>, Serializable {
     public Long identity() {
         return this.agvID;
     }
+
+    @Override
+    public String toString(){
+        return String.format("AGV ID: %d \n", agvID);
+    }
 }

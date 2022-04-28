@@ -42,7 +42,7 @@ public class AutonomyStatus implements ValueObject, Serializable {
     }
 
     public String toString() {
-        return this.autStatus;
+        return String.format("Autonomy: %s left \n", autStatus);
     }
 
     public int compareTo(final AutonomyStatus o) {

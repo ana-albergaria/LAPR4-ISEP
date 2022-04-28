@@ -42,7 +42,7 @@ public class TaskStatus implements ValueObject, Serializable {
     }
 
     public String toString() {
-        return this.tStatus;
+        return String.format("AGV Status: %s \n", tStatus);
     }
 
     public int compareTo(final TaskStatus o) {

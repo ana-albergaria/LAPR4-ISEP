@@ -16,20 +16,16 @@ public class ConfigureAvailableAGVController {
 
     private final AGVRepository repository = PersistenceContext.repositories().agvs();
 
-    public Map<AGV, List<String>> getAvailableAGVInformations(){
-        Map<AGV, List<String>> availableAGVsInfo = new HashMap<>();
-        List<String> informations = new ArrayList<String>();
+    public Map<AGV, String> getAvailableAGVInformations(){
+        Map<AGV, String> availableAGVsInfo = new HashMap<>();
+
 
         for(AGV agv : repository.findAll()){
-            informations.add(agv.getAgvID().toString());
-            informations.add(agv.getModelID().toString());
-            informations.add(agv.getAgvID().toString());
-            informations.add(agv.getAutonomyStatus().toString());
-            informations.add(agv.getTaskStatus().toString());
-
-            availableAGVsInfo.put(agv, informations);
-
-            informations.clear();
+            availableAGVsInfo.put(agv, agv.toString()
+                    + agv.getModelID().toString()
+                    //+ agv.getAgvID().toString() -- AGV Dock ID, ainda não implementado.
+                    + agv.getAutonomyStatus().toString()
+                    + agv.getTaskStatus().toString());
         }
 
         return availableAGVsInfo;
