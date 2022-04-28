@@ -20,7 +20,7 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
     private Long orderItemId;
 
     private int quantity;
-    /*@ManyToOne
+    @ManyToOne
     private Product item;
 
     public OrderItem(final int qty, final Product item) {
@@ -29,19 +29,19 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
 
         quantity = qty;
         this.item = item;
-    }*/
+    }
 
     protected OrderItem() {
         //for ORM purposes
     }
 
-    /*public Product product() {
+    public Product product() {
         return item;
     }
 
     public int quantity() {
         return quantity;
-    }*/
+    }
 
     @Override
     public int hashCode() {
