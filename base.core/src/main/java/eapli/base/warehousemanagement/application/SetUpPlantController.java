@@ -23,6 +23,7 @@ public class SetUpPlantController {
     private final RowRepository repositoryRow = PersistenceContext.repositories().rows();
     private final ShelfRepository repositoryShelf = PersistenceContext.repositories().shelfs();
     private final AgvDockRepository repositoryDock = PersistenceContext.repositories().agvDocks();
+    private final SquareRepository squareRepository = PersistenceContext.repositories().squares();
     private Square beginSquare=null;
     private Square endSquare=null;
     private Square depthSquare=null;
@@ -79,6 +80,7 @@ public class SetUpPlantController {
                     Long wsquare = (Long) warehouseBegin.get("wsquare");
 
                     beginSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                    squareRepository.save(beginSquare);
 
                 }
                 if(aisle.get("end")!=null){
@@ -88,7 +90,7 @@ public class SetUpPlantController {
                     Long wsquare = (Long) warehouseEnd.get("wsquare");
 
                     endSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                    squareRepository.save(endSquare);
                 }
                 if(aisle.get("depth")!=null){
                     JSONObject warehouseDepth = (JSONObject) aisle.get("depth");
@@ -97,6 +99,7 @@ public class SetUpPlantController {
                     Long wsquare = (Long) warehouseDepth.get("wsquare");
 
                     depthSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
+                    squareRepository.save(depthSquare);
                 }
                 String warehouseAccessibility = (String) aisle.get("accessibility");
                 Accessibility accessibility = new Accessibility(warehouseAccessibility);
@@ -124,7 +127,7 @@ public class SetUpPlantController {
                         Long wsquare = (Long) warehouseBegin.get("wsquare");
 
                         beginSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                        squareRepository.save(beginSquare);
                     }
                     if (row.get("end") != null) {
                         JSONObject warehouseEnd = (JSONObject) row.get("end");
@@ -133,7 +136,7 @@ public class SetUpPlantController {
                         Long wsquare = (Long) warehouseEnd.get("wsquare");
 
                         endSquare = new Square(Math.toIntExact(lsquare), Math.toIntExact(wsquare));
-
+                        squareRepository.save(endSquare);
                     }
                     final var newRow = new RowBuilder()
                             .hasID(idRow)
