@@ -2,6 +2,7 @@ package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.productmanagement.domain.Code;
+import eapli.base.productmanagement.domain.Volume;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -128,7 +129,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        //this.items = items;
+        this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
@@ -142,7 +143,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        //this.items = items;
+        this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;

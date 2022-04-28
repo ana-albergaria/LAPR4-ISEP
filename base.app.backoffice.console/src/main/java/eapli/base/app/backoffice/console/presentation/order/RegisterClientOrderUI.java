@@ -6,13 +6,13 @@ import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.domain.TheOrder;
+import eapli.base.productmanagement.application.ListProductService;
+import eapli.base.productmanagement.domain.Code;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class RegisterClientOrderUI extends AbstractUI {
 
@@ -24,6 +24,36 @@ public class RegisterClientOrderUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
+
+        Map<String, Integer> items = new HashMap<>();
+
+        System.out.println(">> PRODUCTS OF THE ORDER");
+
+        String moreProducts = "yes";
+
+        while(moreProducts.equalsIgnoreCase("yes")) {
+            String answer = Console.readLine("Do you want to view the Products Catalog?\n (yes|no)\n");
+            if (answer.equalsIgnoreCase("yes")) {
+                //colocar UI do US1002
+            }
+            final String productCode = Console.readLine("Product Unique Internal Code: ");
+
+            boolean productExist = this.theController.verifyProductById(Code.valueOf(productCode));
+            if (!productExist) {
+                System.out.println("There has not been matches in our Catalog for that Product Code.");
+            } else {
+                Integer quantity = Console.readInteger("How many units of this product do you want?");
+
+                /*if(items.get(productCode) == null) {
+                    items.put(productCode, quantity);
+                    System.out.println("You have already chosen that Product.");
+                } else {
+                    items.put(productCode, quantity);
+                }*/
+                items.put(productCode, quantity);
+                moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?");
+            }
+        }
 
         final Long clientId = Console.readLong("Cliend ID: ");
 
@@ -114,9 +144,9 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         try {
             if(additionalText.isEmpty())
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items);
             else
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, items);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter an order which already exists in the database.");
         }

@@ -1,7 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.agv;
 
 import eapli.base.warehousemanagement.application.ConfigureAvailableAGVController;
-import eapli.base.warehousemanagement.application.RegisterAGVController;
+//import eapli.base.warehousemanagement.application.RegisterAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AgvDock;
 import eapli.base.warehousemanagement.domain.WarehousePlant;

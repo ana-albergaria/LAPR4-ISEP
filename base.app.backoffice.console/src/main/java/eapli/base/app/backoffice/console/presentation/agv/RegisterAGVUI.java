@@ -9,7 +9,7 @@ import eapli.framework.presentation.console.AbstractUI;
 public class RegisterAGVUI extends AbstractUI {
 
     private final RegisterAGVController controller = new RegisterAGVController();
-    
+
     @Override
     protected boolean doShow() {
         String option = "";
