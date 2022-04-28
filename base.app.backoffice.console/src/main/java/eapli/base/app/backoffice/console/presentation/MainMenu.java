@@ -74,7 +74,7 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_ORDER_FOR_CLIENT_OPTION = 2;
 
     //PRODUCT
-    private static final int REGISTER_PRODUCT_OPTION = 1;
+    private static final int REGISTER_PRODUCT_OPTION = 3;
 
     // DISH TYPES
     private static final int DISH_TYPE_REGISTER_OPTION = 1;
@@ -177,10 +177,8 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
-            final Menu productMenu = buildProductMenu();
-            mainMenu.addSubMenu(PRODUCT_OPTION, productMenu);
-            final Menu costumersMenu = buildClientMenu();
-            mainMenu.addSubMenu(COSTUMERS_OPTION, costumersMenu);
+            final Menu salesClerkMenu = buildClientMenu();
+            mainMenu.addSubMenu(COSTUMERS_OPTION, salesClerkMenu);
         }
 
         if(authz.isAuthenticatedUserAuthorizedTo(BaseRoles.WAREHOUSE_EMPLOYEE)){
@@ -220,18 +218,15 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-    private Menu buildProductMenu(){
-        final Menu menu = new Menu("Sales Clerk >");
 
-        menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
-        return menu;
-    }
 
     private Menu buildClientMenu() {
         final Menu menu = new Menu("Sales Clerk >");
 
         menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
         menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
+        menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
+
         return menu;
     }
 
