@@ -25,8 +25,12 @@ import java.util.Set;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import eapli.base.infrastructure.bootstrapers.UsersBootstrapperBase;
+import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.domain.Volume;
+import eapli.base.productmanagement.domain.Weight;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
+import eapli.framework.general.domain.model.Money;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
 /**

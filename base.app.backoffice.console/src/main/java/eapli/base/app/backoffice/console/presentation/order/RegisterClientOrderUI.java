@@ -1,12 +1,10 @@
 package eapli.base.app.backoffice.console.presentation.order;
 
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
-import eapli.base.clientmanagement.domain.Client;
 import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.domain.TheOrder;
-import eapli.base.productmanagement.application.ListProductService;
 import eapli.base.productmanagement.domain.Code;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -21,11 +19,13 @@ public class RegisterClientOrderUI extends AbstractUI {
     private final RegisterClientOrderController theController = new RegisterClientOrderController();
 
 
+
+
     @Override
     protected boolean doShow() {
 
 
-        Map<String, Integer> items = new HashMap<>();
+        /*Map<String, Integer> items = new HashMap<>();
 
         System.out.println(">> PRODUCTS OF THE ORDER");
 
@@ -44,16 +44,16 @@ public class RegisterClientOrderUI extends AbstractUI {
             } else {
                 Integer quantity = Console.readInteger("How many units of this product do you want?");
 
-                /*if(items.get(productCode) == null) {
+                if(items.get(productCode) == null) {
                     items.put(productCode, quantity);
                     System.out.println("You have already chosen that Product.");
                 } else {
                     items.put(productCode, quantity);
-                }*/
+                }
                 items.put(productCode, quantity);
                 moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?");
             }
-        }
+        }*/
 
         final Long clientId = Console.readLong("Cliend ID: ");
 
@@ -144,9 +144,9 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         try {
             if(additionalText.isEmpty())
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, null);
             else
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, items);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, null);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter an order which already exists in the database.");
         }
