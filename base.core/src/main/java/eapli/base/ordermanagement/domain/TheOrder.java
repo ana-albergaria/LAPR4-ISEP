@@ -42,7 +42,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
             @AttributeOverride(name = "city", column = @Column(name = "billing_city")),
             @AttributeOverride(name = "country", column = @Column(name = "billing_country"))
     })
-    private Address billingAddress;
+    private OrderAddress billingAddress;
 
     @Embedded
     @AttributeOverrides({
@@ -52,7 +52,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
             @AttributeOverride(name = "city", column = @Column(name = "shipping_city")),
             @AttributeOverride(name = "country", column = @Column(name = "shipping_country"))
     })
-    private Address shippingAddress;
+    private OrderAddress shippingAddress;
 
     @OneToMany
     Set<OrderItem> items = new HashSet<>();
@@ -89,6 +89,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Enumerated(EnumType.STRING)
     private Shipment shipment;
 
+    @Enumerated(EnumType.STRING)
     private Payment payment;
 
     /*
@@ -118,12 +119,12 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     //NOS CONSTRUTORES FALTA: STATUS, SYSTEM USER, CALCULAR OS AMOUNTS COM TAXAS E SEM TAXAS, O VOLUME E O WEIGHT
 
-    public TheOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Set<OrderItem> items, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = items;
+        //this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
@@ -131,17 +132,18 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.additionalComment = additionalComment;
     }
 
-    public TheOrder(final Client client, final Address billingAddress, final Address shippingAddress, final Set<OrderItem> items, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = items;
+        //this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
     }
+
 
     protected TheOrder() {
         //for ORM purposes

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.regex.Pattern;
 
 @Embeddable
-public class Address implements ValueObject, Serializable {
+public class OrderAddress implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final Pattern VALID_POSTAL_CODE_REGEX = Pattern.compile("[0-9]{4}-[0-9]{3}");
@@ -24,8 +24,8 @@ public class Address implements ValueObject, Serializable {
 
     private final String country;
 
-    public Address(final String streetName, final String doorNumber, final String postalCode,
-                   final String city, final String country) {
+    public OrderAddress(final String streetName, final String doorNumber, final String postalCode,
+                        final String city, final String country) {
         Preconditions.nonEmpty(streetName, "Street name should neither be null nor empty");
         Preconditions.nonEmpty(doorNumber, "Door Number should neither be null nor empty");
         Preconditions.nonEmpty(postalCode, "Postal Code should neither be null nor empty");
@@ -41,23 +41,23 @@ public class Address implements ValueObject, Serializable {
         this.country = country;
     }
 
-    protected Address() {
+    protected OrderAddress() {
         this.streetName = this.doorNumber = this.postalCode = this.city = this.country = "";
         //for ORM purposes
     }
 
-    public static Address valueOf(final String streetName, final String doorNumber, final String postalCode,
-                                  final String city, final String country) {
-        return new Address(streetName, doorNumber, postalCode, city, country);
+    public static OrderAddress valueOf(final String streetName, final String doorNumber, final String postalCode,
+                                       final String city, final String country) {
+        return new OrderAddress(streetName, doorNumber, postalCode, city, country);
     }
 
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
-        } else if (!(o instanceof Address)) {
+        } else if (!(o instanceof OrderAddress)) {
             return false;
         } else {
-            Address that = (Address) o;
+            OrderAddress that = (OrderAddress) o;
             return this.streetName.equals(that.streetName) && this.doorNumber.equals(that.doorNumber)
                     && this.postalCode.equals(that.postalCode) && this.city.equals(that.city)
                     && this.country.equals(that.country);

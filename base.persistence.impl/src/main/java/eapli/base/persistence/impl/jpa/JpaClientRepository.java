@@ -7,6 +7,6 @@ public class JpaClientRepository extends BaseJpaRepositoryBase<Client, Long, Lon
     implements ClientRepository {
 
     JpaClientRepository() {
-        super("client id");
+        super("clientId");
     }
 }

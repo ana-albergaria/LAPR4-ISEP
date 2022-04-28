@@ -27,8 +27,7 @@ public class RegisterClientController {
             Address postalAddress1 = new Address(postalAddress.get(0),postalAddress.get(1),postalAddress.get(2),postalAddress.get(3),postalAddress.get(4));
             postalAddresses.add(postalAddress1);
         }
-
-
+        System.out.println(repository.ofIdentity((long) 19.0));
 
         final var newClient = new ClientBuilder()
                 .named(new Name(firstNames,surnames))
