@@ -101,6 +101,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public AgvDockRepository agvDocks(){return new JpaAgvDockRepository();}
 
     @Override
+    public SquareRepository squares() {
+        return new JpaSquareRepository();
+    }
+
+    @Override
     public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
         return new JpaSignupRequestRepository(autoTx);
     }

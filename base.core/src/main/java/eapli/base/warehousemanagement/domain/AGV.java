@@ -1,6 +1,7 @@
 package eapli.base.warehousemanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
@@ -32,13 +33,13 @@ public class AGV implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "AGVDockID", referencedColumnName = "agvDockID")
     private AgvDock agvDock;
 
-    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final Model modelID, final AgvDock agvDock){
-        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID);
+    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription, final Double maxWeight, final String agvDockID, final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
+        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID, agvDock);
         this.agvID = agvID;
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
-        this.modelID = modelID;
-        this.agvDock = agvDock;
+        this.modelID = new Model(modelID, shortDescription, maxWeight);
+        this.agvDock = new AgvDock(agvDockID, beginSquare, endSquare, depthSquare, accessibilityDirection);
     }
 
     protected AGV(){
@@ -67,21 +68,16 @@ public class AGV implements AggregateRoot<Long>, Serializable {
 
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        return DomainEntities.areEqual(this, other);
     }
 
     @Override
     public int compareTo(Long other) {
-        return AggregateRoot.super.compareTo(other);
+        return DomainEntities.hashCode(this);
     }
 
     @Override
     public Long identity() {
-        return null;
-    }
-
-    @Override
-    public boolean hasIdentity(Long id) {
-        return AggregateRoot.super.hasIdentity(id);
+        return this.agvID;
     }
 }
