@@ -19,14 +19,15 @@ public class TheRow implements AggregateRoot<Long>, Serializable {
     @Id
     private Long rowID;
 
-
+    @Transient
     @OneToOne(cascade = CascadeType.ALL)
     private Square beginSquare;
 
+    @Transient
     @OneToOne(cascade = CascadeType.ALL)
     private Square endSquare;
 
-
+    @Transient
     @ManyToOne(cascade = CascadeType.ALL)
     private Aisle aisleID;
 

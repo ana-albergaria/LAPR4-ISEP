@@ -13,7 +13,9 @@ public class Square implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Transient
     private Long lSquare;
+    @Transient
     private Long wSquare;
 
     public Square(Long lSquare, Long wSquare){

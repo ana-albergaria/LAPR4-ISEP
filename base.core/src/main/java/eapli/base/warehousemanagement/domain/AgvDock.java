@@ -19,16 +19,19 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
     @Id
     private String agvDockID;
 
-
+    @Transient
     @OneToOne
     private Square beginSquare;
 
+    @Transient
     @OneToOne
     private Square endSquare;
 
+    @Transient
     @OneToOne
     private Square depthSquare;
 
+    @Transient
     @Embedded
     private Accessibility accessibility;
 
