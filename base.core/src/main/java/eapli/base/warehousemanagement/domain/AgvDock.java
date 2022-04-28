@@ -47,6 +47,10 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
     protected AgvDock() {
     }
 
+    public String getAgvDockID(){
+        return this.agvDockID;
+    }
+
 
     @Override
     public int hashCode() {

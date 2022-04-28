@@ -62,6 +62,10 @@ public class Product implements AggregateRoot<Code>, Serializable {
     private Reference reference; //optional
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "taxes_currency"))
+    })
     private Money priceWithoutTaxes;
 
     @Enumerated(EnumType.STRING)
@@ -72,6 +76,10 @@ public class Product implements AggregateRoot<Code>, Serializable {
     private Volume volume;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "no_taxes_currency"))
+    })
     private Money priceWithTaxes;
 
     @Embedded

@@ -27,6 +27,7 @@ import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVU
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.backoffice.console.presentation.order.RegisterClientOrderUI;
+import eapli.base.app.backoffice.console.presentation.product.RegisterProductUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -72,6 +73,9 @@ public class MainMenu extends AbstractUI {
     private static final int REGISTER_COSTUMER_OPTION = 1;
     private static final int REGISTER_ORDER_FOR_CLIENT_OPTION = 2;
 
+    //PRODUCT
+    private static final int REGISTER_PRODUCT_OPTION = 1;
+
     // DISH TYPES
     private static final int DISH_TYPE_REGISTER_OPTION = 1;
     private static final int DISH_TYPE_LIST_OPTION = 2;
@@ -113,6 +117,7 @@ public class MainMenu extends AbstractUI {
     private static final int REPORTING_DISHES_OPTION = 8;
 
     // MAIN MENU SALES CLERK
+    private static final int PRODUCT_OPTION = 1;
     private static final int COSTUMERS_OPTION = 2;
 
     // WAREHOUSE EMPLOYEE
@@ -172,6 +177,8 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
+            final Menu productMenu = buildProductMenu();
+            mainMenu.addSubMenu(PRODUCT_OPTION, productMenu);
             final Menu costumersMenu = buildClientMenu();
             mainMenu.addSubMenu(COSTUMERS_OPTION, costumersMenu);
         }
@@ -213,10 +220,16 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu buildProductMenu(){
+        final Menu menu = new Menu("Sales Clerk >");
+
+        menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
+        return menu;
+    }
+
     private Menu buildClientMenu() {
         final Menu menu = new Menu("Sales Clerk >");
 
-                                                        //alterar para a UI do Register Costumer
         menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
         menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
         return menu;
