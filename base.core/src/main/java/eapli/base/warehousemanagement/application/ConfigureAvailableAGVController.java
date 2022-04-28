@@ -7,22 +7,31 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConfigureAvailableAGVController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final AGVRepository repository = PersistenceContext.repositories().agvs();
 
-    public List<String> getAvailableAGVInformations(){
+    public Map<AGV, List<String>> getAvailableAGVInformations(){
+        Map<AGV, List<String>> availableAGVsInfo = new HashMap<>();
         List<String> informations = new ArrayList<String>();
 
-        /*informations.add(builder.getAgvID().toString());
-        informations.add(builder.getModelID());
-        informations.add(builder.getAGVDock().toString());
-        informations.add(builder.getAutonomyStatus().toString());
-        informations.add(builder.getTaskStatus().toString());*/
+        for(AGV agv : repository.findAll()){
+            informations.add(agv.getAgvID().toString());
+            informations.add(agv.getModelID().toString());
+            informations.add(agv.getAgvID().toString());
+            informations.add(agv.getAutonomyStatus().toString());
+            informations.add(agv.getTaskStatus().toString());
 
-        return informations;
+            availableAGVsInfo.put(agv, informations);
+
+            informations.clear();
+        }
+
+        return availableAGVsInfo;
     }
 }

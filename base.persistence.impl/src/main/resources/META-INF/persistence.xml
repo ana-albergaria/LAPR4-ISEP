@@ -18,8 +18,8 @@
     <class>eapli.base.warehousemanagement.domain.AGV</class>
     <class>eapli.base.warehousemanagement.domain.AgvDock</class>
     <class>eapli.base.warehousemanagement.domain.Aisle</class>
-    <!--<class>eapli.base.warehousemanagement.domain.Row</class>
-    <class>eapli.base.warehousemanagement.domain.Shelf</class>-->
+    <class>eapli.base.warehousemanagement.domain.TheRow</class>
+    <class>eapli.base.warehousemanagement.domain.Shelf</class>
     <class>eapli.base.warehousemanagement.domain.Square</class>
     <class>eapli.base.ordermanagement.domain.OrderItem</class>
 

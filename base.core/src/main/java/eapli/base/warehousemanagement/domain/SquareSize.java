@@ -4,22 +4,23 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class SquareSize {
     private static final long serialVersionUID = 1L;
 
-    private int squareSize;
+    private Long squareSize;
 
-    public SquareSize(int squareSize){
+    public SquareSize(Long squareSize){
         Preconditions.isPositive(squareSize, "Square Size must be positive!");
 
         this.squareSize=squareSize;
     }
 
-    public SquareSize() {this.squareSize= 0;}
+    public SquareSize() {this.squareSize= null;}
 
-    public static  SquareSize valueOf(final int squareSize){
+    public static  SquareSize valueOf(final Long squareSize){
         return new SquareSize(squareSize);
     }
 
@@ -30,7 +31,7 @@ public class SquareSize {
             return false;
         } else {
             SquareSize that = (SquareSize) o;
-            return this.squareSize==that.squareSize;
+            return Objects.equals(this.squareSize, that.squareSize);
         }
     }
 

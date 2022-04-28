@@ -19,7 +19,7 @@ public class Accessibility implements ValueObject, Serializable {
         this.accessibility=accessibility;
     }
 
-    public Accessibility() {
+    protected Accessibility() {
         this.accessibility="";
     }
 
