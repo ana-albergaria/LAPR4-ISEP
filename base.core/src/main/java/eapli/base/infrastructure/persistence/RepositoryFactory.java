@@ -91,6 +91,8 @@ public interface RepositoryFactory {
     ShelfRepository shelfs();
     AgvDockRepository agvDocks();
 
+    SquareRepository squares();
+
     /**
      *
      * @param autoTx

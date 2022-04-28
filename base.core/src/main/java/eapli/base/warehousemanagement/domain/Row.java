@@ -31,6 +31,8 @@ public class Row implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private Aisle aisleID;
 
+
+
     public Row(Long rowID, Square beginSquare, Square endSquare, Aisle aisleID) {
         Preconditions.noneNull(rowID, beginSquare, endSquare, aisleID);
         this.rowID=rowID;

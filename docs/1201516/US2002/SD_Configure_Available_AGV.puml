@@ -6,14 +6,16 @@ autonumber
 Actor ":WarehouseEmployee" as WE
 participant "AGVUI" as UI <<presentation>>
 participant "AGVController" as Controller <<application>>
-participant "AGV Builder" as Builder <<builder>>
 participant "agv: AGV" as AGV <<domain>>
 participant "agvDock: AGVDock" as Dock <<domain>>
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as Factory <<factory>>
-database AGVRepository as Repository <<repository>>
+database AGVRepository as agvRepository <<repository>>
+database AGVDockRepository as agvDockRepository <<repository>>
 
 activate WE
+
+loop until the Warehouse Employee selects no when asked if he wants to create more AGVs
 
 WE -> UI: Begin the process to register an AGV
 
@@ -36,34 +38,28 @@ UI -> Controller: registerAGV(agvID, autonomyStatus, taskStatus, \n modelID, sho
 
 activate Controller
 
-Controller -> Builder: create
-Controller -> Builder: setAgvID(agvID)
-Controller -> Builder: setAutonomyStatus(autonomyStatus)
-Controller -> Builder: setTaskStatus(taskStatus)
-Controller -> Builder: setModelID(modelID)
-Controller -> Builder: setShortDescription(shortDescription)
-Controller -> Builder: setMaxWeight(maxWeight)
-Controller -> Builder: createAGV()
+Controller -> AGV: create
+Controller -> AGV: setAgvID(agvID)
+Controller -> AGV: setAutonomyStatus(autonomyStatus)
+Controller -> AGV: setTaskStatus(taskStatus)
+Controller -> AGV: setModelID(modelID)
+Controller -> AGV: setShortDescription(shortDescription)
+Controller -> AGV: setMaxWeight(maxWeight)
 
-activate Builder
+Controller -> Dock: createAGVDock(dockID, beginSquare, endSquare, depthSquare, accessibilityDirection)
+activate Dock
 
-Builder -> AGV: createAGV(agvID, autonomyStatus, taskStatus, \n modelID, shortDescription, maxWeight)
-AGV -> Builder: agv
+Dock -> Controller: agvDock
 
-Builder -> Controller: agv
+deactivate Dock
 
-deactivate Builder
+Controller -> AGV: createAGV(agvID, autonomyStatus, taskStatus, model, agvDock)
 
-Controller -> Builder: createAGVDock()
+activate AGV
 
-activate Builder
+AGV -> Controller: agv
 
-Builder -> Dock: createAGVDock(dockID, beginSquare, endSquare, depthSquare, accessibilityDirection)
-Dock -> Builder: agvDock
-
-Builder -> Controller: agvDock
-
-deactivate Builder
+deactivate AGV
 
 Controller -> Persistence: repositories()
 
@@ -74,24 +70,37 @@ Persistence -> Controller: factory
 
 deactivate Persistence
 
+Controller -> Factory: agvDocks()
+
+activate Factory
+
+Factory -> agvDockRepository: create
+Factory -> Controller: agvDockRepository
+
+deactivate Factory
+
+Controller -> agvDockRepository: save(agvDock)
+
 Controller -> Factory: agvs()
 
 activate Factory
 
-Factory -> Repository: create
+Factory -> agvRepository: create
 Factory -> Controller: agvRepository
 
 deactivate Factory
 
-Controller -> Repository: save(agv)
+Controller -> agvRepository: save(agv)
 
 Controller -> UI: user
 
 deactivate Controller
 
-UI -> WE: successfully creates one or more AGV
+UI -> WE: successfully creates AGV
 
 deactivate UI
+
+end
 
 WE -> UI: Wants to configure the available AGVs in the Warehouse
 
@@ -103,13 +112,13 @@ activate Controller
 
 loop for each available AGV in the Warehouse
 
-Controller -> Builder: id = getAgvID()
-Controller -> Builder: autonomyStatus = getAutonomyStatus()
-Controller -> Builder: taskStatus = getTaskStatus()
-Controller -> Builder: model = getModelID()
-Controller -> Builder: shortDescription = getShortDescription()
-Controller -> Builder: maxWeight = getMaxWeight()
-Controller -> Builder: agvDock = getAGVDock()
+Controller -> AGV: id = getAgvID()
+Controller -> AGV: autonomyStatus = getAutonomyStatus()
+Controller -> AGV: taskStatus = getTaskStatus()
+Controller -> AGV: model = getModelID()
+Controller -> AGV: shortDescription = getShortDescription()
+Controller -> AGV: maxWeight = getMaxWeight()
+Controller -> AGV: agvDock = getAGVDock()
 
 end
 
