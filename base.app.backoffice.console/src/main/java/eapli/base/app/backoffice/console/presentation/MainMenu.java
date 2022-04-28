@@ -223,10 +223,10 @@ public class MainMenu extends AbstractUI {
     private Menu buildWarehouseEmployee(){
         final Menu menu = new Menu("Warehouse Employee >");
 
-        menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
-        menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
         menu.addItem(REGISTER_AGV, "Register AGV", new RegisterAGVUI()::show);
+        menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
         menu.addItem(AVAILABLE_AGVS_INFORMATIONS, "Show Available AGVs Description", new ConfigureAvailableAGVUI()::show);
+        menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
