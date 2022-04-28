@@ -10,8 +10,6 @@ public class RegisterAGVUI extends AbstractUI {
 
     private final RegisterAGVController controller = new RegisterAGVController();
 
-    private final AGVBuilder builder = new AGVBuilder();
-
     @Override
     protected boolean doShow() {
         String option = "";
@@ -33,13 +31,11 @@ public class RegisterAGVUI extends AbstractUI {
 
             AutonomyStatus autonomy = new AutonomyStatus(autonomyStatus);
             TaskStatus task = new TaskStatus(taskStatus);
-            Square beginSquare = new Square(beginSquareLength, beginSquareWidth);
-            Square endSquare = new Square(endSquareLength, endSquareWidth);
-            Square depthSquare = new Square(depthSquareLength, depthSquareWidth);
             Accessibility accessibilityDirection = new Accessibility(accessibilityDir);
 
             try {
-                this.controller.registerAGV(agvID, autonomy, task, modelID, shortDescription, maxWeight, agvDockID, beginSquare, endSquare, depthSquare, accessibilityDirection);
+                this.controller.registerAGV(agvID, autonomy, task, modelID, shortDescription, maxWeight, agvDockID, beginSquareLength, beginSquareWidth, endSquareLength, endSquareWidth,
+                        depthSquareLength, depthSquareWidth, accessibilityDirection);
                 System.out.println("AGV created with success!");
             } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
                 System.out.println("You tried to enter an AGV that already exists in the database.");

@@ -33,13 +33,13 @@ public class AGV implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "AGVDockID", referencedColumnName = "agvDockID")
     private AgvDock agvDock;
 
-    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription, final Double maxWeight, final String agvDockID, final Square beginSquare, final Square endSquare, final Square depthSquare, final Accessibility accessibilityDirection){
+    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription, final Double maxWeight, AgvDock agvDock){
         Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID, agvDock);
         this.agvID = agvID;
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
         this.modelID = new Model(modelID, shortDescription, maxWeight);
-        this.agvDock = new AgvDock(agvDockID, beginSquare, endSquare, depthSquare, accessibilityDirection);
+        this.agvDock = agvDock;
     }
 
     protected AGV(){
