@@ -4,24 +4,25 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class Width {
     private static final long serialVersionUID = 1L;
 
-    private int width;
+    private Long width;
 
-    public Width(int width){
+    public Width(Long width){
         Preconditions.isPositive(width, "Width must be positive!");
 
         this.width=width;
     }
 
     public Width() {
-        this.width= 0;
+        this.width= null;
     }
 
-    public static  Width valueOf(final int width){
+    public static  Width valueOf(final Long width){
         return new Width(width);
     }
 
@@ -32,7 +33,7 @@ public class Width {
             return false;
         } else {
             Width that = (Width) o;
-            return this.width==that.width;
+            return Objects.equals(this.width, that.width);
         }
     }
 

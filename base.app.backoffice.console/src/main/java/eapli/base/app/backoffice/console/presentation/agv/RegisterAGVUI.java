@@ -10,6 +10,11 @@ public class RegisterAGVUI extends AbstractUI {
 
     private final RegisterAGVController controller = new RegisterAGVController();
 
+<<<<<<< HEAD
+=======
+    //private final AGVBuilder builder = new AGVBuilder();
+
+>>>>>>> 797957de8fef3e823827c0df4d2179070d5b9f06
     @Override
     protected boolean doShow() {
         String option = "";

@@ -9,7 +9,8 @@ import java.io.Serializable;
 
 
 @Entity
-public class Row implements AggregateRoot<Long>, Serializable {
+public class TheRow implements AggregateRoot<Long>, Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Version
@@ -19,21 +20,19 @@ public class Row implements AggregateRoot<Long>, Serializable {
     private Long rowID;
 
 
-    @OneToOne
-    @JoinColumn(name = "begin_square_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Square beginSquare;
 
-    @OneToOne
-    @JoinColumn(name = "end_square_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private Square endSquare;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Aisle aisleID;
 
 
 
-    public Row(Long rowID, Square beginSquare, Square endSquare, Aisle aisleID) {
+    public TheRow(Long rowID, Square beginSquare, Square endSquare, Aisle aisleID) {
         Preconditions.noneNull(rowID, beginSquare, endSquare, aisleID);
         this.rowID=rowID;
         this.beginSquare = beginSquare;
@@ -41,7 +40,8 @@ public class Row implements AggregateRoot<Long>, Serializable {
         this.aisleID=aisleID;
     }
 
-    protected Row() {
+    protected TheRow() {
+        this.rowID=null;
     }
 
     @Override
