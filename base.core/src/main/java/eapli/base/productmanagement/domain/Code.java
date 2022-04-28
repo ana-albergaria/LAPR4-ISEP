@@ -4,7 +4,6 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
