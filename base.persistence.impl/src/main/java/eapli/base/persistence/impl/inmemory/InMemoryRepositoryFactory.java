@@ -107,6 +107,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public AgvDockRepository agvDocks(){return new InMemoryAgvDockRepository();}
 
     @Override
+    public SquareRepository squares() {
+        return new InMemorySquareRepository();
+    }
+
+    @Override
     public SignupRequestRepository signupRequests() {
         return signupRequests(null);
     }
