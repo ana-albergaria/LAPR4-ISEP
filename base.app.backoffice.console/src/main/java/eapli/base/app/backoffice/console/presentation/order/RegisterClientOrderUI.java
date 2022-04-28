@@ -6,6 +6,7 @@ import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.domain.TheOrder;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -25,10 +26,12 @@ public class RegisterClientOrderUI extends AbstractUI {
 
 
         final Long clientId = Console.readLong("Cliend ID: ");
-        //colocar try depois
+
         boolean clientExist = this.theController.verifyClientById(clientId);
-        if(!clientExist)
+        if(!clientExist) {
+            System.out.println("The client is not registered in the system. Proceed to the client registration.");
             new RegisterClientUI().show();
+        }
 
         List<List<String>> addresses = new ArrayList<>();
 
@@ -82,6 +85,8 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         Payment payment = Payment.values()[optionPayment];
 
+        System.out.println(payment.text());
+
         int k = 1;
         System.out.println("\n>> SOURCE CHANNEL:");
         for (TheOrder.SourceChannel options : TheOrder.SourceChannel.values()) {
@@ -107,7 +112,14 @@ public class RegisterClientOrderUI extends AbstractUI {
             additionalText = Console.readLine("Additional Comment: ");
         }
 
-        this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText);
+        try {
+            if(additionalText.isEmpty())
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate);
+            else
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText);
+        } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
+            System.out.println("You tried to enter an order which already exists in the database.");
+        }
 
 
 

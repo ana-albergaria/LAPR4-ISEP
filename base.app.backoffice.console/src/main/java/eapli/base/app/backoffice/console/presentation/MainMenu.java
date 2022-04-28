@@ -216,7 +216,6 @@ public class MainMenu extends AbstractUI {
     private Menu buildClientMenu() {
         final Menu menu = new Menu("Sales Clerk >");
 
-                                                        //alterar para a UI do Register Costumer
         menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
         menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
         return menu;

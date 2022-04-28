@@ -9,6 +9,7 @@ import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,7 +34,7 @@ public class RegisterClientOrderController {
 
         AdditionalComment additionalComment = new AdditionalComment(additionalCommentText);
 
-        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment);
+        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser());
 
         return orderRepository.save(order);
     }
@@ -48,7 +49,7 @@ public class RegisterClientOrderController {
         OrderAddress deliveryAddress = new OrderAddress(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2),
                 addresses.get(1).get(3), addresses.get(1).get(4));
 
-        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate);
+        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, authz.session().get().authenticatedUser());
 
         return orderRepository.save(order);
     }
@@ -60,7 +61,4 @@ public class RegisterClientOrderController {
             client = chosenClient.get();
         return client != null;
     }
-
-
-
 }

@@ -5,6 +5,7 @@ import eapli.base.productmanagement.domain.Code;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
@@ -119,7 +120,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     //NOS CONSTRUTORES FALTA: STATUS, SYSTEM USER, CALCULAR OS AMOUNTS COM TAXAS E SEM TAXAS, O VOLUME E O WEIGHT
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment) {
+    @ManyToOne
+    private SystemUser salesClerk;
+
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -130,9 +134,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
+        this.salesClerk = salesClerk;
     }
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -142,6 +147,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
+        this.salesClerk = salesClerk;
     }
 
 
