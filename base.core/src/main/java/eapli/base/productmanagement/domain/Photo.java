@@ -15,4 +15,11 @@ public class Photo implements ValueObject, Serializable {
         throw new IllegalStateException("to develop");
     }
 
+    public String name() {
+        throw new IllegalStateException("to develop");
+    }
+
+    public String path() {
+        throw new IllegalStateException("to develop");
+    }
 }
