@@ -38,9 +38,9 @@ deactivate CatRep
 CTRL --> UI : ProductCategories
 deactivate CTRL
 UI -> UI : doShow()
-UI -> CTRL : registerProduct(productCategory, shortDescription, extendedDescription, technicalDescription, brandName, reference, priceWithoutTaxes, weight, volume, tax, optionalProductionCode, photo, status)
+UI -> CTRL : registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription, priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory, technicalDescription, brandName, reference, productionCode, photos)
 activate CTRL
-CTRL -> Prod : newProduct = create(productCategory, shortDescription, extendedDescription, technicalDescription, brandName, reference, priceWithoutTaxes, weight, volume, tax, optionalProductionCode, photo, status)
+CTRL -> Prod : newProduct = create(uniqueInternalCode, barcode, shortDescription, extendedDescription, priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory, technicalDescription, brandName, reference, productionCode, photos)
 activate Prod
 |||
 deactivate Prod

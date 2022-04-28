@@ -116,6 +116,8 @@ package "<<aggregate>> Bin" {
 }
 
 entity Product <<entity>> <<root>> {
+    -<<VO>> UniqueInternalCode
+    -<<VO>> Barcode
     -<<VO>> ShortDescription
     -<<VO>> ExtendedDescription
     -<<VO>> PriceWithoutTaxes
@@ -125,12 +127,10 @@ entity Product <<entity>> <<root>> {
     -<<VO>> Tax
 }
 
-class UniqueInternalCode <<(V,#FF8B40) value object>>
 class TechnicalDescription <<(V,#FF8B40) value object>>
 class BrandName <<(V,#FF8B40) value object>>
 class Reference <<(V,#FF8B40) value object>>
 class Photo <<(V,#FF8B40) value object>>
-class Barcode <<(V,#FF8B40) value object>>
 class OptionalProductionCode <<(V,#FF8B40) value object>>
 
 
@@ -350,9 +350,7 @@ class Role <<(V,#FF8B40) value object>> {
 
 } '/
 
-Product --> "1" UniqueInternalCode : has
 Product --> "*" Photo
-Product --> "1" Barcode
 Product --> "0..1" OptionalProductionCode
 Product --> "1" Category : belongs to
 Product --> "0..1" TechnicalDescription
