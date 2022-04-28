@@ -26,6 +26,7 @@ package eapli.base.app.backoffice.console.presentation;
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
+import eapli.base.app.backoffice.console.presentation.order.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -69,6 +70,7 @@ public class MainMenu extends AbstractUI {
 
     // COSTUMERS
     private static final int REGISTER_COSTUMER_OPTION = 1;
+    private static final int REGISTER_ORDER_FOR_CLIENT_OPTION = 2;
 
     // DISH TYPES
     private static final int DISH_TYPE_REGISTER_OPTION = 1;
@@ -212,11 +214,11 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildClientMenu() {
-        final Menu menu = new Menu("Clients >");
+        final Menu menu = new Menu("Sales Clerk >");
 
                                                         //alterar para a UI do Register Costumer
         menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
-
+        menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
         return menu;
     }
 

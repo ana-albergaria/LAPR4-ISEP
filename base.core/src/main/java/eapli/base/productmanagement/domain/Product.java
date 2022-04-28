@@ -86,8 +86,6 @@ public class Product implements AggregateRoot<Code>, Serializable {
 
     private Barcode barcode;
 
-    //+BARCODE
-
     /**
      * Constructor for Product with the minimum attributes.
      * @param uniqueInternalCode the product unique internal code
@@ -180,10 +178,6 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return priceWithoutTaxes;
     }
 
-    /*public OurMoney getPriceWithoutTaxesOnDate(final Calendar date) {
-        return priceWithoutTaxes.onDate(date);
-    }*/
-
     public Status getStatus() {
         return status;
     }
@@ -200,10 +194,6 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return priceWithTaxes;
     }
 
-    /*public OurMoney getPriceWithTaxesOnDate(final Calendar date) {
-        return priceWithTaxes.onDate(date);
-    }*/
-
     public Optional<Code> getProductionCode() {
         return Optional.ofNullable(productionCode);
     }
@@ -212,48 +202,8 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return Collections.unmodifiableSet(photos);
     }
 
-    //+método para mudar priceWithoutTaxes
-
-    //+método para mudar priceWithTaxes
-
     public boolean addPhoto(final Photo photo){
         return photos.add(photo); //add(new ProductPhoto(photo)) ???
     }
-
-
-
-    /*
-    //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
-    public void addProductionCode(final String productionCode) {
-        if (!isLetters(productionCode.substring(0, 3))){
-            throw new IllegalArgumentException("Production Code needs to start with 4 letters!");
-        } else if (productionCode.charAt(4)!='.'){
-            throw new IllegalArgumentException("Production Code needs to have a dot as the 5th character!");
-        } else if (!isDigits(productionCode.substring(5,9))){
-            throw new IllegalArgumentException("Production Code needs to end with 5 digits!");
-        }
-        this.productionCode = productionCode;
-    }
-
-    public boolean isLetters(String string) {
-        char[] chars = string.toCharArray();
-        for (char c : chars) {
-            if(!Character.isLetter(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isDigits(String string) {
-        char[] chars = string.toCharArray();
-        for (char c : chars) {
-            if(!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    */
 
 }
