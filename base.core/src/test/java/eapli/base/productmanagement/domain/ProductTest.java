@@ -8,7 +8,7 @@ import org.junit.Test;
 public class ProductTest {
 
     private static final Code UNIQUE_INTERNAL_CODE = Code.valueOf("abcd.12345");
-    private static final ProductCategory PRODUCT_CATEGORY = new ProductCategory("code","description");
+    private static final ProductCategory PRODUCT_CATEGORY = new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("description"));
 
     @Test
     public void ensureDishWithObrigatoryParameters(){

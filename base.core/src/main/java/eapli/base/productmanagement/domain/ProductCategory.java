@@ -4,13 +4,11 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class ProductCategory implements AggregateRoot<String>, Serializable {
+public class ProductCategory implements AggregateRoot<AlphaNumericCode>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,26 +16,37 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
     private Long version;
 
     @Id
-    private String alphanumericCode;
+    private AlphaNumericCode alphanumericCode;
 
-    private String description;
+    @Embedded
+    private CategoryDescription description;
 
     protected ProductCategory(){
-
+        this.alphanumericCode=null;
     }
 
-    public ProductCategory(final String alphanumericCode, final String description){
+    public ProductCategory(final AlphaNumericCode alphanumericCode, final CategoryDescription description){
         Preconditions.noneNull(alphanumericCode,description);
         this.alphanumericCode=alphanumericCode;
         this.description=description;
     }
 
-    public String getAlphanumericCode() {
+    public AlphaNumericCode getAlphanumericCode() {
         return alphanumericCode;
     }
 
-    public String getDescription() {
+    public CategoryDescription getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(final Object o){
+        return DomainEntities.areEqual(this,o);
+    }
+
+    @Override
+    public int hashCode(){
+        return DomainEntities.hashCode(this);
     }
 
     @Override
@@ -46,7 +55,7 @@ public class ProductCategory implements AggregateRoot<String>, Serializable {
     }
 
     @Override
-    public String identity() {
+    public AlphaNumericCode identity() {
         return this.alphanumericCode;
     }
 }
