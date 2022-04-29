@@ -7,6 +7,8 @@ import eapli.framework.application.ApplicationService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.util.Optional;
+
 @ApplicationService
 public class ListProductCategoryService {
 
@@ -17,6 +19,10 @@ public class ListProductCategoryService {
     public Iterable<ProductCategory> allProductCategories(){
         authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK);
         return repo.findAll();
+    }
+
+    public Optional<ProductCategory> find(final AlphaNumericCode alphaNumericCode){
+        return repo.findByAlphanumericCode(alphaNumericCode);
     }
 
 }

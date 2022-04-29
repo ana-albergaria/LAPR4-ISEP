@@ -31,7 +31,7 @@ public class RegisterProductController {
                                    final double priceWithoutTaxes, final String status, final double weight, final double volume,
                                    final double priceWithTaxes, final ProductCategory productCategory, final String technicalDescription,
                                    final String brandName, final String reference, final String productionCode, final Set<Photo> photos){
-        authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK);
+        authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_CLERK, BaseRoles.POWER_USER);
 
         final var newProduct = new ProductBuilder()
                 .codedAs(new Code(uniqueInternalCode))
