@@ -10,7 +10,7 @@ public class SetUpPlantUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        this.controller.setUpPlant(new File("D:\\Faculdade\\ano 2\\semestre2\\LAPR4\\warehouse1.json"));
+        this.controller.setUpPlant(new File("base.core\\src\\main\\java\\eapli\\base\\warehousemanagement\\application\\warehouse1.json"));
 
 
         return false;
