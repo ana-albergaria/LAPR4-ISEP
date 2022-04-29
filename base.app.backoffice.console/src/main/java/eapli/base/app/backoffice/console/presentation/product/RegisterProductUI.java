@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 
 public class RegisterProductUI extends AbstractUI {
