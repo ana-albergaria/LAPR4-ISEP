@@ -86,8 +86,8 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
-    @ManyToOne(optional = false)
-    private ProductCategory productCategory;
+    //@ManyToOne
+    //private ProductCategory productCategory;
 
     @ElementCollection
     private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
@@ -119,7 +119,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
         this.weight=weight;
         this.volume=volume;
         this.priceWithTaxes=priceWithTaxes;
-        this.productCategory=null; //TENHO DE APRESENTAR AS CATEGORIAS PARA ESCOLHER
+        //this.productCategory=null; //TENHO DE APRESENTAR AS CATEGORIAS PARA ESCOLHER
     }
 
     protected Product(){
@@ -159,9 +159,9 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
         this.priceWithTaxes = priceWithTaxes;
     }
 
-    public ProductCategory getProductCategory(){
+    /*public ProductCategory getProductCategory(){
         return productCategory;
-    }
+    }*/
 
     @Override
     public Code identity() {
