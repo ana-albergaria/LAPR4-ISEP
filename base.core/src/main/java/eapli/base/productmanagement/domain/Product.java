@@ -151,7 +151,8 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     }
 
     //APENAS PARA TESTAR US1004
-    public Product(Money priceWithoutTaxes, Weight weight, Volume volume, Money priceWithTaxes) {
+    public Product(Code uniqueInternalCode, Money priceWithoutTaxes, Weight weight, Volume volume, Money priceWithTaxes) {
+        this.uniqueInternalCode=uniqueInternalCode;
         this.priceWithoutTaxes = priceWithoutTaxes;
         this.weight = weight;
         this.volume = volume;

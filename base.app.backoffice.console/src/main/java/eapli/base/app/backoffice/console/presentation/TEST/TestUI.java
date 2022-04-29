@@ -2,10 +2,7 @@ package eapli.base.app.backoffice.console.presentation.TEST;
 
 import eapli.base.app.backoffice.console.presentation.product.ProductCategoryPrinter;
 import eapli.base.productmanagement.application.RegisterProductController;
-import eapli.base.productmanagement.domain.Photo;
-import eapli.base.productmanagement.domain.ProductCategory;
-import eapli.base.productmanagement.domain.Volume;
-import eapli.base.productmanagement.domain.Weight;
+import eapli.base.productmanagement.domain.*;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.io.util.Console;
@@ -25,13 +22,14 @@ public class TestUI extends AbstractUI {
     @Override
     protected boolean doShow(){
 
+        final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
         final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
         final double weight = Console.readDouble("OrderWeight: ");
         final double volume = Console.readDouble("Volume: ");
         final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
 
         try{
-            this.theController.test(Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), Volume.valueOf(volume), Weight.valueOf(weight));
+            this.theController.test(Code.valueOf(uniqueInternalCode), Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), Volume.valueOf(volume), Weight.valueOf(weight));
             System.out.println("Product successfully created!");
         } catch (final IntegrityViolationException e){
             System.out.println("You tried to enter a product which already exists in the database.");
