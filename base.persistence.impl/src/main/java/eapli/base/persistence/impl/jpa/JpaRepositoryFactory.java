@@ -75,12 +75,12 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ProductRepository products() {
-        return null;
+        return new JpaProductRepository();
     }
 
     @Override
     public ProductCategoryRepository productCategories() {
-        return null;
+        return new JpaProductCategoryRepository();
     }
 
     /* Acrescentei - Dúvida */
