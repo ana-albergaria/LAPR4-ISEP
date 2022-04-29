@@ -14,7 +14,7 @@ public class RegisterAGVController {
 
     private final AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
 
-    private final AGVRepository agvRepostitory = PersistenceContext.repositories().agvs();
+    private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
 
     private final SquareRepository squareRepository = PersistenceContext.repositories().squares();
 
@@ -25,6 +25,6 @@ public class RegisterAGVController {
 
         final var newAGV = new AGV(agvID, autonomyStatus, taskStatus, modelID, shortDescription, maxWeight, agvDock);
 
-        return agvRepostitory.save(newAGV);
+        return agvRepository.save(newAGV);
     }
 }

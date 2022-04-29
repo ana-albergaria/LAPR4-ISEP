@@ -23,7 +23,7 @@ public class ConfigureAvailableAGVController {
         for(AGV agv : repository.findAll()){
             availableAGVsInfo.put(agv, agv.toString()
                     + agv.getModelID().toString()
-                    //+ agv.getAgvID().toString() -- AGV Dock ID, ainda não implementado.
+                    + agv.getAgvDock().toString()
                     + agv.getAutonomyStatus().toString()
                     + agv.getTaskStatus().toString());
         }

@@ -1,13 +1,15 @@
 package eapli.base.warehousemanagement.domain;
 
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Unit {
+public class Unit implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
     private String unit;
