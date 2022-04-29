@@ -25,7 +25,7 @@ public class RegisterClientOrderUI extends AbstractUI {
     protected boolean doShow() {
 
 
-        Map<String, Integer> items = new HashMap<>();
+        /*Map<String, Integer> items = new HashMap<>();
 
         System.out.println(">> PRODUCTS OF THE ORDER");
 
@@ -53,7 +53,7 @@ public class RegisterClientOrderUI extends AbstractUI {
                 items.put(productCode, quantity);
                 moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?");
             }
-        }
+        }*/
 
         final Long clientId = Console.readLong("Cliend ID: ");
 
