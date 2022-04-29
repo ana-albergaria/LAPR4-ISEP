@@ -43,7 +43,7 @@ public class RegisterAGVUI extends AbstractUI {
             TaskStatus task = new TaskStatus(taskStatus);
             //Accessibility accessibilityDirection = new Accessibility(accessibilityDir);
 
-            /*Map<Integer, AgvDock> dockOptions = new HashMap<>();
+            Map<Integer, AgvDock> dockOptions = new HashMap<>();
             numDocks = dockRepository.count();
             AgvDock dock = null;
             int i = 1;
@@ -58,13 +58,13 @@ public class RegisterAGVUI extends AbstractUI {
             final Integer selectedDock = read.nextInt();
 
             for(Integer numberedDocks : dockOptions.keySet()){
-                if(numberedDocks == selectedDock){
+                if(numberedDocks.equals(selectedDock)){
                     dock = dockOptions.get(numberedDocks);
                 }
-            }*/
+            }
 
             try {
-                this.controller.registerAGV(agvID, autonomy, task, modelID, shortDescription, maxWeight/*, dock*/);
+                this.controller.registerAGV(agvID, autonomy, task, modelID, shortDescription, maxWeight, dock);
                 System.out.println("AGV created with success!");
             } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
                 System.out.println("You tried to enter an AGV that already exists in the database.");

@@ -19,11 +19,11 @@ public class RegisterAGVController {
     private final SquareRepository squareRepository = PersistenceContext.repositories().squares();
 
     public AGV registerAGV(final Long agvID,final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription,
-                           final Double maxWeight/*, AgvDock agvDock*/){
+                           final Double maxWeight, AgvDock agvDock){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        final var newAGV = new AGV(agvID, autonomyStatus, taskStatus, modelID, shortDescription, maxWeight/*, agvDock*/);
+        final var newAGV = new AGV(agvID, autonomyStatus, taskStatus, modelID, shortDescription, maxWeight, agvDock);
 
         return agvRepostitory.save(newAGV);
     }
