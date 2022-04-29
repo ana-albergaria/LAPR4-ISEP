@@ -11,11 +11,21 @@ public class ProductTest {
     private static final ProductCategory PRODUCT_CATEGORY = new ProductCategory("code","description");
 
     @Test
-    public void ensureDishWithObrigatoryParameters(){
-        new Product(UNIQUE_INTERNAL_CODE,ShortDescription.valueOf("Short description."), ExtendedDescription.valueOf("Very very very very very very very extended description."),
-                Money.valueOf(1.5,"EUR"), Product.Status.AVAILABLE,Weight.valueOf(10),Volume.valueOf(5.3),Money.valueOf(3,"EUR"),PRODUCT_CATEGORY);
+    public void ensureProductWithObrigatoryParameters(){
+        new Product(UNIQUE_INTERNAL_CODE,Barcode.valueOf("123456789012"),ShortDescription.valueOf("Short description."), ExtendedDescription.valueOf("Very very very very very very very extended description."),
+                Money.euros(1.5), Product.Status.AVAILABLE,Weight.valueOf(10),Volume.valueOf(5.3),Money.euros(3),PRODUCT_CATEGORY);
         assertTrue(true);
     }
+
+    /*@Test
+    public void ensureCanBuildProductWithObrigatoryParameters(){
+        final Product product = new ProductBuilder()
+                .codedAs(UNIQUE_INTERNAL_CODE)
+                .ofBarcode(Barcode.valueOf("123456789012"))
+                .shortlyDescriptedAs(ShortDescription.valueOf(""))
+                .extendedlyDescriptedAs(ExtendedDescription.valueOf(""))
+                .initialyPricedAs(Money.euros())
+    }*/
 
 
 

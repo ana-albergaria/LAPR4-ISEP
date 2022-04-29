@@ -107,9 +107,9 @@ public class ProductBuilder implements DomainFactory<Product> {
         // instance (it is only built) in the build method
         if (theProduct!=null){
             return theProduct;
-        } else if (category!=null && shortDescription!=null && extendedDescription!=null &&
+        } else if (category!=null && barcode!=null && shortDescription!=null && extendedDescription!=null &&
         priceWithoutTaxes!=null && status!=null && weight!=null && volume!=null && priceWithTaxes!=null){
-            theProduct = new Product(uniqueInternalCode, shortDescription, extendedDescription,
+            theProduct = new Product(uniqueInternalCode, barcode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, priceWithTaxes, category);
             return theProduct;
         } else {
