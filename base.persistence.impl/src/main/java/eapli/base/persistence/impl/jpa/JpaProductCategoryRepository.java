@@ -6,6 +6,7 @@ import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 
 public class JpaProductCategoryRepository extends BaseJpaRepositoryBase<ProductCategory, AlphaNumericCode, AlphaNumericCode>
 implements ProductCategoryRepository {
+    //comentario
     JpaProductCategoryRepository() {
         super("alphanumericCode");
     }

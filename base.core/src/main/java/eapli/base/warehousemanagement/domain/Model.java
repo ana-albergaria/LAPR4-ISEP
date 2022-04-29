@@ -38,6 +38,6 @@ public class Model implements ValueObject, Serializable {
 
     @Override
     public String toString(){
-        return String.format("Model ID: %s\nShort Description: %s\nMax Weight: %.2f", modelID, shortDescription, maxWeight);
+        return String.format("Model ID: %s\nShort Description: %s\nMax Weight: %.2f\n", modelID, shortDescription, maxWeight);
     }
 }

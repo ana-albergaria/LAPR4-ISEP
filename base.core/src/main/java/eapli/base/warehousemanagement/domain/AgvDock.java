@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 
 @Entity
-public class AgvDock implements AggregateRoot<Long>, Serializable {
+public class AgvDock implements AggregateRoot<String>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,12 +63,27 @@ public class AgvDock implements AggregateRoot<Long>, Serializable {
     }
 
     @Override
-    public Long identity() {
-        return Long.valueOf(this.agvDockID);
+    public String identity() {
+        return this.agvDockID;
     }
 
     @Override
     public String toString(){
-        return this.agvDockID;
+        return String.format("Dock ID: %s \n", agvDockID);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof AgvDock)) {
+            return false;
+        }
+
+        AgvDock agvDock = (AgvDock) o;
+
+        return agvDock.agvDockID.equalsIgnoreCase(this.agvDockID);
     }
 }

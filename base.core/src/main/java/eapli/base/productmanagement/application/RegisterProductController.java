@@ -58,4 +58,9 @@ public class RegisterProductController {
         return svc.allProductCategories();
     }
 
+    //APENAS PARA TESTAR US1004
+    public Product test(final Code uniqueInternalCode, final Money priceWithoutTaxes, final Money priceWithTaxes, Volume volume, Weight weight){
+        Product product = new Product(uniqueInternalCode, priceWithoutTaxes,weight,volume,priceWithTaxes);
+        return repository.save(product);
+    }
 }

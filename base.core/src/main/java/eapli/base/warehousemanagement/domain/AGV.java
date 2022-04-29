@@ -29,17 +29,17 @@ public class AGV implements AggregateRoot<Long>, Serializable {
     @Embedded
     private Model modelID;
 
-    /*@OneToOne
+    @OneToOne
     @JoinColumn(name = "AGVDockID", referencedColumnName = "agvDockID")
-    private AgvDock agvDock;*/
+    private AgvDock agvDock;
 
-    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription, final Double maxWeight/*, AgvDock agvDock*/){
-        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID/*, agvDock*/);
+    public AGV(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID, final String shortDescription, final Double maxWeight, AgvDock agvDock){
+        Preconditions.noneNull(agvID, autonomyStatus, taskStatus, modelID, agvDock);
         this.agvID = agvID;
         this.autonomyStatus = autonomyStatus;
         this.taskStatus = taskStatus;
         this.modelID = new Model(modelID, shortDescription, maxWeight);
-        //this.agvDock = agvDock;
+        this.agvDock = agvDock;
     }
 
     protected AGV(){
@@ -62,9 +62,9 @@ public class AGV implements AggregateRoot<Long>, Serializable {
         return modelID;
     }
 
-    /*public AgvDock getAgvDock() {
+    public AgvDock getAgvDock() {
         return agvDock;
-    }*/
+    }
 
     @Override
     public boolean sameAs(Object other) {

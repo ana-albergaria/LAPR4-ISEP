@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 
 public class RegisterProductUI extends AbstractUI {
@@ -29,8 +31,8 @@ public class RegisterProductUI extends AbstractUI {
         final String shortDescription = Console.readLine("Short Description: ");
         final String extendedDescription = Console.readLine("Extended Description: ");
         final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
-        final String status = Console.readLine("OrderStatus: ");
-        final double weight = Console.readDouble("OrderWeight: ");
+        final String status = Console.readLine("Status (AVAILABLE, TEMPORARILY_UNAVAILABLE, UNAVAILABLE): ");
+        final double weight = Console.readDouble("Weight: ");
         final double volume = Console.readDouble("Volume: ");
         final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
         final String technicalDescription = Console.readLine("Technical Description: ");

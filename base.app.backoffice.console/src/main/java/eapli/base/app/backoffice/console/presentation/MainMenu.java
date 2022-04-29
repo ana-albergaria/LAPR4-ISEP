@@ -23,6 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
+import eapli.base.app.backoffice.console.presentation.TEST.TestUI;
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
@@ -120,7 +121,7 @@ public class MainMenu extends AbstractUI {
     // MAIN MENU SALES CLERK
     private static final int PRODUCT_OPTION = 1;
     private static final int COSTUMERS_OPTION = 2;
-    private static final int CREATE_CATEGORY = 4;
+    private static final int CREATE_CATEGORY = 5;
 
     // WAREHOUSE EMPLOYEE
     private static final int REGISTER_AGV = 1;
@@ -229,7 +230,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
         menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
         menu.addItem(CREATE_CATEGORY, "Create Product Category", new CreateCategoryUI()::show);
-
+        menu.addItem(4, "test", new TestUI()::show);
         return menu;
     }
 
