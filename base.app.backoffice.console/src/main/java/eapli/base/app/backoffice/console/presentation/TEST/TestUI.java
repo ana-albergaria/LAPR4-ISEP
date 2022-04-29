@@ -22,6 +22,10 @@ public class TestUI extends AbstractUI {
     @Override
     protected boolean doShow(){
 
+        final Iterable<ProductCategory> productCategories = theController.productCategories();
+        final SelectWidget<ProductCategory> selector = new SelectWidget<>("Select a product category", productCategories, new ProductCategoryPrinter());
+        selector.show();
+        final ProductCategory productCategory = selector.selectedElement();
         final String uniqueInternalCode = Console.readLine("Unique Internal Code: ");
         final double priceWithoutTaxes = Console.readDouble("Price Without Taxes: ");
         final double weight = Console.readDouble("OrderWeight: ");
@@ -29,7 +33,7 @@ public class TestUI extends AbstractUI {
         final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
 
         try{
-            this.theController.test(Code.valueOf(uniqueInternalCode), Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), Volume.valueOf(volume), Weight.valueOf(weight));
+            this.theController.test(productCategory, Code.valueOf(uniqueInternalCode), Money.euros(priceWithoutTaxes), Money.euros(priceWithTaxes), Volume.valueOf(volume), Weight.valueOf(weight));
             System.out.println("Product successfully created!");
         } catch (final IntegrityViolationException e){
             System.out.println("You tried to enter a product which already exists in the database.");
