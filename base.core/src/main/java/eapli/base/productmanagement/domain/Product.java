@@ -149,6 +149,14 @@ public class Product implements AggregateRoot<Code>, Serializable {
         return identity().equals(that.identity());
     }
 
+    //APENAS PARA TESTAR US1004
+    public Product(Money priceWithoutTaxes, Weight weight, Volume volume, Money priceWithTaxes) {
+        this.priceWithoutTaxes = priceWithoutTaxes;
+        this.weight = weight;
+        this.volume = volume;
+        this.priceWithTaxes = priceWithTaxes;
+    }
+
     public ProductCategory getProductCategory(){
         return productCategory;
     }
