@@ -12,8 +12,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import java.util.Set;
 
 public class RegisterProductController {
-    
-    private ListProductCategoryService svc;
+
+    private ListProductCategoryService svc = new ListProductCategoryService();
 
     private ProductCategoryRepository productCategoryRepository;
 

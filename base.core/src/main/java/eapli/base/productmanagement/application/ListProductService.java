@@ -1,6 +1,6 @@
 package eapli.base.productmanagement.application;
 
-import eapli.base.clientmanagement.domain.Client;
+
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
