@@ -8,12 +8,10 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 
 public class RegisterProductUI extends AbstractUI {
@@ -40,19 +38,14 @@ public class RegisterProductUI extends AbstractUI {
         final String reference = Console.readLine("Reference: ");
         final String productionalCode = Console.readLine("Production Code: ");
         final Set<Photo> photos = new HashSet<>();
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "PNG, JPG, JPEG & SVG", "png", "jpg", "jpeg", "svg", "PNG", "JPG", "JEPG", "SVG"
-        );
-        chooser.setFileFilter(filter);
         String option = "yes";
-        Photo photo;
+        String photoPath;
         do {
-            System.out.println("Select a photo.");
-            int photoValue = chooser.showOpenDialog(null);
-            if (photoValue == JFileChooser.APPROVE_OPTION) {
-                photo = new Photo(chooser.getSelectedFile().getPath());
-                photos.add(photo);
+            photoPath = Console.readLine("Photo Path: ");
+            if (Files.exists(Paths.get(photoPath)) && !photos.contains(new Photo(photoPath))) {
+                photos.add(new Photo(photoPath));
+            } else {
+                System.out.println("This photo was already added.");
             }
             do {
                 if (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no")){
@@ -61,7 +54,6 @@ public class RegisterProductUI extends AbstractUI {
                 option = Console.readLine("Do you want to add another photo? Yes or no? ");
             } while (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no"));
         } while (option.equalsIgnoreCase("yes"));
-
         try{
             this.theController.registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory, technicalDescription,

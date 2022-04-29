@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
 public class Photo implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
-    //private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^(?:[\\w]\\:|\\\\)(\\\\[a-z_\\-\\s0-9\\.]+)+\\.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
+    private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^(?:[\\w]\\:|\\\\)(\\\\[a-z_\\-\\s0-9\\.]+)+\\.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
 
     private final String value;
 
     public Photo(final String value){
-        Preconditions.nonEmpty(value, "Photo should neither be null nor empty");
-        //Preconditions.matches(VALID_PHOTO_REGEX, value, "The Photo does not follow the required format.");
+        Preconditions.nonEmpty(value, "Photo path should neither be null nor empty");
+        Preconditions.matches(VALID_PHOTO_REGEX, value, "The Photo does not follow the required format.");
         this.value=value;
     }
 
