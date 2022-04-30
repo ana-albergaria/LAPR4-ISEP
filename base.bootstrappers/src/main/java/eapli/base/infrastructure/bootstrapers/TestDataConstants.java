@@ -30,6 +30,10 @@ public final class TestDataConstants {
     public static final String PRODUCT_CATEGORY_FISH = "fsh1";
     public static final String PRODUCT_CATEGORY_JEANS = "jns1";
 
+    public static final String PRODUCT_LEMON_SHAMPOO = "lmsp.00001";
+    public static final String PRODUCT_APPLE_SHAMPOO = "apsp.00001";
+    public static final String PRODUCT_CANNED_TUNA = "tnfs.00001";
+
     public static final String USER_TEST1 = "user1";
 
     @SuppressWarnings("squid:S2068")

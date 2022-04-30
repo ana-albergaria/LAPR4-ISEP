@@ -6,6 +6,7 @@ import eapli.framework.util.HashCoder;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+//kg
 @Embeddable
 public class Weight implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;

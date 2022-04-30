@@ -15,8 +15,6 @@ public class RegisterProductController {
 
     private ListProductCategoryService svc = new ListProductCategoryService();
 
-    private ProductCategoryRepository productCategoryRepository;
-
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
 
     private final ProductRepository repository = PersistenceContext.repositories().products();
