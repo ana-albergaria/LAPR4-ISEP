@@ -44,7 +44,7 @@ public class RegisterClientOrderUI extends AbstractUI {
             } else {
                 Integer quantity = Console.readInteger("How many units of this product do you want?");
 
-                if(items.get(productCode) == null) {
+                if(items.get(productCode) != null) {
                     items.put(productCode, quantity);
                     System.out.println("You have already chosen that Product.");
                 } else {
@@ -144,9 +144,9 @@ public class RegisterClientOrderUI extends AbstractUI {
 
         try {
             if(additionalText.isEmpty())
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, null);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items);
             else
-                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, null);
+                this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, items);
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter an order which already exists in the database.");
         }

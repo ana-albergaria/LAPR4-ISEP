@@ -1,8 +1,6 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.productmanagement.domain.Code;
-import eapli.base.productmanagement.domain.Volume;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -56,8 +54,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     })
     private OrderAddress shippingAddress;
 
-    @OneToMany
-    Set<OrderItem> items = new HashSet<>();
+    @ElementCollection
+    private Set<NewOrderItem> items;
 
 
     /**
@@ -67,12 +65,12 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
      *
      * Might be useful for future US's, namely related to the Shopping Cart
      */
-    @OneToMany
+    /*@OneToMany
     @JoinTable(name = "map_items",
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
     @MapKeyJoinColumn(name = "product_code")
-    private Map<Code, OrderItem> mapItems = new HashMap<>();
+    private Map<Code, OrderItem> mapItems = new HashMap<>();*/
 
     @Embedded
     @AttributeOverrides({
@@ -124,7 +122,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private SystemUser salesClerk;
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<NewOrderItem> items) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -138,7 +136,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
     }
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, /*final Set<OrderItem> items,*/ final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<NewOrderItem> items) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;

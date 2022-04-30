@@ -21,7 +21,6 @@
     <class>eapli.base.warehousemanagement.domain.TheRow</class>
     <class>eapli.base.warehousemanagement.domain.Shelf</class>
     <class>eapli.base.warehousemanagement.domain.Square</class>
-    <class>eapli.base.ordermanagement.domain.OrderItem</class>
     <class>eapli.base.productmanagement.domain.Product</class>
     <class>eapli.base.productmanagement.domain.ProductCategory</class>
 

@@ -1,29 +1,31 @@
 package eapli.base.ordermanagement.domain;
 
+import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-public class OrderItem implements AggregateRoot<Long>, Serializable {
+@Embeddable
+public class OrderItem implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Version
-    private Long version;
+    /*@Version
+    private Long version;*/
 
-    @Id
+    /*@Id
     @GeneratedValue
-    private Long orderItemId;
+    private Long orderItemId;*/
 
     private int quantity;
-    @ManyToOne
-    private Product item;
 
-    public OrderItem(final int qty, final Product item) {
+    private Code item;
+
+    public OrderItem(final int qty, final Code item) {
         Preconditions.isPositive(qty);
         Preconditions.nonNull(item);
 
@@ -35,7 +37,7 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
         //for ORM purposes
     }
 
-    public Product product() {
+    public Code product() {
         return item;
     }
 
@@ -43,7 +45,8 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
         return quantity;
     }
 
-    @Override
+
+    /*@Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
     }
@@ -56,6 +59,6 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
     @Override
     public Long identity() {
         return this.orderItemId;
-    }
+    }*/
 
 }
