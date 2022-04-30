@@ -1,27 +1,33 @@
 @startuml
-skinparam classAttributeIconSize 0
-
-
-class RegisterClientUI <<presentation>>
-class RegisterClientController <<application>>
-class Client <<domain>>
-class ClientRepository <<repository>>
-class ClientBuilder <<builder>>
-
-class Client {
-- ClientID
-- Name
-- VAT
-- Email
-- PhoneNumber
+class RegisterClientUI{
 }
 
-class ClientRepository{
-+save(newClient)
+class RegisterClientController{
++create()
++registerClient(firstnames, surnames, email, phoneNumber,vat, postalAddress, birthDate, gender)}
 }
 
 
-class ClientBuilder {
+class PersistenceContext{
++repositories()
+}
+
+class RepositoryFactory{
++create()
++newTransactionalContext()
++create(TransactionalContext ctx)
+}
+
+database ClientRepository{
+}
+
+class Client{
++create()
+}
+
+class ClientBuilder{
++create()
++createClient()
 +withVAT()
 +withEmail()
 +withPhoneNumber()
@@ -34,28 +40,23 @@ class ClientBuilder {
 +build()
 }
 
-
-
-
-
-class RegisterClientController {
-  +registerClient(firstNames, surnames, email, phoneNumber, vat, addresses, birthDate, gender)
+class TransactionalContext{
++beginTransaction()
++commit()
 }
 
-class RegisterClientUI {
-    #doShow()
 
-}
+RegisterClientUI --> RegisterClientController
 
-RegisterClientUI --> RegisterClientController : theController
-RegisterClientController --> Client : newClient
-RegisterClientController --> ClientRepository : clientRepository
+RegisterClientController-->ClientBuilder
+RegisterClientController -->PersistenceContext
+RegisterClientController -->TransactionalContext
+RegisterClientController-->ClientRepository
 
+ClientBuilder --> Client
 
+PersistenceContext -->RepositoryFactory
 
-RegisterClientUI ..> Client : newClient
-
-ClientBuilder --> Client : theClient
-RegisterClientUI ..> ClientBuilder
+RepositoryFactory -->ClientRepository
 
 @enduml

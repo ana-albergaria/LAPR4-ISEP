@@ -135,12 +135,43 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 ## 3.4. Testes 
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+**Teste 1:** Verificar que não é possível criar uma instância da classe Client sem os valores obrigatórios.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+	@Test
+    public void ensureDishWithNameEmailPhoneNumberVatAndPostalAddress() {
+        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
+        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
+        assertTrue(true);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveName() {
+        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
+        new Client(null,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveVat() {
+        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
+        new Client(CLIENT_NAME,null,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void ensureMustHaveEmail() {
+        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
+        new Client(CLIENT_NAME,CLIENT_VAT,null,CLIENT_PHONE_NUMBER,postalAddresses);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void ensureMustHavePhoneNumber() {
+        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
+        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,null,postalAddresses);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void ensureMustHavePostalAddress() {
+        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,null);
+    }
 
 # 4. Implementação
 
