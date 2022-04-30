@@ -1,14 +1,16 @@
 @startuml
-skinparam classAttributeIconSize 0
+
 hide empty methods
+hide empty attributes
 
 class RegisterClientOrderUI <<presentation>>
 class RegisterClientOrderController <<application>>
 class Order <<domain>>
-class OrderRepository <<repository>>
 class OrderItem <<domain>>
 class Product <<domain>>
 class ListProductService <<application>>
+class RegisterClientUI <<presentation>>
+class ViewProductsCatalogUI <<presentation>>
 
 class Order {
 -OrderId /'automatically generated'/
@@ -22,11 +24,27 @@ class Order {
 - Status
 }
 
-class OrderRepository{
-+save(order)
+class ListProductService {
++findProductById(code)
+}
+
+database OrderRepository{
+}
+
+class PersistenceContext{
++repositories()
 }
 
 
+
+class Client{
++create()
+}
+
+class TransactionalContext{
++beginTransaction()
++commit()
+}
 
 
 
@@ -37,11 +55,19 @@ class RegisterClientOrderController {
 +registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items)
 +verifyClientById(clientId)
 +fillOrderItems(items, setItems)
++verifyProductId(code)
 }
 
 class RegisterClientOrderUI {
     #doShow()
+}
 
+class RegisterClientUI {
+    #doShow()
+}
+
+class ViewProductsCatalogUI {
+    #doShow()
 }
 
 class OrderItem {
@@ -69,8 +95,16 @@ class Client {
 - PhoneNumber
 }
 
-class ClientRepository{
-+ofIdentity(clientId)
+database ClientRepository{
+}
+
+database ProductRepository {
+}
+
+
+
+class RepositoryFactory{
++create()
 }
 
 
@@ -78,7 +112,7 @@ RegisterClientOrderUI ---> RegisterClientOrderController : theController
 RegisterClientOrderController --> Order : order
 RegisterClientOrderController --> OrderRepository : orderRepository
 
-RegisterClientOrderUI ..> Order : order
+/'RegisterClientOrderUI ..> Order : order'/
 
 
 
@@ -91,9 +125,22 @@ RegisterClientOrderController --> ClientRepository : clientRepository
 /'RegisterClientOrderController --> Product : product'/
 RegisterClientOrderController --> ListProductService : svcProducts
 
-RegisterClientOrderUI ..> Client : chosenClient
+/'RegisterClientOrderUI ..> Client : chosenClient
 RegisterClientOrderUI ..> OrderItem : orderItem
-RegisterClientOrderUI ..> Product : product
+RegisterClientOrderUI ..> Product : product'/
+
+ListProductService --> ProductRepository : productRepository
+
+RegisterClientOrderController -->PersistenceContext
+RegisterClientOrderController -->TransactionalContext
+
+PersistenceContext -->RepositoryFactory
+RepositoryFactory -->ClientRepository
+RepositoryFactory -->ProductRepository
+RepositoryFactory -->OrderRepository
+
+RegisterClientOrderUI --> ViewProductsCatalogUI
+RegisterClientOrderUI --> RegisterClientUI
 
 
 @enduml
