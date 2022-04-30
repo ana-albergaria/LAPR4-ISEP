@@ -109,6 +109,8 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 
 *Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
+![CD_Client.svg](./CD_Client.svg)
+
 ## 3.3. Padrões Aplicados
 
 *Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*

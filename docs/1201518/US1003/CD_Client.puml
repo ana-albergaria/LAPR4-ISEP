@@ -1,27 +1,61 @@
 @startuml
-'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+class RegisterClientUI <<presentation>>
+class RegisterClientController <<application>>
+class Client <<domain>>
+class ClientRepository <<repository>>
+class ClientBuilder <<builder>>
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class Client {
+- ClientID
+- Name
+- VAT
+- Email
+- PhoneNumber
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class ClientRepository{
++save(newClient)
 }
+
+
+class ClientBuilder {
++withVAT()
++withEmail()
++withPhoneNumber()
++named()
++withAddresses()
++withAddress()
++buildOrThrow()
++withBirthDate()
++withGender()
++build()
+}
+
+
+
+
+
+class RegisterClientController {
+  +registerClient(firstNames, surnames, email, phoneNumber, vat, addresses, birthDate, gender)
+}
+
+class RegisterClientUI {
+    #doShow()
+
+}
+
+RegisterClientUI --> RegisterClientController : theController
+RegisterClientController --> Client : newClient
+RegisterClientController --> ClientRepository : clientRepository
+
+
+
+RegisterClientUI ..> Client : newClient
+
+ClientBuilder --> Client : theClient
+RegisterClientUI ..> ClientBuilder
 
 @enduml

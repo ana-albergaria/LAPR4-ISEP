@@ -1,0 +1,99 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide empty methods
+
+class RegisterClientOrderUI <<presentation>>
+class RegisterClientOrderController <<application>>
+class Order <<domain>>
+class OrderRepository <<repository>>
+class OrderItem <<domain>>
+class Product <<domain>>
+class ListProductService <<application>>
+
+class Order {
+-OrderId /'automatically generated'/
+- CreatedOn /'automatically generated na hora do registo do sistema'/
+- BillingAddress
+- DeliveryAddress
+- TotalAmountWithoutTaxes
+- TotalAmountWithTaxes
+- TotalWeight
+- TotalVolume
+- Status
+}
+
+class OrderRepository{
++save(order)
+}
+
+
+
+
+
+
+
+class RegisterClientOrderController {
++registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalCommentText, items)
++registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items)
++verifyClientById(clientId)
++fillOrderItems(items, setItems)
+}
+
+class RegisterClientOrderUI {
+    #doShow()
+
+}
+
+class OrderItem {
+-code
+-itemQuantity
+}
+
+class Product {
+-UniqueInternalCode
+-Weight
+-Volume
+-PriceWithTaxes
+-PriceWithoutTaxes
+-Payment
+-Shipment
+-SourceChannel
+-AdditionalComment
+}
+
+class Client {
+- ClientID
+- Name
+- VAT
+- Email
+- PhoneNumber
+}
+
+class ClientRepository{
++ofIdentity(clientId)
+}
+
+
+RegisterClientOrderUI ---> RegisterClientOrderController : theController
+RegisterClientOrderController --> Order : order
+RegisterClientOrderController --> OrderRepository : orderRepository
+
+RegisterClientOrderUI ..> Order : order
+
+
+
+Order --> "1..*" OrderItem : composed by
+OrderItem --> "1" Product : composed by
+Order --> "1" Client : ordered by
+
+RegisterClientOrderController --> ClientRepository : clientRepository
+
+/'RegisterClientOrderController --> Product : product'/
+RegisterClientOrderController --> ListProductService : svcProducts
+
+RegisterClientOrderUI ..> Client : chosenClient
+RegisterClientOrderUI ..> OrderItem : orderItem
+RegisterClientOrderUI ..> Product : product
+
+
+@enduml

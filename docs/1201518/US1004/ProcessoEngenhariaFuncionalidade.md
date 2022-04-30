@@ -126,6 +126,8 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 
 *Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
+![CD_RegisterOrderClient.svg](./CD_RegisterOrderClient.svg)
+
 ## 3.3. Padrões Aplicados
 
 *Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
