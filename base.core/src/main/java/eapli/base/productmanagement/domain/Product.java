@@ -16,23 +16,19 @@ import java.util.Set;
 public class Product implements AggregateRoot<Code>, Serializable, Comparable<Code> {
 
     public void changeTechnicalDescription(TechnicalDescription newTechnicalDescription) {
-        Preconditions.nonNull(newTechnicalDescription);
         technicalDescription = newTechnicalDescription;
     }
 
     public void changeBrandName(BrandName newBrandName) {
-        Preconditions.nonNull(newBrandName);
         brandName = newBrandName;
 
     }
 
     public void changeReference(Reference newReference) {
-        Preconditions.nonNull(newReference);
         reference = newReference;
     }
 
     public void changeProductionCode(Code newProductionCode) {
-        Preconditions.nonNull(newProductionCode);
         productionCode = newProductionCode;
     }
 

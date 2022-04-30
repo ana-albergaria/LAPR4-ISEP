@@ -33,35 +33,66 @@ public class RegisterProductUI extends AbstractUI {
         final double weight = Console.readDouble("Weight: ");
         final double volume = Console.readDouble("Volume: ");
         final double priceWithTaxes = Console.readDouble("Price With Taxes: ");
-        final String technicalDescription = Console.readLine("Technical Description: ");
-        final String brandName = Console.readLine("Brand Name: ");
-        final String reference = Console.readLine("Reference: ");
-        final String productionalCode = Console.readLine("Production Code: ");
-        final Set<Photo> photos = new HashSet<>();
-        String option = "yes";
-        String photoPath;
-        Photo photoToAdd;
-        do {
-            photoPath = Console.readLine("Photo Path: ");
-            if (Files.exists(Paths.get(photoPath)) && !photos.contains(new Photo(photoPath))) {
-                photoToAdd=new Photo(photoPath);
-                photos.add(photoToAdd);
-            } else if (!Files.exists(Paths.get(photoPath))){
-                System.out.println("Wrong path inserted.");
-            } else {
-                System.out.println("This photo was already added.");
-            }
+        String option;
+        option = Console.readLine("Do you want to insert the technical description?\n Yes or no?\n");
+        final String technicalDescription;
+        if(option.equalsIgnoreCase("yes")){
+            technicalDescription = Console.readLine("Technical Description: ");
+        } else {
+            technicalDescription = null;
+        }
+        option = Console.readLine("Do you want to insert the brand name?\n Yes or no?\n");
+        final String brandName;
+        if(option.equalsIgnoreCase("yes")){
+            brandName = Console.readLine("Brand Name: ");
+        } else {
+            brandName = null;
+        }
+        option = Console.readLine("Do you want to insert the reference?\n Yes or no?\n");
+        final String reference;
+        if(option.equalsIgnoreCase("yes")){
+            reference = Console.readLine("Reference: ");
+        } else {
+            reference = null;
+        }
+        option = Console.readLine("Do you want to insert the production code?\n Yes or no?\n");
+        final String productionCode;
+        if(option.equalsIgnoreCase("yes")){
+            productionCode = Console.readLine("Production Code: ");
+        } else {
+            productionCode = null;
+        }
+        final Set<Photo> photos;
+        option = Console.readLine("Do you want to insert photos?\n Yes or no?\n");
+        if(option.equalsIgnoreCase("yes")) {
+            photos = new HashSet<>();
+            option = "yes";
+            String photoPath;
+            Photo photoToAdd;
             do {
-                if (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no")){
-                    System.out.println("Your answer was not valid.");
+                photoPath = Console.readLine("Photo Path: ");
+                if (Files.exists(Paths.get(photoPath)) && !photos.contains(new Photo(photoPath))) {
+                    photoToAdd = new Photo(photoPath);
+                    photos.add(photoToAdd);
+                } else if (!Files.exists(Paths.get(photoPath))) {
+                    System.out.println("Wrong path inserted.");
+                } else {
+                    System.out.println("This photo was already added.");
                 }
-                option = Console.readLine("Do you want to add another photo? Yes or no? ");
-            } while (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no"));
-        } while (option.equalsIgnoreCase("yes"));
+                do {
+                    if (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no")) {
+                        System.out.println("Your answer was not valid.");
+                    }
+                    option = Console.readLine("Do you want to add another photo? Yes or no? ");
+                } while (!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no"));
+            } while (option.equalsIgnoreCase("yes"));
+        } else {
+            photos=null;
+        }
         try{
             this.theController.registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription,
                     priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory, technicalDescription,
-                    brandName, reference, productionalCode, photos);
+                    brandName, reference, productionCode, photos);
             System.out.println("Product successfully created!");
         } catch (final IntegrityViolationException e){
             System.out.println("You tried to enter a product which already exists in the database.");

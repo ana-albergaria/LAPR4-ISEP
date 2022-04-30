@@ -16,7 +16,6 @@ public class Reference implements ValueObject, Serializable {
     private final String value;
 
     public Reference(final String value){
-        Preconditions.nonEmpty(value, "Reference should not be empty");
         if (value.length() > MAX_LENGTH)
             throw new IllegalArgumentException("Reference is too long.");
         this.value=value;

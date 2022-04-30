@@ -120,26 +120,34 @@ public class ProductBuilder implements DomainFactory<Product> {
     //atributos opcionais
 
     public ProductBuilder withTechnicalDescription(final TechnicalDescription technicalDescription){
-        buildOrThrow();
-        theProduct.changeTechnicalDescription(technicalDescription);
+        if (technicalDescription!=null) {
+            buildOrThrow();
+            theProduct.changeTechnicalDescription(technicalDescription);
+        }
         return this;
     }
 
     public ProductBuilder withBrandName(final BrandName brandName){
-        buildOrThrow();
-        theProduct.changeBrandName(brandName);
+        if (brandName!=null){
+            buildOrThrow();
+            theProduct.changeBrandName(brandName);
+        }
         return this;
     }
 
     public ProductBuilder withReference(final Reference reference){
-        buildOrThrow();
-        theProduct.changeReference(reference);
+        if (reference!=null) {
+            buildOrThrow();
+            theProduct.changeReference(reference);
+        }
         return this;
     }
 
     public ProductBuilder withProductionCode(final Code productionCode){
-        buildOrThrow();
-        theProduct.changeProductionCode(productionCode);
+        if (productionCode!=null) {
+            buildOrThrow();
+            theProduct.changeProductionCode(productionCode);
+        }
         return this;
     }
 
