@@ -13,7 +13,7 @@ package "<<aggregate>> Client" {
 }
 
 entity Client <<entity>> <<root>> {
-    - CostumerID
+    - ClientID
     - <<VO>> Name
     - <<VO>> VAT
     - <<VO>> Email

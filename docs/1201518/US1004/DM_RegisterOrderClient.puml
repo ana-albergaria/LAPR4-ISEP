@@ -73,12 +73,12 @@ class SourceChannel <<(V,#FF8B40) value object>>
 class InteractionDate <<(V,#FF8B40) value object>>
 class AdditionalComment <<(V,#FF8B40) value object>>
 
-class Shipment {
+enum Shipment {
     -method
     -cost
 }
 
-class Payment {
+enum Payment {
     -method
     -status
 }

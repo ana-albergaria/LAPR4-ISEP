@@ -4,18 +4,6 @@
 
 # 1. Requisitos
 
-*Nesta secção a equipa deve indicar a funcionalidade desenvolvida bem como descrever a sua interpretação sobre a mesma e sua correlação e/ou dependência de/com outros requisitos.*
-
-*Exemplo*
-
-**Demo1** Como {Ator} pretendo...
-
-- Demo1.1. Blá Blá Blá ...
-
-- Demo1.2. Blá Blá Blá ...
-
-A interpretação feita deste requisito foi no sentido de ...
-
 US1003 - Como Sales Clerk, pretendo registar um novo cliente.
 
 ### 1.1 Especificações e esclarecimentos do cliente
@@ -77,10 +65,6 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 
 # 2. Análise
 
-*Neste secção a equipa deve relatar o estudo/análise/comparação que fez com o intuito de tomar as melhores opções de design para a funcionalidade bem como aplicar diagramas/artefactos de análise adequados.*
-
-*Recomenda-se que organize este conteúdo por subsecções.*
-
 ## 2.1 Excerto do Modelo de Domínio
 
 ![DM_Client.svg](./DM_Client.svg)
@@ -90,12 +74,6 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 ![SSD_Client.svg](./SSD_Client.svg)
 
 # 3. Design
-
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
-
-
 
 ## 3.1. Realização da Funcionalidade
 
@@ -109,7 +87,25 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 
 *Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
 
+![CD_Client.svg](./CD_Client.svg)
+
 ## 3.3. Padrões Aplicados
+
+Foram aplicados os padrões princípios SOLID e GoF 
+
+### Builder
+- O padrão Builder é usado para encapsular a lógica de construção de um objeto. Foi utilizado devido à criação do Cliente envolver vários atributos opcionais, existindo assim representações múltiplas da classe.
+
+
+### Creator
+
+### Repository
+
+### Factory
+
+### Information Expert 
+
+
 
 *Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
 
@@ -125,17 +121,82 @@ As you already figure it out, it is an excellent idea that at the end of use cas
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+## 4.1 Classe ClientBuilder
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    public ClientBuilder named(final Name name) {
+    this.name = name;
+    return this;
+    }
+
+
+    public ClientBuilder withVAT(final VAT vat) {
+        this.vat = vat;
+        return this;
+    }
+
+    public ClientBuilder withEmail(final Email email) {
+        this.email = email;
+        return this;
+    }
+
+    public ClientBuilder withPhoneNumber(final PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public ClientBuilder withAddresses(final Set<Address> addresses) {
+        if (addresses != null) {
+            addresses.forEach(this::withAddress);
+        }
+        return this;
+    }
+
+    public ClientBuilder withAddress(final Address address) {
+        this.addresses.add(address);
+        return this;
+    }
+
+    private Client buildOrThrow() {
+        if (theClient != null) {
+            return theClient;
+        } else if (name != null && vat != null && email != null && phoneNumber != null && !addresses.isEmpty()) {
+            theClient = new Client(name, vat, email, phoneNumber, addresses);
+            return theClient;
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    public ClientBuilder withGender(final Client.Gender gender) {
+        if(gender != null) {
+            buildOrThrow();
+            theClient.addGender(gender);
+        }
+        return this;
+    }
+
+    public ClientBuilder withBirthdate(final Calendar birthdate) {
+        if(birthdate != null) {
+            buildOrThrow();
+            theClient.insertBirthDate(birthdate);
+        }
+        return this;
+    }
+
+    @Override
+    public Client build() {
+        final Client ret = buildOrThrow();
+        theClient = null;
+        return ret;
+    }
 
 # 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+Esta User Story foi implementada na totalidade não tendo dependências com outras user stories.
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
+Futuramente o sales clerk terá uma opção que será de gerar as credenciais para o cliente tornando-o um utilizador do sistema.
 
 
 

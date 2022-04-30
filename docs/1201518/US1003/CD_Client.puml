@@ -1,27 +1,62 @@
 @startuml
-'https://plantuml.com/class-diagram
-
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class RegisterClientUI{
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class RegisterClientController{
++create()
++registerClient(firstnames, surnames, email, phoneNumber,vat, postalAddress, birthDate, gender)}
 }
+
+
+class PersistenceContext{
++repositories()
+}
+
+class RepositoryFactory{
++create()
++newTransactionalContext()
++create(TransactionalContext ctx)
+}
+
+database ClientRepository{
+}
+
+class Client{
++create()
+}
+
+class ClientBuilder{
++create()
++createClient()
++withVAT()
++withEmail()
++withPhoneNumber()
++named()
++withAddresses()
++withAddress()
++buildOrThrow()
++withBirthDate()
++withGender()
++build()
+}
+
+class TransactionalContext{
++beginTransaction()
++commit()
+}
+
+
+RegisterClientUI --> RegisterClientController
+
+RegisterClientController-->ClientBuilder
+RegisterClientController -->PersistenceContext
+RegisterClientController -->TransactionalContext
+RegisterClientController-->ClientRepository
+
+ClientBuilder --> Client
+
+PersistenceContext -->RepositoryFactory
+
+RepositoryFactory -->ClientRepository
 
 @enduml
