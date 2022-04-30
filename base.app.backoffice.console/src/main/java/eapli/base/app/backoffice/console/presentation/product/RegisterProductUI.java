@@ -44,6 +44,8 @@ public class RegisterProductUI extends AbstractUI {
             photoPath = Console.readLine("Photo Path: ");
             if (Files.exists(Paths.get(photoPath)) && !photos.contains(new Photo(photoPath))) {
                 photos.add(new Photo(photoPath));
+            } else if (!Files.exists(Paths.get(photoPath))){
+                System.out.println("Wrong path inserted.");
             } else {
                 System.out.println("This photo was already added.");
             }
