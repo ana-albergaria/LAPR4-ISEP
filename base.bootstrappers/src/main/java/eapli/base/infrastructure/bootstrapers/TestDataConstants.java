@@ -26,10 +26,6 @@ import eapli.framework.time.util.Calendars;
 
 public final class TestDataConstants {
 
-    public static final String PRODUCT_CATEGORY_SHAMPOO = "1111";
-    public static final String PRODUCT_CATEGORY_FISH = "2222";
-    public static final String PRODUCT_CATEGORY_JEANS = "3333";
-
     public static final String DISH_TYPE_MEAT = "meat";
     public static final String DISH_TYPE_FISH = "fish";
     public static final String DISH_TYPE_VEGIE = "vegie";
