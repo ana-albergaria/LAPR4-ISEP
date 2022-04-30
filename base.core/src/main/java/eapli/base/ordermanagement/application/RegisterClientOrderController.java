@@ -1,6 +1,5 @@
 package eapli.base.ordermanagement.application;
 
-import eapli.base.clientmanagement.domain.Address;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -12,12 +11,8 @@ import eapli.base.productmanagement.domain.Product;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class RegisterClientOrderController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -40,7 +35,10 @@ public class RegisterClientOrderController {
 
         AdditionalComment additionalComment = new AdditionalComment(additionalCommentText);
 
-        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser());
+        Set<OrderItem> orderItems = new HashSet<>();
+        fillOrderItems(items, orderItems);
+
+        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser(), orderItems);
 
         return orderRepository.save(order);
     }
@@ -55,7 +53,10 @@ public class RegisterClientOrderController {
         OrderAddress deliveryAddress = new OrderAddress(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2),
                 addresses.get(1).get(3), addresses.get(1).get(4));
 
-        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, authz.session().get().authenticatedUser());
+        Set<OrderItem> orderItems = new HashSet<>();
+        fillOrderItems(items, orderItems);
+
+        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, authz.session().get().authenticatedUser(), orderItems);
 
         return orderRepository.save(order);
     }
@@ -73,5 +74,15 @@ public class RegisterClientOrderController {
         if(chosenProduct.isPresent())
             product = chosenProduct.get();
         return product != null;
+    }
+
+    private void fillOrderItems(Map<String, Integer> items, Set<OrderItem> setItems) {
+
+        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+            String code = entry.getKey();
+            Integer quantity = entry.getValue();
+            OrderItem orderItem = new OrderItem(code,quantity);
+            setItems.add(orderItem);
+        }
     }
 }

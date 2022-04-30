@@ -46,6 +46,8 @@ public class BaseDemoBootstrapper implements Action {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
 
+    //private ProductCategoryBootstrapper productCategoryBootstrapper;
+
     @Override
     public boolean execute() {
         // declare bootstrap actions

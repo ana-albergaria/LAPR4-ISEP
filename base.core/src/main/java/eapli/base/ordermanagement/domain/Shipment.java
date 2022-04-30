@@ -27,5 +27,9 @@ public enum Shipment {
         return this.cost.amountAsDouble();
     }
 
+    public String currency() {
+        return this.cost.currency().toString();
+    }
+
 
 }

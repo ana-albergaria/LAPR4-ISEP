@@ -48,6 +48,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
+    @AttributeOverride(name = "value", column = @Column(name = "unique_value"))
     private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
@@ -73,6 +74,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
 
     private Weight weight;
 
+    @AttributeOverride(name = "value", column = @Column(name = "volume"))
     private Volume volume;
 
     @Embedded
@@ -83,6 +85,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Money priceWithTaxes;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "production_value"))
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 

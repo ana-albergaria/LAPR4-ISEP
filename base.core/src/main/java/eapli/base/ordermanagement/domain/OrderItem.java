@@ -1,61 +1,53 @@
 package eapli.base.ordermanagement.domain;
 
-import eapli.base.productmanagement.domain.Product;
-import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.domain.model.ValueObject;
+import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Entity
-public class OrderItem implements AggregateRoot<Long>, Serializable {
-    private static final long serialVersionUID = 1L;
+@Embeddable
+public class OrderItem implements ValueObject, Serializable {
+    private final String code;
 
-    @Version
-    private Long version;
+    private final Integer quantity;
 
-    @Id
-    @GeneratedValue
-    private Long orderItemId;
-
-    private int quantity;
-    @ManyToOne
-    private Product item;
-
-    public OrderItem(final int qty, final Product item) {
-        Preconditions.isPositive(qty);
-        Preconditions.nonNull(item);
-
-        quantity = qty;
-        this.item = item;
+    public OrderItem(final String code, final Integer quantity) {
+        Preconditions.nonEmpty(code, "Code should neither be null nor empty");
+        Preconditions.nonNull(quantity, "Quantity should not be null");
+        Preconditions.isPositive(quantity, "The quantity of the wished Product must be positive.");
+        this.code = code;
+        this.quantity = quantity;
     }
 
     protected OrderItem() {
-        //for ORM purposes
+        this.code = "";
+        this.quantity = null;
     }
 
-    public Product product() {
-        return item;
+    public static OrderItem valueOf(final String code, final Integer quantity) {
+        return new OrderItem(code, quantity);
     }
 
-    public int quantity() {
-        return quantity;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof OrderItem)) {
+            return false;
+        } else {
+            OrderItem that = (OrderItem) o;
+            return this.code.equals(that.code) && this.quantity.equals(that.quantity);
+        }
     }
 
     @Override
     public int hashCode() {
-        return DomainEntities.hashCode(this);
+        return (new HashCoder()).with(this.code).with(this.quantity).code();
     }
 
     @Override
-    public boolean sameAs(Object other) {
-        return DomainEntities.areEqual(this, other);
+    public String toString() {
+        return "Produce Code: " + this.code + "| Quantity: " + this.quantity;
     }
-
-    @Override
-    public Long identity() {
-        return this.orderItemId;
-    }
-
 }

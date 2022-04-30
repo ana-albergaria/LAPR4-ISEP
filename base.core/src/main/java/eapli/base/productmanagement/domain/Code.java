@@ -4,9 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+@Embeddable
 //internal code: not empty alphanumeric code with at 23 chars maximum however it might meet a given regular expression defined/configured at deployment time.
 //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 public class Code implements ValueObject, Serializable, Comparable<Code> {

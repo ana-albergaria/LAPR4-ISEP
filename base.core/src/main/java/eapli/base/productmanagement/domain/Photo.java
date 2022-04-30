@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 //"From a usability perspective, it would be better having a window (or any other way) to
 // select the photo file to be uploaded. However, if by some reason that option is not viable
 // by now the user can write the path but the system must validate it."
-public class Photo implements ValueObject, Serializable {
+public class Photo implements ValueObject, Serializable { //docs/photos/shampoo.png
     private static final long serialVersionUID = 1L;
 
-    private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^(?:[\\w]\\:|\\\\)(\\\\[a-z_\\-\\s0-9\\.]+)+\\.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
+    private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^([a-zA-Z]+/)*[a-zA-Z0-9_-]+.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
 
     private final String value;
 

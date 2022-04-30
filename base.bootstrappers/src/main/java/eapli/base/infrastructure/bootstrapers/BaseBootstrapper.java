@@ -23,6 +23,7 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
+//import eapli.base.infrastructure.bootstrapers.demo.ProductCategoryBootstrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,10 +59,14 @@ public class BaseBootstrapper implements Action {
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
     private final UserRepository userRepository = PersistenceContext.repositories().users();
 
+    //private ProductCategoryBootstrapper productCategoryBootstrapper;
+
     @Override
     public boolean execute() {
         // declare bootstrap actions
         final Action[] actions = { new MasterUsersBootstrapper(), };
+        //final Action[] actions = { new ProductCategoryBootstrapper(), };
+
 
         registerPowerUser();
         authenticateForBootstrapping();
@@ -112,4 +117,5 @@ public class BaseBootstrapper implements Action {
         final String name = boot.getClass().getSimpleName();
         return Strings.left(name, name.length() - "Bootstrapper".length());
     }
+
 }

@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
@@ -26,5 +27,29 @@ public class OrderStatus implements ValueObject, Serializable {
 
     public OrderStatus() {
         //for ORM purposes
+    }
+
+    public static OrderStatus valueOf(final Status status) {
+        return new OrderStatus(status);
+    }
+
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof OrderStatus)) {
+            return false;
+        } else {
+            OrderStatus that = (OrderStatus) o;
+            return this.status.equals(that.status);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (new HashCoder()).with(this.status).code();
+    }
+
+    public String toString() {
+        return "Order Status: " + this.status;
     }
 }
