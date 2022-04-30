@@ -141,6 +141,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
     }
 
     public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> items) {
@@ -156,6 +157,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
     }
 
 
