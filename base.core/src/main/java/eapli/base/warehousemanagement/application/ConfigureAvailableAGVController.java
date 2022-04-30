@@ -6,9 +6,7 @@ import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ConfigureAvailableAGVController {
