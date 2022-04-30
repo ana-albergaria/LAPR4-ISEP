@@ -4,11 +4,9 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 //brand: not empty having 50 chars maximum;
-@Embeddable
 public class BrandName implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -48,19 +48,14 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
-    @Embedded
     private ShortDescription shortDescription;
 
-    @Embedded
     private ExtendedDescription extendedDescription;
 
-    @Embedded
     private TechnicalDescription technicalDescription; //optional
 
-    @Embedded
     private BrandName brandName; //optional
 
-    @Embedded
     private Reference reference; //optional
 
     @Embedded
@@ -74,7 +69,6 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Status status;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "weight"))
     private Weight weight;
 
     @Embedded

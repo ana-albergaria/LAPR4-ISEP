@@ -11,7 +11,9 @@ class Photo <<value object >>'/
 
 package "<<aggregate>> Product" {
     entity Product
+    class UniqueInternalCode
     class Photo
+    class Barcode
     class OptionalProductionCode
     class TechnicalDescription
     class BrandName
