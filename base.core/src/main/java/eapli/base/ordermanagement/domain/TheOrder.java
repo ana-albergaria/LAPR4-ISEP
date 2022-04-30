@@ -1,6 +1,9 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.productmanagement.application.ListProductService;
+import eapli.base.productmanagement.domain.Code;
+import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
@@ -58,6 +61,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     private Set<OrderItem> items;
 
 
+
     /**
      * Map where:
      * > Key: Unique Internal Code of Product
@@ -112,6 +116,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     private AdditionalComment additionalComment;
 
+
     /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
     Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
      */
@@ -134,6 +139,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
         this.salesClerk = salesClerk;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
     }
 
     public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> items) {
@@ -147,11 +154,39 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.salesClerk = salesClerk;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
     }
 
 
     protected TheOrder() {
         //for ORM purposes
+    }
+
+    public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
+        double totalAmountWithoutTaxes = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
+            if(product.isPresent()) {
+                totalAmountWithoutTaxes += (orderItem.quantity() * product.get().getPriceWithoutTaxes().amountAsDouble());
+            }
+        }
+        return this.totalAmountWithoutTaxes = Money.euros(totalAmountWithoutTaxes);
+    }
+
+    public Money obtainTotalAmountWithTaxes(ListProductService svcProducts) {
+        double totalAmountWithTaxes = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
+            if(product.isPresent()) {
+                totalAmountWithTaxes += (orderItem.quantity() * product.get().getPriceWithTaxes().amountAsDouble());
+            }
+        }
+        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes);
     }
 
     @Override
