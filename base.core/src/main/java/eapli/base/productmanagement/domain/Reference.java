@@ -4,10 +4,12 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.sql.Ref;
 
 //reference: not empty alphanumeric code with at 23 chars maximum;
+@Embeddable
 public class Reference implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 

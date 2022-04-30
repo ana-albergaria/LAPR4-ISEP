@@ -51,7 +51,7 @@ public class ProductsBootstrapper implements Action {
                 "bbsp.00002", null);
         register(TestDataConstants.PRODUCT_CANNED_TUNA, "000000000003", "This is a can of tuna.",
                 "This can of tuna is delicious. Perfect for any dish.", 0.5, "AVAILABLE", 0.185, 0.00021,
-                0.99, shampoo, "This canned tuna has no preserving agents. Only natural ingredients.", "Freshy", "1",
+                0.99, fish, "This canned tuna has no preserving agents. Only natural ingredients.", "Freshy", "1",
                 "fstn.00001", cannedTunaPhotos);
         return true;
     }
