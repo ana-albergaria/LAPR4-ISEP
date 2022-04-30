@@ -141,6 +141,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
+        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
     }
 
@@ -157,6 +159,8 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
         this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
         this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
+        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
+        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
     }
 
@@ -188,7 +192,34 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
                 totalAmountWithTaxes += (orderItem.quantity() * product.get().getPriceWithTaxes().amountAsDouble());
             }
         }
-        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes);
+        return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes + this.shipment.cost());
+    }
+
+    public OrderWeight obtainTotalOrderWeight(ListProductService svcProducts) {
+        double totalWeight = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
+            if(product.isPresent()) {
+                totalWeight += (orderItem.quantity() * product.get().getWeight().weight());
+            }
+        }
+        return this.orderWeight = new OrderWeight(totalWeight);
+    }
+
+    public OrderVolume obtainTotalOrderVolume(ListProductService svcProducts) {
+        double totalVolume = 0;
+
+        for (OrderItem orderItem : items) {
+            String code = orderItem.code();
+            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
+            if(product.isPresent()) {
+                totalVolume += (orderItem.quantity() * product.get().getVolume().volume());
+            }
+
+        }
+        return this.orderVolume = new OrderVolume(totalVolume);
     }
 
     @Override

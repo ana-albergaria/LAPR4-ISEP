@@ -23,7 +23,7 @@
  */
 package eapli.base.app.backoffice.console.presentation;
 
-import eapli.base.app.backoffice.console.presentation.TEST.TestUI;
+
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
@@ -79,45 +79,10 @@ public class MainMenu extends AbstractUI {
     //PRODUCT
     private static final int REGISTER_PRODUCT_OPTION = 3;
 
-    // DISH TYPES
-    private static final int DISH_TYPE_REGISTER_OPTION = 1;
-    private static final int DISH_TYPE_LIST_OPTION = 2;
-    private static final int DISH_TYPE_CHANGE_OPTION = 3;
-    private static final int DISH_TYPE_ACTIVATE_DEACTIVATE_OPTION = 4;
-
-    // DISHES
-    private static final int DISH_REGISTER_OPTION = 5;
-    private static final int DISH_LIST_OPTION = 6;
-    private static final int DISH_REGISTER_DTO_OPTION = 7;
-    private static final int DISH_LIST_DTO_OPTION = 8;
-    private static final int DISH_ACTIVATE_DEACTIVATE_OPTION = 9;
-    private static final int DISH_CHANGE_OPTION = 10;
-
-    // DISH PROPERTIES
-    private static final int CHANGE_DISH_NUTRICIONAL_INFO_OPTION = 1;
-    private static final int CHANGE_DISH_PRICE_OPTION = 2;
-
-    // MATERIALS
-    private static final int MATERIAL_REGISTER_OPTION = 1;
-    private static final int MATERIAL_LIST_OPTION = 2;
-
-    // REPORTING
-    private static final int REPORTING_DISHES_PER_DISHTYPE_OPTION = 1;
-    private static final int REPORTING_HIGH_CALORIES_DISHES_OPTION = 2;
-    private static final int REPORTING_DISHES_PER_CALORIC_CATEGORY_OPTION = 3;
-
-    // MEALS
-    private static final int LIST_MEALS_OPTION = 1;
-    private static final int MEAL_REGISTER_OPTION = 2;
-
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
     private static final int USERS_OPTION = 2;
     private static final int SETTINGS_OPTION = 4;
-    private static final int DISH_OPTION = 5;
-    private static final int TRACEABILITY_OPTION = 6;
-    private static final int MEALS_OPTION = 7;
-    private static final int REPORTING_DISHES_OPTION = 8;
 
     // MAIN MENU SALES CLERK
     private static final int PRODUCT_OPTION = 1;
@@ -233,7 +198,6 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_ORDER_FOR_CLIENT_OPTION, "Register Order On Behalf Of A Costumer", new RegisterClientOrderUI()::show);
         menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
         menu.addItem(CREATE_CATEGORY, "Create Product Category", new CreateCategoryUI()::show);
-        menu.addItem(4, "test", new TestUI()::show);
         menu.addItem(SHOW_CATALOG, "Show Products Catalog", new ViewProductCatalogUI()::show);
         return menu;
     }
