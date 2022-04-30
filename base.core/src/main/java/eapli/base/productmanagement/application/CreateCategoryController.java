@@ -1,5 +1,6 @@
 package eapli.base.productmanagement.application;
 
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.productmanagement.domain.AlphaNumericCode;
 import eapli.base.productmanagement.domain.CategoryDescription;
 import eapli.base.productmanagement.domain.ProductCategory;
@@ -8,8 +9,10 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import javax.persistence.Persistence;
+
 public class CreateCategoryController {
-    private ProductCategoryRepository repository;
+    private final ProductCategoryRepository repository = PersistenceContext.repositories().productCategories();
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public void createCategory(String alphaNumericCode, String description){
