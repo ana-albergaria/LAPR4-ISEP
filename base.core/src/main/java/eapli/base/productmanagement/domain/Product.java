@@ -44,18 +44,28 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     @EmbeddedId//@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
-    @AttributeOverride(name = "value", column = @Column(name = "unique_value"))
+    @AttributeOverride(name = "value", column = @Column(name = "unique_internal_code"))
     private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "short_description"))
     private ShortDescription shortDescription;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "extended_description"))
     private ExtendedDescription extendedDescription;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "technical_description"))
     private TechnicalDescription technicalDescription; //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "brand_name"))
     private BrandName brandName; //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "reference"))
     private Reference reference; //optional
 
     @Embedded
@@ -69,10 +79,11 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Status status;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "weight_in_kilograms"))
     private Weight weight;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "volume"))
+    @AttributeOverride(name = "value", column = @Column(name = "volume_in_cubic_meters"))
     private Volume volume;
 
     @Embedded
@@ -83,7 +94,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Money priceWithTaxes;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "production_value"))
+    @AttributeOverride(name = "value", column = @Column(name = "production_code"))
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
@@ -91,8 +102,12 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private ProductCategory productCategory;
 
     @ElementCollection
+    @CollectionTable(name="product_photos")
+    @Column(name="photo_path")
     private Set<Photo> photos = new HashSet<>(); //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "barcode"))
     private Barcode barcode;
 
     public void setVolume(Volume volume) {

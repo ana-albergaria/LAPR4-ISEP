@@ -46,12 +46,12 @@ public class ProductsBootstrapper implements Action {
                 1.3, shampoo, "This shampoo has no chemicals. Only natural ingredients.", "Bobbles", "1",
                 "bbsp.00001", lemonShampooPhotos);
         register(TestDataConstants.PRODUCT_APPLE_SHAMPOO, "000000000002", "This is an apple shampoo.",
-                "This shampoo has apple scent. The scent stays in the hair for a long time.", 1, "TEMPORARILY_UNAVAILABLE", 1, 0.000565,
+                "This shampoo has apple scent. The scent stays in the hair for a long time.", 1, "AVAILABLE", 1, 0.000565,
                 1.3, shampoo, "This shampoo has no chemicals. Only natural ingredients.", "Bobbles", "2",
                 "bbsp.00002", null);
         register(TestDataConstants.PRODUCT_CANNED_TUNA, "000000000003", "This is a can of tuna.",
                 "This can of tuna is delicious. Perfect for any dish.", 0.5, "AVAILABLE", 0.185, 0.00021,
-                0.99, shampoo, "This canned tuna has no preserving agents. Only natural ingredients.", "Freshy", "1",
+                0.99, fish, "This canned tuna has no preserving agents. Only natural ingredients.", "Freshy", "1",
                 "fstn.00001", cannedTunaPhotos);
         return true;
     }
