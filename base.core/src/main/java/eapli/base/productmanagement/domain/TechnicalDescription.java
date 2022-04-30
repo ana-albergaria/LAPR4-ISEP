@@ -4,9 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 //technical description: multiple lines of text, preferably with no limit or the biggest possible.
+@Embeddable
 public class TechnicalDescription implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
