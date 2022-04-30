@@ -35,7 +35,7 @@ public class RegisterClientOrderController {
 
         AdditionalComment additionalComment = new AdditionalComment(additionalCommentText);
 
-        Set<NewOrderItem> orderItems = new HashSet<>();
+        Set<OrderItem> orderItems = new HashSet<>();
         fillOrderItems(items, orderItems);
 
         TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser(), orderItems);
@@ -53,7 +53,7 @@ public class RegisterClientOrderController {
         OrderAddress deliveryAddress = new OrderAddress(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2),
                 addresses.get(1).get(3), addresses.get(1).get(4));
 
-        Set<NewOrderItem> orderItems = new HashSet<>();
+        Set<OrderItem> orderItems = new HashSet<>();
         fillOrderItems(items, orderItems);
 
         TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, authz.session().get().authenticatedUser(), orderItems);
@@ -76,12 +76,12 @@ public class RegisterClientOrderController {
         return product != null;
     }
 
-    private void fillOrderItems(Map<String, Integer> items, Set<NewOrderItem> setItems) {
+    private void fillOrderItems(Map<String, Integer> items, Set<OrderItem> setItems) {
 
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
             String code = entry.getKey();
             Integer quantity = entry.getValue();
-            NewOrderItem orderItem = new NewOrderItem(code,quantity);
+            OrderItem orderItem = new OrderItem(code,quantity);
             setItems.add(orderItem);
         }
     }

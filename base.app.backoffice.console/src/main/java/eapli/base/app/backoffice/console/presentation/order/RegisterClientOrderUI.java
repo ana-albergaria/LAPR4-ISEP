@@ -88,7 +88,7 @@ public class RegisterClientOrderUI extends AbstractUI {
         int i = 1;
         System.out.println("\n>> SHIPMENT:");
         for (Shipment options : Shipment.values()) {
-            System.out.printf("%d. %s | %s%n", i , options.name(), options.cost());
+            System.out.printf("%d. %s | %s %s%n", i , options.name(), options.cost(), options.currency());
             i++;
         }
 

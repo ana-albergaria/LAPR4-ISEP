@@ -1,6 +1,7 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
@@ -19,6 +20,26 @@ public class OrderWeight implements ValueObject, Serializable {
     protected OrderWeight() {
         //for ORM purposes
         this.weight = null;
+    }
+
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof OrderWeight)) {
+            return false;
+        } else {
+            OrderWeight that = (OrderWeight) o;
+            return this.weight.equals(that.weight);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (new HashCoder()).with(this.weight).code();
+    }
+
+    public String toString() {
+        return "Order Weight: " + this.weight;
     }
 
 

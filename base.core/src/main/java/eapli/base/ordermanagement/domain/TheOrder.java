@@ -55,7 +55,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     private OrderAddress shippingAddress;
 
     @ElementCollection
-    private Set<NewOrderItem> items;
+    private Set<OrderItem> items;
 
 
     /**
@@ -122,7 +122,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private SystemUser salesClerk;
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<NewOrderItem> items) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<OrderItem> items) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
@@ -136,7 +136,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.salesClerk = salesClerk;
     }
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<NewOrderItem> items) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> items) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
