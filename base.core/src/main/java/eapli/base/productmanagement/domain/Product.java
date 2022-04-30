@@ -102,6 +102,8 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private ProductCategory productCategory;
 
     @ElementCollection
+    @CollectionTable(name="product_photos")
+    @Column(name="photo_path")
     private Set<Photo> photos = new HashSet<>(); //optional
 
     @Embedded
