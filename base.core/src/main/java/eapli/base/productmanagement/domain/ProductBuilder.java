@@ -145,7 +145,9 @@ public class ProductBuilder implements DomainFactory<Product> {
 
     public ProductBuilder withPhotos(final Set<Photo> photos){
         if (photos != null) {
-            photos.forEach(this::withPhoto);
+            for (Photo photo : photos) {
+                withPhoto(photo);
+            }
         }
         return this;
     }

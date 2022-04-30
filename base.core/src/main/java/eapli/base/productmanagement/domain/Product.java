@@ -8,6 +8,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,8 +45,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     @Version
     private Long version;
 
-    @Id
-    //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
+    @EmbeddedId//@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
     //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
     //private Code uniqueInternalCode;
     @AttributeOverride(name = "value", column = @Column(name = "unique_value"))
@@ -72,8 +72,10 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Embedded
     private Weight weight;
 
+    @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "volume"))
     private Volume volume;
 
@@ -93,9 +95,21 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private ProductCategory productCategory;
 
     @ElementCollection
-    private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
+    private Set<Photo> photos = new HashSet<>(); //optional
 
     private Barcode barcode;
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
+    }
+
+    public void setWeight(Weight weight) {
+        this.weight = weight;
+    }
+
+    public void setUniqueInternalCode(Code uniqueInternalCode) {
+        this.uniqueInternalCode = uniqueInternalCode;
+    }
 
     /**
      * Constructor for Product with the minimum attributes.

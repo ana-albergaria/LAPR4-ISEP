@@ -40,10 +40,12 @@ public class RegisterProductUI extends AbstractUI {
         final Set<Photo> photos = new HashSet<>();
         String option = "yes";
         String photoPath;
+        Photo photoToAdd;
         do {
             photoPath = Console.readLine("Photo Path: ");
             if (Files.exists(Paths.get(photoPath)) && !photos.contains(new Photo(photoPath))) {
-                photos.add(new Photo(photoPath));
+                photoToAdd=new Photo(photoPath);
+                photos.add(photoToAdd);
             } else if (!Files.exists(Paths.get(photoPath))){
                 System.out.println("Wrong path inserted.");
             } else {
