@@ -14,8 +14,6 @@ class PersistenceContext{
 
 class RepositoryFactory{
 +create()
-+newTransactionalContext()
-+create(TransactionalContext ctx)
 }
 
 database ClientRepository{

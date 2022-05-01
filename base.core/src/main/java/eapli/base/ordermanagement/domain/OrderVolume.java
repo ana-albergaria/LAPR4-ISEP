@@ -9,11 +9,11 @@ import java.io.Serializable;
 
 @Embeddable
 public class OrderVolume implements ValueObject, Serializable {
-    private final Long volume;
+    private final Double volume;
 
-    public OrderVolume(final Long volume) {
+    public OrderVolume(final Double volume) {
         Preconditions.nonNull(volume, "The volume shouldn't be null.");
-        Preconditions.isPositive(volume, "The volume should be positive.");
+        Preconditions.ensure(volume > 0, "The volume should be positive.");
         this.volume = volume;
     }
 
@@ -22,7 +22,7 @@ public class OrderVolume implements ValueObject, Serializable {
         this.volume = null;
     }
 
-    public static OrderVolume valueOf(final Long volume) {
+    public static OrderVolume valueOf(final Double volume) {
         return new OrderVolume(volume);
     }
 

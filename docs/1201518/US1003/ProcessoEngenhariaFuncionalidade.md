@@ -128,7 +128,6 @@ Foram aplicados os padrões princípios SOLID e GoF
     return this;
     }
 
-
     public ClientBuilder withVAT(final VAT vat) {
         this.vat = vat;
         return this;

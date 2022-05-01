@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.order;
 
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
+import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
 import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.ordermanagement.domain.Shipment;
@@ -34,7 +35,7 @@ public class RegisterClientOrderUI extends AbstractUI {
         while(moreProducts.equalsIgnoreCase("yes")) {
             String answer = Console.readLine("Do you want to view the Products Catalog?\n (yes|no)\n");
             if (answer.equalsIgnoreCase("yes")) {
-                //colocar UI do US1002
+                new ViewProductCatalogUI().show();
             }
             final String productCode = Console.readLine("Product Unique Internal Code: ");
 
@@ -147,6 +148,7 @@ public class RegisterClientOrderUI extends AbstractUI {
                 this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, items);
             else
                 this.theController.registerOrder(addresses, shipment, payment, sourceChannel, interactionDate, additionalText, items);
+            System.out.println("Order created successfully!");
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter an order which already exists in the database.");
         }
