@@ -60,5 +60,5 @@ public class RegisterProductController {
     public Iterable<ProductCategory> productCategories(){
         return svc.allProductCategories();
     }
-    
+
 }
