@@ -18,6 +18,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
 * Products
 * Clients
 * Warehouses
+* AGVs
 
 
 # 3. Design
@@ -35,6 +36,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
     * WarehousesBootstrapper
     * ProductCategoriesBootstrapper
     * ProductsBootstrapper
+    * AGVsBootstrapper
   * BaseDemoSmokeTester
 
 
@@ -101,6 +103,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
                 new WarehousesBootstrapper(),
                 new ProductCategoriesBootstrapper(),
                 new ProductsBootstrapper(),
+                new AGVsBootstraper(),
         };
 
         authenticateForBootstrapping();
