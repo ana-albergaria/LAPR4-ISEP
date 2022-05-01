@@ -5,7 +5,7 @@
 # 1. Requisitos
 
 
-**UC1900:** As Project Manager, I intend that, for demonstration purposes, the system has the possibility of being initialized (bootstrap) with some information related to the product catalog and auxiliary information (e.g., categories of products).
+**UC1900:** Como um Project Manager, eu pretendo que, para a demonstração, o sistema tenha a possibilidade de ser inicializado (bootstrap) com alguma informação relacionada com o catálogo do produto e informação auxiliar (e.g., categorias de produtos).
 
 A interpretação feita deste requisito foi no sentido de popular as tabelas da base de dados, de forma a facilitar a demonstração da aplicação.
 
@@ -13,19 +13,28 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
 
 ## 2.1. Dados de bootstrap necessários
 
+
 * Product Categories
 * Products
 * Clients
 
 
-# 3. Design
 
-n/a
+# 3. Design
 
 
 ## 3.1. Organização dos Bootstrappers
 
-n/a
+* BaseBootstrap
+  * BaseBootstrapper
+    * MasterUsersBootstrapper
+  * BaseDemoBootstrapper
+    * BackofficeUsersBootstrapper
+    * ClientUserBootstrapper
+    * ClientsBootstrapper
+    * ProductCategoriesBootstrapper
+    * ProductsBootstrapper
+  * BaseDemoSmokeTester
 
 
 # 4. Implementação
@@ -33,19 +42,7 @@ n/a
 ## 4.1. Classe BaseBootstrap
 
 
-    private BaseBootstrap() {
-    }
-
-    private boolean isToBootstrapDemoData;
-    private boolean isToRunSampleE2E;
-
-    public static void main(final String[] args) {
-
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(),
-                new PlainTextEncoder());
-
-        new BaseBootstrap().run(args);
-    }
+    [...]
 
     @Override
     protected void doMain(final String[] args) {
@@ -62,31 +59,60 @@ n/a
 
     }
 
-    private void handleArgs(final String[] args) {
-        isToRunSampleE2E = ArrayPredicates.contains(args, "-smoke:basic");
-        if (isToRunSampleE2E) {
-            isToBootstrapDemoData = true;
-        } else {
-            isToBootstrapDemoData = ArrayPredicates.contains(args, "-bootstrap:demo");
+    [...]
+
+
+
+## 4.2. Classe BaseBootstrapper
+
+
+    [...]
+
+    @Override
+    public boolean execute() {
+        final Action[] actions = { new MasterUsersBootstrapper(), };
+
+        registerPowerUser();
+        authenticateForBootstrapping();
+
+        boolean ret = true;
+        for (final Action boot : actions) {
+            System.out.println("Bootstrapping " + nameOfEntity(boot) + "...");
+            ret &= boot.execute();
         }
+        return ret;
     }
 
-    @Override
-    protected String appTitle() {
-        return "Bootstrapping Base data ";
+    [...]
+
+
+
+## 4.3. Classe BaseDemoBootstrapper
+
+
+    [...]
+
+     @Override
+    public boolean execute() {
+        final Action[] actions = { new BackofficeUsersBootstrapper(),
+                new ClientUserBootstrapper(),
+                new ClientsBootstrapper(),
+                new ProductCategoriesBootstrapper(),
+                new ProductsBootstrapper(),
+        };
+
+        authenticateForBootstrapping();
+
+        boolean ret = true;
+        for (final Action boot : actions) {
+            System.out.println("Bootstrapping " + nameOfEntity(boot) + "...");
+            ret &= boot.execute();
+        }
+        return ret;
     }
 
-    @Override
-    protected String appGoodbye() {
-        return "Bootstrap data done.";
-    }
+    [...]
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
-        dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-    }
 
 
 # 5. Integração/Demonstração
