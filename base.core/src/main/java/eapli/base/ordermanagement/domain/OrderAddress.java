@@ -69,6 +69,7 @@ public class OrderAddress implements ValueObject, Serializable {
         return (new HashCoder()).with(this.streetName).with(doorNumber).with(postalCode).with(city).with(country).code();
     }
 
+    @Override
     public String toString() {
         return this.streetName + ", nº" + this.doorNumber + "\n" + this.postalCode + " - " + this.city + ", " + this.country;
     }
