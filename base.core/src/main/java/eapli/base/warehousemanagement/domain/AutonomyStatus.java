@@ -19,7 +19,7 @@ public class AutonomyStatus implements ValueObject, Serializable {
     }
 
     protected AutonomyStatus() {
-        this.autStatus = "free";
+        this.autStatus = "0h";
     }
 
     public static AutonomyStatus valueOf(final String status){

@@ -101,81 +101,68 @@ A interpretação feita deste requisito foi a de mostrar as informações básic
 ## 3.4. Testes
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível configurar a planta com um ficheiro incorreto.
+**Test 1:** getter of agvID
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    @Test
+    public void getAgvID() {
+        Assert.assertEquals(Long.valueOf(1234), agv.getAgvID());
     }
 
-**Teste 2:** Verificar que não é possível configurar a planta com uma Length nula.
+**Test 2:** getter of autonomyStatus
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    @Test
+    public void getAutonomyStatus() {
+        Assert.assertEquals(new AutonomyStatus("2h"), agv.getAutonomyStatus());
     }
 
-**Teste 3:** Verificar que não é possível configurar a planta com uma Width nula.
+**Test 3:** getter of taskStatus
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    @Test
+    public void getTaskStatus() {
+        Assert.assertEquals(new TaskStatus("free"), agv.getTaskStatus());
     }
 
-**Teste 4:** Verificar que não é possível configurar a planta com o Square nulo.
+**Test 4:** getter of agvDock
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 5:** Verificar que não é possível configurar a planta com a Unit nula.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 6:** Verificar que não é possível configurar a planta com a Aisle Accessibility nula.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 7:** Verificar que não é possível configurar a planta com uma Length menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 8:** Verificar que não é possível configurar a planta com uma Width menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 9:** Verificar que não é possível configurar a planta com o Square menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 10:** Verificar que não é possível configurar a planta com a Unit menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 11:** Verificar que não é possível configurar a planta com a Aisle Accessibility com mais de 2 chars.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    @Test
+    public void getAgvDock() {
+        Assert.assertEquals(new AgvDock("165", beginSquare, endSquare, depthSquare, accessibility), agv.getAgvDock());
     }
 
 # 4. Implementação
 
 *Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    public class ConfigureAvailableAGVController {
+      private final AuthorizationService authz = AuthzRegistry.authorizationService();
+  
+      private final AGVRepository repository = PersistenceContext.repositories().agvs();
+  
+      public Map<AGV, String> getAvailableAGVInformations(){
+          Map<AGV, String> availableAGVsInfo = new HashMap<>();
+  
+  
+          for(AGV agv : repository.findAll()){
+              availableAGVsInfo.put(agv, agv.toString()
+                      + agv.getModelID().toString()
+                      + agv.getAgvDock().toString()
+                      + agv.getAutonomyStatus().toString()
+                      + agv.getTaskStatus().toString());
+          }
+  
+          return availableAGVsInfo;
+      }
+    }
 
 # 5. Integração/Demonstração
 
 *Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+
+![US_2002_Demo1](Demonstration1.png)
+
+![US_2002_Demo2](Demonstration2.png)
+
+![US_2002_Demo3](Demonstration3.png)
 
 # 6. Observações
 
