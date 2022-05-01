@@ -1,13 +1,13 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.productmanagement.domain.Code;
-import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -39,10 +39,13 @@ implements ProductRepository {
     }
 
     @Override
-    public TypedQuery<Product> query(final String jpql, final Class<Product> classz) {
-        ProductRepository repository = PersistenceContext.repositories().products();
+    public Iterable<BrandName> findAllBrandName() {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
+    }
 
-        return repository.query(jpql, classz);
+    @Override
+    public Iterable<ExtendedDescription> findAllDescription() {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
     }
 
     @Override
@@ -53,5 +56,20 @@ implements ProductRepository {
     @Override
     public boolean contains(Product entity) {
         return super.contains(entity);
+    }
+
+    @Override
+    public Iterable<Product> findByBrandName(BrandName brandName){
+        return match(e -> e.brandName().equals(brandName));
+    }
+
+    @Override
+    public Iterable<Product> findByExtendedDescription(ExtendedDescription description){
+        return match(e -> e.getExtendedDescription().equals(description));
+    }
+
+    @Override
+    public Iterable<Product> findByCategory(ProductCategory category){
+        return match(e -> e.getProductCategory().equals(category));
     }
 }

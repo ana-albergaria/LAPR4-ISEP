@@ -1,6 +1,7 @@
 package eapli.base.productmanagement.repositories;
 
 import eapli.base.productmanagement.domain.AlphaNumericCode;
+import eapli.base.productmanagement.domain.ExtendedDescription;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.framework.domain.repositories.DomainRepository;
 
@@ -15,4 +16,5 @@ public interface ProductCategoryRepository extends DomainRepository<AlphaNumeric
 
     Optional<ProductCategory> findByAlphanumericCode(AlphaNumericCode alphaNumericCode);
 
+    Iterable<ProductCategory> findAllCategory();
 }

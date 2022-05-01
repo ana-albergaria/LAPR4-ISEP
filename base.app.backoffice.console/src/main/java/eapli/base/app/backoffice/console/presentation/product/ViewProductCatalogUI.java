@@ -28,7 +28,7 @@ public class ViewProductCatalogUI extends AbstractUI {
         filters.put(3, "Description");
         filters.put(4, "All above");
 
-        int i=0, k=0, j=0, m=0;
+        int i=0, j, m;
         System.out.println("Do you want to use filters? \n Yes - Y | No - N");
         do{
             if(i > 0){
@@ -51,16 +51,19 @@ public class ViewProductCatalogUI extends AbstractUI {
             }
         }else{
             do {
+                m = 0;
+                j = 0;
+
                 System.out.println("Which filter do you want to use?");
                 for (Integer filterNum : filters.keySet()) {
                     System.out.println(filterNum + " - " + filters.get(filterNum));
-                    k++;
                 }
 
                 do {
                     if (j > 0) {
                         System.out.println("Please enter a valid number.");
                     }
+
                     filterOption = read.nextInt();
 
                     if(filterOption == 1 || filterOption == 2 || filterOption == 3 || filterOption == 4){
@@ -72,32 +75,68 @@ public class ViewProductCatalogUI extends AbstractUI {
                     j++;
                 } while(!isValidNumber);
 
+
+
                 if(filterOption == 4) {
                     moreFilters = "no";
                 }else {
+
                     filters.remove(filterOption, filters.get(filterOption));
                     filters.remove(4, filters.get(4));
 
-                    System.out.println("Do you want to use any more filters? \n Yes - Y | No - N");
                     do {
                         if (m > 0) {
                             System.out.println("Please enter a valid answer. (Yes - Y | No - N)");
                         }
-                        moreFilters = read.nextLine();
 
-                        if(moreFilters.equalsIgnoreCase("yes") || moreFilters.equalsIgnoreCase("y")
-                                || moreFilters.equalsIgnoreCase("no") || moreFilters.equalsIgnoreCase("n")){
-                            isValidYesOrNo2 = true;
+                        if(numSelectedFilters < 3) {
+                            moreFilters = Console.readLine("Do you want to use any more filters? \n Yes - Y | No - N");
+
+                            if(moreFilters.equalsIgnoreCase("yes") || moreFilters.equalsIgnoreCase("y")
+                                    || moreFilters.equalsIgnoreCase("no") || moreFilters.equalsIgnoreCase("n")){
+                                isValidYesOrNo2 = true;
+                            }
+
+                            m++;
+                        }else{
+                            moreFilters = "no";
                         }
-
-                        m++;
                     } while(!isValidYesOrNo2);
                 }
             }while (!moreFilters.equalsIgnoreCase("no") && !moreFilters.equalsIgnoreCase("n"));
+        }
 
-            //controller.showProductCatalogWithOneOrMoreFilters(selectedFilters);
+        for(Integer selectedOption : selectedFilters.keySet()) {
+            switch (selectedOption) {
+                case 1:
+                    catalog = controller.showProductCatalogFilteredByCategory();
 
+                    for (String product : catalog) {
+                        System.out.println(product);
+                    }
+                    break;
+                case 2:
+                    catalog = controller.showProductCatalogFilteredByBrand();
 
+                    for (String product : catalog) {
+                        System.out.println(product);
+                    }
+                    break;
+                case 3:
+                    catalog = controller.showProductCatalogFilteredByDescription();
+
+                    for (String product : catalog) {
+                        System.out.println(product);
+                    }
+                    break;
+                case 4:
+                    catalog = controller.showProductCatalogFilteredByAll();
+
+                    for(String product : catalog){
+                        System.out.println(product);
+                    }
+                    break;
+            }
         }
 
         return false;

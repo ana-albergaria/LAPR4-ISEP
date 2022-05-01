@@ -16,4 +16,9 @@ public class InMemoryProductCategoryRepository extends InMemoryDomainRepository<
     public Optional<ProductCategory> findByAlphanumericCode(AlphaNumericCode alphaNumericCode) {
         return matchOne(e -> e.getAlphanumericCode().equals(alphaNumericCode));
     }
+
+    @Override
+    public Iterable<ProductCategory> findAllCategory(){
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
+    }
 }
