@@ -26,12 +26,16 @@ public class Client implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long clientId;
 
+    @Embedded
     private Name name;
 
+    @Embedded
     private VAT vat;
 
+    @Embedded
     private Email email;
 
+    @Embedded
     private PhoneNumber phoneNumber;
 
     @Temporal(TemporalType.DATE)
@@ -42,6 +46,38 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     @ElementCollection
     private Set<Address> addresses;
+
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public VAT getVat() {
+        return vat;
+    }
+
+    public void setVat(VAT vat) {
+        this.vat = vat;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
 
     /**
