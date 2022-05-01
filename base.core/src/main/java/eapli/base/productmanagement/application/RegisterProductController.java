@@ -60,10 +60,5 @@ public class RegisterProductController {
     public Iterable<ProductCategory> productCategories(){
         return svc.allProductCategories();
     }
-
-    //APENAS PARA TESTAR US1004
-    public Product test(final ProductCategory productCategory, final Code uniqueInternalCode, final Money priceWithoutTaxes, final Money priceWithTaxes, Volume volume, Weight weight){
-        Product product = new Product(productCategory, uniqueInternalCode, priceWithoutTaxes,weight,volume,priceWithTaxes);
-        return repository.save(product);
-    }
+    
 }
