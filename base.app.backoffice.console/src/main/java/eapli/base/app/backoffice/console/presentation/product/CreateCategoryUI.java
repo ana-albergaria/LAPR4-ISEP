@@ -17,6 +17,8 @@ public class CreateCategoryUI extends AbstractUI {
 
         controller.createCategory(code, description);
 
+        System.out.println("The new Category has been successfully created!");
+
         return false;
     }
 

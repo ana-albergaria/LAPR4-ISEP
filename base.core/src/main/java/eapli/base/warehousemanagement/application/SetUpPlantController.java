@@ -14,7 +14,6 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
 
 public class SetUpPlantController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -30,7 +29,7 @@ public class SetUpPlantController {
 
 
     @SuppressWarnings("unchecked")
-    public void setUpPlant(File json){
+    public boolean setUpPlant(File json){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
         JSONParser jsonParser = new JSONParser();
 
@@ -209,6 +208,8 @@ public class SetUpPlantController {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
+        return true;
 
     }
 }
