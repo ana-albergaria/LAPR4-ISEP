@@ -26,6 +26,10 @@ package "<<aggregate>> Order" {
     entity Order
     class Shipment
     class Payment
+    entity OrderItem
+    class SourceChannel
+    class AdditionalComment
+    class InteractionDate
 }
 
 package "<<aggregate>> Client" {
@@ -151,12 +155,12 @@ entity Order <<entity>> <<root>> {
 }
 
 /'Representa-se atributos de value objects?'/
-class Shipment <<(V,#FF8B40) value object>> {
+enum Shipment {
     -method
     -cost
 }
 
-class Payment <<(V,#FF8B40) value object>> {
+enum Payment {
     -method
     -status
 }
@@ -345,6 +349,10 @@ class Role <<(V,#FF8B40) value object>> {
 
 } '/
 
+entity OrderItem <<entity>> {
+    -itemQuantity
+}
+
 Product --> "*" Photo
 Product --> "0..1" OptionalProductionCode
 Product --> "1" Category : belongs to
@@ -356,6 +364,11 @@ Order --> "1" Client : ordered by
 Order --> "1..*" Product : composed by
 Order --> "1" Shipment : has info about
 Order --> "1" Payment : has info about
+Order -> "1..*" OrderItem : composed by
+OrderItem --> "1" Product : composed by
+Order --> "0..1" SourceChannel
+Order --> "0..1" InteractionDate
+Order --> "0..1" AdditionalComment
 
 Client --> "1..*" Address : has
 Client --> "*" Survey: answers
@@ -429,5 +442,9 @@ Survey --> "*" Answer
 /'Report --> "*" Answer'/
 
 /' TaxService ..> Tax '/
+
+class SourceChannel <<(V,#FF8B40) value object>>
+class InteractionDate <<(V,#FF8B40) value object>>
+class AdditionalComment <<(V,#FF8B40) value object>>
 
 @enduml
