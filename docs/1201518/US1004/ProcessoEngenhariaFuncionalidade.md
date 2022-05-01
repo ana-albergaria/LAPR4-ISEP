@@ -4,18 +4,6 @@
 
 # 1. Requisitos
 
-*Nesta secção a equipa deve indicar a funcionalidade desenvolvida bem como descrever a sua interpretação sobre a mesma e sua correlação e/ou dependência de/com outros requisitos.*
-
-*Exemplo*
-
-**Demo1** Como {Ator} pretendo...
-
-- Demo1.1. Blá Blá Blá ...
-
-- Demo1.2. Blá Blá Blá ...
-
-A interpretação feita deste requisito foi no sentido de ...
-
 US1004 - Como Sales Clerk, pretendo criar uma nova encomenda de produtos em nome de um dado cliente.
 
 ### 1.1 Especificações e esclarecimentos do cliente
@@ -96,10 +84,6 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 
 # 2. Análise
 
-*Neste secção a equipa deve relatar o estudo/análise/comparação que fez com o intuito de tomar as melhores opções de design para a funcionalidade bem como aplicar diagramas/artefactos de análise adequados.*
-
-*Recomenda-se que organize este conteúdo por subsecções.*
-
 ## 2.1 Excerto do Modelo de Domínio
 
 ![DM_RegisterOrderClient.svg](./DM_RegisterOrderClient.svg)
@@ -110,13 +94,7 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 
 # 3. Design
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
-
 ## 3.1. Realização da Funcionalidade
-
-*Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
 
 ## 3.1.1 Sequence Diagram (SD)
 
@@ -124,68 +102,116 @@ However, it might happen (s)he is not registered. In such case, the customer is 
 
 ## 3.2. Diagrama de Classes
 
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
-
 ![CD_RegisterOrderClient.svg](./CD_RegisterOrderClient.svg)
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+### Creator
+
+### Repository
+
+### Factory
+
+### Information Expert
 
 ## 3.4. Testes 
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
 **Teste 1:** Verificar que não é possível criar uma instância da classe Client sem os valores obrigatórios.
 
-	@Test
-    public void ensureDishWithNameEmailPhoneNumberVatAndPostalAddress() {
-        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
-        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
-        assertTrue(true);
+	@Test(expected = IllegalArgumentException.class)
+    public void ensureOrderAddressMustHaveStreeName() {
+        new OrderAddress(null, "7", "4520-463", "Rio Meão", "Portugal");
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveName() {
-        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
-        new Client(null,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderAddressMustHaveDoorNumber() {
+        new OrderAddress("Travessa do Outeiro", null, "4520-463", "Rio Meão", "Portugal");
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveVat() {
-        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
-        new Client(CLIENT_NAME,null,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,postalAddresses);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderAddressMustHavePostalCode() {
+        new OrderAddress("Travessa do Outeiro", "7", null, "Rio Meão", "Portugal");
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
-    public void ensureMustHaveEmail() {
-        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
-        new Client(CLIENT_NAME,CLIENT_VAT,null,CLIENT_PHONE_NUMBER,postalAddresses);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderAddressMustHaveCity() {
+        new OrderAddress("Travessa do Outeiro", "7", "4520-463", null, "Portugal");
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
-    public void ensureMustHavePhoneNumber() {
-        postalAddresses.add(CLIENT_POSTAL_ADDRESS);
-        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,null,postalAddresses);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderAddressMustHaveCountry() {
+        new OrderAddress("Travessa do Outeiro", "7", "4520-463", "Rio Meão", null);
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
-    public void ensureMustHavePostalAddress() {
-        new Client(CLIENT_NAME,CLIENT_VAT,CLIENT_EMAIL,CLIENT_PHONE_NUMBER,null);
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderItemHasCode() {
+        new OrderItem(null, 1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureOrderItemHasQuantity() {
+        new OrderItem("aaaa.11111", null);
     }
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+## Classe RegisterClientOrderController
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    public TheOrder registerOrder(List<List<String>> addresses, Shipment shipment, Payment payment, TheOrder.SourceChannel sourceChannel, Calendar interactionDate, String additionalCommentText, Map<String, Integer> items) {
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
+
+        OrderAddress billingAddress = new OrderAddress(addresses.get(0).get(0), addresses.get(0).get(1),addresses.get(0).get(2),
+                addresses.get(0).get(3), addresses.get(0).get(4));
+
+        OrderAddress deliveryAddress = new OrderAddress(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2),
+                addresses.get(1).get(3), addresses.get(1).get(4));
+
+        AdditionalComment additionalComment = new AdditionalComment(additionalCommentText);
+
+        Set<OrderItem> orderItems = new HashSet<>();
+        fillOrderItems(items, orderItems);
+
+        TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser(), orderItems);
+
+        return orderRepository.save(order);
+    }
+
+    public boolean verifyClientById(Long clientId) {
+        Optional<Client> chosenClient = clientRepository.ofIdentity(clientId);
+        if(chosenClient.isPresent())
+        client = chosenClient.get();
+        return client != null;
+    }
+
+    public boolean verifyProductById(Code code) {
+        Optional<Product> chosenProduct = svcProducts.findProductById(code);
+        if(chosenProduct.isPresent())
+            product = chosenProduct.get();
+        return product != null;
+    }
+
+    private void fillOrderItems(Map<String, Integer> items, Set<OrderItem> setItems) {
+
+        for (Map.Entry<String, Integer> entry : items.entrySet()) {
+            String code = entry.getKey();
+            Integer quantity = entry.getValue();
+            OrderItem orderItem = new OrderItem(code,quantity);
+            setItems.add(orderItem);
+        }
+    }
+
 
 # 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+Esta User Story foi implementada na sua totalidade, integrando na sua implementação a interação com vários repositórios (ProductRepository, ClientRepository e OrderRepository) e com outras UI's, nomeadamente a RegisterClientUI (para o registo de um cliente) e a ViewProductsCatalogUI (para a visualização dos produtos) de modo a cumprir com os requisitos.
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
+A OrderItem será, futuramente, uma Entidade, como representada no Modelo de Domínio.  
+Devido a problemas na persistência de dados dessa entidade, enquanto alternativa optou-se por implementar a OrderItem enquanto Value Object.
+
 
 
 

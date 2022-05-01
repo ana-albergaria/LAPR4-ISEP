@@ -36,10 +36,10 @@ public class ProductsBootstrapper implements Action {
         final var fish = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_FISH);
 
         Set<Photo> lemonShampooPhotos = new HashSet<>();
-        lemonShampooPhotos.add(new Photo("docs/photos/shampoo.png"));
-        lemonShampooPhotos.add(new Photo("docs/photos/shampoo_on_use.jpg"));
+        lemonShampooPhotos.add(new Photo("docs/1201592/US1001/photos/shampoo.png"));
+        lemonShampooPhotos.add(new Photo("docs/1201592/US1001/photos/shampoo_on_use.jpg"));
         Set<Photo> cannedTunaPhotos = new HashSet<>();
-        cannedTunaPhotos.add(new Photo("docs/photos/canned_tuna.jpg"));
+        cannedTunaPhotos.add(new Photo("docs/1201592/US1001/photos/canned_tuna.jpg"));
 
         register(TestDataConstants.PRODUCT_LEMON_SHAMPOO, "000000000001", "This is a lemon shampoo.",
                 "This shampoo has lemon scent. The scent stays in the hair for a long time.", 1, "AVAILABLE", 1, 0.000565,

@@ -57,6 +57,10 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
         productionCode = newProductionCode;
     }
 
+    public BrandName brandName() {
+        return this.brandName;
+    }
+
     /**
      * Possible values for product's status.
      */
@@ -321,4 +325,8 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
         return photos.add(photo); //add(new ProductPhoto(photo)) ???
     }
 
+    @Override
+    public String toString(){
+        return String.format("Product - %s, %s \n", uniqueInternalCode.toString(), shortDescription);
+    }
 }

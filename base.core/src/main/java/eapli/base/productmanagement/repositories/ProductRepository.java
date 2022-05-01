@@ -1,11 +1,8 @@
 package eapli.base.productmanagement.repositories;
 
-import eapli.base.productmanagement.domain.Code;
-import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.domain.*;
 import eapli.framework.domain.repositories.DomainRepository;
 
-import javax.persistence.LockModeType;
-import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 public interface ProductRepository extends DomainRepository<Code, Product> {
@@ -15,5 +12,13 @@ public interface ProductRepository extends DomainRepository<Code, Product> {
 
     Optional<Product> ofIdentity();
 
-    TypedQuery<Product> query(final String jpql, final Class<Product> classz);
+    Iterable<BrandName> findAllBrandName();
+
+    Iterable<ExtendedDescription> findAllDescription();
+
+    Iterable<Product> findByBrandName(BrandName brandName);
+
+    Iterable<Product> findByExtendedDescription(ExtendedDescription description);
+
+    Iterable<Product> findByCategory(ProductCategory category);
 }

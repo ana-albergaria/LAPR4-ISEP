@@ -26,12 +26,16 @@ public class Client implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long clientId;
 
+    @Embedded
     private Name name;
 
+    @Embedded
     private VAT vat;
 
+    @Embedded
     private Email email;
 
+    @Embedded
     private PhoneNumber phoneNumber;
 
     @Temporal(TemporalType.DATE)
@@ -42,6 +46,38 @@ public class Client implements AggregateRoot<Long>, Serializable {
 
     @ElementCollection
     private Set<Address> addresses;
+
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public VAT getVat() {
+        return vat;
+    }
+
+    public void setVat(VAT vat) {
+        this.vat = vat;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
 
     /**
@@ -55,7 +91,6 @@ public class Client implements AggregateRoot<Long>, Serializable {
     public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber, final Set<Address> addresses) {
         Preconditions.noneNull(name, vat, email, phoneNumber);
         Preconditions.noneNull(addresses, "The Client must have at least one address.");
-        //usar o Preconditions.ensure para fazer verificações à data
         this.name = name;
         this.vat = vat;
         this.email = email;
@@ -75,6 +110,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
         this.birthdate = birthdate;
     }
 
+    public Email email() {
+        return this.email;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
@@ -90,18 +129,5 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return this.clientId;
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "version=" + version +
-                ", clientId=" + clientId +
-                ", name=" + name +
-                ", vat=" + vat +
-                ", email=" + email +
-                ", phoneNumber=" + phoneNumber +
-                ", birthdate=" + birthdate +
-                ", gender=" + gender +
-                ", addresses=" + addresses +
-                '}';
-    }
+
 }
