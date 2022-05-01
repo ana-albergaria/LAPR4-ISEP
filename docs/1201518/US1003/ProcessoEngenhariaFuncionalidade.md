@@ -96,7 +96,6 @@ Foram aplicados os padrões princípios SOLID e GoF
 ### Builder
 - O padrão Builder é usado para encapsular a lógica de construção de um objeto. Foi utilizado devido à criação do Cliente envolver vários atributos opcionais, existindo assim representações múltiplas da classe.
 
-
 ### Creator
 
 ### Repository

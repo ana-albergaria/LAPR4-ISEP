@@ -11,18 +11,18 @@ participant RepositoryFactory as Factory <<factory>>
 database ClientRepository as Repository <<repository>>
 
 activate SC
-SC -> UI : Inicia o processo de registo do cliente
+SC -> UI : inicia o registo do cliente
 activate UI
 UI -> Controller: create
-UI --> SC : Solicita os dados obrigatórios (firstNames, surnames, Email, \nPhoneNumber, VAT, Postal Address)
+UI --> SC : solicita os dados obrigatórios (firstNames, surnames, Email, \nPhoneNumber, VAT, Postal Address)
 deactivate UI
-SC -> UI : Introduz os dados solicitados
+SC -> UI : introduz os dados solicitados
 activate UI
 
 
 
-alt Sales Clerk deseja associar mais endereços
-loop Enquanto o Sales Clerk quiser associar \nmais endereços
+alt sales Clerk quer introduzir mais endereços
+loop o Sales Clerk quer introduzir \nmais endereços
 UI --> SC : Solicita o endereço
 deactivate UI
 
@@ -31,17 +31,17 @@ SC -> UI : Introduz o endereço
 activate UI
 end
 end
-alt Sales Clerk deseja associar a \ndata de nascimento do cliente
+alt sales Clerk insere a \ndata de nascimento do cliente
 activate UI
-UI --> SC : Solicita a data de nascimento
+UI --> SC : solicita a data de nascimento
 deactivate UI
 SC -> UI : introduz data de nascimento
 activate UI
 end
-alt Sales Clerk deseja associar o sexo do cliente
-UI --> SC : Solicita o sexo
+alt sales Clerk insere o género do cliente
+UI --> SC : solicita o género
 deactivate UI
-SC -> UI : Introduz o sexo
+SC -> UI : introduz o género
 activate UI
 end
 UI -> Controller: registerClient(firstnames, surnames, email, phoneNumber,\nvat, postalAddress, birthDate, gender)
@@ -80,7 +80,7 @@ deactivate Factory
 Controller->Repository:save(client)
 Controller->UI: user
 deactivate Controller
-UI --> SC : Informa o sucesso da operação e \nmostra a informação do cliente
+UI --> SC : informa o sucesso da operação e \nmostra a informação do cliente
 deactivate UI
 deactivate SC
 

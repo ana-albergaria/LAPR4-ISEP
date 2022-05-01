@@ -110,6 +110,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
         this.birthdate = birthdate;
     }
 
+    public Email email() {
+        return this.email;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);
@@ -125,18 +129,5 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return this.clientId;
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "version=" + version +
-                ", clientId=" + clientId +
-                ", name=" + name +
-                ", vat=" + vat +
-                ", email=" + email +
-                ", phoneNumber=" + phoneNumber +
-                ", birthdate=" + birthdate +
-                ", gender=" + gender +
-                ", addresses=" + addresses +
-                '}';
-    }
+
 }
