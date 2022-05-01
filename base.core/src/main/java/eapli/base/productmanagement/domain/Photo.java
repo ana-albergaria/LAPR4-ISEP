@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class Photo implements ValueObject, Serializable { //docs/photos/shampoo.png
     private static final long serialVersionUID = 1L;
 
-    private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^([a-zA-Z]+/)*[a-zA-Z0-9_-]+.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
+    private static final Pattern VALID_PHOTO_REGEX = Pattern.compile("^([a-zA-Z0-9_-]+/)*[a-zA-Z0-9_-]+.(png|jpg|svg|jpeg|PNG|JPG|SVG|JPEG)$");
 
     private final String value;
 
