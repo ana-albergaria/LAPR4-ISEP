@@ -2,15 +2,12 @@ package eapli.base.infrastructure.bootstrapers.demo;
 
 import eapli.base.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.infrastructure.persistence.RepositoryFactory;
-import eapli.base.productmanagement.application.CreateCategoryController;
 import eapli.base.productmanagement.application.RegisterProductController;
 import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.general.domain.model.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
@@ -18,6 +15,9 @@ import org.springframework.transaction.TransactionSystemException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public class ProductsBootstrapper implements Action {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductsBootstrapper.class);

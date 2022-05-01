@@ -7,7 +7,12 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-//short description: not empty having 30 chars maximum;
+/**
+ * The short description of a product. As requested, it is not empty,
+ * having 30 chars maximum.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 public class ShortDescription implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;

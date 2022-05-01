@@ -11,6 +11,11 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.Set;
 
+/**
+ * The controller for the use case "register new product" using the domain objects.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 public class RegisterProductController {
 
     private ListProductCategoryService svc = new ListProductCategoryService();

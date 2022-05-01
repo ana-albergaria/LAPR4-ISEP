@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
 
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public class ProductCategoriesBootstrapper implements Action {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductCategoriesBootstrapper.class);

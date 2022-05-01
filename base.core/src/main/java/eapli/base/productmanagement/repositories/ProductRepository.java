@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 public interface ProductRepository extends DomainRepository<Code, Product> {
+
     @Override
     Iterable<Product> findAll();
 

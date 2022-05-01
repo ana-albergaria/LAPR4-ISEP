@@ -8,7 +8,12 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.sql.Ref;
 
-//reference: not empty alphanumeric code with at 23 chars maximum;
+/**
+ * The reference of a product. As requested, it is a not empty alphanumeric
+ * code with 23 chars maximum.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 public class Reference implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;

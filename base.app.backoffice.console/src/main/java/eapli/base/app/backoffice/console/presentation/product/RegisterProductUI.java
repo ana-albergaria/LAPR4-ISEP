@@ -13,7 +13,9 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public class RegisterProductUI extends AbstractUI {
 
     private final RegisterProductController theController = new RegisterProductController();

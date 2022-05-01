@@ -12,6 +12,13 @@ import java.util.regex.Pattern;
 //"From a usability perspective, it would be better having a window (or any other way) to
 // select the photo file to be uploaded. However, if by some reason that option is not viable
 // by now the user can write the path but the system must validate it."
+
+/**
+ * The photo of a product. As requested, it might be of any common format (e.g. png, jpeg, svg)
+ * and the user can write the path but the system must validate it.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 public class Photo implements ValueObject, Serializable { //docs/photos/shampoo.png
     private static final long serialVersionUID = 1L;

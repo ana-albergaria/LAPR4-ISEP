@@ -5,6 +5,11 @@ import eapli.framework.general.domain.model.Money;
 
 import java.util.Set;
 
+/**
+ * A Product builder. Used to avoid overloading constructors or too
+ * much conditional logic on the constructor.
+ * @author Marta Ribeiro 1201592
+ */
 public class ProductBuilder implements DomainFactory<Product> {
 
     private Product theProduct;
