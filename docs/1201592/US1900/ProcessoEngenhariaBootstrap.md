@@ -17,7 +17,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
 * Product Categories
 * Products
 * Clients
-
+* Warehouses
 
 
 # 3. Design
@@ -32,6 +32,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
     * BackofficeUsersBootstrapper
     * ClientUserBootstrapper
     * ClientsBootstrapper
+    * WarehousesBootstrapper
     * ProductCategoriesBootstrapper
     * ProductsBootstrapper
   * BaseDemoSmokeTester
@@ -97,6 +98,7 @@ A interpretação feita deste requisito foi no sentido de popular as tabelas da 
         final Action[] actions = { new BackofficeUsersBootstrapper(),
                 new ClientUserBootstrapper(),
                 new ClientsBootstrapper(),
+                new WarehousesBootstrapper(),
                 new ProductCategoriesBootstrapper(),
                 new ProductsBootstrapper(),
         };
