@@ -34,8 +34,6 @@ public class ProductBuilder implements DomainFactory<Product> {
 
     private ProductCategory category;
 
-    //atributos obrigatorios
-
     public ProductBuilder ofCategory(final ProductCategory productCategory){
         category=productCategory;
         return this;
@@ -107,9 +105,6 @@ public class ProductBuilder implements DomainFactory<Product> {
     }
 
     private Product buildOrThrow(){
-        // we will create the actual instance inside the builder during the building process, but
-        // that is hidden from the client code. conceptually, the client code only sees the new
-        // instance (it is only built) in the build method
         if (theProduct!=null){
             return theProduct;
         } else if (category!=null && barcode!=null && shortDescription!=null && extendedDescription!=null &&
@@ -121,8 +116,6 @@ public class ProductBuilder implements DomainFactory<Product> {
             throw new IllegalStateException();
         }
     }
-
-    //atributos opcionais
 
     public ProductBuilder withTechnicalDescription(final TechnicalDescription technicalDescription){
         if (technicalDescription!=null) {
