@@ -1,4 +1,4 @@
-/*package eapli.base.infrastructure.bootstrapers.demo;
+package eapli.base.infrastructure.bootstrapers.demo;
 
 import eapli.base.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -8,6 +8,10 @@ import eapli.base.productmanagement.domain.Photo;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.warehousemanagement.application.RegisterAGVController;
+import eapli.base.warehousemanagement.domain.AgvDock;
+import eapli.base.warehousemanagement.domain.AutonomyStatus;
+import eapli.base.warehousemanagement.domain.TaskStatus;
+import eapli.base.warehousemanagement.repositories.AgvDockRepository;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -22,50 +26,37 @@ public class AGVsBootstrapper implements Action {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AGVsBootstrapper.class);
 
+    private AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
+
     private final RegisterAGVController controller = new RegisterAGVController();
 
-    private ProductCategory getProductCategory(final String alphanumericCode){
-        return productCategoryRepository.ofIdentity(AlphaNumericCode.valueOf(alphanumericCode)).orElseThrow(IllegalStateException::new);
+    private AgvDock getAgvDock(final String id){
+        return agvDockRepository.ofIdentity(id).orElseThrow(IllegalStateException::new);
     }
 
     @Override
     public boolean execute(){
-        final var shampoo = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_SHAMPOO);
-        final var fish = getProductCategory(TestDataConstants.PRODUCT_CATEGORY_FISH);
-
-        Set<Photo> lemonShampooPhotos = new HashSet<>();
-        lemonShampooPhotos.add(new Photo("docs/1201592/US1001/photos/shampoo.png"));
-        lemonShampooPhotos.add(new Photo("docs/1201592/US1001/photos/shampoo_on_use.jpg"));
-        Set<Photo> cannedTunaPhotos = new HashSet<>();
-        cannedTunaPhotos.add(new Photo("docs/1201592/US1001/photos/canned_tuna.jpg"));
-
-        register(TestDataConstants.PRODUCT_LEMON_SHAMPOO, "000000000001", "This is a lemon shampoo.",
-                "This shampoo has lemon scent. The scent stays in the hair for a long time.", 1, "AVAILABLE", 1, 0.000565,
-                1.3, shampoo, "This shampoo has no chemicals. Only natural ingredients.", "Bobbles", "1",
-                "bbsp.00001", lemonShampooPhotos);
-        register(TestDataConstants.PRODUCT_APPLE_SHAMPOO, "000000000002", "This is an apple shampoo.",
-                "This shampoo has apple scent. The scent stays in the hair for a long time.", 1, "AVAILABLE", 1, 0.000565,
-                1.3, shampoo, "This shampoo has no chemicals. Only natural ingredients.", "Bobbles", "2",
-                "bbsp.00002", null);
-        register(TestDataConstants.PRODUCT_CANNED_TUNA, "000000000003", "This is a can of tuna.",
-                "This can of tuna is delicious. Perfect for any dish.", 0.5, "AVAILABLE", 0.185, 0.00021,
-                0.99, fish, "This canned tuna has no preserving agents. Only natural ingredients.", "Freshy", "1",
-                "fstn.00001", cannedTunaPhotos);
+        final var d1 = getAgvDock("D1");
+        final var d2 = getAgvDock("D2");
+        final var d3 = getAgvDock("D3");
+        register(10L, new AutonomyStatus("1D"), new TaskStatus("FREE"), "refaerfa",
+                "short description 1", 18.0, d1);
+        register(11L, new AutonomyStatus("3D"), new TaskStatus("FREE"), "afardfrg",
+                "short description 2", 19.0, d2);
+        register(12L, new AutonomyStatus("2D"), new TaskStatus("FREE"), "sdkfjnsk",
+                "short description 3", 20.0, d3);
         return true;
     }
 
-    public void register(final String uniqueInternalCode, final String barcode, final String shortDescription, final String extendedDescription,
-                         final double priceWithoutTaxes, final String status, final double weight, final double volume,
-                         final double priceWithTaxes, final ProductCategory productCategory, final String technicalDescription,
-                         final String brandName, final String reference, final String productionCode, final Set<Photo> photos){
+    public void register(final Long agvID, final AutonomyStatus autonomyStatus, final TaskStatus taskStatus, final String modelID,
+                         final String shortDescription, final Double maxWeight, AgvDock agvDock){
         try{
-            controller.registerProduct(uniqueInternalCode, barcode, shortDescription, extendedDescription, priceWithoutTaxes, status, weight, volume, priceWithTaxes, productCategory,
-                    technicalDescription, brandName, reference, productionCode, photos);
-            LOGGER.debug(uniqueInternalCode);
+            controller.registerAGV(agvID, autonomyStatus, taskStatus, modelID, shortDescription, maxWeight, agvDock);
+            LOGGER.debug(String.valueOf(agvID));
         } catch (final IntegrityViolationException | ConcurrencyException | TransactionSystemException e){
             // ignoring exception. assuming it is just a primary key violation
             // due to the tentative of inserting a duplicated user
-            LOGGER.warn("Assuming {} already exists (see trace log for details on {} {})", uniqueInternalCode,
+            LOGGER.warn("Assuming {} already exists (see trace log for details on {} {})", agvID,
                     e.getClass().getSimpleName(), e.getMessage());
             LOGGER.trace(String.valueOf(e));
         }
@@ -73,4 +64,3 @@ public class AGVsBootstrapper implements Action {
 
 
 }
-*/
