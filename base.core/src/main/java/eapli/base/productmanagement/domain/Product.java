@@ -53,7 +53,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
      *
      * @param newProductionCode new production code
      */
-    public void changeProductionCode(Code newProductionCode) {
+    public void changeProductionCode(ProductionCode newProductionCode) {
         productionCode = newProductionCode;
     }
 
@@ -125,7 +125,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "production_code"))
-    private Code productionCode; //optional
+    private ProductionCode productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
     @ManyToOne
@@ -305,7 +305,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     /**
      * @return the product production code
      */
-    public Optional<Code> getProductionCode() {
+    public Optional<ProductionCode> getProductionCode() {
         return Optional.ofNullable(productionCode);
     }
 
