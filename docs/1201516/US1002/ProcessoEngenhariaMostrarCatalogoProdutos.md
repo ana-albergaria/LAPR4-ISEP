@@ -13,7 +13,39 @@ A interpretação feita deste requisito foi a de mostrar as informações básic
 
 ## 2.1. Respostas do Cliente
 
+> Q1: "In the us1002 we have 3 filters (category, brand and description) to search for products, but can the Sales Clerk only use a filter by search or can use the three?"
+> 
+> A1:
+> "Follow common sense...
+> 
+> Put yourself on the Sales Clerk shoes.
+> 
+> What would you as a Sales Clerk expect from the system?
+> 
+> Probably, you would figure out that sometimes you need to filter using just one attribute and on another case you need to apply/combine filtering criteria of two or more attributes."
 
+> Q2: "Should the sales clerk select/specify the catalog presentation order before he/she can see the catalog? Or the catalog is presented in a default order, and then if the sales clerk wants, he/she can change it? The same doubt came on the filtering.
+> 
+> Talking about data presentation orders, which ones should exist?"
+> 
+> A2: "
+>1. Data to be used to filter the products catalog content should be asked ahead.
+>
+>2. Regarding presentation order, the necessary data can be asked either: ahead and after presenting them."
+
+> Q3: "Regarding the product search, is there a field you want to use to filter the data and any desired data presentation order? And do you want to see all the fields or just a simplified summary?"
+> 
+> A3: "Commonly fields used to filter products are:
+> 
+> - Category
+> - Description (any of the available descriptions)
+> - Brand
+>
+>User should select/specify a data presentation order. This applies to any similar US. 
+> 
+> At least the product' code, short description, brand, category and unit price should be presented. 
+> 
+> More details can be presented for a given/selected product at user request."
 
 ## 2.2. Regras de Negócio
 
@@ -31,11 +63,12 @@ A interpretação feita deste requisito foi a de mostrar as informações básic
 
 ### 3.1.1. Classes de Domínio:
 
-* AGV, AVGDock
+* Product, ProductCategory 
 * Controlador:
-    * AGVController
+    * ViewProductCatalogController
 * Repository:
-    * AGVRepository
+    * ProductRepository
+    * ProductCategoryRepository
 
 
 ### 3.1.2. Diagrama de Sequência do Sistema:
