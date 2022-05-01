@@ -46,13 +46,12 @@ public class RegisterClientOrderUI extends AbstractUI {
                 Integer quantity = Console.readInteger("How many units of this product do you want?");
 
                 if(items.get(productCode) != null) {
-                    items.put(productCode, quantity);
                     System.out.println("You have already chosen that Product.");
+                    moreProducts = Console.readLine("Do you want to add more Products?\n (yes|no)\n");
                 } else {
                     items.put(productCode, quantity);
+                    moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?\n (yes|no)\n");
                 }
-                items.put(productCode, quantity);
-                moreProducts = Console.readLine("Product added successfully. Do you want to add more Products?");
             }
         }
 
