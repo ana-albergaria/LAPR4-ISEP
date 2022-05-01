@@ -9,17 +9,21 @@ import java.io.Serializable;
 
 @Embeddable
 public class OrderWeight implements ValueObject, Serializable {
-    private final Long weight;
+    private final Double weight;
 
-    public OrderWeight(final Long weight) {
+    public OrderWeight(final Double weight) {
         Preconditions.nonNull(weight, "The volume shouldn't be null.");
-        Preconditions.isPositive(weight, "The volume should be positive.");
+        Preconditions.ensure(weight > 0, "The volume should be positive.");
         this.weight = weight;
     }
 
     protected OrderWeight() {
         //for ORM purposes
         this.weight = null;
+    }
+
+    public static OrderWeight valueOf(final Double volume) {
+        return new OrderWeight(volume);
     }
 
     public boolean equals(final Object o) {

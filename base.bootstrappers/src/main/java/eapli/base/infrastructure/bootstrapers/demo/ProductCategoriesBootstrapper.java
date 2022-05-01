@@ -1,6 +1,6 @@
-package eapli.base.infrastructure.bootstrapers.demo.backoffice;
+package eapli.base.infrastructure.bootstrapers.demo;
 
-import eapli.base.infrastructure.bootstrapers.demo.DemoDataConstants;
+import eapli.base.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.productmanagement.application.CreateCategoryController;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -9,18 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
 
-//importante
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public class ProductCategoriesBootstrapper implements Action {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductCategoriesBootstrapper.class);
 
-    private CreateCategoryController controller;
+    private final CreateCategoryController controller = new CreateCategoryController();
 
     @Override
     public boolean execute(){
-        register(DemoDataConstants.PRODUCT_CATEGORY_SHAMPOO,"These are some very nice shampoos.");
-        register(DemoDataConstants.PRODUCT_CATEGORY_FISH,"These are some very nice fishes.");
-        register(DemoDataConstants.PRODUCT_CATEGORY_JEANS,"These are some very nice jeans.");
+        register(TestDataConstants.PRODUCT_CATEGORY_SHAMPOO,"This is the shampoos' category");
+        register(TestDataConstants.PRODUCT_CATEGORY_FISH,"This is the fishes' category");
+        register(TestDataConstants.PRODUCT_CATEGORY_JEANS,"This is the jeans' category");
         return true;
     }
 

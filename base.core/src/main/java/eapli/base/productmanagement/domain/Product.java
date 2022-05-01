@@ -8,33 +8,58 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * A Product.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Entity
 public class Product implements AggregateRoot<Code>, Serializable, Comparable<Code> {
 
+    /**
+     * Changes the technical description of the product.
+     *
+     * @param newTechnicalDescription new technical description
+     */
     public void changeTechnicalDescription(TechnicalDescription newTechnicalDescription) {
-        Preconditions.nonNull(newTechnicalDescription);
         technicalDescription = newTechnicalDescription;
     }
 
+    /**
+     * Changes the brand name of the product.
+     *
+     * @param newBrandName new brand name
+     */
     public void changeBrandName(BrandName newBrandName) {
-        Preconditions.nonNull(newBrandName);
         brandName = newBrandName;
 
     }
 
+    /**
+     * Changes the reference of the product.
+     *
+     * @param newReference new reference
+     */
     public void changeReference(Reference newReference) {
-        Preconditions.nonNull(newReference);
         reference = newReference;
     }
 
+    /**
+     * Changes the production code of the product.
+     *
+     * @param newProductionCode new production code
+     */
     public void changeProductionCode(Code newProductionCode) {
-        Preconditions.nonNull(newProductionCode);
         productionCode = newProductionCode;
     }
 
+    /**
+     * Possible values for product's status.
+     */
     public enum Status {
         AVAILABLE, TEMPORARILY_UNAVAILABLE, UNAVAILABLE;
     }
@@ -44,22 +69,29 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     @Version
     private Long version;
 
-    @Id
-    //@AttributeOverride(name="value",column=@Column(name="uniqueInternalCode"))
-    //@OneToOne(optional = false, cascade = CascadeType.ALL) //cascade??
-    //private Code uniqueInternalCode;
-    @AttributeOverride(name = "value", column = @Column(name = "unique_value"))
+    @EmbeddedId
+    @AttributeOverride(name = "value", column = @Column(name = "unique_internal_code"))
     private Code uniqueInternalCode;
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits."
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "short_description"))
     private ShortDescription shortDescription;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "extended_description"))
     private ExtendedDescription extendedDescription;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "technical_description"))
     private TechnicalDescription technicalDescription; //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "brand_name"))
     private BrandName brandName; //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "reference"))
     private Reference reference; //optional
 
     @Embedded
@@ -72,9 +104,12 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "weight_in_kilograms"))
     private Weight weight;
 
-    @AttributeOverride(name = "value", column = @Column(name = "volume"))
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "volume_in_cubic_meters"))
     private Volume volume;
 
     @Embedded
@@ -85,7 +120,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private Money priceWithTaxes;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "production_value"))
+    @AttributeOverride(name = "value", column = @Column(name = "production_code"))
     private Code productionCode; //optional
     //"For example, 4 letters followed by a dot (".") and ending with 5 digits." OPTIONAL
 
@@ -93,13 +128,31 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     private ProductCategory productCategory;
 
     @ElementCollection
-    private Set<Photo> photos; //TENHO DE CRIAR PHOTO - optional
+    @CollectionTable(name="product_photos")
+    @Column(name="photo_path")
+    private Set<Photo> photos = new HashSet<>(); //optional
 
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "barcode"))
     private Barcode barcode;
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
+    }
+
+    public void setWeight(Weight weight) {
+        this.weight = weight;
+    }
+
+    public void setUniqueInternalCode(Code uniqueInternalCode) {
+        this.uniqueInternalCode = uniqueInternalCode;
+    }
 
     /**
      * Constructor for Product with the minimum attributes.
+     *
      * @param uniqueInternalCode the product unique internal code
+     * @param barcode the product barcode
      * @param shortDescription the product short description
      * @param extendedDescription the product extended description
      * @param priceWithoutTaxes the product price without taxes
@@ -153,77 +206,117 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
         return identity().equals(that.identity());
     }
 
-    //APENAS PARA TESTAR US1004
-    public Product(ProductCategory productCategory, Code uniqueInternalCode, Money priceWithoutTaxes, Weight weight, Volume volume, Money priceWithTaxes) {
-        this.productCategory=productCategory;
-        this.uniqueInternalCode=uniqueInternalCode;
-        this.priceWithoutTaxes = priceWithoutTaxes;
-        this.weight = weight;
-        this.volume = volume;
-        this.priceWithTaxes = priceWithTaxes;
-    }
-
+    /**
+     * @return the product category of this product
+     */
     public ProductCategory getProductCategory(){
         return productCategory;
     }
 
+    /**
+     * @return the product identity (unique internal code)
+     */
     @Override
     public Code identity() {
         return uniqueInternalCode;
     }
 
+    /**
+     * @return the product unique internal code
+     */
     public Code getUniqueInternalCode() {
         return uniqueInternalCode;
     }
 
+    /**
+     * @return the product short description
+     */
     public ShortDescription getShortDescription() {
         return shortDescription;
     }
 
+    /**
+     * @return the product extended description
+     */
     public ExtendedDescription getExtendedDescription() {
         return extendedDescription;
     }
 
+    /**
+     * @return the product technical description
+     */
     public Optional<TechnicalDescription> getTechnicalDescription() {
         return Optional.ofNullable(technicalDescription);
     }
 
+    /**
+     * @return the product brand name
+     */
     public Optional<BrandName> getBrandName() {
         return Optional.ofNullable(brandName);
     }
 
+    /**
+     * @return the product reference
+     */
     public Optional<Reference> getReference() {
         return Optional.ofNullable(reference);
     }
 
+    /**
+     * @return the product price without taxes
+     */
     public Money getPriceWithoutTaxes() {
         return priceWithoutTaxes;
     }
 
+    /**
+     * @return the product status
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * @return the product weight
+     */
     public Weight getWeight() {
         return weight;
     }
 
+    /**
+     * @return the product volume
+     */
     public Volume getVolume() {
         return volume;
     }
 
+    /**
+     * @return the product price with taxes
+     */
     public Money getPriceWithTaxes() {
         return priceWithTaxes;
     }
 
+    /**
+     * @return the product production code
+     */
     public Optional<Code> getProductionCode() {
         return Optional.ofNullable(productionCode);
     }
 
+    /**
+     * @return the product photos
+     */
     public Set<Photo> photos() {
         return Collections.unmodifiableSet(photos);
     }
 
+    /**
+     * Add a photo to the set of product photos
+     * @param photo the photo to add
+     * @return true if successfully added
+     */
     public boolean addPhoto(final Photo photo){
         return photos.add(photo); //add(new ProductPhoto(photo)) ???
     }

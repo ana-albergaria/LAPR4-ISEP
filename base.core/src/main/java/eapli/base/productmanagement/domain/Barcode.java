@@ -4,10 +4,12 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
 //UPC-A -> 12 digits
+@Embeddable
 public class Barcode implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -112,29 +112,40 @@ A interpretação feita deste requisito foi no sentido de criar um novo produto 
 ## 3.1. Realização da Funcionalidade
 
 
-### 3.1.1. Classes de Domínio:
+### 3.1.1. Modelo de Domínio:
+
+![US_1001_DM](US_1001_DM.svg)
+
+
+### 3.1.2. Classes de Domínio:
 
 * Product, ProductCategory
 * Product um agregado independente de ProductCategory:
   * relação unidirecional many-to-one
-  * cascade NONE
-  * fetch EAGER
 * Barcode
-* OptionalProductCode
-* UniqueInternalCode
-* Photo
+* Code
+* Photos
+* Weight
+* Volume
+* BrandName
+* Reference
+* ShortDescription
+* ExtendedDescription
+* TechnicalDescription
 * Controlador:
   * RegisterProdutController
 * Repository:
   * ProductRepository
+  * ProductCategoryRepository
+* ListProductCategoryRepository
 
 
-### 3.1.2. Diagrama de Sequência do Sistema:
+### 3.1.3. Diagrama de Sequência do Sistema:
 
 ![US_1001_SSD](US_1001_SSD.svg)
 
 
-### 3.1.3. Diagrama de Sequência:
+### 3.1.4. Diagrama de Sequência:
 
 ![US_1001_SD](US_1001_SD.svg)
 
@@ -148,121 +159,314 @@ A interpretação feita deste requisito foi no sentido de criar um novo produto 
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+#!!!!!!!!!! PARA PREENCHER !!!!!!!!!!
+
 
 ## 3.4. Testes
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Product com valores nulos.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+**Teste 1:** Verificar que é possível criar uma instância da classe Product apenas com os parâmetros obrigatórios.
+
+	@Test
+    public void ensureProductWithObrigatoryParameters(){
+        new Product(Code.valueOf("abcd.12345"),Barcode.valueOf("123456789012"),ShortDescription.valueOf("Short description."), ExtendedDescription.valueOf("Very very very very very very very extended description."),
+                Money.euros(1.5), Product.Status.AVAILABLE,Weight.valueOf(10),Volume.valueOf(5.3),Money.euros(3),new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")));
+        assertTrue(true);
     }
 
-**Teste 2:** Verificar que não é possível criar uma instância da classe Product com referência nula.
+**Teste 2:** Verificar que é possível fazer build de uma instância da classe Product apenas com os parâmetros obrigatórios.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+	@Test
+    public void ensureCanBuildProductWithObrigatoryParameters(){
+        final Product product = new ProductBuilder()
+                .codedAs(Code.valueOf("abcd.12345"))
+                .ofBarcode(Barcode.valueOf("123456789012"))
+                .shortlyDescriptedAs(ShortDescription.valueOf("short description"))
+                .extendedlyDescriptedAs(ExtendedDescription.valueOf("exteeeeeeeeeeeeendeeeeed descriptioooon"))
+                .initialyPricedAs(Money.euros(1))
+                .statusAs("AVAILABLE")
+                .weightAs(Weight.valueOf(1))
+                .volumeAs(Volume.valueOf(0.05))
+                .afterTaxesPricedAs(Money.euros(2.3))
+                .ofCategory(new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")))
+                .build();
+        assertNotNull(product);
     }
 
-**Teste 3:** Verificar que não é possível criar uma instância da classe Product com referência vazia.
+**Teste 3:** Verificar que é possível fazer build de uma instância da classe Product com todos os parâmetros.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
+	@Test
+    public void ensureCanBuildProductWithAllParameters(){
+        Set<Photo> photos = new HashSet<>();
+        photos.add(new Photo("docs/photos/shampoo.png"));
+        photos.add(new Photo("docs/photos/shampoo_on_use.jpg"));
+        final Product product = new ProductBuilder()
+                .codedAs(Code.valueOf("abcd.12345"))
+                .ofBarcode(Barcode.valueOf("123456789012"))
+                .shortlyDescriptedAs(ShortDescription.valueOf("short description"))
+                .extendedlyDescriptedAs(ExtendedDescription.valueOf("exteeeeeeeeeeeeendeeeeed descriptioooon"))
+                .initialyPricedAs(Money.euros(1))
+                .statusAs("AVAILABLE")
+                .weightAs(Weight.valueOf(1))
+                .volumeAs(Volume.valueOf(0.05))
+                .afterTaxesPricedAs(Money.euros(2.3))
+                .ofCategory(new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")))
+                .withTechnicalDescription(TechnicalDescription.valueOf("this is a very technical description"))
+                .withBrandName(BrandName.valueOf("the brand"))
+                .withReference(Reference.valueOf("12345brand"))
+                .withProductionCode(Code.valueOf("dggd.34656"))
+                .withPhotos(photos)
+                .build();
+        assertNotNull(product);
     }
 
-**Teste 4:** Verificar que não é possível criar uma instância da classe Product com PriceWithoutTaxes nulo.
+**Teste 4:** Verificar que não é possível criar uma instância da classe Product com UniqueInternalCode nulo.
 
 	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    public void ensureCannotBuildProductWithNullUniqueInternalCode(){
+        final Product product = new ProductBuilder()
+                .codedAs((String) null)
+                .ofBarcode(Barcode.valueOf("123456789012"))
+                .shortlyDescriptedAs(ShortDescription.valueOf("short description"))
+                .extendedlyDescriptedAs(ExtendedDescription.valueOf("exteeeeeeeeeeeeendeeeeed descriptioooon"))
+                .initialyPricedAs(Money.euros(1))
+                .statusAs("AVAILABLE")
+                .weightAs(Weight.valueOf(1))
+                .volumeAs(Volume.valueOf(0.05))
+                .afterTaxesPricedAs(Money.euros(2.3))
+                .ofCategory(new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")))
+                .build();
     }
 
-**Teste 5:** Verificar que não é possível criar uma instância da classe Product com PriceWithoutTaxes menor do que zero.
+**Os testes do 5 ao 13 são feitos usando a mesma lógica do teste 4:**
+
+**Teste 5:** Verificar que não é possível criar uma instância da classe Product com Barcode nulo.
+
+
+**Teste 6:** Verificar que não é possível criar uma instância da classe Product com ShortDescription nula.
+
+	
+**Teste 7:** Verificar que não é possível criar uma instância da classe Product com ExtendedDescription nula.
+
+	
+**Teste 8:** Verificar que não é possível criar uma instância da classe Product com PriceWithoutTaxes nulo.
+
+	
+**Teste 9:** Verificar que não é possível criar uma instância da classe Product com Status nulo.
+
+	
+**Teste 10:** Verificar que não é possível criar uma instância da classe Product com Weight nula.
+
+	
+**Teste 11:** Verificar que não é possível criar uma instância da classe Product com Volume nulo.
+
+	
+**Teste 12:** Verificar que não é possível criar uma instância da classe Product com PriceWithTaxes nulo.
+
+	
+**Teste 13:** Verificar que não é possível criar uma instância da classe Product com ProductCategory nula.
+
+	
+**Teste 14:** Verificar que não é possível criar uma instância da classe Product sem UniqueInternalCode.
 
 	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    public void ensureCannotBuildProductWithNullUniqueInternalCode2(){
+        final Product product = new ProductBuilder()
+                .ofBarcode(Barcode.valueOf("123456789012"))
+                .shortlyDescriptedAs(ShortDescription.valueOf("short description"))
+                .extendedlyDescriptedAs(ExtendedDescription.valueOf("exteeeeeeeeeeeeendeeeeed descriptioooon"))
+                .initialyPricedAs(Money.euros(1))
+                .statusAs("AVAILABLE")
+                .weightAs(Weight.valueOf(1))
+                .volumeAs(Volume.valueOf(0.05))
+                .afterTaxesPricedAs(Money.euros(2.3))
+                .ofCategory(new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")))
+                .build();
     }
 
-**Teste 6:** Verificar que não é possível criar uma instância da classe Product com PriceWithoutTaxes igual a zero.
+**Os testes do 15 ao 23 são feitos usando a mesma lógica do teste 4:**
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 15:** Verificar que não é possível criar uma instância da classe Product sem Barcode.
 
-**Teste 7:** Verificar que não é possível criar uma instância da classe Product com Tax nula.
+	
+**Teste 16:** Verificar que não é possível criar uma instância da classe Product sem ShortDescription.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+	
+**Teste 17:** Verificar que não é possível criar uma instância da classe Product sem ExtendedDescription.
 
-**Teste 8:** Verificar que não é possível criar uma instância da classe Product com Tax menor do que zero.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 18:** Verificar que não é possível criar uma instância da classe Product sem PriceWithoutTaxes.
 
-**Teste 9:** Verificar que não é possível criar uma instância da classe Product com Weight nula.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 19:** Verificar que não é possível criar uma instância da classe Product sem Status.
 
-**Teste 10:** Verificar que não é possível criar uma instância da classe Product com Weight menor do que zero.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 20:** Verificar que não é possível criar uma instância da classe Product sem Weight.
 
-**Teste 11:** Verificar que não é possível criar uma instância da classe Product com Weight igual a zero.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 21:** Verificar que não é possível criar uma instância da classe Product sem Volume.
 
-**Teste 12:** Verificar que não é possível criar uma instância da classe Product com Volume nulo.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 22:** Verificar que não é possível criar uma instância da classe Product sem PriceWithTaxes.
 
-**Teste 13:** Verificar que não é possível criar uma instância da classe Product com Volume menor do que zero.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 14:** Verificar que não é possível criar uma instância da classe Product com Volume igual a zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 15:** Verificar que não é possível criar uma instância da classe Product com Status nulo.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 16:** Verificar que não é possível criar uma instância da classe Product com Status diferente de Available, Temporarily Unavailable ou Unavailable.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
+**Teste 23:** Verificar que não é possível criar uma instância da classe Product sem ProductCategory.
 
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+## 4.1. Classe ProductBuilder
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+
+    [...]
+
+    public ProductBuilder ofCategory(final ProductCategory productCategory){
+        category=productCategory;
+        return this;
+    }
+
+    public ProductBuilder shortlyDescriptedAs(final String shortDescription){
+        return shortlyDescriptedAs(ShortDescription.valueOf(shortDescription));
+    }
+
+    public ProductBuilder shortlyDescriptedAs(final ShortDescription shortDescription){
+        this.shortDescription=shortDescription;
+        return this;
+    }
+
+    public ProductBuilder extendedlyDescriptedAs(final String extendedDescription){
+        return shortlyDescriptedAs(ShortDescription.valueOf(extendedDescription));
+    }
+
+    public ProductBuilder extendedlyDescriptedAs(final ExtendedDescription extendedDescription){
+        this.extendedDescription=extendedDescription;
+        return this;
+    }
+
+    public ProductBuilder codedAs(final String uniqueInternalCode){
+        return codedAs(Code.valueOf(uniqueInternalCode));
+    }
+
+    public ProductBuilder codedAs(final Code uniqueInternalCode){
+        this.uniqueInternalCode=uniqueInternalCode;
+        return this;
+    }
+
+    public ProductBuilder ofBarcode(final String barcode){
+        return ofBarcode(Barcode.valueOf(barcode));
+    }
+
+    public ProductBuilder ofBarcode(final Barcode barcode){
+        this.barcode=barcode;
+        return this;
+    }
+
+    public ProductBuilder initialyPricedAs(final Money priceWithoutTaxes){
+        this.priceWithoutTaxes=priceWithoutTaxes;
+        return this;
+    }
+
+    public ProductBuilder statusAs(final String status){
+        return statusAs(Product.Status.valueOf(status));
+    }
+
+    public ProductBuilder statusAs(final Product.Status status){
+        this.status=status;
+        return this;
+    }
+
+    public ProductBuilder weightAs(final Weight weight){
+        this.weight=weight;
+        return this;
+    }
+
+    public ProductBuilder volumeAs(final Volume volume){
+        this.volume=volume;
+        return this;
+    }
+
+    public ProductBuilder afterTaxesPricedAs(final Money priceWithTaxes){
+        this.priceWithTaxes=priceWithTaxes;
+        return this;
+    }
+
+    private Product buildOrThrow(){
+        if (theProduct!=null){
+            return theProduct;
+        } else if (category!=null && barcode!=null && shortDescription!=null && extendedDescription!=null &&
+        priceWithoutTaxes!=null && status!=null && weight!=null && volume!=null && priceWithTaxes!=null){
+            theProduct = new Product(uniqueInternalCode, barcode, shortDescription, extendedDescription,
+                    priceWithoutTaxes, status, weight, volume, priceWithTaxes, category);
+            return theProduct;
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    public ProductBuilder withTechnicalDescription(final TechnicalDescription technicalDescription){
+        if (technicalDescription!=null) {
+            buildOrThrow();
+            theProduct.changeTechnicalDescription(technicalDescription);
+        }
+        return this;
+    }
+
+    public ProductBuilder withBrandName(final BrandName brandName){
+        if (brandName!=null){
+            buildOrThrow();
+            theProduct.changeBrandName(brandName);
+        }
+        return this;
+    }
+
+    public ProductBuilder withReference(final Reference reference){
+        if (reference!=null) {
+            buildOrThrow();
+            theProduct.changeReference(reference);
+        }
+        return this;
+    }
+
+    public ProductBuilder withProductionCode(final Code productionCode){
+        if (productionCode!=null) {
+            buildOrThrow();
+            theProduct.changeProductionCode(productionCode);
+        }
+        return this;
+    }
+
+    public ProductBuilder withPhotos(final Set<Photo> photos){
+        if (photos != null) {
+            for (Photo photo : photos) {
+                withPhoto(photo);
+            }
+        }
+        return this;
+    }
+
+    public ProductBuilder withPhoto(final Photo photo){
+        buildOrThrow();
+        theProduct.addPhoto(photo);
+        return this;
+    }
+
+    @Override
+    public Product build() {
+        final Product ret = buildOrThrow();
+        theProduct = null;
+        return ret;
+    }
+
 
 # 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+Esta User Story foi implementada na totalidade, sendo dependente da US1005, uma vez que os Products estão associados a Product Categories.
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
-
-
-
+Perante a resposta do cliente à pergunta 9, presente na secção 2.1 deste 
+documento, a frase "technical description: multiple lines of text, preferably 
+with no limit or the biggest possible." não foi interpretada como um pedido para
+que a technical description seja representada por um array de Strings, mas sim como
+um pedido para que esta não tenha limite de tamanho e, como consequência, possa ser 
+longa ao ponto de ocupar várias linhas.

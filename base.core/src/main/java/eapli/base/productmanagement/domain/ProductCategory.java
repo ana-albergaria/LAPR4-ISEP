@@ -21,6 +21,10 @@ public class ProductCategory implements AggregateRoot<AlphaNumericCode>, Seriali
     @Embedded
     private CategoryDescription description;
 
+    public void setAlphanumericCode(AlphaNumericCode alphanumericCode) {
+        this.alphanumericCode = alphanumericCode;
+    }
+
     protected ProductCategory(){
         this.alphanumericCode=null;
     }

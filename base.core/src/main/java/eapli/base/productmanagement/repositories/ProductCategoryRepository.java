@@ -6,6 +6,9 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;
 
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public interface ProductCategoryRepository extends DomainRepository<AlphaNumericCode, ProductCategory> {
 
     Iterable<ProductCategory> findAll();

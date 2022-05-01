@@ -4,10 +4,17 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.sql.Ref;
 
-//reference: not empty alphanumeric code with at 23 chars maximum;
+/**
+ * The reference of a product. As requested, it is a not empty alphanumeric
+ * code with 23 chars maximum.
+ *
+ * @author Marta Ribeiro 1201592
+ */
+@Embeddable
 public class Reference implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +23,6 @@ public class Reference implements ValueObject, Serializable {
     private final String value;
 
     public Reference(final String value){
-        Preconditions.nonEmpty(value, "Reference should not be empty");
         if (value.length() > MAX_LENGTH)
             throw new IllegalArgumentException("Reference is too long.");
         this.value=value;

@@ -41,6 +41,14 @@ public class OrderItem implements ValueObject, Serializable {
         }
     }
 
+    public String code() {
+        return this.code;
+    }
+
+    public double quantity() {
+        return this.quantity;
+    }
+
     @Override
     public int hashCode() {
         return (new HashCoder()).with(this.code).with(this.quantity).code();

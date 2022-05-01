@@ -4,9 +4,16 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-//technical description: multiple lines of text, preferably with no limit or the biggest possible.
+/**
+ * The technical description of a product. As required, it has multiple lines
+ * of text, preferably with no limit or the biggest possible.
+ *
+ * @author Marta Ribeiro 1201592
+ */
+@Embeddable
 public class TechnicalDescription implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 

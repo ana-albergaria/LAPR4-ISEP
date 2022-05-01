@@ -11,11 +11,14 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.Set;
 
+/**
+ * The controller for the use case "register new product" using the domain objects.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 public class RegisterProductController {
 
     private ListProductCategoryService svc = new ListProductCategoryService();
-
-    private ProductCategoryRepository productCategoryRepository;
 
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
 
@@ -58,9 +61,4 @@ public class RegisterProductController {
         return svc.allProductCategories();
     }
 
-    //APENAS PARA TESTAR US1004
-    public Product test(final ProductCategory productCategory, final Code uniqueInternalCode, final Money priceWithoutTaxes, final Money priceWithTaxes, Volume volume, Weight weight){
-        Product product = new Product(productCategory, uniqueInternalCode, priceWithoutTaxes,weight,volume,priceWithTaxes);
-        return repository.save(product);
-    }
 }

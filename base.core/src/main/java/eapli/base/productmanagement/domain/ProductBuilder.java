@@ -5,6 +5,11 @@ import eapli.framework.general.domain.model.Money;
 
 import java.util.Set;
 
+/**
+ * A Product builder. Used to avoid overloading constructors or too
+ * much conditional logic on the constructor.
+ * @author Marta Ribeiro 1201592
+ */
 public class ProductBuilder implements DomainFactory<Product> {
 
     private Product theProduct;
@@ -28,8 +33,6 @@ public class ProductBuilder implements DomainFactory<Product> {
     private Money priceWithTaxes;
 
     private ProductCategory category;
-
-    //atributos obrigatorios
 
     public ProductBuilder ofCategory(final ProductCategory productCategory){
         category=productCategory;
@@ -102,9 +105,6 @@ public class ProductBuilder implements DomainFactory<Product> {
     }
 
     private Product buildOrThrow(){
-        // we will create the actual instance inside the builder during the building process, but
-        // that is hidden from the client code. conceptually, the client code only sees the new
-        // instance (it is only built) in the build method
         if (theProduct!=null){
             return theProduct;
         } else if (category!=null && barcode!=null && shortDescription!=null && extendedDescription!=null &&
@@ -117,35 +117,43 @@ public class ProductBuilder implements DomainFactory<Product> {
         }
     }
 
-    //atributos opcionais
-
     public ProductBuilder withTechnicalDescription(final TechnicalDescription technicalDescription){
-        buildOrThrow();
-        theProduct.changeTechnicalDescription(technicalDescription);
+        if (technicalDescription!=null) {
+            buildOrThrow();
+            theProduct.changeTechnicalDescription(technicalDescription);
+        }
         return this;
     }
 
     public ProductBuilder withBrandName(final BrandName brandName){
-        buildOrThrow();
-        theProduct.changeBrandName(brandName);
+        if (brandName!=null){
+            buildOrThrow();
+            theProduct.changeBrandName(brandName);
+        }
         return this;
     }
 
     public ProductBuilder withReference(final Reference reference){
-        buildOrThrow();
-        theProduct.changeReference(reference);
+        if (reference!=null) {
+            buildOrThrow();
+            theProduct.changeReference(reference);
+        }
         return this;
     }
 
     public ProductBuilder withProductionCode(final Code productionCode){
-        buildOrThrow();
-        theProduct.changeProductionCode(productionCode);
+        if (productionCode!=null) {
+            buildOrThrow();
+            theProduct.changeProductionCode(productionCode);
+        }
         return this;
     }
 
     public ProductBuilder withPhotos(final Set<Photo> photos){
         if (photos != null) {
-            photos.forEach(this::withPhoto);
+            for (Photo photo : photos) {
+                withPhoto(photo);
+            }
         }
         return this;
     }

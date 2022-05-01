@@ -9,6 +9,9 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.Optional;
 
+/**
+ * @author Marta Ribeiro 1201592
+ */
 @ApplicationService
 public class ListProductCategoryService {
 

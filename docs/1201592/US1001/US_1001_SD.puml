@@ -54,7 +54,7 @@ activate ProRep
 deactivate ProRep
 deactivate Factory
 deactivate Persistance
-CTRL -> ProRep : save(newDish)
+CTRL -> ProRep : save(newProduct)
 activate ProRep
 |||
 deactivate ProRep

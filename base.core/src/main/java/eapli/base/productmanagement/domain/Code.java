@@ -8,6 +8,13 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
+/**
+ * The code (unique internal code or production code) of a product.
+ * As requested, it meets a given regular expression: 4 letters followed
+ * by a dot (".") and ending with 5 digits.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 //internal code: not empty alphanumeric code with at 23 chars maximum however it might meet a given regular expression defined/configured at deployment time.
 //"For example, 4 letters followed by a dot (".") and ending with 5 digits."

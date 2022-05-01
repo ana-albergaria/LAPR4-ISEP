@@ -7,6 +7,11 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * The volume of a product, in cubic meters.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 public class Volume implements ValueObject, Serializable {
 

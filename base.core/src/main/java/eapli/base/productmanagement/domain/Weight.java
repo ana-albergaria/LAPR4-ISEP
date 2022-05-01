@@ -6,6 +6,11 @@ import eapli.framework.util.HashCoder;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+/**
+ * The weight of a product, in kilograms.
+ *
+ * @author Marta Ribeiro 1201592
+ */
 @Embeddable
 public class Weight implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
