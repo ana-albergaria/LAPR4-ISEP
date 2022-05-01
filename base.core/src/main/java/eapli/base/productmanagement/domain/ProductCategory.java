@@ -15,7 +15,7 @@ public class ProductCategory implements AggregateRoot<AlphaNumericCode>, Seriali
     @Version
     private Long version;
 
-    @Id
+    @EmbeddedId
     private AlphaNumericCode alphanumericCode;
 
     @Embedded

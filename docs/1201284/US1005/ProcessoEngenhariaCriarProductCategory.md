@@ -44,28 +44,27 @@ A interpretação feita deste requisito foi a de definir uma nova Categoria de P
 
 ### 3.1.1. Classes de Domínio:
 
-* WarehousePlant, Aisle, Row, Shelf, AVGDock
+* ProductCategory
 * Controlador:
-  * SetWarehousePlantController
+  * CreateCategoryController
 * Repository:
-  * WarehouseRepository
+  * ProductCategoryRepository
 
 
 ### 3.1.2. Diagrama de Sequência do Sistema:
 
-![US_1001_SSD](US_1001_SSD.svg)
+![US_1005_SSD](SSD_CreateCategory.svg)
 
 
 ### 3.1.3. Diagrama de Sequência:
 
-![US_1001_SD](US_1001_SD.svg)
+![US_1005_SD](SD_CreateCategory.svg)
 
 
 
 ## 3.2. Diagrama de Classes
 
 
-![US_1001_CD](US_1001_CD.svg)
 
 
 ## 3.3. Padrões Aplicados
@@ -75,71 +74,49 @@ A interpretação feita deste requisito foi a de definir uma nova Categoria de P
 ## 3.4. Testes
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível configurar a planta com um ficheiro incorreto.
+**Teste 1:** Verificar que não é possível criar a classe AlphaNumericCode com uma String vazia.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 2:** Verificar que não é possível configurar a planta com uma Length nula.
+**Teste 2:** Verificar que não é possível criar a classe AlphaNumericCode com uma String com tamanho maior que 10 caracteres.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 3:** Verificar que não é possível configurar a planta com uma Width nula.
+**Teste 3:** Verificar que não é possível criar a classe CategoryDescription com uma String vazia.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 4:** Verificar que não é possível configurar a planta com o Square nulo.
+**Teste 4:** Verificar que não é possível criar a classe CategoryDescription com uma String com tamanho maior que 50 caracteres.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 5:** Verificar que não é possível configurar a planta com a Unit nula.
+**Teste 5:** Verificar que não é possível criar a classe CategoryDescription com uma String com tamanho inferior a 20 caracteres.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 6:** Verificar que não é possível configurar a planta com a Aisle Accessibility nula.
+**Teste 6:** Verificar que não é possível criar uma ProductCategory com AlphaNumericCode nula.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 7:** Verificar que não é possível configurar a planta com uma Length menor que zero.
+**Teste 7:** Verificar que não é possível criar uma ProductCategory com CategoryDescription nula.
 
 	@Test(expected = IllegalArgumentException.class)
         //to develop
     }
 
-**Teste 8:** Verificar que não é possível configurar a planta com uma Width menor que zero.
 
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 9:** Verificar que não é possível configurar a planta com o Square menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 10:** Verificar que não é possível configurar a planta com a Unit menor que zero.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
-
-**Teste 11:** Verificar que não é possível configurar a planta com a Aisle Accessibility com mais de 2 chars.
-
-	@Test(expected = IllegalArgumentException.class)
-        //to develop
-    }
 
 # 4. Implementação
 

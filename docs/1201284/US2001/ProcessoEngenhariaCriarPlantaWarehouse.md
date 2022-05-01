@@ -56,19 +56,14 @@ A interpretação feita deste requisito foi a de definir uma planta de um wareho
 
 ### 3.1.2. Diagrama de Sequência do Sistema:
 
-![US_1001_SSD](US_1001_SSD.svg)
+![US_2001_SSD](SSD_WarehousePlant.svg)
 
 
 ### 3.1.3. Diagrama de Sequência:
 
-![US_1001_SD](US_1001_SD.svg)
-
-
+![US_2001_SD](SD_WarehousePlant.svg)
 
 ## 3.2. Diagrama de Classes
-
-
-![US_1001_CD](US_1001_CD.svg)
 
 
 ## 3.3. Padrões Aplicados

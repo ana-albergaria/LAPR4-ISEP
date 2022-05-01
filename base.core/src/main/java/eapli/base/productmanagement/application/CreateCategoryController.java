@@ -2,6 +2,7 @@ package eapli.base.productmanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.productmanagement.domain.AlphaNumericCode;
+import eapli.base.productmanagement.domain.CategoryBuilder;
 import eapli.base.productmanagement.domain.CategoryDescription;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
@@ -21,7 +22,7 @@ public class CreateCategoryController {
         AlphaNumericCode code = new AlphaNumericCode(alphaNumericCode);
         CategoryDescription categoryDescription = new CategoryDescription(description);
 
-        ProductCategory category = new ProductCategory(code, categoryDescription);
+        final var category = new CategoryBuilder().hasCode(code).hasDescription(categoryDescription).build();
         repository.save(category);
     }
 }
