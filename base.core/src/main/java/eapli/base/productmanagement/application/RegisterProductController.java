@@ -50,7 +50,7 @@ public class RegisterProductController {
                 .withTechnicalDescription(new TechnicalDescription(technicalDescription))
                 .withBrandName(new BrandName(brandName))
                 .withReference(new Reference(reference))
-                .withProductionCode(new Code(productionCode))
+                .withProductionCode(new ProductionCode(productionCode))
                 .withPhotos(photos)
                 .build();
 

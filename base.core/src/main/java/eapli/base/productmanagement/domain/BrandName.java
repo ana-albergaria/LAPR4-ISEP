@@ -17,8 +17,9 @@ public class BrandName implements ValueObject, Serializable {
     private final String value;
 
     public BrandName(final String value){
-        if (value!=null && value.length() > MAX_LENGTH)
-            throw new IllegalArgumentException("Brand name is too long.");
+        if (value!=null)
+            if(value.length() > MAX_LENGTH)
+                throw new IllegalArgumentException("Brand name is too long.");
         this.value=value;
     }
 

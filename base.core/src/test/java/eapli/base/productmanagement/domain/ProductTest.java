@@ -53,7 +53,7 @@ public class ProductTest {
                 .withTechnicalDescription(TechnicalDescription.valueOf("this is a very technical description"))
                 .withBrandName(BrandName.valueOf("the brand"))
                 .withReference(Reference.valueOf("12345brand"))
-                .withProductionCode(Code.valueOf("dggd.34656"))
+                .withProductionCode(ProductionCode.valueOf("dggd.34656"))
                 .withPhotos(photos)
                 .build();
         assertNotNull(product);

@@ -27,7 +27,8 @@ public class ProductionCode implements ValueObject, Serializable, Comparable<Pro
     private final String value;
 
     public ProductionCode(final String value){
-        Preconditions.matches(VALID_CODE_REGEX, value, "The Production Code does not follow the defined format.");
+        if (value!=null)
+            Preconditions.matches(VALID_CODE_REGEX, value, "The Production Code does not follow the defined format.");
         this.value=value;
     }
 
