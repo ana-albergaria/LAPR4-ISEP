@@ -4,11 +4,15 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.productmanagement.application.ListProductService;
 import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.Calendars;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -60,22 +64,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @ElementCollection
     private Set<OrderItem> items;
 
-
-
-    /**
-     * Map where:
-     * > Key: Unique Internal Code of Product
-     * > Value: an Order Item entity
-     *
-     * Might be useful for future US's, namely related to the Shopping Cart
-     */
-    /*@OneToMany
-    @JoinTable(name = "map_items",
-            joinColumns = {@JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "item_id")})
-    @MapKeyJoinColumn(name = "product_code")
-    private Map<Code, OrderItem> mapItems = new HashMap<>();*/
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
@@ -96,17 +84,9 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     @Enumerated(EnumType.STRING)
     private Payment payment;
 
-    /*
-    DÚVIDA ENUNCIADO - ...the shipment cost computation, and the connections to external systems (e.g.: carriers and payment services) should be mock.
-     */
-
-    //falta implementar value object c metodo pra calcular
     private OrderVolume orderVolume;
 
-    //falta implementar value object c metodo pra calcular
     private OrderWeight orderWeight;
-
-    //falta identificar SalesClerk
 
     @Enumerated(EnumType.STRING)
     private SourceChannel sourceChannel;
@@ -115,14 +95,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     private Calendar interactionDate;
 
     private AdditionalComment additionalComment;
-
-
-    /*FALTA COLOCAR ATRIBUTOS ADICIONAIS PARA QUANDO É O SALES CLERK A REGISTAR ORDER
-    Despite identifying the clerk registering the order, it is important to register (i) the source channel (e.g.: phone, email, meeting, etc...), (ii) the date/time when such interaction happen and (iii) optionally add some comment.
-     */
-
-
-    //NOS CONSTRUTORES FALTA: STATUS, SYSTEM USER, CALCULAR OS AMOUNTS COM TAXAS E SEM TAXAS, O VOLUME E O WEIGHT
 
     @ManyToOne
     private SystemUser salesClerk;

@@ -55,7 +55,6 @@ public class Client implements AggregateRoot<Long>, Serializable {
     public Client(final Name name, final VAT vat, final Email email, final PhoneNumber phoneNumber, final Set<Address> addresses) {
         Preconditions.noneNull(name, vat, email, phoneNumber);
         Preconditions.noneNull(addresses, "The Client must have at least one address.");
-        //usar o Preconditions.ensure para fazer verificações à data
         this.name = name;
         this.vat = vat;
         this.email = email;

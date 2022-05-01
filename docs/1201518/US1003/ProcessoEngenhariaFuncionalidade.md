@@ -105,8 +105,6 @@ Foram aplicados os padrões princípios SOLID e GoF
 
 ### Information Expert 
 
-
-
 *Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
 
 ## 3.4. Testes 

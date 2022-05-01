@@ -45,13 +45,13 @@ package "<<aggregate>> Employee" {
     entity Employee
 }
 
-package "<<aggregate>> Salesclerk" {
+/'package "<<aggregate>> Salesclerk" {
     entity Salesclerk
-}
+}'/
 
-package "<<aggregate>> SalesManager" {
+/'package "<<aggregate>> SalesManager" {
     entity SalesManager
-}
+}'/
 
 package "<<aggregate>> User" {
     entity User
@@ -64,17 +64,17 @@ package "<<aggregate>> AGV" {
     class Model
 }
 
-package "<<aggregate>> Report" {
+/'package "<<aggregate>> Report" {
     entity Report
-}
+}'/
 
 package "<<aggragte>> Task" {
     entity Task
 }
 
-package "<<aggregate>> MomentInfo" {
+/'package "<<aggregate>> MomentInfo" {
     entity MomentInfo
-}
+}'/
 
 package "<<aggregate>> Answer" {
     entity Answer
@@ -179,13 +179,13 @@ entity Employee <<entity>> <<root>> {
     - <<VO>> EmployeeID
 }
 
-entity Salesclerk <<entity>> <<root>> {
+/'entity Salesclerk <<entity>> <<root>> {
 
-}
+}'/
 
-entity SalesManager <<entity>> <<root>> {
+/'entity SalesManager <<entity>> <<root>> {
 
-}
+}'/
 
 entity User <<entity>> <<root>> {
     - <<VO>> Name
@@ -197,7 +197,7 @@ entity User <<entity>> <<root>> {
 entity User
 note left: the User can either be human or an external system.
 
-entity Survey <<(V,#FF8B40) value object>> {
+entity Survey <<entity>> <<root>> {
     - <<VO>> AlphanumericCode
     - <<VO>> TopicQuestionnaire
     - <<VO>> InitialDate
@@ -214,9 +214,9 @@ entity AGV <<entity>> <<root>> {
     - <<VO>> TaskStatus /' free charging or occupied '/
 }
 
-entity Report <<entity>> <<root>> {
+/'entity Report <<entity>> <<root>> {
 
-}
+}'/
 
 entity Task <<entity>> <<root>>{
     - <<VO>> TaskID
@@ -224,14 +224,14 @@ entity Task <<entity>> <<root>>{
     - <<VO>> AgvID
 }
 
-entity MomentInfo <<entity>> <<root>> {
+/'entity MomentInfo <<entity>> <<root>> {
     - <<VO>> OrderId
     - <<VO>> ProductId
     - <<VO>> GeneratedTime
-    - <<VO>> PriceWithoutTaxes
+    - <<VO>> PriceWithoutTaxes'/
 
     /'- <<VO>> Weight'/
-}
+/'}'/
 
 entity Answer <<entity>> <<root>> {
     - <<VO>> QuestionID
@@ -363,19 +363,24 @@ Client --> "0..1" BirthDate
 Client --> "0..1" Gender
 
 Employee --> "*" Client : registers a
+Employee --> "*" Order
+Employee --> "1..*" Product
+Employee --> "1..*" Category
+Employee --> "1..*" Survey
+/'Employee --> "1..*" Report'/
 /'Salesclerk --> "*" Client'/
-Salesclerk --> "*" Order
-Salesclerk --|> Employee
-Salesclerk --> "1..*" Product
-Salesclerk --> "1..*" Category
+/'Salesclerk --> "*" Order'/
+/'Salesclerk --|> Employee'/
+/'Salesclerk --> "1..*" Product'/
+/'Salesclerk --> "1..*" Category'/
 
 /'SalesManager --> "*" Client'/
-SalesManager --> "*" Order
-SalesManager -|> Employee
-SalesManager --> "1..*" Product
-SalesManager --> "1..*" Category
-SalesManager --> "1..*" Survey
-SalesManager ---> "1..*" Report
+/'SalesManager --> "*" Order'/
+/'SalesManager -|> Employee'/
+/'SalesManager --> "1..*" Product'/
+/'SalesManager --> "1..*" Category'/
+/'SalesManager --> "1..*" Survey'/
+/'SalesManager ---> "1..*" Report'/
 
 User --> "1..*" Role
 User "1" <-- Employee
@@ -407,8 +412,8 @@ AGVDock --> "3" Square
 
 /'AGVPosition --> "1" Square'/
 
-Report --> "1" Survey
-Report --> "*" Order
+/'Report --> "1" Survey
+Report --> "*" Order'/
 
 Survey --> "1..*" Section
 
@@ -417,11 +422,11 @@ Section --> "1..*" Question
 Order --> "1" Task
 AGV --> "1" Task
 
-Product --> "1..*" MomentInfo
-Order --> "1..*" MomentInfo
+/'Product --> "1..*" MomentInfo
+Order --> "1..*" MomentInfo'/
 
 Survey --> "*" Answer
-Report --> "*" Answer
+/'Report --> "*" Answer'/
 
 /' TaxService ..> Tax '/
 
