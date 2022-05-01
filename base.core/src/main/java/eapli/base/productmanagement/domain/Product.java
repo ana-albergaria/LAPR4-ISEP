@@ -125,6 +125,7 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
     /**
      * Constructor for Product with the minimum attributes.
      * @param uniqueInternalCode the product unique internal code
+     * @param barcode the product barcode
      * @param shortDescription the product short description
      * @param extendedDescription the product extended description
      * @param priceWithoutTaxes the product price without taxes
