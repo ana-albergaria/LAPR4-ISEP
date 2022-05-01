@@ -20,7 +20,6 @@ public class TechnicalDescription implements ValueObject, Serializable {
     private final String value;
 
     public TechnicalDescription(final String value){
-        Preconditions.nonEmpty(value, "Reference should not be empty");
         this.value=value;
     }
 

@@ -8,6 +8,8 @@ import eapli.base.productmanagement.domain.Photo;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.warehousemanagement.application.SetUpPlantController;
+import eapli.base.warehousemanagement.domain.AutonomyStatus;
+import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -44,5 +46,4 @@ public class WarehousesBootstrapper implements Action {
             LOGGER.trace(String.valueOf(e));
         }
     }
-
 }
