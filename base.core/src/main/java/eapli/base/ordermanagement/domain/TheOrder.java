@@ -92,8 +92,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     private Notification notification;
 
-    /*@OneToMany(mappedBy="order",
-            cascade = CascadeType.ALL)*/
     @OneToMany(cascade = CascadeType.ALL,
                 orphanRemoval = true)
     @JoinColumn(name = "order_id")
