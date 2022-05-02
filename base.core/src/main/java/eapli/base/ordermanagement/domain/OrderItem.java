@@ -1,61 +1,63 @@
 package eapli.base.ordermanagement.domain;
 
-import eapli.framework.domain.model.ValueObject;
-import eapli.framework.util.HashCoder;
-import eapli.framework.validations.Preconditions;
+import eapli.base.productmanagement.domain.Product;
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Embeddable
-public class OrderItem implements ValueObject, Serializable {
-    private final String code;
+@Entity
+public class OrderItem implements AggregateRoot<Long>, Serializable {
 
-    private final Integer quantity;
+    private static final long serialVersionUID = 1L;
 
-    public OrderItem(final String code, final Integer quantity) {
-        Preconditions.nonEmpty(code, "Code should neither be null nor empty");
-        Preconditions.nonNull(quantity, "Quantity should not be null");
-        Preconditions.isPositive(quantity, "The quantity of the wished Product must be positive.");
-        this.code = code;
+    @Version
+    private Long version;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long orderItemId;
+
+    private int quantity;
+
+    @ManyToOne
+    private Product product;
+
+    /*@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="orderId", insertable = false, updatable = false)
+    private TheOrder order;*/
+
+    public OrderItem(final int quantity, final Product product) {
+        this.product = product;
         this.quantity = quantity;
     }
 
     protected OrderItem() {
-        this.code = "";
-        this.quantity = null;
+        //for ORM purposes
     }
 
-    public static OrderItem valueOf(final String code, final Integer quantity) {
-        return new OrderItem(code, quantity);
-    }
-
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof OrderItem)) {
-            return false;
-        } else {
-            OrderItem that = (OrderItem) o;
-            return this.code.equals(that.code) && this.quantity.equals(that.quantity);
-        }
-    }
-
-    public String code() {
-        return this.code;
-    }
-
-    public double quantity() {
+    public int quantity() {
         return this.quantity;
+    }
+
+    public Product product() {
+        return this.product;
     }
 
     @Override
     public int hashCode() {
-        return (new HashCoder()).with(this.code).with(this.quantity).code();
+        return DomainEntities.hashCode(this);
     }
 
     @Override
-    public String toString() {
-        return "Produce Code: " + this.code + "| Quantity: " + this.quantity;
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
     }
+
+    @Override
+    public Long identity() {
+        return this.orderItemId;
+    }
+
 }

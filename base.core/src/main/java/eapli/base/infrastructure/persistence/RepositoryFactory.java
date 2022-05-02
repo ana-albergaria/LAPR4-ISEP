@@ -20,6 +20,7 @@
  */
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.ordermanagement.repositories.OrderItemRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -74,6 +75,10 @@ public interface RepositoryFactory {
      * @return
      */
     ClientUserRepository clientUsers();
+
+    OrderItemRepository orderItems(TransactionalContext tx);
+
+    OrderItemRepository orderItems();
 
     ClientRepository clients();
 

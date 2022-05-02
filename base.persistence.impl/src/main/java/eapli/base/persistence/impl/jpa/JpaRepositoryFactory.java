@@ -21,6 +21,7 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.ordermanagement.repositories.OrderItemRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -60,6 +61,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public JpaClientUserRepository clientUsers() {
         return new JpaClientUserRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public OrderItemRepository orderItems(final TransactionalContext tx) {
+        return new JpaOrderItemRepository(tx);
+    }
+
+    @Override
+    public OrderItemRepository orderItems() {
+        return new JpaOrderItemRepository(Application.settings().getPersistenceUnitName());
     }
 
     /* Acrescentei - Dúvida */

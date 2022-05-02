@@ -4,6 +4,7 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.*;
+import eapli.base.ordermanagement.repositories.OrderItemRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.application.ListProductService;
 import eapli.base.productmanagement.domain.Code;
@@ -16,12 +17,29 @@ import java.util.*;
 
 public class RegisterClientOrderController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private final OrderItemRepository orderItemRepository = PersistenceContext.repositories().orderItems();
     private final ListProductService svcProducts = new ListProductService();
+    private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
 
     private Client client;
     private Product product;
+
+    /*public TheOrder registerOrderItem() {
+
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
+
+        Product product = svcProducts.findProductById(Code.valueOf("lmsp.00001")).get();
+
+
+        OrderItem orderItem = new OrderItem(3,product);
+        //orderItemRepository.save(orderItem);
+
+        List<OrderItem> newOrderItems = new ArrayList<>();
+        newOrderItems.add(orderItem);
+        TheOrder order = new TheOrder(newOrderItems);
+        return orderRepository.save(order);
+    }*/
 
     public TheOrder registerOrder(List<List<String>> addresses, Shipment shipment, Payment payment, TheOrder.SourceChannel sourceChannel, Calendar interactionDate, String additionalCommentText, Map<String, Integer> items) {
 
@@ -35,7 +53,7 @@ public class RegisterClientOrderController {
 
         AdditionalComment additionalComment = new AdditionalComment(additionalCommentText);
 
-        Set<OrderItem> orderItems = new HashSet<>();
+        List<OrderItem> orderItems = new ArrayList<>();
         fillOrderItems(items, orderItems);
 
         TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, additionalComment, authz.session().get().authenticatedUser(), orderItems);
@@ -53,7 +71,7 @@ public class RegisterClientOrderController {
         OrderAddress deliveryAddress = new OrderAddress(addresses.get(1).get(0), addresses.get(1).get(1),addresses.get(1).get(2),
                 addresses.get(1).get(3), addresses.get(1).get(4));
 
-        Set<OrderItem> orderItems = new HashSet<>();
+        List<OrderItem> orderItems = new ArrayList<>();
         fillOrderItems(items, orderItems);
 
         TheOrder order = new TheOrder(client, billingAddress, deliveryAddress, shipment, payment, sourceChannel, interactionDate, authz.session().get().authenticatedUser(), orderItems);
@@ -76,12 +94,13 @@ public class RegisterClientOrderController {
         return product != null;
     }
 
-    private void fillOrderItems(Map<String, Integer> items, Set<OrderItem> setItems) {
+    private void fillOrderItems(Map<String, Integer> items, List<OrderItem> setItems) {
 
         for (Map.Entry<String, Integer> entry : items.entrySet()) {
             String code = entry.getKey();
             Integer quantity = entry.getValue();
-            OrderItem orderItem = new OrderItem(code,quantity);
+            Product product = svcProducts.findProductById(Code.valueOf(code)).get();
+            OrderItem orderItem = new OrderItem(quantity, product);
             setItems.add(orderItem);
         }
     }

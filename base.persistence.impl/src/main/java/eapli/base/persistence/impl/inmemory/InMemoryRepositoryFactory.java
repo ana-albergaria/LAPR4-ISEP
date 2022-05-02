@@ -20,6 +20,7 @@
  */
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.ordermanagement.repositories.OrderItemRepository;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -67,11 +68,22 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return clientUsers(null);
     }
 
+    @Override
+    public OrderItemRepository orderItems(final TransactionalContext tx) {
+        return new InMemoryOrderItemRepository();
+    }
+
+    @Override
+    public OrderItemRepository orderItems() {
+        return orderItems(null);
+    }
+
     /* Acrescentei - Dúvida */
     @Override
     public ClientRepository clients() {
         return new InMemoryClientRepository();
     }
+
 
     @Override
     public AGVRepository agvs() {
