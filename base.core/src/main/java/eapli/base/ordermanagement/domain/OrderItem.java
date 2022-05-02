@@ -24,10 +24,6 @@ public class OrderItem implements AggregateRoot<Long>, Serializable {
     @ManyToOne
     private Product product;
 
-    /*@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="orderId", insertable = false, updatable = false)
-    private TheOrder order;*/
-
     public OrderItem(final int quantity, final Product product) {
         this.product = product;
         this.quantity = quantity;

@@ -18,28 +18,11 @@ import java.util.*;
 public class RegisterClientOrderController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
-    private final OrderItemRepository orderItemRepository = PersistenceContext.repositories().orderItems();
     private final ListProductService svcProducts = new ListProductService();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
 
     private Client client;
     private Product product;
-
-    /*public TheOrder registerOrderItem() {
-
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_CLERK);
-
-        Product product = svcProducts.findProductById(Code.valueOf("lmsp.00001")).get();
-
-
-        OrderItem orderItem = new OrderItem(3,product);
-        //orderItemRepository.save(orderItem);
-
-        List<OrderItem> newOrderItems = new ArrayList<>();
-        newOrderItems.add(orderItem);
-        TheOrder order = new TheOrder(newOrderItems);
-        return orderRepository.save(order);
-    }*/
 
     public TheOrder registerOrder(List<List<String>> addresses, Shipment shipment, Payment payment, TheOrder.SourceChannel sourceChannel, Calendar interactionDate, String additionalCommentText, Map<String, Integer> items) {
 
