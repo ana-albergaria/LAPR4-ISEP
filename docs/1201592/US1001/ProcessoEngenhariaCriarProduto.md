@@ -156,7 +156,21 @@ A interpretação feita deste requisito foi no sentido de criar um novo produto 
 
 ## 3.3. Padrões Aplicados
 
-#!!!!!!!!!! PARA PREENCHER !!!!!!!!!!
+Foram aplicados os padrões princípios SOLID e GoF
+
+### Builder
+
+
+### Creator
+
+
+### Repository
+
+
+### Factory
+
+
+### Information Expert
 
 
 ## 3.4. Testes

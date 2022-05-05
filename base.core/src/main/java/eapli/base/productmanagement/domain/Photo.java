@@ -28,8 +28,8 @@ public class Photo implements ValueObject, Serializable { //docs/photos/shampoo.
     private final String value;
 
     public Photo(final String value){
-        Preconditions.nonEmpty(value, "Photo path should neither be null nor empty");
-        Preconditions.matches(VALID_PHOTO_REGEX, value, "The Photo does not follow the required format.");
+        if (value!=null)
+            Preconditions.matches(VALID_PHOTO_REGEX, value, "The Photo does not follow the required format.");
         this.value=value;
     }
 

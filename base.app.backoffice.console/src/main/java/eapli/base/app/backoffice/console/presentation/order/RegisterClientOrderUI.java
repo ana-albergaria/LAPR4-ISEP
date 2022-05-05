@@ -1,8 +1,8 @@
 package eapli.base.app.backoffice.console.presentation.order;
 
+import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
-import eapli.base.ordermanagement.application.RegisterClientOrderController;
 import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.ordermanagement.domain.Shipment;
 import eapli.base.ordermanagement.domain.TheOrder;
@@ -14,18 +14,12 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.*;
 
 public class RegisterClientOrderUI extends AbstractUI {
+    private final RegisterClientOrderController theController = new RegisterClientOrderController();
 
     private static final Integer NUM_ADDRESSES = 2;
 
-    private final RegisterClientOrderController theController = new RegisterClientOrderController();
-
-
-
-
     @Override
     protected boolean doShow() {
-
-
         Map<String, Integer> items = new HashMap<>();
 
         System.out.println(">> PRODUCTS OF THE ORDER");
@@ -69,7 +63,7 @@ public class RegisterClientOrderUI extends AbstractUI {
         for (int i = 0; i < NUM_ADDRESSES; i++) {
             String typeOfAddress = (i==0) ? "\n>> BILLING ADDRESS" : ">> DELIVERY ADDRESS";
             System.out.println(typeOfAddress);
-            
+
             List<String> address = new ArrayList<>();
 
             String streetName = Console.readLine("Street Name:");
@@ -151,10 +145,6 @@ public class RegisterClientOrderUI extends AbstractUI {
         } catch (@SuppressWarnings("unused") final IntegrityViolationException e) {
             System.out.println("You tried to enter an order which already exists in the database.");
         }
-
-
-
-
 
         return false;
     }

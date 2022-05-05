@@ -29,6 +29,7 @@ public class RegisterAGVUI extends AbstractUI {
         Double maxWeight;
         AutonomyStatus autonomy;
         TaskStatus task;
+        boolean isValidYesOrNo = false;
 
         do {
             Map<Integer, AgvDock> dockOptions = new HashMap<>();
@@ -93,13 +94,14 @@ public class RegisterAGVUI extends AbstractUI {
                 System.out.println("You tried to enter an AGV that already exists in the database.");
             }
 
-            if(numDocks <= 0){
-                System.out.println("No more docks available, so it is not possible to register any more AGVs.");
-            }else {
-                option = Console.readLine("Do you want to register more AGVs? \n Yes - Y | No - N");
-            }
 
-        }while ((!option.equalsIgnoreCase("no") && !option.equalsIgnoreCase("n")) && (numDocks < 0));
+            option = Console.readLine("Do you want to register more AGVs? \n Yes - Y | No - N");
+            if(option.equalsIgnoreCase("yes") || option.equalsIgnoreCase("y")) {
+                isValidYesOrNo = true;
+            }else if(option.equalsIgnoreCase("no") || option.equalsIgnoreCase("n")){
+                isValidYesOrNo = false;
+            }
+        }while ((isValidYesOrNo) || (numDocks < 0));
 
         return false;
     }

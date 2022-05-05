@@ -27,7 +27,6 @@ public class TheOrderTest {
     private Set<Address> addresses = new HashSet<>();
     private SystemUser salesClerk;
     private Set<Role> roles = new HashSet<>();
-    private Set<OrderItem> orderItems = new HashSet<>();
 
     @BeforeAll
     public void setUp() {
@@ -36,7 +35,6 @@ public class TheOrderTest {
         addresses.add(Address.valueOf("Travessa do Outeiro 1","7","4520-463","Rio Meão","Portugal"));
         client = new Client(Name.valueOf("Joao", "Sousa"), VAT.valueOf("PT123456789"), Email.valueOf("joao@gmail.com"), PhoneNumber.valueOf("+351918413784"), addresses);
         roles.add(BaseRoles.SALES_CLERK);
-        orderItems.add(new OrderItem("aaaa.12345", 1));
         final SystemUserBuilder userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
         salesClerk = userBuilder.with("sales_clerk", "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
     }
@@ -64,15 +62,5 @@ public class TheOrderTest {
     @Test(expected = IllegalArgumentException.class)
     public void ensureOrderAddressMustHaveCountry() {
         new OrderAddress("Travessa do Outeiro", "7", "4520-463", "Rio Meão", null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureOrderItemHasCode() {
-        new OrderItem(null, 1);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void ensureOrderItemHasQuantity() {
-        new OrderItem("aaaa.11111", null);
     }
 }

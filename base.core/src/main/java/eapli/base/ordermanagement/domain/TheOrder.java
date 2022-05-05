@@ -1,18 +1,12 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.productmanagement.application.ListProductService;
-import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
-import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.Calendars;
-import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -61,9 +55,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
     })
     private OrderAddress shippingAddress;
 
-    @ElementCollection
-    private Set<OrderItem> items;
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "no_taxes_amount")),
@@ -101,22 +92,27 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     private Notification notification;
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final Set<OrderItem> items) {
+    @OneToMany(cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> newOrderItems;
+
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.additionalComment = additionalComment;
         this.salesClerk = salesClerk;
-        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
-        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
-        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
-        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
+        this.newOrderItems = newOrderItems;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes();
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes();
+        this.orderWeight = obtainTotalOrderWeight();
+        this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
         if(this.client != null) {
             this.notification = new Notification(this.client.email().toString(),
@@ -124,21 +120,21 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         }
     }
 
-    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final Set<OrderItem> items) {
+    public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();
         this.client = client;
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
-        this.items = items;
         this.shipment = shipment;
         this.payment = payment;
         this.sourceChannel = sourceChannel;
         this.interactionDate = interactionDate;
         this.salesClerk = salesClerk;
-        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes(new ListProductService());
-        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes(new ListProductService());
-        this.orderVolume = obtainTotalOrderVolume(new ListProductService());
-        this.orderWeight = obtainTotalOrderWeight(new ListProductService());
+        this.newOrderItems = newOrderItems;
+        this.totalAmountWithoutTaxes = obtainTotalAmountWithoutTaxes();
+        this.totalAmountWithTaxes = obtainTotalAmountWithTaxes();
+        this.orderWeight = obtainTotalOrderWeight();
+        this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
         if(this.client != null) {
             this.notification = new Notification(this.client.email().toString(),
@@ -146,60 +142,46 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         }
     }
 
-
     protected TheOrder() {
         //for ORM purposes
     }
 
-    public Money obtainTotalAmountWithoutTaxes(ListProductService svcProducts) {
+    public Money obtainTotalAmountWithoutTaxes() {
         double totalAmountWithoutTaxes = 0;
 
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
-            if(product.isPresent()) {
-                totalAmountWithoutTaxes += (orderItem.quantity() * product.get().getPriceWithoutTaxes().amountAsDouble());
-            }
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalAmountWithoutTaxes += (orderItem.quantity() * product.getPriceWithoutTaxes().amountAsDouble());
         }
         return this.totalAmountWithoutTaxes = Money.euros(totalAmountWithoutTaxes);
     }
 
-    public Money obtainTotalAmountWithTaxes(ListProductService svcProducts) {
+    public Money obtainTotalAmountWithTaxes() {
         double totalAmountWithTaxes = 0;
 
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
-            if(product.isPresent()) {
-                totalAmountWithTaxes += (orderItem.quantity() * product.get().getPriceWithTaxes().amountAsDouble());
-            }
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalAmountWithTaxes += (orderItem.quantity() * product.getPriceWithTaxes().amountAsDouble());
         }
         return this.totalAmountWithTaxes = Money.euros(totalAmountWithTaxes + this.shipment.cost());
     }
 
-    public OrderWeight obtainTotalOrderWeight(ListProductService svcProducts) {
+    public OrderWeight obtainTotalOrderWeight() {
         double totalWeight = 0;
 
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
-            if(product.isPresent()) {
-                totalWeight += (orderItem.quantity() * product.get().getWeight().weight());
-            }
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalWeight += (orderItem.quantity() * product.getWeight().weight());
         }
         return this.orderWeight = new OrderWeight(totalWeight);
     }
 
-    public OrderVolume obtainTotalOrderVolume(ListProductService svcProducts) {
+    public OrderVolume obtainTotalOrderVolume() {
         double totalVolume = 0;
 
-        for (OrderItem orderItem : items) {
-            String code = orderItem.code();
-            Optional<Product> product = svcProducts.findProductById(Code.valueOf(code));
-            if(product.isPresent()) {
-                totalVolume += (orderItem.quantity() * product.get().getVolume().volume());
-            }
-
+        for (OrderItem orderItem : newOrderItems) {
+            Product product = orderItem.product();
+            totalVolume += (orderItem.quantity() * product.getVolume().volume());
         }
         return this.orderVolume = new OrderVolume(totalVolume);
     }

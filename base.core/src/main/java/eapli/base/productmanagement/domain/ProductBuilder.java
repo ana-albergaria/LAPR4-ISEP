@@ -141,7 +141,7 @@ public class ProductBuilder implements DomainFactory<Product> {
         return this;
     }
 
-    public ProductBuilder withProductionCode(final Code productionCode){
+    public ProductBuilder withProductionCode(final ProductionCode productionCode){
         if (productionCode!=null) {
             buildOrThrow();
             theProduct.changeProductionCode(productionCode);
