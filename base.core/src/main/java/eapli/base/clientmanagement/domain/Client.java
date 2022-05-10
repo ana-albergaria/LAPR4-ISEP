@@ -7,7 +7,6 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,38 +46,6 @@ public class Client implements AggregateRoot<Long>, Serializable {
     @ElementCollection
     private Set<Address> addresses;
 
-    public Name getName() {
-        return name;
-    }
-
-    public void setName(Name name) {
-        this.name = name;
-    }
-
-    public VAT getVat() {
-        return vat;
-    }
-
-    public void setVat(VAT vat) {
-        this.vat = vat;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setEmail(Email email) {
-        this.email = email;
-    }
-
-    public PhoneNumber getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(PhoneNumber phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 
     /**
      * Constructor for Client with the minimum attributes.
@@ -110,9 +77,39 @@ public class Client implements AggregateRoot<Long>, Serializable {
         this.birthdate = birthdate;
     }
 
+    public Name name() {
+        return this.name;
+    }
+
+    public void updateName(final Name name) {
+        this.name = name;
+    }
+
+    public VAT vat() {
+        return this.vat;
+    }
+
+    public void updateVat(VAT vat) {
+        this.vat = vat;
+    }
+
     public Email email() {
         return this.email;
     }
+
+    public void setEmail(final Email email) {
+        this.email = email;
+    }
+
+    public PhoneNumber phoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void changePhoneNumber(final PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
 
     @Override
     public int hashCode() {
