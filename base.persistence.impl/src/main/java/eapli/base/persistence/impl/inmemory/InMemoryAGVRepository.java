@@ -1,7 +1,9 @@
 package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.productmanagement.domain.ExtendedDescription;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
@@ -24,5 +26,14 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, Long> i
         }
 
         return list;
+    }
+
+    @Override
+    public Iterable<TaskStatus> findAllAvailable() {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
+    }
+
+    public Iterable<AGV> findByTaskStatus(TaskStatus taskStatus){
+        return match(e -> e.getTaskStatus().equals(taskStatus));
     }
 }

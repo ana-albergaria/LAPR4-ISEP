@@ -186,6 +186,18 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         return this.orderVolume = new OrderVolume(totalVolume);
     }
 
+    public OrderStatus getOrderStatus(){
+        return this.status;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

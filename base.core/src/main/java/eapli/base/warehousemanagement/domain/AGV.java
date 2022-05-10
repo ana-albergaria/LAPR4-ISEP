@@ -85,4 +85,8 @@ public class AGV implements AggregateRoot<Long>, Serializable {
     public String toString(){
         return String.format("AGV ID: %d \n", agvID);
     }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 }
