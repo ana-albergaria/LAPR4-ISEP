@@ -166,9 +166,9 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
      * @param priceWithTaxes the product price with taxes
      * @param productCategory the product category
      */
-    protected Product(final Code uniqueInternalCode, final Barcode barcode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
-                      final Money priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
-                      final Money priceWithTaxes, final ProductCategory productCategory){
+    public Product(final Code uniqueInternalCode, final Barcode barcode, final ShortDescription shortDescription, final ExtendedDescription extendedDescription,
+                   final Money priceWithoutTaxes, final Status status, final Weight weight, final Volume volume,
+                   final Money priceWithTaxes, final ProductCategory productCategory){
         Preconditions.noneNull(uniqueInternalCode, shortDescription,extendedDescription,priceWithoutTaxes,status,weight,volume,priceWithTaxes,productCategory);
         this.uniqueInternalCode=uniqueInternalCode;
         this.barcode=barcode;
