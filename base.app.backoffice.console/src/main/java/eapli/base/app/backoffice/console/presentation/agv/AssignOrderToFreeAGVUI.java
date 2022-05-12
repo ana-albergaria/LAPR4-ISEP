@@ -22,8 +22,6 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
         boolean isValidOrderOption = false, isValidAGVOption = false;
         int orderOption, agvOption, j = 0, k = 0;
 
-        TaskStatus occupied = new TaskStatus("occupied");
-
         TheOrder selectedOrder = null;
         AGV selectedAGV = null;
 
@@ -93,7 +91,7 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
                 for (AGV agv : agvs) {
                     if (agv.getAgvID().equals(freeAGVsList.get(agvOption))) {
                         selectedAGV = agv;
-                        selectedAGV.setTaskStatus(occupied);
+                        selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
                     }
                 }
             }else{
@@ -106,7 +104,7 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
         }
 
         if (selectedAGV != null && selectedOrder != null) {
-            System.out.printf("Selected AGV (%d) successfully assigned to the selected Order (%d). The selected Order (%d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId());
+            System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
         } else {
             System.out.println("Error assigning the selected AGV to the selected Order. Try again.");
         }

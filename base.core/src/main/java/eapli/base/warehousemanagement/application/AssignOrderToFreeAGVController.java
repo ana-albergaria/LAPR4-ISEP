@@ -36,9 +36,10 @@ public class AssignOrderToFreeAGVController {
 
         Iterable<TheOrder> ordersAlreadyPaid = new LinkedList<>();
         Map<Integer, Long> paidOrdersList = new HashMap<>();
+        OrderStatus orderStatus = OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED);
         int i=1;
 
-        ordersAlreadyPaid = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+        ordersAlreadyPaid = orderRepository.findByOrderStatus(orderStatus);
 
         for(TheOrder order : ordersAlreadyPaid){
             paidOrdersList.put(i, order.getOrderId());
@@ -55,9 +56,7 @@ public class AssignOrderToFreeAGVController {
         Map<Integer, Long> freeAGVsList = new HashMap<>();
         int i=1;
 
-        TaskStatus task = new TaskStatus("FREE");
-
-        agvsAvailable = agvRepository.findByTaskStatus(task);
+        agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
 
         for(AGV agv : agvsAvailable){
             freeAGVsList.put(i, agv.getAgvID());

@@ -39,11 +39,11 @@ public class AGVsBootstrapper implements Action {
         final var d1 = getAgvDock("D1");
         final var d2 = getAgvDock("D2");
         final var d3 = getAgvDock("D3");
-        register(10L, new AutonomyStatus("1D"), new TaskStatus("FREE"), "refaerfa",
+        register(10L, new AutonomyStatus("1D"), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE), "refaerfa",
                 "short description 1", 18.0, d1);
-        register(11L, new AutonomyStatus("3D"), new TaskStatus("FREE"), "afardfrg",
+        register(11L, new AutonomyStatus("3D"), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE), "afardfrg",
                 "short description 2", 19.0, d2);
-        register(12L, new AutonomyStatus("2D"), new TaskStatus("FREE"), "sdkfjnsk",
+        register(12L, new AutonomyStatus("2D"), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE), "sdkfjnsk",
                 "short description 3", 20.0, d3);
         return true;
     }
