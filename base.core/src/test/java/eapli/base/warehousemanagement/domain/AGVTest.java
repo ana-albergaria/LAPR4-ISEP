@@ -14,7 +14,7 @@ public class AGVTest {
     final Accessibility accessibility = new Accessibility("right");
     final AgvDock agvDock = new AgvDock("165", beginSquare, endSquare, depthSquare, accessibility);
     final AutonomyStatus autonomyStatus = new AutonomyStatus("2h");
-    final TaskStatus taskStatus = new TaskStatus("free");
+    final TaskStatus taskStatus = new TaskStatus(TaskStatus.TaskStatusEnum.FREE);
     final AGV agv = new AGV(1234L, autonomyStatus, taskStatus, "1h23", "test", 22.3, agvDock);
 
     @Test
@@ -29,7 +29,7 @@ public class AGVTest {
 
     @Test
     public void getTaskStatus() {
-        Assert.assertEquals(new TaskStatus("free"), agv.getTaskStatus());
+        Assert.assertEquals(new TaskStatus(TaskStatus.TaskStatusEnum.FREE), agv.getTaskStatus());
     }
 
     @Test

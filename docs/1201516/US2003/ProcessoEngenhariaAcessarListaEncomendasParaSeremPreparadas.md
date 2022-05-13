@@ -15,11 +15,19 @@ A interpretação feita deste requisito foi a de mostrar a lista de encomendas q
 
 >Q1: "Regarding US2003, the development team was wondering if the warehouse employee chooses the intended AGV available to prepare the specific order or if it should be assigned to any AGV available without even asking the warehouse employee."
 > 
-> A1: ""
+> A1: "In the scope of US 2003, the AGV is selected by the warehouse employee from the ones that are available and are able to perform the task."
  
 >Q2: "It is mentioned that the warehouse is able to force a certain task to a certain AGV, but can this only happen when the AGV is free, or can the warehouse employee cancel a task and assign a new one."
 > 
-> A2: ""
+> A2: "In the scope of US 2003, the AGV is selected by the warehouse employee from the ones that are available and are able to perform the task. Tasks cannot be manually cancelled."
+
+>Q3: "Regarding this feature, what would you consider to be its complete state, that is, what would be the criterion to define whether or not this feature was functional?"
+> 
+> A3: "The warehouse employee is able to (i) select an order that needs to be prepared; (ii): select the AGV from the ones that are available and able to perform the task; (iii) the task is sent to the selected AGV and (iv) the order change its status."
+
+>Q4: "Knowing that in US2003 it is only mentioned that the Warehouse Employee will do this action, I would like to know if it is part of the System to allow users with greater skills and responsibilities (Warehouse Managers or Admins) to also perform the same task? If yes, which users?"
+> 
+> A4: "No! There is not such need."
 
 ## 2.2. Regras de Negócio
 
@@ -74,19 +82,66 @@ A interpretação feita deste requisito foi a de mostrar a lista de encomendas q
 ## 3.4. Testes
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Test 1:** 
-
 # 4. Implementação
 
 *Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
 
+    public Map<Integer, TheOrder> showPaidOrdersList(){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
+        Iterable<TheOrder> ordersAlreadyPaid = new LinkedList<>();
+        Map<Integer, TheOrder> paidOrdersList = new HashMap<>();
+        OrderStatus orderStatus = OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED);
+        int i=1;
+
+        ordersAlreadyPaid = orderRepository.findByOrderStatus(orderStatus);
+
+        for(TheOrder order : ordersAlreadyPaid){
+            paidOrdersList.put(i, order);
+            i++;
+        }
+
+        return paidOrdersList;
+    }
+
+    public Map<Integer, AGV> showFreeAGVsList(){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        Iterable<AGV> agvsAvailable = new LinkedList<>();
+        Map<Integer, AGV> freeAGVsList = new HashMap<>();
+        int i=1;
+
+        agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+
+        for(AGV agv : agvsAvailable){
+            freeAGVsList.put(i, agv);
+            i++;
+        }
+
+        return freeAGVsList;
+    }
+
+    public TheOrder updateOrder(final TheOrder order){
+        orderRepository.remove(order);
+        return orderRepository.save(order);
+    }
+
+    public AGV updateAGV(final AGV agv){
+        agvRepository.remove(agv);
+        return agvRepository.save(agv);
+    }
 
 # 5. Integração/Demonstração
 
 *Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
 
-![US_2003_Demo1](Demonstration1.png)
+>![US_2003_Demo1](Demonstration1.png)
+
+>![US_2003_Demo2](Demonstration2.png)
+
+>![US_2003_Demo3](Demonstration3.png)
+
+>![US_2003_Demo4](Demonstration4.png)
 
 # 6. Observações
 
