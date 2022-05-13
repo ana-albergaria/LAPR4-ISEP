@@ -42,9 +42,15 @@ public class OrdersBootstrapper implements Action {
             addresses.add(address);
             addresses.add(address2);
             Map<String,Integer> newOrderItems = new HashMap<>();
+            Map<String,Integer> newOrderItems1 = new HashMap<>();
+            Map<String,Integer> newOrderItems2 = new HashMap<>();
             newOrderItems.put("lmsp.00001",3);
+            newOrderItems1.put("apsp.00001",4);
+            newOrderItems2.put("tnfs.00001",2);
 
             register(addresses,Shipment.BLUE,Payment.APPLE_PAY, TheOrder.SourceChannel.CALL,Calendars.now(),newOrderItems);
+            register(addresses, Shipment.GREEN, Payment.PAYPAL, TheOrder.SourceChannel.EMAIL, Calendars.now(), newOrderItems1);
+            register(addresses, Shipment.STANDARD, Payment.PAYPAL, TheOrder.SourceChannel.MEETING, Calendars.now(), newOrderItems2);
 
             return true;
         }
