@@ -22,6 +22,7 @@ public class Shelf implements AggregateRoot<Long>, Serializable {
 
     @Transient
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "RowID", referencedColumnName = "rowID")
     private TheRow rowID;
 
 
