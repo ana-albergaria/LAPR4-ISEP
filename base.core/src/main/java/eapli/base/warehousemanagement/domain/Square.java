@@ -28,6 +28,14 @@ public class Square implements AggregateRoot<Long>, Serializable {
 
     protected Square(){}
 
+    public Long lSquare(){
+        return this.lSquare;
+    }
+
+    public Long wSquare(){
+        return this.wSquare;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);

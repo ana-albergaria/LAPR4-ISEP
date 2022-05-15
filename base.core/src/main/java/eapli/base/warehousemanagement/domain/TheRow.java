@@ -21,14 +21,17 @@ public class TheRow implements AggregateRoot<Long>, Serializable {
 
     @Transient
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "BeginSquareID", referencedColumnName = "id")
     private Square beginSquare;
 
     @Transient
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EndSquareID", referencedColumnName = "id")
     private Square endSquare;
 
     @Transient
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "AisleID", referencedColumnName = "aisleID")
     private Aisle aisleID;
 
 

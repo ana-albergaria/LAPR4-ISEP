@@ -23,7 +23,7 @@ public class JpaOrderRepository extends BaseJpaRepositoryBase<TheOrder, Long, Lo
     @Override
     public Iterable<OrderStatus> findAllOrderStatus(){
         final TypedQuery<TheOrder> query = entityManager().createQuery(
-                "SELECT o FROM AGV o",
+                "SELECT o FROM TheOrder o",
                 TheOrder.class);
 
         Iterable<TheOrder> orders = query.getResultList();

@@ -24,46 +24,48 @@ public class AssignOrderToFreeAGVController {
 
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
-    public Iterable<TheOrder> findAllOrders(){
-        return orderRepository.findAll();
-    }
-
-    public Iterable<AGV> findAllAGVs(){
-        return agvRepository.findAll();
-    }
-    public Map<Integer, Long> showPaidOrdersList(){
+    public Map<Integer, TheOrder> showPaidOrdersList(){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
         Iterable<TheOrder> ordersAlreadyPaid = new LinkedList<>();
-        Map<Integer, Long> paidOrdersList = new HashMap<>();
+        Map<Integer, TheOrder> paidOrdersList = new HashMap<>();
+        OrderStatus orderStatus = OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED);
         int i=1;
 
-        ordersAlreadyPaid = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+        ordersAlreadyPaid = orderRepository.findByOrderStatus(orderStatus);
 
         for(TheOrder order : ordersAlreadyPaid){
-            paidOrdersList.put(i, order.getOrderId());
+            paidOrdersList.put(i, order);
             i++;
         }
 
         return paidOrdersList;
     }
 
-    public Map<Integer, Long> showFreeAGVsList(){
+    public Map<Integer, AGV> showFreeAGVsList(){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
         Iterable<AGV> agvsAvailable = new LinkedList<>();
-        Map<Integer, Long> freeAGVsList = new HashMap<>();
+        Map<Integer, AGV> freeAGVsList = new HashMap<>();
         int i=1;
 
-        TaskStatus task = new TaskStatus("FREE");
-
-        agvsAvailable = agvRepository.findByTaskStatus(task);
+        agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
 
         for(AGV agv : agvsAvailable){
-            freeAGVsList.put(i, agv.getAgvID());
+            freeAGVsList.put(i, agv);
             i++;
         }
 
         return freeAGVsList;
+    }
+
+    public TheOrder updateOrder(final TheOrder order){
+        orderRepository.remove(order);
+        return orderRepository.save(order);
+    }
+
+    public AGV updateAGV(final AGV agv){
+        agvRepository.remove(agv);
+        return agvRepository.save(agv);
     }
 }

@@ -5,6 +5,7 @@ import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.warehousemanagement.application.AssignOrderToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
+import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.hibernate.criterion.Order;
 
@@ -22,18 +23,14 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
         boolean isValidOrderOption = false, isValidAGVOption = false;
         int orderOption, agvOption, j = 0, k = 0;
 
-        TaskStatus occupied = new TaskStatus("occupied");
-
         TheOrder selectedOrder = null;
         AGV selectedAGV = null;
 
-        Map<Integer, Long> paidOrdersList = controller.showPaidOrdersList();
+        Map<Integer, TheOrder> paidOrdersList = controller.showPaidOrdersList();
         List<Integer> orderOptionsNum = new LinkedList<>();
-        Iterable<TheOrder> orders = controller.findAllOrders();
 
-        Map<Integer, Long> freeAGVsList = controller.showFreeAGVsList();
+        Map<Integer, AGV> freeAGVsList = controller.showFreeAGVsList();
         List<Integer> agvOptionsNum = new LinkedList<>();
-        Iterable<AGV> agvs = controller.findAllAGVs();
 
         if(paidOrdersList.size() > 0) {
             for (int i = 0; i < paidOrdersList.size(); i++) {
@@ -43,7 +40,7 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
             System.out.println("Select one order ready to be prepared: ");
 
             for (Integer paidOrderNumber : paidOrdersList.keySet()) {
-                System.out.printf("%d - Order number: %d\n", paidOrderNumber, paidOrdersList.get(paidOrderNumber));
+                System.out.printf("%d - Order number: %d\n", paidOrderNumber, paidOrdersList.get(paidOrderNumber).getOrderId());
             }
 
 
@@ -51,7 +48,7 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
                 if (j > 0) {
                     System.out.println("Please choose a valid option.");
                 }
-                orderOption = read.nextInt();
+                orderOption = Console.readInteger("");
 
                 if (orderOptionsNum.contains(orderOption)) {
                     isValidOrderOption = true;
@@ -60,8 +57,8 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
             } while (!isValidOrderOption);
 
 
-            for (TheOrder order : orders) {
-                if (order.getOrderId().equals(paidOrdersList.get(orderOption))) {
+            for (TheOrder order : paidOrdersList.values()) {
+                if (order.getOrderId().equals(paidOrdersList.get(orderOption).getOrderId())) {
                     selectedOrder = order;
                     selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
                 }
@@ -75,14 +72,14 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
                 System.out.println("Select one AGV to be assigned to the selected order: ");
 
                 for (Integer freeAGVNumber : freeAGVsList.keySet()) {
-                    System.out.printf("%d - AGV ID: %d\n", freeAGVNumber, freeAGVsList.get(freeAGVNumber));
+                    System.out.printf("%d - AGV ID: %d\n", freeAGVNumber, freeAGVsList.get(freeAGVNumber).getAgvID());
                 }
 
                 do {
                     if (k > 0) {
                         System.out.println("Please choose a valid option.");
                     }
-                    agvOption = read.nextInt();
+                    agvOption = Console.readInteger("");
 
                     if (agvOptionsNum.contains(agvOption)) {
                         isValidAGVOption = true;
@@ -90,10 +87,10 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
                     k++;
                 } while (!isValidAGVOption);
 
-                for (AGV agv : agvs) {
-                    if (agv.getAgvID().equals(freeAGVsList.get(agvOption))) {
+                for (AGV agv : freeAGVsList.values()) {
+                    if (agv.getAgvID().equals(freeAGVsList.get(agvOption).getAgvID())) {
                         selectedAGV = agv;
-                        selectedAGV.setTaskStatus(occupied);
+                        selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
                     }
                 }
             }else{
@@ -106,7 +103,9 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
         }
 
         if (selectedAGV != null && selectedOrder != null) {
-            System.out.printf("Selected AGV (%d) successfully assigned to the selected Order (%d). The selected Order (%d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId());
+            controller.updateOrder(selectedOrder);
+            controller.updateAGV(selectedAGV);
+            System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
         } else {
             System.out.println("Error assigning the selected AGV to the selected Order. Try again.");
         }

@@ -20,15 +20,18 @@ public class AgvDock implements AggregateRoot<String>, Serializable {
     private String agvDockID;
 
     @Transient
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "BeginSquareID", referencedColumnName = "id")
     private Square beginSquare;
 
     @Transient
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EndSquareID", referencedColumnName = "id")
     private Square endSquare;
 
     @Transient
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DepthSquareID", referencedColumnName = "id")
     private Square depthSquare;
 
     @Transient

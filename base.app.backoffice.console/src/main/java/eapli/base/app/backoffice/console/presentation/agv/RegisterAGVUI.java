@@ -28,8 +28,9 @@ public class RegisterAGVUI extends AbstractUI {
         String autonomyStatus, taskStatus, modelID, shortDescription;
         Double maxWeight;
         AutonomyStatus autonomy;
-        TaskStatus task;
+        TaskStatus task = null;
         boolean isValidYesOrNo = false;
+        boolean isValidTaskOption = false;
 
         do {
             Map<Integer, AgvDock> dockOptions = new HashMap<>();
@@ -54,18 +55,41 @@ public class RegisterAGVUI extends AbstractUI {
 
             numDocks = (long) selectedDocks.size();
 
-            int i = 1;
+            int i = 1, j=0;
 
             if(!selectedDocks.isEmpty()) {
                 agvID = Console.readLong("AGV ID:");
                 autonomyStatus = Console.readLine("Autonomy Status:");
-                taskStatus = Console.readLine("Task Status:");
+                do {
+                    if(j > 0){
+                        System.out.println("Please enter a valid option.");
+                    }
+
+                    taskStatus = Console.readLine("Task Status: \n (Free | Occupied | Charging)");
+                    
+                    if(taskStatus.equalsIgnoreCase("Free")){
+                        isValidTaskOption = true;
+                        
+                        task = TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE);
+                    }else if(taskStatus.equalsIgnoreCase("Occupied")){
+                        isValidTaskOption = true;
+
+                        task = TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED);
+                    }else if(taskStatus.equalsIgnoreCase("Charging")){
+                        isValidTaskOption = true;
+
+                        task = TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING);
+                    }
+                    
+                    j++;
+                }while(!isValidTaskOption);
                 modelID = Console.readLine("Model ID:");
                 shortDescription = Console.readLine("Short Description:");
                 maxWeight = Console.readDouble("Max Weight:");
 
                 autonomy = new AutonomyStatus(autonomyStatus);
-                task = new TaskStatus(taskStatus);
+                
+                   
 
                 System.out.println("To which dock do you want to associate the AGV?");
                 for(AgvDock agvDock : selectedDocks) {

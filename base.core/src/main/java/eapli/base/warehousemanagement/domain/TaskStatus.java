@@ -5,24 +5,30 @@ import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 
 @Embeddable
 public class TaskStatus implements ValueObject, Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final String tStatus;
+    public enum TaskStatusEnum{
+        FREE, OCCUPIED, CHARGING;
+    }
 
-    public TaskStatus(final String tStatus){
-        Preconditions.nonEmpty(tStatus, "Task status can neither be null nor empty.");
+    @Enumerated(EnumType.STRING)
+    private final TaskStatusEnum tStatus;
+
+    public TaskStatus(final TaskStatusEnum tStatus){
         this.tStatus = tStatus;
     }
 
     protected TaskStatus(){
-        this.tStatus = "";
+        this.tStatus = TaskStatusEnum.FREE;
     }
 
-    public TaskStatus valueOf(final String status){
+    public static TaskStatus valueOf(final TaskStatusEnum status){
         return new TaskStatus(status);
     }
 
