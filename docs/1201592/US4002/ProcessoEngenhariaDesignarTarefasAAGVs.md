@@ -15,11 +15,11 @@ A interpretação feita deste requisito foi no sentido de acrescentar o algoritm
 
 >Q1: "Will the FIFO algorithm be used to control the tasks/orders that are waiting for an available AGV? If I am interpreting something wrong please clarify for me."
 >
->A1: ""
+>A1: "The general idea is that product orders reaching a certain state whose meaning is of "need to be prepared by an AGV" are added to a queue. Then, following the FIFO algorithm orders are removed from the queue and assigned to available AGVs capable of performing the task that such order implies."
 
 >Q2: "Talking about being automatic, the System executes this functionally after some other functionality, or executes it periodically? If it is periodically, how often?"
 >
->A2: ""
+>A2: "Teams are free to propose a solution for that problem/issue. Notice that all team decisions must be well supported in light of business need and technical constraints."
 
 
 
