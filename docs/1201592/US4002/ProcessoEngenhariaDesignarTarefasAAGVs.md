@@ -7,7 +7,8 @@
 
 **UC4002:** Como Project Manager pretendo que a componente "AGVManager" seja aprimorada com um algoritmo FIFO (first in first out) básico, para atribuir automáticamente tarefas aos AGVs.
 
-A interpretação feita deste requisito foi no sentido de acrescentar o algoritmo pedido ao AGVManager e fazer com que a designação de tasks aos AGVs seja automática.
+A interpretação feita deste requisito foi no sentido de acrescentar ao menu do perfil que gere os AGVs (Warehouse Manager) a funcionalidade de atribuir, automáticamente, orders aos AGVs.
+
 
 # 2. Análise
 
@@ -20,6 +21,10 @@ A interpretação feita deste requisito foi no sentido de acrescentar o algoritm
 >Q2: "Talking about being automatic, the System executes this functionally after some other functionality, or executes it periodically? If it is periodically, how often?"
 >
 >A2: "Teams are free to propose a solution for that problem/issue. Notice that all team decisions must be well supported in light of business need and technical constraints."
+
+>Q3: "In US4002 it is required that the AGV Manager should support automatic assignment of orders to AGVs. In US2003 the Warehouse Employee will be able to assign any order to an AGV available. If the orders are being automatically assigned to an AGV (US4002) how can the Warehouse Employee assign a specific order to an AGV?"
+> 
+>A3: "Usually, and by default, one intends that system automatically assigns orders to AGVs (US 4002). However, if such option is not available (e.g.: turned off) or by some reason an order needs to be prepared faster than it would normally be, the warehouse employee has the ability to assign tasks manually (US 2003). Notice that, orders that can be prepared by AGVs are being added to a queue following a FIFO algorithm (part of the US 4002). In the scope of US 2003 the FIFO algorithm does not apply... the employee might choose the order (s)he wants."
 
 
 

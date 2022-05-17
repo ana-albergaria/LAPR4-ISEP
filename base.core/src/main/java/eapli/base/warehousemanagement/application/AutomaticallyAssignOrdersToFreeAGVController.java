@@ -11,6 +11,9 @@ import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AutomaticallyAssignOrdersToFreeAGVController {
@@ -20,16 +23,21 @@ public class AutomaticallyAssignOrdersToFreeAGVController {
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
 
-    public void automaticallyAssignOrdersToFreeAGV(){
+    public List<TheOrder> getOrdersToAssign(){
         authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
-        Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(new OrderStatus(OrderStatus.Status.TO_BE_PREPARED));
+        Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+        List<TheOrder> ordersToAssignList = new ArrayList<>();
+        ordersToAssign.forEach(ordersToAssignList::add);
+        ordersToAssignList.sort(Comparator.comparing(TheOrder::getCreatedOn));
+        return ordersToAssignList;
+    }
+
+    public List<AGV> getAGVsAvailable(){
+        authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
         Iterable<AGV> agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
-
-        //colocar as orders por ordem
-        //mudar a order para a ser preparada
-        //mudar o agv para ocupado
-
-
+        List<AGV> agvsAvailableList = new ArrayList<>();
+        agvsAvailable.forEach(agvsAvailableList::add);
+        return agvsAvailableList;
     }
 
 }
