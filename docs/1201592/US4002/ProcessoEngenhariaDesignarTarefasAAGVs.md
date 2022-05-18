@@ -79,29 +79,43 @@ A interpretação feita deste requisito foi no sentido de, através do AGVManage
 
 Foram aplicados os padrões princípios SOLID e GoF
 
-### Builder
-
-
-### Creator
-
-
 ### Repository
 
 
 ### Factory
 
 
-### Information Expert
-
-
-## 3.4. Testes
-
-
-
-
 # 4. Implementação
 
-## 4.1. Classe ...
+## 4.1. Classe AutomaticallyAssignOrderToFreeAGVUI
+
+
+    [...]
+
+    List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
+    List<AGV> agvsAvailable = controller.getAGVsAvailable();
+    if (ordersToAssign.isEmpty()){
+        System.out.println("There are no orders waiting to be assigned.");
+        return false;
+    } else if (agvsAvailable.isEmpty()){
+        System.out.println("There are no available AGVs.");
+        return false;
+    }
+    int num = 0;
+    int ordersToAssignSize = ordersToAssign.size();
+    int agvsAvailableSize = agvsAvailable.size();
+    do {
+        selectedOrder = ordersToAssign.get(num);
+        selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
+        controller.updateOrder(selectedOrder);
+        selectedAGV = agvsAvailable.get(num);
+        selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+        controller.updateAGV(selectedAGV);
+        System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+        num++;
+    } while (num+1<=ordersToAssignSize && num+1<=agvsAvailableSize);
+
+    [...]
 
 
     
@@ -109,7 +123,8 @@ Foram aplicados os padrões princípios SOLID e GoF
 
 # 5. Integração/Demonstração
 
-Esta User Story não tem dependências com qualquer outra User Story deste Sprint.
+Esta User Story depende da User Story 4001, uma vez que é necessária a existência do AGVManager para que esta US funcione do modo pretendido.
 
 # 6. Observações
 
+Uma vez que para esta US é apenas criada uma UI e um Controller, não sendo criado qualquer tipo de entidade, não foi criada nenhuma classe de testes.
