@@ -19,7 +19,7 @@ class TcpCliSum {
             System.out.println("Invalid server specified: " + args[0]);
             System.exit(1); }
 
-        try { sock = new Socket(serverIP, 9999); }
+        try { sock = new Socket(serverIP, 10999); }
         catch(IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1); }

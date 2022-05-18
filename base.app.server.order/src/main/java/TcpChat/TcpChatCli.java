@@ -24,7 +24,7 @@ class TcpChatCli {
             System.out.println("Invalid server: " + args[0]);
             System.exit(1); }
 
-        try { sock = new Socket(serverIP, 9999); }
+        try { sock = new Socket(serverIP, 10999); }
         catch(IOException ex) {
             System.out.println("Failed to connect.");
             System.exit(1); }

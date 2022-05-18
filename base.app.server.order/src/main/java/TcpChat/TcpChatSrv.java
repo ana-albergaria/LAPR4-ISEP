@@ -36,7 +36,7 @@ class TcpChatSrv {
     public static void main(String args[]) throws Exception {
         int i;
 
-        try { sock = new ServerSocket(9999); }
+        try { sock = new ServerSocket(10999); }
         catch(IOException ex) {
             System.out.println("Local port number not available.");
             System.exit(1); }
