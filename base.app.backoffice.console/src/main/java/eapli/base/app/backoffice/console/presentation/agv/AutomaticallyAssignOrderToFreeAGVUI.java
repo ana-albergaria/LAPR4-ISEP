@@ -2,6 +2,7 @@ package eapli.base.app.backoffice.console.presentation.agv;
 
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
+import eapli.base.warehousemanagement.application.AssignOrderToFreeAGVController;
 import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
@@ -12,11 +13,12 @@ import java.util.List;
 public class AutomaticallyAssignOrderToFreeAGVUI extends AbstractUI {
 
     private final AutomaticallyAssignOrdersToFreeAGVController controller = new AutomaticallyAssignOrdersToFreeAGVController();
+    private final AssignOrderToFreeAGVController controller2 = new AssignOrderToFreeAGVController();
 
     @Override
     protected boolean doShow(){
-        TheOrder selectedOrder = null;
-        AGV selectedAGV = null;
+        TheOrder selectedOrder;
+        AGV selectedAGV;
         List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
         List<AGV> agvsAvailable = controller.getAGVsAvailable();
         if (ordersToAssign.isEmpty()){
@@ -26,15 +28,19 @@ public class AutomaticallyAssignOrderToFreeAGVUI extends AbstractUI {
             System.out.println("There are no available AGVs.");
             return false;
         }
-        int num = 1;
+        int num = 0;
+        int ordersToAssignSize = ordersToAssign.size();
+        int agvsAvailableSize = agvsAvailable.size();
         do {
-            selectedOrder = ordersToAssign.get(num-1);
+            selectedOrder = ordersToAssign.get(num);
             selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-            selectedAGV = agvsAvailable.get(num-1);
+            controller2.updateOrder(selectedOrder);
+            selectedAGV = agvsAvailable.get(num);
             selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+            controller2.updateAGV(selectedAGV);
             System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
             num++;
-        } while (num<=ordersToAssign.size()||num<=agvsAvailable.size());
+        } while (num+1<=ordersToAssignSize && num+1<=agvsAvailableSize);
         return false;
     }
 

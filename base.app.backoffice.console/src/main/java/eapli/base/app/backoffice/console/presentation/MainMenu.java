@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 
 import eapli.base.app.backoffice.console.presentation.agv.AssignOrderToFreeAGVUI;
+import eapli.base.app.backoffice.console.presentation.agv.AutomaticallyAssignOrderToFreeAGVUI;
 import eapli.base.app.backoffice.console.presentation.order.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
@@ -99,6 +100,8 @@ public class MainMenu extends AbstractUI {
     private static final int SET_UP_PLANT=3;
 
     private static final int ASSIGN_AGV_TO_ORDER = 4;
+
+    //private static final int AUTOMATICALLY_ASSIGN_AGV_TO_ORDER = 5;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -206,11 +209,11 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildWarehouseEmployee(){
         final Menu menu = new Menu("Warehouse Employee >");
-
         menu.addItem(REGISTER_AGV, "Register AGV", new RegisterAGVUI()::show);
         menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
         menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
         menu.addItem(ASSIGN_AGV_TO_ORDER, "Assign AGV to Order ready to be prepared", new AssignOrderToFreeAGVUI()::show);
+        //menu.addItem(AUTOMATICALLY_ASSIGN_AGV_TO_ORDER, "Automatically assign AGV to Order ready to be prepared", new AutomaticallyAssignOrderToFreeAGVUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
