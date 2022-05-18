@@ -7,7 +7,7 @@
 
 **UC4002:** Como Project Manager pretendo que a componente "AGVManager" seja aprimorada com um algoritmo FIFO (first in first out) básico, para atribuir automáticamente tarefas aos AGVs.
 
-A interpretação feita deste requisito foi no sentido de, assim que o perfil que gere os AGVs (Warehouse Manager) entra na aplicação, atribuir, automáticamente, orders aos AGVs.
+A interpretação feita deste requisito foi no sentido de, através do AGVManager, atribuir, automáticamente, orders aos AGVs.
 
 
 # 2. Análise
@@ -48,13 +48,13 @@ A interpretação feita deste requisito foi no sentido de, assim que o perfil qu
 
 ### 3.1.2. Classes de Domínio:
 
-* AGV
-* AutonomyStatus
+* TheOrder, AGV
+* OrderStatus
 * TaskStatus
-* Model
 * Controlador:
-  * AssignTasksToAGVsController
+  * AutomaticallyAssignOrdersToFreeAGVController
 * Repository:
+  * OrderRepository
   * AGVRepository
 
 

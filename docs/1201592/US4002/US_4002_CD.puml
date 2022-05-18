@@ -1,0 +1,41 @@
+@startuml
+
+class AutomaticallyAssignOrderToFreeAGVUI{
+}
+
+class AutomaticallyAssignOrderToFreeAGVController{
++getOrdersToAssign()
++getAGVsAvailable()
++updateOrder(order)
++updateAGV(agv)
+}
+
+class PersistenceContext{
++repositories()
+}
+
+database OrderRepository{
+}
+
+database AGVRepository{
+}
+
+class TheOrder{
++setStatus(status)
+}
+
+class AGV{
++setTaskStatus(taskStatus)
+}
+
+AutomaticallyAssignOrderToFreeAGVUI --> AutomaticallyAssignOrderToFreeAGVController
+
+AutomaticallyAssignOrderToFreeAGVController --> PersistenceContext
+
+PersistenceContext --> OrderRepository
+PersistenceContext --> AGVRepository
+
+AutomaticallyAssignOrderToFreeAGVController --> TheOrder
+AutomaticallyAssignOrderToFreeAGVController --> AGV
+
+@enduml

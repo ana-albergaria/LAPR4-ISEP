@@ -12,7 +12,6 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -38,6 +37,14 @@ public class AutomaticallyAssignOrdersToFreeAGVController {
         List<AGV> agvsAvailableList = new ArrayList<>();
         agvsAvailable.forEach(agvsAvailableList::add);
         return agvsAvailableList;
+    }
+
+    public void updateOrder(final TheOrder order){
+        orderRepository.save(order);
+    }
+
+    public void updateAGV(final AGV agv){
+        agvRepository.save(agv);
     }
 
 }

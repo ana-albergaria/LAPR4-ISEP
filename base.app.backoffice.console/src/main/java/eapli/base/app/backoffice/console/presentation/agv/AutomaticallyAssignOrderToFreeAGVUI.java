@@ -13,7 +13,6 @@ import java.util.List;
 public class AutomaticallyAssignOrderToFreeAGVUI extends AbstractUI {
 
     private final AutomaticallyAssignOrdersToFreeAGVController controller = new AutomaticallyAssignOrdersToFreeAGVController();
-    private final AssignOrderToFreeAGVController controller2 = new AssignOrderToFreeAGVController();
 
     @Override
     protected boolean doShow(){
@@ -34,10 +33,10 @@ public class AutomaticallyAssignOrderToFreeAGVUI extends AbstractUI {
         do {
             selectedOrder = ordersToAssign.get(num);
             selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-            controller2.updateOrder(selectedOrder);
+            controller.updateOrder(selectedOrder);
             selectedAGV = agvsAvailable.get(num);
             selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-            controller2.updateAGV(selectedAGV);
+            controller.updateAGV(selectedAGV);
             System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
             num++;
         } while (num+1<=ordersToAssignSize && num+1<=agvsAvailableSize);
