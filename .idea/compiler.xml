@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="base.persistence.impl" />
+        <module name="base.app.server.order" />
         <module name="base.app.other.console" />
         <module name="base.app.user.console" />
         <module name="base.core" />
+        <module name="agvmanager" />
         <module name="base.app.backoffice.console" />
         <module name="base.app.common.console" />
         <module name="base.bootstrappers" />

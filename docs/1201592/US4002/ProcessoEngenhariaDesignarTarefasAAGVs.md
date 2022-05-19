@@ -7,7 +7,8 @@
 
 **UC4002:** Como Project Manager pretendo que a componente "AGVManager" seja aprimorada com um algoritmo FIFO (first in first out) básico, para atribuir automáticamente tarefas aos AGVs.
 
-A interpretação feita deste requisito foi no sentido de acrescentar o algoritmo pedido ao AGVManager e fazer com que a designação de tasks aos AGVs seja automática.
+A interpretação feita deste requisito foi no sentido de, através do AGVManager, atribuir, automáticamente, orders aos AGVs.
+
 
 # 2. Análise
 
@@ -15,11 +16,15 @@ A interpretação feita deste requisito foi no sentido de acrescentar o algoritm
 
 >Q1: "Will the FIFO algorithm be used to control the tasks/orders that are waiting for an available AGV? If I am interpreting something wrong please clarify for me."
 >
->A1: ""
+>A1: "The general idea is that product orders reaching a certain state whose meaning is of "need to be prepared by an AGV" are added to a queue. Then, following the FIFO algorithm orders are removed from the queue and assigned to available AGVs capable of performing the task that such order implies."
 
 >Q2: "Talking about being automatic, the System executes this functionally after some other functionality, or executes it periodically? If it is periodically, how often?"
 >
->A2: ""
+>A2: "Teams are free to propose a solution for that problem/issue. Notice that all team decisions must be well supported in light of business need and technical constraints."
+
+>Q3: "In US4002 it is required that the AGV Manager should support automatic assignment of orders to AGVs. In US2003 the Warehouse Employee will be able to assign any order to an AGV available. If the orders are being automatically assigned to an AGV (US4002) how can the Warehouse Employee assign a specific order to an AGV?"
+> 
+>A3: "Usually, and by default, one intends that system automatically assigns orders to AGVs (US 4002). However, if such option is not available (e.g.: turned off) or by some reason an order needs to be prepared faster than it would normally be, the warehouse employee has the ability to assign tasks manually (US 2003). Notice that, orders that can be prepared by AGVs are being added to a queue following a FIFO algorithm (part of the US 4002). In the scope of US 2003 the FIFO algorithm does not apply... the employee might choose the order (s)he wants."
 
 
 
@@ -43,13 +48,13 @@ A interpretação feita deste requisito foi no sentido de acrescentar o algoritm
 
 ### 3.1.2. Classes de Domínio:
 
-* AGV
-* AutonomyStatus
+* TheOrder, AGV
+* OrderStatus
 * TaskStatus
-* Model
 * Controlador:
-  * AssignTasksToAGVsController
+  * AutomaticallyAssignOrdersToFreeAGVController
 * Repository:
+  * OrderRepository
   * AGVRepository
 
 
@@ -74,29 +79,43 @@ A interpretação feita deste requisito foi no sentido de acrescentar o algoritm
 
 Foram aplicados os padrões princípios SOLID e GoF
 
-### Builder
-
-
-### Creator
-
-
 ### Repository
 
 
 ### Factory
 
 
-### Information Expert
-
-
-## 3.4. Testes
-
-
-
-
 # 4. Implementação
 
-## 4.1. Classe ...
+## 4.1. Classe AutomaticallyAssignOrderToFreeAGVUI
+
+
+    [...]
+
+    List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
+    List<AGV> agvsAvailable = controller.getAGVsAvailable();
+    if (ordersToAssign.isEmpty()){
+        System.out.println("There are no orders waiting to be assigned.");
+        return false;
+    } else if (agvsAvailable.isEmpty()){
+        System.out.println("There are no available AGVs.");
+        return false;
+    }
+    int num = 0;
+    int ordersToAssignSize = ordersToAssign.size();
+    int agvsAvailableSize = agvsAvailable.size();
+    do {
+        selectedOrder = ordersToAssign.get(num);
+        selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
+        controller.updateOrder(selectedOrder);
+        selectedAGV = agvsAvailable.get(num);
+        selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+        controller.updateAGV(selectedAGV);
+        System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+        num++;
+    } while (num+1<=ordersToAssignSize && num+1<=agvsAvailableSize);
+
+    [...]
 
 
     
@@ -104,7 +123,8 @@ Foram aplicados os padrões princípios SOLID e GoF
 
 # 5. Integração/Demonstração
 
-Esta User Story não tem dependências com qualquer outra User Story deste Sprint.
+Esta User Story depende da User Story 4001, uma vez que é necessária a existência do AGVManager para que esta US funcione do modo pretendido.
 
 # 6. Observações
 
+Uma vez que para esta US é apenas criada uma UI e um Controller, não sendo criado qualquer tipo de entidade, não foi criada nenhuma classe de testes.

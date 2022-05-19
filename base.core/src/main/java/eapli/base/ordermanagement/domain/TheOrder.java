@@ -213,7 +213,7 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         return this.orderId;
     }
 
-
-
-
+    public Calendar getCreatedOn() {
+        return createdOn;
+    }
 }

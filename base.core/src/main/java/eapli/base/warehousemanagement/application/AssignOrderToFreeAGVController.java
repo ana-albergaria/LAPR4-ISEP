@@ -60,12 +60,11 @@ public class AssignOrderToFreeAGVController {
     }
 
     public TheOrder updateOrder(final TheOrder order){
-        orderRepository.remove(order);
         return orderRepository.save(order);
     }
 
     public AGV updateAGV(final AGV agv){
-        agvRepository.remove(agv);
         return agvRepository.save(agv);
     }
+
 }
