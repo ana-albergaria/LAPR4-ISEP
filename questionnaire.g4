@@ -11,7 +11,7 @@ message : frase
 
 /********* QUESTIONNAIRE *********/
 
-survey : questionnaire_id title NEWLINE message? NEWLINE (section)+ NEWLINE message ;
+survey : questionnaire_id title NEWLINE NEWLINE (message)? /*NEWLINE (section)+ NEWLINE message */;
 
 //id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
 questionnaire_id : alfanumerico+ ;
@@ -63,8 +63,9 @@ scaling_option: (question)+;
 /********* TOKENS *********/
 
 
-PALAVRA : [a-zA-Z]+;
+
 DIGITO : [0-9] ;
+PALAVRA : [a-zA-Z]+;
 VIRGULA : ',' ;
 ESPACO : ' ' ;
 PONTO_INTERROGACAO : '?' ;
