@@ -25,7 +25,6 @@ package eapli.base.app.backoffice.console.presentation;
 
 
 import eapli.base.app.backoffice.console.presentation.agv.AssignOrderToFreeAGVUI;
-import eapli.base.app.backoffice.console.presentation.agv.AutomaticallyAssignOrderToFreeAGVUI;
 import eapli.base.app.backoffice.console.presentation.order.RegisterClientOrderUI;
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;

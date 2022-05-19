@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The controller for the use case "automaticcaly assign orders to free AGVs".
+ *
+ * @author Marta Ribeiro 1201592
+ */
 public class AutomaticallyAssignOrdersToFreeAGVController {
 
     private AuthorizationService authorizationService = AuthzRegistry.authorizationService();

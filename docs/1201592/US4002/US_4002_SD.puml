@@ -4,7 +4,7 @@
 autonumber
 
 Actor ":AGVManager" as AGVM
-participant ":AutomaticallyAssignOrderToFreeAGVUI" as UI
+participant ":TcpSrvSum" as UI
 participant ":AutomaticallyAssignOrderToFreeAGVController" as CTRL
 participant ":PersistenceContext" as Persistance
 participant ":RepositoryFactory" as Factory
@@ -16,7 +16,6 @@ participant ":AGV" as AGV
 activate AGVM
 AGVM -> UI : automatically request to assign available orders to available AGVs
 activate UI
-UI -> UI : doShow()
 UI -> CTRL : create
 activate CTRL
 |||

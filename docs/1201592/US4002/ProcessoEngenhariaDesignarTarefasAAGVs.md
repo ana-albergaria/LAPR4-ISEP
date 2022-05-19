@@ -87,33 +87,33 @@ Foram aplicados os padrões princípios SOLID e GoF
 
 # 4. Implementação
 
-## 4.1. Classe AutomaticallyAssignOrderToFreeAGVUI
+## 4.1. Classe TcpSrv
 
 
     [...]
 
+    TheOrder selectedOrder;
+    AGV selectedAGV;
     List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
     List<AGV> agvsAvailable = controller.getAGVsAvailable();
     if (ordersToAssign.isEmpty()){
         System.out.println("There are no orders waiting to be assigned.");
-        return false;
     } else if (agvsAvailable.isEmpty()){
         System.out.println("There are no available AGVs.");
-        return false;
     }
-    int num = 0;
+    int number = 0;
     int ordersToAssignSize = ordersToAssign.size();
     int agvsAvailableSize = agvsAvailable.size();
     do {
-        selectedOrder = ordersToAssign.get(num);
+        selectedOrder = ordersToAssign.get(number);
         selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
         controller.updateOrder(selectedOrder);
-        selectedAGV = agvsAvailable.get(num);
+        selectedAGV = agvsAvailable.get(number);
         selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
         controller.updateAGV(selectedAGV);
-        System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
-        num++;
-    } while (num+1<=ordersToAssignSize && num+1<=agvsAvailableSize);
+        System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+        number++;
+    } while (number+1<=ordersToAssignSize && number+1<=agvsAvailableSize);
 
     [...]
 

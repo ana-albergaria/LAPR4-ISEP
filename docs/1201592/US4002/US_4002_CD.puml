@@ -1,6 +1,8 @@
 @startuml
 
-class AutomaticallyAssignOrderToFreeAGVUI{
+class TcpSrvSum{
++main(args)
++run()
 }
 
 class AutomaticallyAssignOrderToFreeAGVController{
@@ -32,7 +34,7 @@ class AGV{
 +setTaskStatus(taskStatus)
 }
 
-AutomaticallyAssignOrderToFreeAGVUI --> AutomaticallyAssignOrderToFreeAGVController
+TcpSrvSum --> AutomaticallyAssignOrderToFreeAGVController
 
 AutomaticallyAssignOrderToFreeAGVController --> PersistenceContext
 
