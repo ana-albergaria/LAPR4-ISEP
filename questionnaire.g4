@@ -12,7 +12,7 @@ message : frase
 
 /********* QUESTIONNAIRE *********/
 
-survey : questionnaire_id (ESPACO)? title NEWLINE message? (section)+ NEWLINE message ;
+survey : questionnaire_id ESPACO title NEWLINE message? (NEWLINE section)+ NEWLINE NEWLINE message ;
 
 
 //id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
@@ -21,24 +21,23 @@ questionnaire_id : alfanumerico+ ;
 
 /********* SECTION *********/
 
-//---> Falta incluir Obligatoriness e Repeatability <---
-section : numeric_id /*title NEWLINE (frase+ NEWLINE)* NEWLINE obligatoriness NEWLINE (question)+*/;
+//---> Falta incluir Repeatability <---
+section : numeric_id title NEWLINE message? obligatoriness NEWLINE (question)+;
 
 numeric_id : (DIGITO)+ ;
 
-obligatoriness : MANDATORY
+obligatoriness : 'Obligatoriness: ' (MANDATORY
                | OPTIONAL
-               | CONDITION_DEPENDENT ;
+               | CONDITION_DEPENDENT) ;
 
 
 /********* QUESTION *********/
 
 //---> Falta incluir Type, Obligatoriness e Extra Info <---
-question: numeric_id title NEWLINE message? ;
+question: numeric_id question_text NEWLINE type NEWLINE message? ;
 
 
-question_text : frase PONTO_INTERROGACAO
-            | frase PONTO_EXCLAMACAO;
+question_text : frase PONTO_INTERROGACAO ;
 
 type: 'free text'
     | 'numeric'
@@ -64,17 +63,15 @@ scaling_option: (question)+;
 
 /********* TOKENS *********/
 
-
-
+MANDATORY: 'mandatory';
+OPTIONAL: 'optional';
+CONDITION_DEPENDENT: 'condition dependent';
 DIGITO : [0-9] ;
 PALAVRA : [a-zA-Z]+;
 VIRGULA : ',' ;
 ESPACO : ' ' ;
 PONTO_INTERROGACAO : '?' ;
 PONTO_EXCLAMACAO: '!';
-MANDATORY: 'mandatory';
-OPTIONAL: 'optional';
-CONDITION_DEPENDENT: 'condition dependent';
 NEWLINE:'\r'?'\n' ;         //return end of line
 WS : [ \t\r.?!*'-]+ -> skip ; //skip spaces, tabs, newlines
 
