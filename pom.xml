@@ -30,7 +30,7 @@
         <module>base.core</module>
         <module>base.persistence.impl</module>
         <module>base.app.server.order</module>
-        <module>agvmanager</module>
+        <module>base.app.server.AgvManager</module>
     </modules>
 
     <dependencies>

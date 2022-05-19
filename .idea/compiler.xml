@@ -11,7 +11,6 @@
         <module name="base.app.other.console" />
         <module name="base.app.user.console" />
         <module name="base.core" />
-        <module name="agvmanager" />
         <module name="base.app.backoffice.console" />
         <module name="base.app.common.console" />
         <module name="base.bootstrappers" />
@@ -19,6 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="base.app.server.agvmanager" target="11" />
       <module name="core" target="1.7" />
     </bytecodeTargetLevel>
   </component>
