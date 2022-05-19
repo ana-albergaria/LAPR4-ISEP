@@ -10,17 +10,21 @@ alfas : alfa (HIFEN)? alfas
 
 letra : MINUSCULA | MAIUSCULA ;
 
-alfa : letra | DIGITO ;
+palavra: (letra)+;
 
+alfa : palavra | DIGITO ;
 
-frase : PALAVRA frase
-      | PALAVRA ;
+texto: (DIGITO)* palavra (DIGITO)*
+       | DIGITO;
+
+frase :  texto frase
+      | texto ;
 
 //title: it is a mandatory short sentence (nota: ver se exite limite de caracteres)
 title : frase ;
 
-welcome_message : frase
-                | (frase NEWLINE)+ ;
+message : frase
+        | (frase NEWLINE)+ ;
 
 /* SECÇÃO */
 id_numerico : (DIGITO)+ ;
@@ -50,7 +54,7 @@ question_text : frase PONTO_INTERROGACAO ;
 
 MAIUSCULA : [A-Z] ;
 MINUSCULA : [a-z] ;
-PALAVRA : [A-Za-z]+ ;
+//PALAVRA : [A-Za-z]+ ;
 DIGITO : [0-9] ;
 HIFEN : '-' ;
 PONTO_INTERROGACAO : '?' ;
