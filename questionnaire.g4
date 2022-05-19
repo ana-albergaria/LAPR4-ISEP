@@ -11,7 +11,7 @@ message : frase
 
 /********* QUESTIONNAIRE *********/
 
-survey : questionnaire_id title NEWLINE message? NEWLINE (section)+ NEWLINE message ;
+survey : questionnaire_id title NEWLINE (frase+ NEWLINE)* (section)+ NEWLINE message ;
 
 //id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
 questionnaire_id : alfanumerico+ ;
@@ -20,7 +20,7 @@ questionnaire_id : alfanumerico+ ;
 /********* SECTION *********/
 
 //---> Falta incluir Obligatoriness e Repeatability <---
-section : numeric_id /*title NEWLINE message? NEWLINE (question)+*/;
+section : numeric_id /*title NEWLINE (frase+ NEWLINE)* NEWLINE obligatoriness NEWLINE (question)+*/;
 
 numeric_id : (DIGITO)+ ;
 
