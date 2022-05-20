@@ -1,49 +1,43 @@
 grammar questionnaire ;
 
-//survey :
+/********* UTILS *********/
 
-//id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
-id : alfas ;
-
-alfas : alfa alfas
-      | alfa ;
-
-letra : MINUSCULA | MAIUSCULA ;
-
-palavra: (letra)+;
-
-alfa : palavra | DIGITO ;
-
-texto: (DIGITO)* palavra (DIGITO)*
-       | DIGITO;
-
-frase :  texto frase
-      | texto ;
-
-//title: it is a mandatory short sentence (nota: ver se exite limite de caracteres)
+alfanumerico : PALAVRA | DIGITO ;
+frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)*)*;
+//title: it is a mandatory short sentence (for questionnaire and section)
 title : frase ;
-
 message : frase
         | (frase NEWLINE)+ ;
 
-/* SECÇÃO */
-id_numerico : (DIGITO)+ ;
 
-obligatoriness : MANDATORY | OPTIONAL | CONDITION_DEPENDENT ;
+/********* QUESTIONNAIRE *********/
 
-//falta repeatability
-
-/*content : questao questoes
-        | questao ;*/
-
-//seccao :
+survey : questionnaire_id ESPACO title NEWLINE message? (NEWLINE section)+ NEWLINE NEWLINE message ;
 
 
+//id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
+questionnaire_id : alfanumerico+ ;
 
-/* QUESTÃO */
 
-question_text : frase PONTO_INTERROGACAO
-            | frase PONTO_EXCLAMACAO;
+/********* SECTION *********/
+
+//---> Falta incluir Repeatability <---
+section : numeric_id title NEWLINE message? obligatoriness NEWLINE (question)+;
+
+numeric_id : (DIGITO)+ ;
+
+obligatoriness : 'Obligatoriness: ' (MANDATORY
+               | OPTIONAL
+               | CONDITION_DEPENDENT) ;
+
+
+/********* QUESTION *********/
+
+//---> Falta incluir Type, Obligatoriness e Extra Info <---
+question: numeric_id question_text NEWLINE type NEWLINE message? ;
+
+
+question_text : frase PONTO_INTERROGACAO ;
 
 type: 'free text'
     | 'numeric'
@@ -54,32 +48,31 @@ type: 'free text'
     | 'sorting options' sorting_option
     | 'scaling options' scaling_option;
 
-question_list: frase NEWLINE question_list
-            | frase;
 
-single_choice: question_list;
-single_choice_input: question_list;
-multiple_choice: question_list;
-multiple_choice_input: question_list;
-sorting_option: question_list;
-scaling_option: question_list;
 
+single_choice: (question)+;
+single_choice_input: (question)+;
+multiple_choice: (question)+;
+multiple_choice_input: (question)+;
+sorting_option: (question)+;
+scaling_option: (question)+;
 
 
 
 
 
+/********* TOKENS *********/
 
-MAIUSCULA : [A-Z] ;
-MINUSCULA : [a-z] ;
-//PALAVRA : [A-Za-z]+ ;
-DIGITO : [0-9] ;
-PONTO_INTERROGACAO : '?' ;
-PONTO_EXCLAMACAO: '!';
 MANDATORY: 'mandatory';
 OPTIONAL: 'optional';
 CONDITION_DEPENDENT: 'condition dependent';
-NEWLINE: '\n' ;             //return end of line
-WS : [ \t\r.,?!*'-]+ -> skip ; //skip spaces, tabs, newlines
+DIGITO : [0-9] ;
+PALAVRA : [a-zA-Z]+;
+VIRGULA : ',' ;
+ESPACO : ' ' ;
+PONTO_INTERROGACAO : '?' ;
+PONTO_EXCLAMACAO: '!';
+NEWLINE:'\r'?'\n' ;         //return end of line
+WS : [ \t\r.?!*'-]+ -> skip ; //skip spaces, tabs, newlines
 
 
