@@ -36,26 +36,27 @@ obligatoriness : 'Obligatoriness: ' (MANDATORY
 //---> Falta incluir Type, Obligatoriness e Extra Info <---
 question: numeric_id question_text NEWLINE type NEWLINE message? ;
 
+option: numeric_id PARENTISIS frase NEWLINE;
 
 question_text : frase PONTO_INTERROGACAO ;
 
 type: 'free text'
     | 'numeric'
-    | 'single-choice' single_choice
-    | 'multiple_choice' multiple_choice
-    | 'single-choice with input' single_choice_input
-    | 'multiple-choice with input' multiple_choice_input
-    | 'sorting options' sorting_option
-    | 'scaling options' scaling_option;
+    | 'single-choice' NEWLINE single_choice
+    | 'multiple_choice' NEWLINE multiple_choice
+    | 'single-choice with input' NEWLINE single_choice_input
+    | 'multiple-choice with input' NEWLINE multiple_choice_input
+    | 'sorting options' NEWLINE sorting_option
+    | 'scaling options' NEWLINE scaling_option;
 
 
 
-single_choice: (question)+;
-single_choice_input: (question)+;
-multiple_choice: (question)+;
-multiple_choice_input: (question)+;
-sorting_option: (question)+;
-scaling_option: (question)+;
+single_choice: (option)+;
+single_choice_input: (option)+;
+multiple_choice: (option)+;
+multiple_choice_input: (option)+;
+sorting_option: (option)+;
+scaling_option: (option)+;
 
 
 
@@ -68,6 +69,7 @@ OPTIONAL: 'optional';
 CONDITION_DEPENDENT: 'condition dependent';
 DIGITO : [0-9] ;
 PALAVRA : [a-zA-Z]+;
+PARENTISIS: ')';
 VIRGULA : ',' ;
 ESPACO : ' ' ;
 PONTO_INTERROGACAO : '?' ;
