@@ -1,0 +1,30 @@
+COSM22-01 Cosmetics Questionnaire
+Hello,
+This questionnaire aims to...
+It takes approximately 10 minutes.
+Thank you very much for your time and support.
+
+1. Basic Personal Information
+Section Obligatoriness: mandatory
+Repeatability: yes
+1. How willing are you to try different cosmetic products?(mandatory)
+Please answer this question correctly.
+Type: free text
+2. Do you often use cosmetic products?(optional)
+Type: single choice
+1)Very often
+2)Not so often
+
+3. How many cosmetics products do you use?(condition dependent: if you answered Q1 from S1, answer this one)
+Be precise.
+Type: numeric
+
+2. Section 2
+This is section 2.
+Section Obligatoriness: optional
+Repeatability: no
+1. Do you enjoy going shopping?(mandatory)
+Type: free text
+
+
+Thank you for answering the questionnaire!
