@@ -35,17 +35,33 @@ public class WebDashboard {
             System.exit(1);
         }
 
-        ObjectInputStream sIn = new ObjectInputStream(sock.getInputStream());
-
-        Object positionList = sIn.readObject();
-
         HTTPMessage request = new HTTPMessage();
         request.setRequestMethod("GET");
         request.setURI("agvs");
 
         System.out.println("Connecting to http://" + args[0] + ":" + serverPort + "/");
 
-        
+        try {
+            sock = new Socket(serverIP, serverPort);
+        } catch(IOException ex) {
+            System.out.println("Failed to connect to provided SERVER-ADDRESS and SERVER-PORT.");
+            System.out.println("Application aborted.");
+            System.exit(1);
+        }
+
+        try {
+            sOut = new DataOutputStream(sock.getOutputStream());
+            sIn = new DataInputStream(sock.getInputStream());
+        } catch(IOException ex) {
+            System.out.println("Error accessing socket's streams. Aborted.");
+            try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+            System.out.println("Application aborted.");
+            System.exit(1);
+        }
+
+        request.send(sOut);
+        HTTPMessage response = new HTTPMessage(sIn);
+
 
 
         try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
