@@ -28,17 +28,17 @@ public interface questionnaireListener extends ParseTreeListener {
 	 */
 	void exitFrase(questionnaireParser.FraseContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code lengthText}
+	 * Enter a parse tree produced by the {@code lengthTitle}
 	 * labeled alternative in {@link questionnaireParser#title}.
 	 * @param ctx the parse tree
 	 */
-	void enterLengthText(questionnaireParser.LengthTextContext ctx);
+	void enterLengthTitle(questionnaireParser.LengthTitleContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code lengthText}
+	 * Exit a parse tree produced by the {@code lengthTitle}
 	 * labeled alternative in {@link questionnaireParser#title}.
 	 * @param ctx the parse tree
 	 */
-	void exitLengthText(questionnaireParser.LengthTextContext ctx);
+	void exitLengthTitle(questionnaireParser.LengthTitleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link questionnaireParser#message}.
 	 * @param ctx the parse tree

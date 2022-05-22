@@ -3,9 +3,12 @@ grammar questionnaire ;
 /********* UTILS *********/
 
 alfanumerico : PALAVRA | DIGITO ;
-frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)*)*;
+/* frase: the 2nd condition PALAVRA VIRGULA is for the specific case where it's adequate to only use a word and a comma, usually in the beginning of a message
+ For example: Hello,
+*/
+frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)*)* | PALAVRA VIRGULA ;
 //title: it is a mandatory short sentence (for questionnaire and section)
-title : frase   #lengthText
+title : frase   #lengthTitle
       ;
 
 message : frase
@@ -23,7 +26,6 @@ questionnaire_id : alfanumerico+ ;
 
 /********* SECTION *********/
 
-//---> Falta incluir Repeatability <---
 section : numeric_id title NEWLINE message? 'Section Obligatoriness: ' obligatoriness NEWLINE 'Repeatability: ' repeatability NEWLINE (question)+;
 
 numeric_id : (DIGITO)+ ;
@@ -39,7 +41,6 @@ repeatability : YES     #repeatabilityYes
 
 /********* QUESTION *********/
 
-//---> Falta incluir Type, Obligatoriness e Extra Info <---
 question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE message?;
 
 option: numeric_id PARENTESIS_DIREITO frase NEWLINE;
@@ -94,5 +95,3 @@ PONTO_INTERROGACAO : '?' ;
 PONTO_EXCLAMACAO: '!';
 NEWLINE:'\r'?'\n' ;         //return end of line
 WS : [ \t\r.?!*'-]+ -> skip ; //skip spaces, tabs, newlines
-
-

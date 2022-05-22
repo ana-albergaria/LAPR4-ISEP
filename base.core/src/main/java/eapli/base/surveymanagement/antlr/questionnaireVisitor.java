@@ -23,12 +23,12 @@ public interface questionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFrase(questionnaireParser.FraseContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code lengthText}
+	 * Visit a parse tree produced by the {@code lengthTitle}
 	 * labeled alternative in {@link questionnaireParser#title}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLengthText(questionnaireParser.LengthTextContext ctx);
+	T visitLengthTitle(questionnaireParser.LengthTitleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link questionnaireParser#message}.
 	 * @param ctx the parse tree

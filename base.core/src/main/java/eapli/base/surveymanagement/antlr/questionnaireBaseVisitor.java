@@ -31,7 +31,7 @@ public class questionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLengthText(questionnaireParser.LengthTextContext ctx) { return visitChildren(ctx); }
+	@Override public T visitLengthTitle(questionnaireParser.LengthTitleContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
