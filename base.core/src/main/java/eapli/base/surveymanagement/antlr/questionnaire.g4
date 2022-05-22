@@ -5,7 +5,9 @@ grammar questionnaire ;
 alfanumerico : PALAVRA | DIGITO ;
 frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)*)*;
 //title: it is a mandatory short sentence (for questionnaire and section)
-title : frase ;
+title : frase   #lengthText
+      ;
+
 message : frase
         | (frase NEWLINE)+ ;
 
@@ -22,32 +24,36 @@ questionnaire_id : alfanumerico+ ;
 /********* SECTION *********/
 
 //---> Falta incluir Repeatability <---
-section : numeric_id title NEWLINE message? obligatoriness NEWLINE (question)+;
+section : numeric_id title NEWLINE message? 'Section Obligatoriness: ' obligatoriness NEWLINE 'Repeatability: ' repeatability NEWLINE (question)+;
 
 numeric_id : (DIGITO)+ ;
 
-obligatoriness : 'Obligatoriness: ' (MANDATORY
+obligatoriness : MANDATORY
                | OPTIONAL
-               | CONDITION_DEPENDENT) ;
+               | CONDITION_DEPENDENT DOIS_PONTOS ESPACO frase;
+
+repeatability : YES     #repeatabilityYes
+              | NO      #repeatibilityNo
+              ;
 
 
 /********* QUESTION *********/
 
 //---> Falta incluir Type, Obligatoriness e Extra Info <---
-question: numeric_id question_text NEWLINE type NEWLINE message? ;
+question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE message?;
 
-option: numeric_id PARENTISIS frase NEWLINE;
+option: numeric_id PARENTESIS_DIREITO frase NEWLINE;
 
 question_text : frase PONTO_INTERROGACAO ;
 
-type: 'free text'
-    | 'numeric'
-    | 'single-choice' NEWLINE single_choice
-    | 'multiple_choice' NEWLINE multiple_choice
-    | 'single-choice with input' NEWLINE single_choice_input
-    | 'multiple-choice with input' NEWLINE multiple_choice_input
-    | 'sorting options' NEWLINE sorting_option
-    | 'scaling options' NEWLINE scaling_option;
+type: FREE_TEXT
+    | NUMERIC
+    | SINGLE_CHOICE NEWLINE single_choice
+    | MULTIPLE_CHOICE NEWLINE multiple_choice
+    | SINGLE_CHOICE_WITH_INPUT NEWLINE single_choice_input
+    | MULTIPLE_CHOICE_WITH_INPUT NEWLINE multiple_choice_input
+    | SORTING_OPTION NEWLINE sorting_option
+    | SCALING_OPTION NEWLINE scaling_option;
 
 
 
@@ -64,14 +70,26 @@ scaling_option: (option)+;
 
 /********* TOKENS *********/
 
+SINGLE_CHOICE_WITH_INPUT: 'single choice with input';
+MULTIPLE_CHOICE_WITH_INPUT: 'multiple choice with input';
+FREE_TEXT: 'free text' ;
+NUMERIC: 'numeric' ;
+SINGLE_CHOICE: 'single choice' ;
+MULTIPLE_CHOICE: 'multiple choice' ;
+SORTING_OPTION: 'sorting option' ;
+SCALING_OPTION: 'scaling option' ;
+YES: 'yes';
+NO: 'no';
 MANDATORY: 'mandatory';
 OPTIONAL: 'optional';
 CONDITION_DEPENDENT: 'condition dependent';
 DIGITO : [0-9] ;
 PALAVRA : [a-zA-Z]+;
-PARENTISIS: ')';
+PARENTESIS_DIREITO: ')';
+PARENTESIS_ESQUERDO: '(';
 VIRGULA : ',' ;
 ESPACO : ' ' ;
+DOIS_PONTOS : ':' ;
 PONTO_INTERROGACAO : '?' ;
 PONTO_EXCLAMACAO: '!';
 NEWLINE:'\r'?'\n' ;         //return end of line
