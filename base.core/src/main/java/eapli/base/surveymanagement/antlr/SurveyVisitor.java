@@ -1,4 +1,4 @@
-/*package eapli.base.surveymanagement.antlr;
+package eapli.base.surveymanagement.antlr;
 
 public class SurveyVisitor extends questionnaireBaseVisitor {
     @Override
@@ -11,4 +11,3 @@ public class SurveyVisitor extends questionnaireBaseVisitor {
     }
 
 }
-*/
