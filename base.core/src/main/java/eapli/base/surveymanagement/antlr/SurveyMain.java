@@ -1,4 +1,4 @@
-package eapli.base.surveymanagement.antlr;
+/*package eapli.base.surveymanagement.antlr;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -21,3 +21,5 @@ public class SurveyMain {
         eval.visit(tree);
     }
 }
+
+ */
