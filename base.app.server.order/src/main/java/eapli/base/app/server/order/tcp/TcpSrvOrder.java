@@ -9,8 +9,8 @@ import java.net.*;
 public class TcpSrvOrder {
     static ServerSocket sock;
 
-    static AppSettings app = Application.settings();
-    static final int serverPortProperties = app.getServerPortKey();
+    //static AppSettings app = Application.settings();
+    //static final int serverPortProperties = app.getServerPortKey();
 
     public static void main(String args[]) throws Exception {
         Socket cliSock;
