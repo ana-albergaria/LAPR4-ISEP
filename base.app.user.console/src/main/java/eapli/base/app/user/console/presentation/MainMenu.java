@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.AddProductShoppingCartUI;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -48,9 +49,7 @@ class MainMenu extends ClientUserBaseUI {
 
     // MAIN MENU
     private static final int MY_USER_OPTION = 1;
-    private static final int BOOKINGS_OPTION = 2;
-    private static final int ACCOUNT_OPTION = 3;
-    private static final int SETTINGS_OPTION = 4;
+    private static final int ADD_PRODUCTS_SHOPPING_CART = 2;
 
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
@@ -87,6 +86,7 @@ class MainMenu extends ClientUserBaseUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
+        mainMenu.addItem(ADD_PRODUCTS_SHOPPING_CART, "Add Products To Shopping Cart >", new AddProductShoppingCartUI()::show);
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
