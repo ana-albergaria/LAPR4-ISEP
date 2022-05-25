@@ -1,6 +1,7 @@
 package eapli.base.warehousemanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
@@ -31,6 +32,18 @@ public class AGVPosition implements ValueObject, Serializable {
     }
 
     public AGVPosition() {}
+
+    public Long getAGVID(){
+        return this.agv.getAgvID();
+    }
+
+    public Long getLSquare(){
+        return this.positionSquare.lSquare();
+    }
+
+    public Long getWSquare() {
+        return this.positionSquare.wSquare();
+    }
 
     public static AGVPosition valueOf(final Square positionSquare, final AGV agv){
 
