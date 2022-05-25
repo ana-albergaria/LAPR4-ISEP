@@ -20,7 +20,7 @@ function refreshPositions() {
         setTimeout(refreshPositions, 5000);
     };
 
-    request.open("GET", "/agvs", true);
+    request.open("PUT", "/agvs", true);
     request.timeout = 5000;
     request.send();
 }
