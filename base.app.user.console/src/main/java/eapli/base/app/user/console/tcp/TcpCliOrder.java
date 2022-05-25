@@ -1,9 +1,11 @@
 package eapli.base.app.user.console.tcp;
 
+import eapli.base.productmanagement.domain.Product;
 import eapli.framework.validations.Preconditions;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class TcpCliOrder {
     static InetAddress serverIP;
@@ -65,6 +67,28 @@ class TcpCliOrderThread implements Runnable {
             byte[] serverMessage = sInData.readNBytes(4);
             if (serverMessage[1] == 2) {
 
+                /*============beginning of US1501============*/
+                ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
+                Iterable<Product> voume = (Iterable<Product>) sInputObject.readObject();
+                System.out.println(voume);
+
+                String useFilters;
+                byte[] data = new byte[300];
+                Scanner in = new Scanner(System.in);
+                System.out.print("Answer: ");
+                useFilters = in.nextLine();
+                //useFilters = "yes";
+                data = useFilters.getBytes();
+
+                byte[] clienteMessageUS = {(byte) 0, (byte) 3, (byte) useFilters.length(), (byte) 0};
+                sOutData.write(clienteMessageUS, 0, 4);
+                sOutData.write(data,0,useFilters.length());
+                sOutData.flush();
+
+                /*============end of US1501============*/
+
+
+
                 //Mandar um pedido para o servido -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                 sOutData.write(clienteMessageEnd);
@@ -81,7 +105,7 @@ class TcpCliOrderThread implements Runnable {
             } else {
                 System.out.println("==> ERROR: Erro no pacote do Servidor");
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("==> ERROR: Falha durante a troca de informação com o server");
         } finally {
             try {
