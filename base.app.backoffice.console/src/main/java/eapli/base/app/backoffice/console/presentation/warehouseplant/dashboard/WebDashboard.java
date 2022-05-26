@@ -1,5 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
+import eapli.base.dashboard.domain.HTTPMessage;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

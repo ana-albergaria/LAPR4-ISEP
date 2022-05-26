@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor WarehouseEmployee as WE
+participant ":System" as System
+
+activate WE
+
+WE -> System: wants to access the list of orders that have already been prepared.
+
+activate System
+
+System --> WE: show the list of orders that have already been prepared and requests to select one.
+
+deactivate System
+
+WE -> System: selects one Order
+
+activate System
+
+System --> WE: informs operation success.
+
+deactivate System
+
+deactivate WE
+
+@enduml
