@@ -6,7 +6,9 @@ alfanumerico : PALAVRA | DIGITO ;
 /* frase: the 2nd condition PALAVRA VIRGULA is for the specific case where it's adequate to only use a word and a comma, usually in the beginning of a message
  For example: Hello,
 */
-frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)*)* | PALAVRA VIRGULA ;
+frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)+)*
+       | DIGITO+ (VIRGULA? ESPACO (PALAVRA|DIGITO)+)*
+       | PALAVRA VIRGULA ;
 //title: it is a mandatory short sentence (for questionnaire and section)
 title : frase   #lengthTitle
       ;
