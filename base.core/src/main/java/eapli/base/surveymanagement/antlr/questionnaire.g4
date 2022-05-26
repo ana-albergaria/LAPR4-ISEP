@@ -54,7 +54,7 @@ type: FREE_TEXT
     | SINGLE_CHOICE_WITH_INPUT NEWLINE (option)+
     | MULTIPLE_CHOICE_WITH_INPUT NEWLINE (option)+
     | SORTING_OPTION NEWLINE (option)+
-    | SCALING_OPTION NEWLINE (option)+
+    | SCALING_OPTION NEWLINE 'Scale: ' frase NEWLINE (option)+
     ;
 
 
