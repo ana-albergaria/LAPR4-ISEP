@@ -100,29 +100,15 @@ public interface questionnaireListener extends ParseTreeListener {
 	 */
 	void exitObligatoriness(questionnaireParser.ObligatorinessContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code repeatabilityYes}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
+	 * Enter a parse tree produced by {@link questionnaireParser#repeatability}.
 	 * @param ctx the parse tree
 	 */
-	void enterRepeatabilityYes(questionnaireParser.RepeatabilityYesContext ctx);
+	void enterRepeatability(questionnaireParser.RepeatabilityContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code repeatabilityYes}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
+	 * Exit a parse tree produced by {@link questionnaireParser#repeatability}.
 	 * @param ctx the parse tree
 	 */
-	void exitRepeatabilityYes(questionnaireParser.RepeatabilityYesContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code repeatibilityNo}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
-	 * @param ctx the parse tree
-	 */
-	void enterRepeatibilityNo(questionnaireParser.RepeatibilityNoContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code repeatibilityNo}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
-	 * @param ctx the parse tree
-	 */
-	void exitRepeatibilityNo(questionnaireParser.RepeatibilityNoContext ctx);
+	void exitRepeatability(questionnaireParser.RepeatabilityContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link questionnaireParser#question}.
 	 * @param ctx the parse tree
@@ -163,64 +149,4 @@ public interface questionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitType(questionnaireParser.TypeContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#single_choice}.
-	 * @param ctx the parse tree
-	 */
-	void enterSingle_choice(questionnaireParser.Single_choiceContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#single_choice}.
-	 * @param ctx the parse tree
-	 */
-	void exitSingle_choice(questionnaireParser.Single_choiceContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#single_choice_input}.
-	 * @param ctx the parse tree
-	 */
-	void enterSingle_choice_input(questionnaireParser.Single_choice_inputContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#single_choice_input}.
-	 * @param ctx the parse tree
-	 */
-	void exitSingle_choice_input(questionnaireParser.Single_choice_inputContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#multiple_choice}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#multiple_choice}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#multiple_choice_input}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiple_choice_input(questionnaireParser.Multiple_choice_inputContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#multiple_choice_input}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiple_choice_input(questionnaireParser.Multiple_choice_inputContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#sorting_option}.
-	 * @param ctx the parse tree
-	 */
-	void enterSorting_option(questionnaireParser.Sorting_optionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#sorting_option}.
-	 * @param ctx the parse tree
-	 */
-	void exitSorting_option(questionnaireParser.Sorting_optionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#scaling_option}.
-	 * @param ctx the parse tree
-	 */
-	void enterScaling_option(questionnaireParser.Scaling_optionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#scaling_option}.
-	 * @param ctx the parse tree
-	 */
-	void exitScaling_option(questionnaireParser.Scaling_optionContext ctx);
 }
