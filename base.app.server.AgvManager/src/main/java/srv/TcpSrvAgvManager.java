@@ -39,8 +39,8 @@ class TcpSrvAgvManagerThread implements Runnable {
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
-    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.171";
-    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2807;
+    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.167";
+    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2400;
 
     public TcpSrvAgvManagerThread(Socket cli_s){
         s=cli_s;
@@ -63,7 +63,6 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             if (clientMessage[1] == 4) { //Por exemplo, codigo 4 = Ligar ao AGV Manager e pedir posições do AGV
                 TcpCliAgvManager tcpCliAgvManager = new TcpCliAgvManager(AGV_DIGITAL_TWIN_SERVER_ADDRESS, AGV_DIGITAL_TWIN_SERVER_PORT);
-
 
             } else {
                 System.out.println("[ERROR] Pacote do Cliente invalido.");
