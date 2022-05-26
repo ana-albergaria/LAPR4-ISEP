@@ -12,13 +12,18 @@ public class SurveyMain {
     }
 
 
-    public static void parseWithVisitor() throws IOException {
-        questionnaireLexer lexer = new questionnaireLexer(CharStreams.fromFileName("base.core/src/main/java/eapli/base/surveymanagement/antlr/teste.txt"));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        questionnaireParser parser = new questionnaireParser(tokens);
-        ParseTree tree = parser.survey();
-        SurveyVisitor eval = new SurveyVisitor();
-        eval.visit(tree);
+    public static void parseWithVisitor() {
+        try {
+            questionnaireLexer lexer = new questionnaireLexer(CharStreams.fromFileName("base.core/src/main/java/eapli/base/surveymanagement/antlr/teste.txt"));
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            questionnaireParser parser = new questionnaireParser(tokens);
+            ParseTree tree = parser.survey();
+            SurveyVisitor eval = new SurveyVisitor();
+            eval.visit(tree);
+            System.out.println("Survey has a valid format!");
+        } catch(IOException e) {
+            System.out.println("The Survey does not follow the required format.");
+        }
     }
 }
 
