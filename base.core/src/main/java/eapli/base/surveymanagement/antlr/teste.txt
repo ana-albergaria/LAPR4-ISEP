@@ -48,15 +48,33 @@ Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
 3)Our products have more availability than the ones from our competitors.
 4)You prefer to buy products from us.
 
-3. How many cosmetics products do you use?(condition dependent: if you answered Q1 from S1, answer this one)
-Be precise.
-Type: numeric
-
-2. Section 2
-This is section 2.
-Section Obligatoriness: optional
-1. Do you enjoy going shopping?(mandatory)
+7. What important features are we missing?(mandatory)
 Type: free text
+8. How would you rate the value for money?(mandatory)
+Type: single choice
+1)5 stars
+2)4 stars
+3)3 stars
+4)2 stars
+5)1 star
+6)0 stars
+
+9. When do you feel the need to buy our products?(mandatory)
+Type: multiple choice
+1)When I have no more stock of them
+2)When they are in discount
+3)When they are cheaper than our competitors
+4)When I feel like it
+
+10. Which categories are you the most fond of?(mandatory)
+Sort the following categories according to your taste
+Type: sorting option
+1)Skin care
+2)Food
+3)Hair care
+4)Cleaning
+5)Outdoors
+
 
 
 Thank you for answering the questionnaire!

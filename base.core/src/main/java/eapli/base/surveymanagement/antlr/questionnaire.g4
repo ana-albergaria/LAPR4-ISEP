@@ -75,8 +75,6 @@ SINGLE_CHOICE: 'single choice' ;
 MULTIPLE_CHOICE: 'multiple choice' ;
 SORTING_OPTION: 'sorting option' ;
 SCALING_OPTION: 'scaling option' ;
-YES: 'yes';
-NO: 'no';
 MANDATORY: 'mandatory';
 OPTIONAL: 'optional';
 CONDITION_DEPENDENT: 'condition dependent';
