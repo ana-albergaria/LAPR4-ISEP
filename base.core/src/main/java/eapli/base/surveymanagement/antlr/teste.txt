@@ -4,27 +4,87 @@ This questionnaire aims to...
 It takes approximately 10 minutes.
 Thank you very much for your time and support.
 
-1. Basic Personal Information
+1. About You
 Section Obligatoriness: mandatory
-Repeatability: yes
-1. How willing are you to try different cosmetic products?(mandatory)
-Please answer this question correctly.
-Type: free text
-2. Do you often use cosmetic products?(optional)
+Repeatability: 2
+1. What is your gender?
+Question Obligatoriness: optional
+Type: single choice with input
+1)Male
+2)Female
+3)Other:
+
+2. What age group do you belong to?
+Question Obligatoriness: mandatory
 Type: single choice
-1)Very often
-2)Not so often
+1)18-24
+2)25-34
+3)35-44
+4)45-54
+5)55-64
+6)65-74
+7)75+
 
-3. How many cosmetics products do you use?(condition dependent: if you answered Q1 from S1, answer this one)
-Be precise.
-Type: numeric
-
-2. Section 2
-This is section 2.
-Section Obligatoriness: optional
-Repeatability: no
-1. Do you enjoy going shopping?(mandatory)
+3. What country do you live in?
+Question Obligatoriness: mandatory
 Type: free text
+
+2. Product Feedback
+This is section 2 with questions regarding your opinion on our products.
+Section Obligatoriness: mandatory
+4. How often do you use our products?
+Question Obligatoriness: mandatory
+Type: numeric
+5. Which features are most valuable to you in a product?
+Question Obligatoriness: mandatory
+Type: multiple choice with input
+1)Efficiency
+2)Stock availability
+3)Design
+4)Eco friendliness
+5)Brand
+6)Other:
+
+6. How would you compare our products to our competitors?
+Question Obligatoriness: mandatory
+Type: scaling option
+Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
+1)Our products have a higher quality than the ones from our competitors.
+2)Our products are cheaper than the ones from our competitors.
+3)Our products have more availability than the ones from our competitors.
+4)You prefer to buy products from us.
+
+7. What important features are we missing?
+Question Obligatoriness: mandatory
+Type: free text
+8. How would you rate the value for money?
+Question Obligatoriness: mandatory
+Type: single choice
+1)5 stars
+2)4 stars
+3)3 stars
+4)2 stars
+5)1 star
+6)0 stras
+
+9. When do you feel the need to buy our products?
+Question Obligatoriness: mandatory
+Type: multiple choice
+1)When I have no more stock of them
+2)When they are in discount
+3)When they are cheaper than our competitors
+4)When I feel like it
+
+10. Which categories are you the most fond of?
+Question Obligatoriness: mandatory
+Sort the following categories according to your taste
+Type: sorting option
+1)Skin care
+2)Food
+3)Hair care
+4)Cleaning
+5)Outdoors
+
 
 
 Thank you for answering the questionnaire!

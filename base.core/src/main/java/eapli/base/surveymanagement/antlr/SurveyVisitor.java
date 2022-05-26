@@ -5,7 +5,7 @@ public class SurveyVisitor extends questionnaireBaseVisitor {
     public Boolean visitLengthTitle(questionnaireParser.LengthTitleContext ctx) {
         String title = ctx.getText();
 
-        if (title.length()>20) System.out.println("teste");
+        if (title.length()>50) System.out.println("Title length is too long!");
 
         return true;
     }
