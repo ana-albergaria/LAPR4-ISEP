@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1139px" preserveAspectRatio="none" style="width:917px;height:1139px;background:#FFFFFF;" version="1.1" viewBox="0 0 917 1139" width="917px" zoomAndPan="magnify"><defs><filter height="300%" id="f114886yf0bm2u" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[22b4f80a245276e25c9cb3ee67d19758]
+cluster <<aggregate>> AGV--><polygon fill="#FFFFFF" filter="url(#f114886yf0bm2u)" points="304,6,447,6,454,29.6094,464,29.6094,464,330,304,330,304,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="304" x2="454" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="137" x="308" y="22.5332">&lt;&lt;aggregate&gt;&gt; AGV</text><!--MD5=[89a40d3b9877e2c9c1ba7f6f50c24be4]
+cluster <<aggregate>> AGVDock--><polygon fill="#FFFFFF" filter="url(#f114886yf0bm2u)" points="518,487,696,487,703,510.6094,706,510.6094,706,679,518,679,518,487" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="518" x2="703" y1="510.6094" y2="510.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="172" x="522" y="503.5332">&lt;&lt;aggregate&gt;&gt; AGVDock</text><!--MD5=[9dd4458791199fa45785259e7581e7a7]
+cluster <<aggregate>> Order--><polygon fill="#FFFFFF" filter="url(#f114886yf0bm2u)" points="16,712,171,712,178,735.6094,729,735.6094,729,1132,16,1132,16,712" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="178" y1="735.6094" y2="735.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="149" x="20" y="728.5332">&lt;&lt;aggregate&gt;&gt; Order</text><!--MD5=[25f907a8c0a5ee29f7fd0ca541600fab]
+cluster <<aggragte>> Task--><polygon fill="#FFFFFF" filter="url(#f114886yf0bm2u)" points="753,1022,890,1022,897,1045.6094,900,1045.6094,900,1114,753,1114,753,1022" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="753" x2="897" y1="1045.6094" y2="1045.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="131" x="757" y="1038.5332">&lt;&lt;aggragte&gt;&gt; Task</text><!--MD5=[53b2c06ade5903185ca3326dce80e141]
+class AGV--><rect codeLine="28" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="112.7891" id="AGV" style="stroke:#A80036;stroke-width:1.5;" width="127" x="320.5" y="42"/><ellipse cx="360.7" cy="69.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M359.2,70.6406 L359.2,72.6406 L363.2,72.6406 L363.2,71.6406 L363.2,71.1563 L363.825,70.6406 L364.2,70.6406 L364.575,70.6406 L365.2,71.1563 L365.2,71.6406 L365.2,74.6406 L357.2,74.6406 L356.7156,74.6406 L356.2,74.0156 L356.2,73.6406 L356.2,73.2656 L356.7156,72.6406 L357.2,72.6406 L357.2,72.6406 L357.2,66.6406 L357.2,66.6406 L356.7156,66.6406 L356.2,66.0156 L356.2,65.6406 L356.2,65.2656 L356.7156,64.6406 L357.2,64.6406 L365.2,64.6406 L365.2,67.6406 L365.2,68.125 L364.575,68.6406 L364.2,68.6406 L363.825,68.6406 L363.2,68.125 L363.2,67.6406 L363.2,66.6406 L359.2,66.6406 L359.2,68.6406 L360.2,68.6406 L360.2,68.1563 L360.2,68.1563 L360.825,67.6406 L361.2,67.6406 L361.575,67.6406 L362.2,68.1563 L362.2,68.6406 L362.2,70.6406 L362.2,71.125 L361.575,71.6406 L361.575,71.6406 L361.2,71.6406 L360.825,71.6406 L360.2,71.125 L360.2,71.125 L360.2,70.6406 L359.2,70.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="378.3" y="59.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="382.3" y="74.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="23" x="388.3" y="89.6445">AGV</text><line style="stroke:#A80036;stroke-width:1.5;" x1="321.5" x2="446.5" y1="97.2813" y2="97.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="64" x="326.5" y="112.7002">-«VO» AgvID</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="115" x="326.5" y="126.5361">-«VO» AutonomyStatus</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="89" x="326.5" y="140.3721">-«VO» TaskStatus</text><line style="stroke:#A80036;stroke-width:1.5;" x1="321.5" x2="446.5" y1="146.7891" y2="146.7891"/><!--MD5=[7e20e022571e30ec1001cf6eabd7f3e2]
+class Model--><rect codeLine="63" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="97.6953" id="Model" style="stroke:#A80036;stroke-width:1.5;" width="109" x="320.5" y="216"/><ellipse cx="335.5" cy="236.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M335.5,239.375 L337.0313,233.8438 L337.0313,233.8438 L336.5156,233.8438 L336,233.2188 L336,232.8438 L336,232.4688 L336.5156,231.8438 L337.0313,231.8438 L338.9063,231.8438 L339.4844,231.8438 L340,232.4688 L340,232.8438 L340,233.2188 L339.4844,233.8438 L339.4844,233.8438 L339.0313,233.8438 L336.6875,241.8438 L334.3125,241.8438 L331.8438,233.8438 L331.5156,233.8438 L331.5156,233.8438 L331,233.2188 L331,232.8438 L331,232.4688 L331.5156,231.8438 L332.0938,231.8438 L333.9688,231.8438 L334.4844,231.8438 L335,232.4688 L335,232.8438 L335,233.2188 L334.4844,233.8438 L333.9688,233.8438 L333.9688,233.8438 L335.5,239.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="347.5" y="233.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="33" x="371.5" y="248.5508">Model</text><line style="stroke:#A80036;stroke-width:1.5;" x1="321.5" x2="428.5" y1="256.1875" y2="256.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="41" x="326.5" y="271.6064">-ModelID</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="326.5" y="285.4424">-ShortDescription</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="57" x="326.5" y="299.2783">-MaxWeight</text><line style="stroke:#A80036;stroke-width:1.5;" x1="321.5" x2="428.5" y1="305.6953" y2="305.6953"/><!--MD5=[6c8d26f6d50c9b5da41494faa6136af8]
+class AGVDock--><rect codeLine="38" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="140.4609" id="AGVDock" style="stroke:#A80036;stroke-width:1.5;" width="150" x="536" y="523"/><ellipse cx="581.25" cy="550.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M579.75,551.6406 L579.75,553.6406 L583.75,553.6406 L583.75,552.6406 L583.75,552.1563 L584.375,551.6406 L584.75,551.6406 L585.125,551.6406 L585.75,552.1563 L585.75,552.6406 L585.75,555.6406 L577.75,555.6406 L577.2656,555.6406 L576.75,555.0156 L576.75,554.6406 L576.75,554.2656 L577.2656,553.6406 L577.75,553.6406 L577.75,553.6406 L577.75,547.6406 L577.75,547.6406 L577.2656,547.6406 L576.75,547.0156 L576.75,546.6406 L576.75,546.2656 L577.2656,545.6406 L577.75,545.6406 L585.75,545.6406 L585.75,548.6406 L585.75,549.125 L585.125,549.6406 L584.75,549.6406 L584.375,549.6406 L583.75,549.125 L583.75,548.6406 L583.75,547.6406 L579.75,547.6406 L579.75,549.6406 L580.75,549.6406 L580.75,549.1563 L580.75,549.1563 L581.375,548.6406 L581.75,548.6406 L582.125,548.6406 L582.75,549.1563 L582.75,549.6406 L582.75,551.6406 L582.75,552.125 L582.125,552.6406 L582.125,552.6406 L581.75,552.6406 L581.375,552.6406 L580.75,552.125 L580.75,552.125 L580.75,551.6406 L579.75,551.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="605.75" y="540.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="609.75" y="555.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="51" x="601.75" y="570.6445">AGVDock</text><line style="stroke:#A80036;stroke-width:1.5;" x1="537" x2="685" y1="578.2813" y2="578.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="68" x="542" y="593.7002">-«VO» DockID</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="97" x="542" y="607.5361">-«VO» BeginSquare</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="542" y="621.3721">-«VO» EndSquare</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="98" x="542" y="635.208">-«VO» DepthSquare</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="138" x="542" y="649.0439">-«VO» AccessibilityDirection</text><line style="stroke:#A80036;stroke-width:1.5;" x1="537" x2="685" y1="655.4609" y2="655.4609"/><!--MD5=[cf4d6237fcae255cd2e1656cf84a30e2]
+class Order--><rect codeLine="46" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="209.6406" id="Order" style="stroke:#A80036;stroke-width:1.5;" width="173" x="337.5" y="748"/><ellipse cx="400.25" cy="775.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M398.75,776.6406 L398.75,778.6406 L402.75,778.6406 L402.75,777.6406 L402.75,777.1563 L403.375,776.6406 L403.75,776.6406 L404.125,776.6406 L404.75,777.1563 L404.75,777.6406 L404.75,780.6406 L396.75,780.6406 L396.2656,780.6406 L395.75,780.0156 L395.75,779.6406 L395.75,779.2656 L396.2656,778.6406 L396.75,778.6406 L396.75,778.6406 L396.75,772.6406 L396.75,772.6406 L396.2656,772.6406 L395.75,772.0156 L395.75,771.6406 L395.75,771.2656 L396.2656,770.6406 L396.75,770.6406 L404.75,770.6406 L404.75,773.6406 L404.75,774.125 L404.125,774.6406 L403.75,774.6406 L403.375,774.6406 L402.75,774.125 L402.75,773.6406 L402.75,772.6406 L398.75,772.6406 L398.75,774.6406 L399.75,774.6406 L399.75,774.1563 L399.75,774.1563 L400.375,773.6406 L400.75,773.6406 L401.125,773.6406 L401.75,774.1563 L401.75,774.6406 L401.75,776.6406 L401.75,777.125 L401.125,777.6406 L401.125,777.6406 L400.75,777.6406 L400.375,777.6406 L399.75,777.125 L399.75,777.125 L399.75,776.6406 L398.75,776.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="418.75" y="765.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="35" x="422.75" y="780.5508">«root»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="31" x="424.75" y="795.6445">Order</text><line style="stroke:#A80036;stroke-width:1.5;" x1="338.5" x2="509.5" y1="803.2813" y2="803.2813"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="71" x="343.5" y="818.7002">-«VO» OrderId</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="79" x="343.5" y="832.5361">-«VO» DateTime</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="104" x="343.5" y="846.3721">-«VO» BillingAddress</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="116" x="343.5" y="860.208">-«VO» DeliveryAddress</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="161" x="343.5" y="874.0439">-«VO» TotalAmountWithoutTaxes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="343.5" y="887.8799">-«VO» TotalAmountWithTaxes</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="91" x="343.5" y="901.7158">-«VO» TotalWeight</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="94" x="343.5" y="915.5518">-«VO» TotalVolume</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="78" x="343.5" y="929.3877">-«VO» Operator</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="66" x="343.5" y="943.2236">-«VO» Status</text><line style="stroke:#A80036;stroke-width:1.5;" x1="338.5" x2="509.5" y1="949.6406" y2="949.6406"/><!--MD5=[962bf8d17154efae8864e2ec046f4b93]
+class Shipment--><rect codeLine="73" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="75.6719" id="Shipment" style="stroke:#A80036;stroke-width:1.5;" width="85" x="32.5" y="1040"/><ellipse cx="47.5" cy="1056" fill="#EB937F" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M46,1057 L46,1059 L50,1059 L50,1058 L50,1057.5156 L50.625,1057 L51,1057 L51.375,1057 L52,1057.5156 L52,1058 L52,1061 L44,1061 L43.5156,1061 L43,1060.375 L43,1060 L43,1059.625 L43.5156,1059 L44,1059 L44,1059 L44,1053 L44,1053 L43.5156,1053 L43,1052.375 L43,1052 L43,1051.625 L43.5156,1051 L44,1051 L52,1051 L52,1054 L52,1054.4844 L51.375,1055 L51,1055 L50.625,1055 L50,1054.4844 L50,1054 L50,1053 L46,1053 L46,1055 L47,1055 L47,1054.5156 L47,1054.5156 L47.625,1054 L48,1054 L48.375,1054 L49,1054.5156 L49,1055 L49,1057 L49,1057.4844 L48.375,1058 L48.375,1058 L48,1058 L47.625,1058 L47,1057.4844 L47,1057.4844 L47,1057 L46,1057 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="53" x="61.5" y="1060.9102">Shipment</text><line style="stroke:#A80036;stroke-width:1.5;" x1="33.5" x2="116.5" y1="1072" y2="1072"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="39" x="38.5" y="1087.4189">-method</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="25" x="38.5" y="1101.2549">-cost</text><line style="stroke:#A80036;stroke-width:1.5;" x1="33.5" x2="116.5" y1="1107.6719" y2="1107.6719"/><!--MD5=[764fca796ce7f635542948d8fc39db5e]
+class Payment--><rect codeLine="78" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="75.6719" id="Payment" style="stroke:#A80036;stroke-width:1.5;" width="80" x="153" y="1040"/><ellipse cx="168" cy="1056" fill="#EB937F" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M166.5,1057 L166.5,1059 L170.5,1059 L170.5,1058 L170.5,1057.5156 L171.125,1057 L171.5,1057 L171.875,1057 L172.5,1057.5156 L172.5,1058 L172.5,1061 L164.5,1061 L164.0156,1061 L163.5,1060.375 L163.5,1060 L163.5,1059.625 L164.0156,1059 L164.5,1059 L164.5,1059 L164.5,1053 L164.5,1053 L164.0156,1053 L163.5,1052.375 L163.5,1052 L163.5,1051.625 L164.0156,1051 L164.5,1051 L172.5,1051 L172.5,1054 L172.5,1054.4844 L171.875,1055 L171.5,1055 L171.125,1055 L170.5,1054.4844 L170.5,1054 L170.5,1053 L166.5,1053 L166.5,1055 L167.5,1055 L167.5,1054.5156 L167.5,1054.5156 L168.125,1054 L168.5,1054 L168.875,1054 L169.5,1054.5156 L169.5,1055 L169.5,1057 L169.5,1057.4844 L168.875,1058 L168.875,1058 L168.5,1058 L168.125,1058 L167.5,1057.4844 L167.5,1057.4844 L167.5,1057 L166.5,1057 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="48" x="182" y="1060.9102">Payment</text><line style="stroke:#A80036;stroke-width:1.5;" x1="154" x2="232" y1="1072" y2="1072"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="39" x="159" y="1087.4189">-method</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34" x="159" y="1101.2549">-status</text><line style="stroke:#A80036;stroke-width:1.5;" x1="154" x2="232" y1="1107.6719" y2="1107.6719"/><!--MD5=[003718b22fee2486eeba0fa029a176b7]
+class OrderItem--><rect codeLine="59" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="70.0234" id="OrderItem" style="stroke:#A80036;stroke-width:1.5;" width="87" x="625.5" y="818"/><ellipse cx="640.5" cy="838.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M639,839.0938 L639,841.0938 L643,841.0938 L643,840.0938 L643,839.6094 L643.625,839.0938 L644,839.0938 L644.375,839.0938 L645,839.6094 L645,840.0938 L645,843.0938 L637,843.0938 L636.5156,843.0938 L636,842.4688 L636,842.0938 L636,841.7188 L636.5156,841.0938 L637,841.0938 L637,841.0938 L637,835.0938 L637,835.0938 L636.5156,835.0938 L636,834.4688 L636,834.0938 L636,833.7188 L636.5156,833.0938 L637,833.0938 L645,833.0938 L645,836.0938 L645,836.5781 L644.375,837.0938 L644,837.0938 L643.625,837.0938 L643,836.5781 L643,836.0938 L643,835.0938 L639,835.0938 L639,837.0938 L640,837.0938 L640,836.6094 L640,836.6094 L640.625,836.0938 L641,836.0938 L641.375,836.0938 L642,836.6094 L642,837.0938 L642,839.0938 L642,839.5781 L641.375,840.0938 L641.375,840.0938 L641,840.0938 L640.625,840.0938 L640,839.5781 L640,839.5781 L640,839.0938 L639,839.0938 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="660.5" y="835.457">«entity»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="55" x="654.5" y="850.5508">OrderItem</text><line style="stroke:#A80036;stroke-width:1.5;" x1="626.5" x2="711.5" y1="858.1875" y2="858.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="63" x="631.5" y="873.6064">-itemQuantity</text><line style="stroke:#A80036;stroke-width:1.5;" x1="626.5" x2="711.5" y1="880.0234" y2="880.0234"/><!--MD5=[c53bda17ef36a061746eb50c611c55c9]
+class SourceChannel--><rect codeLine="69" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="48.1875" id="SourceChannel" style="stroke:#A80036;stroke-width:1.5;" width="118" x="268" y="1054"/><ellipse cx="283" cy="1074.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M283,1077.375 L284.5313,1071.8438 L284.5313,1071.8438 L284.0156,1071.8438 L283.5,1071.2188 L283.5,1070.8438 L283.5,1070.4688 L284.0156,1069.8438 L284.5313,1069.8438 L286.4063,1069.8438 L286.9844,1069.8438 L287.5,1070.4688 L287.5,1070.8438 L287.5,1071.2188 L286.9844,1071.8438 L286.9844,1071.8438 L286.5313,1071.8438 L284.1875,1079.8438 L281.8125,1079.8438 L279.3438,1071.8438 L279.0156,1071.8438 L279.0156,1071.8438 L278.5,1071.2188 L278.5,1070.8438 L278.5,1070.4688 L279.0156,1069.8438 L279.5938,1069.8438 L281.4688,1069.8438 L281.9844,1069.8438 L282.5,1070.4688 L282.5,1070.8438 L282.5,1071.2188 L281.9844,1071.8438 L281.4688,1071.8438 L281.4688,1071.8438 L283,1077.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="299.5" y="1071.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="86" x="297" y="1086.5508">SourceChannel</text><line style="stroke:#A80036;stroke-width:1.5;" x1="269" x2="385" y1="1094.1875" y2="1094.1875"/><!--MD5=[8f844795de809fa32119c391d2855d3e]
+class AdditionalComment--><rect codeLine="71" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="48.1875" id="AdditionalComment" style="stroke:#A80036;stroke-width:1.5;" width="141" x="421.5" y="1054"/><ellipse cx="436.5" cy="1074.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M436.5,1077.375 L438.0313,1071.8438 L438.0313,1071.8438 L437.5156,1071.8438 L437,1071.2188 L437,1070.8438 L437,1070.4688 L437.5156,1069.8438 L438.0313,1069.8438 L439.9063,1069.8438 L440.4844,1069.8438 L441,1070.4688 L441,1070.8438 L441,1071.2188 L440.4844,1071.8438 L440.4844,1071.8438 L440.0313,1071.8438 L437.6875,1079.8438 L435.3125,1079.8438 L432.8438,1071.8438 L432.5156,1071.8438 L432.5156,1071.8438 L432,1071.2188 L432,1070.8438 L432,1070.4688 L432.5156,1069.8438 L433.0938,1069.8438 L434.9688,1069.8438 L435.4844,1069.8438 L436,1070.4688 L436,1070.8438 L436,1071.2188 L435.4844,1071.8438 L434.9688,1071.8438 L434.9688,1071.8438 L436.5,1077.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="464.5" y="1071.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="109" x="450.5" y="1086.5508">AdditionalComment</text><line style="stroke:#A80036;stroke-width:1.5;" x1="422.5" x2="561.5" y1="1094.1875" y2="1094.1875"/><!--MD5=[c78e32ed571ada68c9f6fb76f9dafada]
+class InteractionDate--><rect codeLine="70" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="48.1875" id="InteractionDate" style="stroke:#A80036;stroke-width:1.5;" width="115" x="597.5" y="1054"/><ellipse cx="612.5" cy="1074.0938" fill="#FF8B40" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M612.5,1077.375 L614.0313,1071.8438 L614.0313,1071.8438 L613.5156,1071.8438 L613,1071.2188 L613,1070.8438 L613,1070.4688 L613.5156,1069.8438 L614.0313,1069.8438 L615.9063,1069.8438 L616.4844,1069.8438 L617,1070.4688 L617,1070.8438 L617,1071.2188 L616.4844,1071.8438 L616.4844,1071.8438 L616.0313,1071.8438 L613.6875,1079.8438 L611.3125,1079.8438 L608.8438,1071.8438 L608.5156,1071.8438 L608.5156,1071.8438 L608,1071.2188 L608,1070.8438 L608,1070.4688 L608.5156,1069.8438 L609.0938,1069.8438 L610.9688,1069.8438 L611.4844,1069.8438 L612,1070.4688 L612,1070.8438 L612,1071.2188 L611.4844,1071.8438 L610.9688,1071.8438 L610.9688,1071.8438 L612.5,1077.375 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="81" x="627.5" y="1071.457">«value object»</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="83" x="626.5" y="1086.5508">InteractionDate</text><line style="stroke:#A80036;stroke-width:1.5;" x1="598.5" x2="711.5" y1="1094.1875" y2="1094.1875"/><!--MD5=[b34797a66dc35cbf1d65f7e3ca75530e]
+class Task--><rect codeLine="35" fill="#F5F5DC" filter="url(#f114886yf0bm2u)" height="40" id="Task" style="stroke:#A80036;stroke-width:1.5;" width="59" x="769.5" y="1058"/><ellipse cx="784.5" cy="1074" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M783,1075 L783,1077 L787,1077 L787,1076 L787,1075.5156 L787.625,1075 L788,1075 L788.375,1075 L789,1075.5156 L789,1076 L789,1079 L781,1079 L780.5156,1079 L780,1078.375 L780,1078 L780,1077.625 L780.5156,1077 L781,1077 L781,1077 L781,1071 L781,1071 L780.5156,1071 L780,1070.375 L780,1070 L780,1069.625 L780.5156,1069 L781,1069 L789,1069 L789,1072 L789,1072.4844 L788.375,1073 L788,1073 L787.625,1073 L787,1072.4844 L787,1072 L787,1071 L783,1071 L783,1073 L784,1073 L784,1072.5156 L784,1072.5156 L784.625,1072 L785,1072 L785.375,1072 L786,1072.5156 L786,1073 L786,1075 L786,1075.4844 L785.375,1076 L785.375,1076 L785,1076 L784.625,1076 L784,1075.4844 L784,1075.4844 L784,1075 L783,1075 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="27" x="798.5" y="1078.9102">Task</text><line style="stroke:#A80036;stroke-width:1.5;" x1="770.5" x2="827.5" y1="1090" y2="1090"/><!--MD5=[90de021bb2aa8991bb28cb59916c543e]
+link AGV to Model--><path codeLine="83" d="M380.95,155.19 C379.98,173.02 378.9,192.7 377.93,210.38 " fill="none" id="AGV-to-Model" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="377.64,215.79,382.122,207.0201,377.911,210.7974,374.1337,206.5864,377.64,215.79" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="370.5191" y="205.2861">1</text><!--MD5=[f109197b03652dc794d321c2b6eb6935]
+link AGV to AGVDock--><path codeLine="84" d="M447.74,121.85 C505.62,146.69 582,192.94 582,264 C582,264 582,264 582,440 C582,465.58 586.01,493.16 591.05,517.72 " fill="none" id="AGV-to-AGVDock" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="592.14,522.91,594.2058,513.2802,591.1128,518.0166,586.3764,514.9237,592.14,522.91" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="582.8341" y="512.3464">1</text><!--MD5=[b15788600414bc85f7a85bb1ca6bcc0d]
+link AGV to Order--><path codeLine="85" d="M437.85,155.21 C461.07,185.03 483,223.83 483,264 C483,264 483,264 483,594 C483,643.65 472.49,697.36 460.34,742.85 " fill="none" id="AGV-to-Order" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="459,747.79,465.2233,740.1565,460.3132,742.9655,457.5041,738.0554,459,747.79" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="440.8359" y="736.9974">1..*</text><!--MD5=[436492a8722677b8f40c7c1b2a179142]
+link AGV to Task--><path codeLine="86" d="M447.5,112.03 C559.87,136.02 782,192.5 782,264 C782,264 782,264 782,854 C782,926.46 791.03,1011.78 795.93,1052.71 " fill="none" id="AGV-to-Task" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="796.56,1057.95,799.4496,1048.5346,795.9592,1052.9862,791.5075,1049.4959,796.56,1057.95" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="787.8151" y="1047.2571">1</text><!--MD5=[3b8460d43649065ec6b873117ac06c59]
+link Order to Shipment--><path codeLine="88" d="M337.43,888.97 C283.73,912.78 214.77,947.3 160,988 C141.5,1001.74 123.5,1019.71 108.87,1035.89 " fill="none" id="Order-to-Shipment" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="105.22,1039.96,114.2062,1035.9291,108.5577,1036.2372,108.2496,1030.5887,105.22,1039.96" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="161" y="1002.4951">has info about</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="103.1465" y="1029.0292">1</text><!--MD5=[2dd35b9e342a33989aa9b5490e0b19cd]
+link Order to Payment--><path codeLine="89" d="M337.3,923.43 C313.76,943.49 288.78,965.94 267,988 C252.29,1002.9 237.3,1020.41 224.69,1035.94 " fill="none" id="Order-to-Payment" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="221.54,1039.84,230.3099,1035.3579,224.6843,1035.9524,224.0898,1030.3269,221.54,1039.84" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="268" y="1002.4951">has info about</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="219.0003" y="1029.1734">1</text><!--MD5=[06a6064c5cdd443a62b5eb59fb550c27]
+link Order to OrderItem--><path codeLine="90" d="M510.72,853 C547.42,853 588.81,853 620.06,853 " fill="none" id="Order-to-OrderItem" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="625.38,853,616.38,849,620.38,853,616.38,857,625.38,853" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="78" x="529" y="846.4951">composed by</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="597.5046" y="867.6942">1..*</text><!--MD5=[5b3b91e031ec2f8e2ebc90bed23d71bc]
+link Order to SourceChannel--><path codeLine="91" d="M378.62,958.32 C364.08,991.76 349.15,1026.07 339.12,1049.14 " fill="none" id="Order-to-SourceChannel" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="337.05,1053.89,344.3144,1047.2395,339.0488,1049.3069,336.9815,1044.0414,337.05,1053.89" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="314.8066" y="1043.178">0..1</text><!--MD5=[90c5b0c66bdceefdcc6cbf9b3e1604ba]
+link Order to InteractionDate--><path codeLine="92" d="M510.67,937.67 C551.96,977.53 598.5,1022.46 627.3,1050.25 " fill="none" id="Order-to-InteractionDate" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="631.06,1053.89,627.3579,1044.7634,627.4608,1050.4193,621.8049,1050.5222,631.06,1053.89" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="600.1066" y="1043.178">0..1</text><!--MD5=[d1cec3bfb6c74cc6c038b6c1677ed110]
+link Order to AdditionalComment--><path codeLine="93" d="M455.81,958.32 C465.96,991.62 476.38,1025.78 483.42,1048.85 " fill="none" id="Order-to-AdditionalComment" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="484.95,1053.89,486.1551,1044.1151,483.4936,1049.1068,478.502,1046.4453,484.95,1053.89" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="458.3247" y="1043.178">0..1</text><!--MD5=[c06a90e562707a92c0851bfe84eae6d6]
+link Order to Task--><path codeLine="94" d="M510.72,904.93 C541.19,922.31 575.84,941.5 608,958 C660.73,985.05 679.53,981.37 729,1014 C746.59,1025.6 764.21,1041.49 777.37,1054.41 " fill="none" id="Order-to-Task" style="stroke:#222222;stroke-width:1.0;"/><polygon fill="#222222" points="780.96,1057.97,777.3688,1048.7992,777.4031,1054.456,771.7464,1054.4902,780.96,1057.97" style="stroke:#222222;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="767.6326" y="1047.2829">1</text><!--MD5=[8ad46e41c68c01128e2a3686c7beb394]
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    /'class AGVPosition'/
+    class Model
+}
+
+package "<<aggregate>> AGVDock" {
+    entity AGVDock
+}
+
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+    entity OrderItem
+    class SourceChannel
+    class AdditionalComment
+    class InteractionDate
+}
+
+entity AGV <<entity>> <<root>> {
+    - <<VO>> AgvID
+    - <<VO>> AutonomyStatus /' number of hours left until it runs out of battery '/
+    - <<VO>> TaskStatus /' free charging or occupied '/
+}
+
+package "<<aggragte>> Task" {
+    entity Task
+}
+
+entity AGVDock <<entity>> <<root>> {
+    - <<VO>> DockID
+    - <<VO>> BeginSquare
+    - <<VO>> EndSquare
+    - <<VO>> DepthSquare
+    - <<VO>> AccessibilityDirection
+}
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId /'automatically generated'/
+    -<<VO>> DateTime /'automatically generated na hora do registo do sistema'/
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -<<VO>> Status /'(CONFIRM WITH CLIENT: registered, payment pending, being prepared on the warehouse, dispatched, delivered by carrier, received by customer)'/
+}
+
+entity OrderItem <<entity>> {
+    -itemQuantity
+}
+
+class Model <<(V,#FF8B40) value object>> {
+    - ModelID
+    - ShortDescription
+    - MaxWeight
+}
+
+class SourceChannel <<(V,#FF8B40) value object>>
+class InteractionDate <<(V,#FF8B40) value object>>
+class AdditionalComment <<(V,#FF8B40) value object>>
+
+enum Shipment {
+    -method
+    -cost
+}
+
+enum Payment {
+    -method
+    -status
+}
+
+AGV - -> "1" Model
+AGV - - - - -> "1" AGVDock
+AGV - - - - - -> "1..*" Order
+AGV - -> "1" Task
+
+Order - -> "1" Shipment : has info about
+Order - -> "1" Payment : has info about
+Order -> "1..*" OrderItem : composed by
+Order - -> "0..1" SourceChannel
+Order - -> "0..1" InteractionDate
+Order - -> "0..1" AdditionalComment
+Order - -> "1" Task
+
+@enduml
+
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty attributes
+skinparam classBackgroundColor beige
+skinparam ArrowColor #222222
+
+package "<<aggregate>> AGV" {
+    entity AGV
+    class Model
+}
+
+package "<<aggregate>> AGVDock" {
+    entity AGVDock
+}
+
+package "<<aggregate>> Order" {
+    entity Order
+    class Shipment
+    class Payment
+    entity OrderItem
+    class SourceChannel
+    class AdditionalComment
+    class InteractionDate
+}
+
+entity AGV <<entity>> <<root>> {
+    - <<VO>> AgvID
+    - <<VO>> AutonomyStatus 
+    - <<VO>> TaskStatus 
+}
+
+package "<<aggragte>> Task" {
+    entity Task
+}
+
+entity AGVDock <<entity>> <<root>> {
+    - <<VO>> DockID
+    - <<VO>> BeginSquare
+    - <<VO>> EndSquare
+    - <<VO>> DepthSquare
+    - <<VO>> AccessibilityDirection
+}
+
+entity Order <<entity>> <<root>> {
+    -<<VO>> OrderId 
+    -<<VO>> DateTime 
+    -<<VO>> BillingAddress
+    -<<VO>> DeliveryAddress
+    -<<VO>> TotalAmountWithoutTaxes
+    -<<VO>> TotalAmountWithTaxes
+    -<<VO>> TotalWeight
+    -<<VO>> TotalVolume
+    -<<VO>> Operator
+    -<<VO>> Status 
+}
+
+entity OrderItem <<entity>> {
+    -itemQuantity
+}
+
+class Model <<(V,#FF8B40) value object>> {
+    - ModelID
+    - ShortDescription
+    - MaxWeight
+}
+
+class SourceChannel <<(V,#FF8B40) value object>>
+class InteractionDate <<(V,#FF8B40) value object>>
+class AdditionalComment <<(V,#FF8B40) value object>>
+
+enum Shipment {
+    -method
+    -cost
+}
+
+enum Payment {
+    -method
+    -status
+}
+
+AGV - -> "1" Model
+AGV - - - - -> "1" AGVDock
+AGV - - - - - -> "1..*" Order
+AGV - -> "1" Task
+
+Order - -> "1" Shipment : has info about
+Order - -> "1" Payment : has info about
+Order -> "1..*" OrderItem : composed by
+Order - -> "0..1" SourceChannel
+Order - -> "0..1" InteractionDate
+Order - -> "0..1" AdditionalComment
+Order - -> "1" Task
+
+@enduml
+
+PlantUML version 1.2021.11(Sat Oct 02 14:26:11 BST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>
