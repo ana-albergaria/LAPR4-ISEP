@@ -4,6 +4,16 @@ This questionnaire aims to...
 It takes approximately 10 minutes.
 Thank you very much for your time and support.
 
+1. About You
+Section Obligatoriness: mandatory
+Repeatability: 2
+1. What is your gender?(optional)
+Type: single choice with input
+1)Male
+2)Female
+3)Other:
+
+
 1. Basic Personal Information
 Section Obligatoriness: mandatory
 Repeatability: 0

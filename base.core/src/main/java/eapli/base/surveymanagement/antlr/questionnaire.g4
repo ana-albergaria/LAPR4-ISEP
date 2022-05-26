@@ -41,12 +41,12 @@ repeatability : DIGITO+ ;
 
 question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE message?;
 
-option: numeric_id PARENTESIS_DIREITO frase NEWLINE;
+option: numeric_id PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
 
 question_text : frase PONTO_INTERROGACAO ;
 
 type: FREE_TEXT
-    | NUMERIC
+    | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)?
     | SINGLE_CHOICE NEWLINE (option)+
     | MULTIPLE_CHOICE NEWLINE (option)+
     | SINGLE_CHOICE_WITH_INPUT NEWLINE (option)+
@@ -64,6 +64,7 @@ type: FREE_TEXT
 
 /********* TOKENS *********/
 
+DECIMALS_ALLOWED: 'Decimal numbers are allowed!';
 SINGLE_CHOICE_WITH_INPUT: 'single choice with input';
 MULTIPLE_CHOICE_WITH_INPUT: 'multiple choice with input';
 FREE_TEXT: 'free text' ;
