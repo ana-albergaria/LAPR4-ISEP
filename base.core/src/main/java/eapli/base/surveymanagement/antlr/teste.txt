@@ -26,11 +26,13 @@ Type: single choice
 3. What country do you live in?(mandatory)
 Type: free text
 
+
 2. Product Feedback
 This is section 2 with questions regarding your opinion on our products.
 Section Obligatoriness: mandatory
 4. How often do you use our products?(mandatory)
 Type: numeric
+
 5. Which features are most valuable to you in a product?(mandatory)
 Type: multiple choice with input
 1)Efficiency
@@ -50,6 +52,7 @@ Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
 
 7. What important features are we missing?(mandatory)
 Type: free text
+
 8. How would you rate the value for money?(mandatory)
 Type: single choice
 1)5 stars

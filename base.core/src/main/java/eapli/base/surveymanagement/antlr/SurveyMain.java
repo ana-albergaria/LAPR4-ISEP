@@ -22,6 +22,8 @@ public class SurveyMain {
             eval.visit(tree);
             System.out.println("Survey has a valid format!");
         } catch(IOException e) {
+            System.out.println("Make sure the file has the correct path");
+        } catch (Exception e) {
             System.out.println("The Survey does not follow the required format.");
         }
     }
