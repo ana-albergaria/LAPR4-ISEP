@@ -2,9 +2,15 @@ package eapli.base.app.server.order.tcp;
 
 import eapli.base.AppSettings;
 import eapli.base.Application;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.productmanagement.repositories.ProductRepository;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TcpSrvOrder {
     static ServerSocket sock;
@@ -35,6 +41,8 @@ class TcpSrvOrderThread implements Runnable {
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
+    private static final ProductRepository productRepository = PersistenceContext.repositories().products();
+
     public TcpSrvOrderThread(Socket cli_s) {
         s = cli_s;
     }
@@ -43,6 +51,8 @@ class TcpSrvOrderThread implements Runnable {
         InetAddress clientIP;
 
         try {
+            //new ViewProductCatalogUI().show();
+
             clientIP = this.s.getInetAddress();
             System.out.println("[INFO] Nova conexão de cliente: " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + ".");
 
@@ -58,6 +68,66 @@ class TcpSrvOrderThread implements Runnable {
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
                 sOut.write(serverMessage);
                 sOut.flush();
+
+                /*============beginning of US1501============*/
+                //ObjectInputStream sInputObject = new ObjectInputStream(this.s.getInputStream());
+                ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                sOutputObject.writeObject(productRepository.findAll());
+                sOutputObject.flush();
+
+
+
+
+                int nChars;
+                byte[] data = new byte[300];
+                String useFilters = "";
+                String moreFilters = "";
+                List<String> catalog = new ArrayList<>();
+                boolean isValidYesOrNo1 = false;
+                boolean isValidYesOrNo2 = false;
+                boolean isValidNumber = false;
+                Integer filterOption;
+                int numSelectedFilters = 0;
+
+                Map<Integer, String> filters = new HashMap<>();
+                Map<Integer, String> selectedFilters = new HashMap<>();
+                filters.put(1, "Category");
+                filters.put(2, "Brand");
+                filters.put(3, "Description");
+                filters.put(4, "All above");
+
+                System.out.println("######## PRODUCT CATALOG ########");
+                int i=0, j, m;
+                System.out.println("Do you want to use filters? \n Yes - Y | No - N");
+
+                /*byte[] clientMessageUS = sIn.readNBytes(4);
+
+                if (clientMessageUS[1] == 3) {
+                    System.out.println("Código Mensagem: " + clientMessageUS[1]);
+                }
+
+                byte[] clientMessageUS = sIn.readNBytes(4);
+                System.out.println("Código mensagem: " + clientMessageUS[1]);*/
+
+
+                //AQUI
+                byte[] clientMessageUS = new byte[4];
+                sIn.read(clientMessageUS,0,4);
+                System.out.println("Código mensagem: " + clientMessageUS[1]);
+
+                if (clientMessageUS[1] == 3) {
+                    System.out.println("Recebeu mensagem código 3");
+                    int dataLength = clientMessageUS[2] + 256 * clientMessageUS[3];
+                    if(dataLength != 0) {
+                        byte[] clientMessageData = new byte[dataLength];
+                        sIn.read(clientMessageData,0,dataLength);
+                        useFilters = new String(clientMessageData, 0, dataLength);
+                        System.out.println("Resposta do Cliente: " + useFilters);
+                    }
+                }
+
+
+                /*============end of US1501============*/
 
 
 

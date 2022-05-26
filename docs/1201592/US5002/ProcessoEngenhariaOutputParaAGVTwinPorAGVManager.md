@@ -5,7 +5,7 @@
 # 1. Requisitos
 
 
-**UC4002:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlode comunicação por output do AGV digital twin, para atualizar o seu status no "AGVManager".
+**UC5002:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlode comunicação por output do AGV digital twin, para atualizar o seu status no "AGVManager".
 
 A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo enviar informação sobre a sua localização atual, status e.t.c (from the system specification document: "it can send information about its current location, status and so on.").
 
@@ -18,6 +18,9 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 >
 >A1: For all of those US, the communication between the two involved components must be implemented in accordance with the SPOMS2022. The requests processing can be somehow mocked. For instance, if processing a request implies saving some data to the database, the component can instead write such data to a log (mocking). Latter, on next sprint, the teams implement the interaction to the database. However, it is not advisable mocking everything, namely the components (internal) state. Notice that by mocking you are letting extra effort to the next sprint. Finally, all US must be demonstrable.
 
+>Q2: What type of communication do you want, i.e., what are the communications that you want to have between these two. Like AGV Manager says "Take a product" and AGV Digital Twin says "Taken"? Is it something like that? Or am i confused?
+> 
+>A2: The communication must follow the SPOMS2022 protocol. It is up to you and your team to devise a set of messages fulfilling the business requirements properly.
 
 ## 2.2. Regras de Negócio
 

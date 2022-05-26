@@ -1,34 +1,31 @@
-package eapli.base.app.user.console.tcp;
-
-import eapli.base.productmanagement.domain.Product;
-import eapli.framework.validations.Preconditions;
+package cli;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
-public class TcpCliOrder {
+public class TcpCliAgvManager{
     static InetAddress serverIP;
     static Socket sock;
 
     static String address;
 
-    public TcpCliOrder(String address) {
-        Preconditions.nonEmpty(address, "Server IPv4/IPv6 address or DNS name is required");
-        this.address = address;
-        new Thread(new TcpCliOrderThread(address)).start();
-    }
+    public TcpCliAgvManager(String address, Integer port){
+        if(address.length() != 1){
+            System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
+            System.exit(1);
+        }
 
+        new Thread(new TcpCliAgvManagerThread(address, port)).start();
+    }
 }
 
-class TcpCliOrderThread implements Runnable {
-
-
+class TcpCliAgvManagerThread implements Runnable {
     private final String ip;
+    private final Integer port;
 
-
-    public TcpCliOrderThread(String ip) {
+    public TcpCliAgvManagerThread(String ip, Integer port) {
         this.ip = ip;
+        this.port = port;
     }
 
     public void run() {
@@ -44,13 +41,13 @@ class TcpCliOrderThread implements Runnable {
         }
 
         try {
-            sock = new Socket(this.ip, 9999); }
+            sock = new Socket(this.ip, port); }
         catch(IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);
         }
 
-        System.out.println("Connected to: " + this.ip + ":" + 2020);
+        System.out.println("Connected to: " + this.ip);
 
         try {
 
@@ -66,28 +63,6 @@ class TcpCliOrderThread implements Runnable {
             //Esperar a resposta do servidor a dizer que entendeu a mensagem
             byte[] serverMessage = sInData.readNBytes(4);
             if (serverMessage[1] == 2) {
-
-                /*============beginning of US1501============*/
-                ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
-                Iterable<Product> voume = (Iterable<Product>) sInputObject.readObject();
-                System.out.println(voume);
-
-                String useFilters;
-                byte[] data = new byte[300];
-                Scanner in = new Scanner(System.in);
-                System.out.print("Answer: ");
-                useFilters = in.nextLine();
-                //useFilters = "yes";
-                data = useFilters.getBytes();
-
-                byte[] clienteMessageUS = {(byte) 0, (byte) 3, (byte) useFilters.length(), (byte) 0};
-                sOutData.write(clienteMessageUS, 0, 4);
-                sOutData.write(data,0,useFilters.length());
-                sOutData.flush();
-
-                /*============end of US1501============*/
-
-
 
                 //Mandar um pedido para o servido -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
@@ -105,7 +80,7 @@ class TcpCliOrderThread implements Runnable {
             } else {
                 System.out.println("==> ERROR: Erro no pacote do Servidor");
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("==> ERROR: Falha durante a troca de informação com o server");
         } finally {
             try {

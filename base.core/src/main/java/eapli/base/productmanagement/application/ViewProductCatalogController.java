@@ -7,8 +7,7 @@ import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.domain.ProductCategory;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ViewProductCatalogController {
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    //private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
 

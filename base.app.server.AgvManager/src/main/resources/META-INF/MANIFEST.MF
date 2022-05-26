@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: TcpSrvSum
+Main-Class: srv.TcpSrvAgvManager
 Class-Path: spring-aop-5.3.16.jar snakeyaml-1.29.jar spring-security-cry
  pto-5.6.2.jar spring-boot-starter-jdbc-2.6.4.jar eapli.framework.infras
  tructure.authz-v17.4.0_AUTHZ.jar spring-aspects-5.3.16.jar spring-tx-5.

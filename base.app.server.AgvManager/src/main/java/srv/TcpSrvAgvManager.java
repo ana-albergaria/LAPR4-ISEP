@@ -1,14 +1,16 @@
-/*import eapli.base.ordermanagement.domain.OrderStatus;
+package srv;/*import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;*/
 
+import cli.TcpCliAgvManager;
+
 import java.io.*;
 import java.net.*;
 //import java.util.List;
 
-class TcpSrvSum {
+class TcpSrvAgvManager {
     static ServerSocket sock;
 
     public static void main(String args[]) throws Exception {
@@ -16,7 +18,7 @@ class TcpSrvSum {
 
         try{
             sock = new ServerSocket(2807);
-            System.out.println("Server connection opened. Let's gooooooooooo!");
+            System.out.println("Server connection opened!");
         }
         catch(IOException ex){
             System.out.println("Failed to open server socket");
@@ -25,19 +27,22 @@ class TcpSrvSum {
 
         while(true){
             cliSock=sock.accept();
-            new Thread(new TcpSrvSumThread(cliSock)).start();
+            new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
         }
     }
 }
 
 
 
-class TcpSrvSumThread implements Runnable {
+class TcpSrvAgvManagerThread implements Runnable {
     private Socket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
-    public TcpSrvSumThread(Socket cli_s){
+    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.171";
+    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2807;
+
+    public TcpSrvAgvManagerThread(Socket cli_s){
         s=cli_s;
     }
 
@@ -53,6 +58,16 @@ class TcpSrvSumThread implements Runnable {
         try{
             sOut = new DataOutputStream(s.getOutputStream());
             sIn = new DataInputStream(s.getInputStream());
+
+            byte[] clientMessage = sIn.readNBytes(4);
+
+            if (clientMessage[1] == 4) { //Por exemplo, codigo 4 = Ligar ao AGV Manager e pedir posições do AGV
+                TcpCliAgvManager tcpCliAgvManager = new TcpCliAgvManager(AGV_DIGITAL_TWIN_SERVER_ADDRESS, AGV_DIGITAL_TWIN_SERVER_PORT);
+
+
+            } else {
+                System.out.println("[ERROR] Pacote do Cliente invalido.");
+            }
 
             //==============================
             //====== INICIO DA US4002 ======
@@ -83,10 +98,6 @@ class TcpSrvSumThread implements Runnable {
             //======= FIM DA US4002 =======
             //=============================
 
-            System.out.println("I am client " + clientIP.getHostAddress() + " and I am finally connected to the server " + s.getLocalAddress() + "! :)");
-
-            System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + s.getPort() +
-                    " disconnected");
             s.close();
         }catch(IOException ex){
             System.out.println("IOException");
