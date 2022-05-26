@@ -7,6 +7,9 @@ import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Entity
 public class Questionnaire implements AggregateRoot<String>, Serializable {
@@ -17,10 +20,25 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     private Long version;
 
     @Id
+    @Column(name = "questionnaire_code")
     private String code;
 
-    public Questionnaire(final String code){
+    private String title;
+
+    private String welcomeMessage;
+
+    @ElementCollection
+    @CollectionTable(name = "sections", joinColumns = {@JoinColumn(name = "questionnaire_code", referencedColumnName = "id")})
+    @MapKeyColumn(name = "section")
+    @Column(name = "question")
+    private HashMap<String, String> sectionsAndQuestions = new HashMap<>();
+
+    public Questionnaire(final String code, final String title, final String welcomeMessage, final HashMap<String,String> sectionsAndQuestions){
         this.code=code;
+        this.title=title;
+        this.welcomeMessage=welcomeMessage;
+        this.sectionsAndQuestions=sectionsAndQuestions;
+
     }
 
     protected Questionnaire(){
