@@ -64,12 +64,17 @@ public final class BaseRoles {
     public static final Role WAREHOUSE_EMPLOYEE = Role.valueOf("WAREHOUSE_EMPLOYEE");
 
     /**
+     *
+     */
+    public static final Role SALES_MANAGER = Role.valueOf("SALES_MANAGER");
+
+    /**
      * get available role types for adding new users
      *
      * @return
      */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, KITCHEN_MANAGER, MENU_MANAGER, CASHIER, SALES_CLERK, WAREHOUSE_EMPLOYEE };
+        return new Role[] { ADMIN, KITCHEN_MANAGER, MENU_MANAGER, CASHIER, SALES_CLERK, WAREHOUSE_EMPLOYEE,SALES_MANAGER };
     }
 
     public boolean isCollaborator(final Role role) {
