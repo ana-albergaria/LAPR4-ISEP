@@ -27,6 +27,7 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.warehousemanagement.repositories.*;
@@ -77,6 +78,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     public OrderItemRepository orderItems() {
         return orderItems(null);
     }
+
+    @Override
+    public TaskRepository tasks(){return new InMemoryTaskRepository();}
 
     /* Acrescentei - Dúvida */
     @Override

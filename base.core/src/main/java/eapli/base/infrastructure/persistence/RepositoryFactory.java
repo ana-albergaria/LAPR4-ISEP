@@ -25,6 +25,7 @@ import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.base.warehousemanagement.repositories.PlantRepository;
@@ -79,6 +80,8 @@ public interface RepositoryFactory {
     OrderItemRepository orderItems(TransactionalContext tx);
 
     OrderItemRepository orderItems();
+
+    TaskRepository tasks();
 
     ClientRepository clients();
 
