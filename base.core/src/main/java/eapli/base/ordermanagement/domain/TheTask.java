@@ -9,31 +9,32 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Task implements AggregateRoot<Long>, Serializable {
+public class TheTask implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Version
     private Long version;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long taskID;
 
     @OneToOne
-    @JoinColumn(name="agvID", referencedColumnName = "agvID")
+    @JoinColumn(name="agvID", referencedColumnName = "ID")
     private AGV agv;
 
     @OneToOne
     @JoinColumn(name="orderID", referencedColumnName = "orderId")
     private TheOrder order;
 
-    public Task(final AGV agv, final TheOrder order) {
+    public TheTask(final AGV agv, final TheOrder order) {
         Preconditions.noneNull(agv, order);
         this.agv=agv;
         this.order=order;
     }
 
-    public Task() {
+    public TheTask() {
         //empty
     }
 
