@@ -32,6 +32,7 @@ import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
 import eapli.base.app.backoffice.console.presentation.product.CreateCategoryUI;
 import eapli.base.app.backoffice.console.presentation.product.RegisterProductUI;
 import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
+import eapli.base.app.backoffice.console.presentation.questionnaire.CreateQuestionnaireUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
@@ -102,6 +103,11 @@ public class MainMenu extends AbstractUI {
 
     //private static final int AUTOMATICALLY_ASSIGN_AGV_TO_ORDER = 5;
 
+    //SALES MANAGER
+    private static final int CREATE_QUESTIONNAIRE = 1;
+
+    private static final int SALES_MANAGER_OPTION = 2;
+
     private static final String SEPARATOR_LABEL = "--------------";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -161,6 +167,11 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(INSERT_AGV_INFORMATIONS, warehouseEmployeeMenu);
         }
 
+        if(authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_MANAGER)){
+            final Menu salesManagerMenu = buildSalesManagerMenu();
+            mainMenu.addSubMenu(SALES_MANAGER_OPTION, salesManagerMenu);
+        }
+
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
@@ -218,6 +229,10 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu buildSalesManagerMenu(){
+        final Menu menu = new Menu("Sales Manager >");
+        menu.addItem(CREATE_QUESTIONNAIRE, "Create Questionnaire", new CreateQuestionnaireUI()::show);
 
-
+        return menu;
+    }
 }

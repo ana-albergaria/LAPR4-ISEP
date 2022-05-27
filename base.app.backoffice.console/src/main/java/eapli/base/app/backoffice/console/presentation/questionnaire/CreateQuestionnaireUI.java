@@ -28,22 +28,22 @@ public class CreateQuestionnaireUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false;
-        int k=0, n=0, r=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID;
+        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID;
         List<String> welcomeMessage = new ArrayList<>();
-        String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine,
-                sectionObligatorinessOption, condition, repetability, questionHeader, questionTitle, questionObligatorinessOption, questionObligatorinessHeader, finalMessage, filePath;
+        String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine = "",
+                sectionObligatorinessOption, condition, repetability, questionHeader, questionText, questionObligatorinessOption, questionObligatorinessHeader, finalMessage, filePath;
 
         questionnaireID = Console.readLine("What is the questionnaire ID?");
 
         questionnaireTitle = Console.readLine("What is the questionnaire title?");
 
-        title = questionnaireID + " " + questionnaireTitle + "\n";
+        title = questionnaireID + " " + questionnaireTitle + "\n" + "\n";
 
         filePath = controller.createQuestionnaireTextFile(questionnaireTitle);
 
-        controller.writeQuestionnaireTextFile(title, questionnaireTitle, filePath);
+        controller.writeQuestionnaireTextFile(title, filePath);
 
-        System.out.println("Do you want to add an welcome message? Yes (Y) | No (N)");
+        System.out.println("Do you want to add an welcome message?");
         welcomeMessageOption = yesOrNo();
 
         if(welcomeMessageOption.equalsIgnoreCase("Yes") || welcomeMessageOption.equalsIgnoreCase("Y")){
@@ -54,10 +54,9 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 }
                 welcomeMessage.add(welcomeMessageNewLine);
             }
-            input.close();
 
             for(String welMes : welcomeMessage){
-                controller.writeQuestionnaireTextFile(welMes, questionnaireTitle, filePath);
+                controller.writeQuestionnaireTextFile(welMes + "\n", filePath);
             }
         }
 
@@ -67,7 +66,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 System.out.println(VALID_ANSWER_MESSAGE);
             }
 
-            numSections = Console.readInteger("");
+            numSections = Console.readInteger("Number os Sections");
 
             if (numSections >= 1){
                 isValidNumSections = true;
@@ -77,17 +76,18 @@ public class CreateQuestionnaireUI extends AbstractUI {
         }while (!isValidNumSections);
 
         for(int i=0; i<numSections; i++){
+            int r=0;
             List<String> sectionMessage = new ArrayList<>();
 
             sectionID = i+1;
 
             sectionTitle = Console.readLine("Enter the section title.");
 
-            sectionHeader = sectionID + sectionTitle;
+            sectionHeader = sectionID + ". " + sectionTitle;
 
-            controller.writeQuestionnaireTextFile(sectionHeader, questionnaireTitle, filePath);
+            controller.writeQuestionnaireTextFile(sectionHeader + "\n", filePath);
 
-            System.out.println("Do you want to add a message to this section? Yes (Y) | No (N)");
+            System.out.println("Do you want to add a message to this section?");
             sectionMessageOption = yesOrNo();
 
             if(sectionMessageOption.equalsIgnoreCase("Yes") || sectionMessageOption.equalsIgnoreCase("Y")){
@@ -96,13 +96,12 @@ public class CreateQuestionnaireUI extends AbstractUI {
                     if (sectionMessageNewLine.isEmpty()) {
                         break;
                     }
+
                     sectionMessage.add(sectionMessageNewLine);
                 }
 
-                input.close();
-
                 for(String secMes : sectionMessage){
-                    controller.writeQuestionnaireTextFile(secMes, questionnaireTitle, filePath);
+                    controller.writeQuestionnaireTextFile(secMes + "\n", filePath);
                 }
             }
 
@@ -110,16 +109,15 @@ public class CreateQuestionnaireUI extends AbstractUI {
             sectionObligatorinessOption = defineSectionObligatoriness();
 
             if(sectionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
-                System.out.println("What is the condition?");
-                condition = Console.readLine("");
+                condition = Console.readLine("What is the condition?");
                 //Escrever no ficheiro .txt SECTION_OBLIGATORINESS + obligatoriness + ":" + condition
-                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption + ":" + condition, questionnaireTitle, filePath);
+                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption + ":" + condition + "\n", filePath);
             }else {
                 //Escrever no ficheiro .txt SECTION_OBLIGATORINESS + obligatoriness
-                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption, questionnaireTitle, filePath);
+                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption + "\n", filePath);
             }
 
-            System.out.println("Is this question repetible?");
+            System.out.println("Is this section repeatable?");
             repetability = yesOrNo();
 
             if(repetability.equalsIgnoreCase("Yes") || repetability.equalsIgnoreCase("Y")){
@@ -129,7 +127,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                         System.out.println(VALID_ANSWER_MESSAGE);
                     }
 
-                    numRepeats = Console.readInteger("");
+                    numRepeats = Console.readInteger("Repeatability");
 
                     if(numRepeats >= 1){
                         isValidRepeatability = true;
@@ -139,16 +137,16 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 }while(!isValidRepeatability);
 
                 //Escrever no ficheiro .txt SECTION_REPEATABILITY + numRepeats
-                controller.writeQuestionnaireTextFile(SECTION_REPEATABILITY + numRepeats, questionnaireTitle, filePath);
+                controller.writeQuestionnaireTextFile(SECTION_REPEATABILITY + numRepeats + "\n", filePath);
             }
 
-            System.out.println("How many questions do you want this section to have? (You need, at least, one)");
+            System.out.println("How many questions do you want this section to have?");
             do{
                 if(r > 0){
                     System.out.println(VALID_ANSWER_MESSAGE);
                 }
 
-                numQuestionsPerSection = Console.readInteger("");
+                numQuestionsPerSection = Console.readInteger("(You need, at least, one)");
 
                 if(numQuestionsPerSection >= 1){
                     isValidNumQuestions = true;
@@ -160,22 +158,27 @@ public class CreateQuestionnaireUI extends AbstractUI {
             for(int l=0; l<numQuestionsPerSection; l++){
                 questionID = l+1;
 
-                questionTitle = Console.readLine("What is the question text?");
+                questionText = Console.readLine("What is the question text?");
 
-                System.out.println("What is the obligatoriness of this question? (Mandatory | Optional | Condition Dependent)");
+                System.out.println("What is the obligatoriness of this question?");
                 questionObligatorinessOption = defineSectionObligatoriness();
 
                 if(questionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
                     System.out.println("What is the condition?");
                     condition = Console.readLine("");
-                    questionObligatorinessHeader = SECTION_OBLIGATORINESS + sectionObligatorinessOption + ":" + condition;
+                    questionObligatorinessHeader = sectionObligatorinessOption + ":" + condition;
                 }else {
-                    questionObligatorinessHeader = SECTION_OBLIGATORINESS + sectionObligatorinessOption;
+                    questionObligatorinessHeader = sectionObligatorinessOption;
                 }
 
-                questionHeader = questionID + questionTitle + INTERROGATION_POINT + LEFT_PARETENSIS + questionObligatorinessHeader + RIGHT_PARETENSIS;
+                if(questionText.contains("?")){
+                    questionHeader = questionID + ". " + questionText + LEFT_PARETENSIS + questionObligatorinessHeader + RIGHT_PARETENSIS + "\n";
+                }else{
+                    questionHeader = questionID + ". " + questionText + INTERROGATION_POINT + LEFT_PARETENSIS + questionObligatorinessHeader + RIGHT_PARETENSIS + "\n";
+                }
 
-                controller.writeQuestionnaireTextFile(questionHeader, questionnaireTitle, filePath);
+                controller.writeQuestionnaireTextFile(questionHeader, filePath);
+
 
 
             }
@@ -198,7 +201,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 System.out.println(VALID_ANSWER_MESSAGE);
             }
 
-            option = Console.readLine("");
+            option = Console.readLine("Yes (Y) | No (N)");
 
             if(option.equalsIgnoreCase("Yes") || option.equalsIgnoreCase("Y") || option.equalsIgnoreCase("No") || option.equalsIgnoreCase("N")){
                 isValidYesOrNo = true;
@@ -218,7 +221,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 System.out.println(VALID_ANSWER_MESSAGE);
             }
 
-            sectionObligatoriness = Console.readLine("");
+            sectionObligatoriness = Console.readLine("(Mandatory | Optional | Condition Dependent)");
 
             if(sectionObligatoriness.equalsIgnoreCase("Mandatory") || sectionObligatoriness.equalsIgnoreCase("Optional") || sectionObligatoriness.equalsIgnoreCase("Condition Dependent")){
                 isValidObligatoriness = true;
