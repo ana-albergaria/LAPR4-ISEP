@@ -223,7 +223,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(CONFIGURE_AVAILABLE_AGVS, "Configure Available AGV", new ConfigureAvailableAGVUI()::show);
         menu.addItem(SET_UP_PLANT, "Set the Warehouse Plant", new SetUpPlantUI()::show);
         menu.addItem(ASSIGN_AGV_TO_ORDER, "Assign AGV to Order ready to be prepared", new AssignOrderToFreeAGVUI()::show);
-        //menu.addItem(AUTOMATICALLY_ASSIGN_AGV_TO_ORDER, "Automatically assign AGV to Order ready to be prepared", new AutomaticallyAssignOrderToFreeAGVUI()::show);
+        //menu.addItem(AUTOMATICALLY_ASSIGN_AGV_TO_ORDER, "Automatically assign AGV to Order ready to be prepared", new TestAutomaticallyAssignOrderToFreeAGVUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

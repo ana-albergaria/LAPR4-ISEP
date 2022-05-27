@@ -2,8 +2,10 @@ package eapli.base.warehousemanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.OrderStatus;
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.repositories.OrderRepository;
+import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
@@ -26,6 +28,7 @@ public class AutomaticallyAssignOrdersToFreeAGVController {
 
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
 
     public List<TheOrder> getOrdersToAssign(){
         authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
@@ -50,6 +53,11 @@ public class AutomaticallyAssignOrdersToFreeAGVController {
 
     public void updateAGV(final AGV agv){
         agvRepository.save(agv);
+    }
+
+    public TheTask registerTask(final AGV agv, final TheOrder order){
+        TheTask newTask = new TheTask(agv,order);
+        return taskRepository.save(newTask);
     }
 
 }

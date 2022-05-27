@@ -1,12 +1,16 @@
-package srv;/*import eapli.base.ordermanagement.domain.OrderStatus;
+package srv;
+/*import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.OrderStatus;
+import eapli.base.ordermanagement.domain.Task;
 import eapli.base.ordermanagement.domain.TheOrder;
+import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;*/
 
 import java.io.*;
 import java.net.*;
-//import java.util.List;
+import java.util.List;
 
 class TcpSrvAgvManager {
     static ServerSocket sock;
@@ -44,7 +48,8 @@ class TcpSrvAgvManagerThread implements Runnable {
         s=cli_s;
     }
 
-    //private final AutomaticallyAssignOrdersToFreeAGVController controller = new AutomaticallyAssignOrdersToFreeAGVController(); //-> used in US4002
+    /*private final AutomaticallyAssignOrdersToFreeAGVController ordersToAGVController = new AutomaticallyAssignOrdersToFreeAGVController(); //-> used in US4002
+    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();*/
 
     public void run() {
         //long f,i,num,sum;
@@ -71,26 +76,28 @@ class TcpSrvAgvManagerThread implements Runnable {
             //==============================
             /*TheOrder selectedOrder;
             AGV selectedAGV;
-            List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
-            List<AGV> agvsAvailable = controller.getAGVsAvailable();
+            List<TheOrder> ordersToAssign = ordersToAGVController.getOrdersToAssign();
+            List<AGV> agvsAvailable = ordersToAGVController.getAGVsAvailable();
             if (ordersToAssign.isEmpty()){
                 System.out.println("There are no orders waiting to be assigned.");
             } else if (agvsAvailable.isEmpty()){
                 System.out.println("There are no available AGVs.");
-            }
-            int number = 0;
-            int ordersToAssignSize = ordersToAssign.size();
-            int agvsAvailableSize = agvsAvailable.size();
-            do {
-                selectedOrder = ordersToAssign.get(number);
-                selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-                controller.updateOrder(selectedOrder);
-                selectedAGV = agvsAvailable.get(number);
-                selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                controller.updateAGV(selectedAGV);
-                System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
-                number++;
-            } while (number+1<=ordersToAssignSize && number+1<=agvsAvailableSize);*/
+            } else {
+                int number = 0;
+                int ordersToAssignSize = ordersToAssign.size();
+                int agvsAvailableSize = agvsAvailable.size();
+                do {
+                    selectedOrder = ordersToAssign.get(number);
+                    selectedAGV = agvsAvailable.get(number);
+                    ordersToAGVController.registerTask(selectedAGV,selectedOrder);
+                    selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
+                    ordersToAGVController.updateOrder(selectedOrder);
+                    selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+                    ordersToAGVController.updateAGV(selectedAGV);
+                    System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+                    number++;
+                } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
+            }*/
             //=============================
             //======= FIM DA US4002 =======
             //=============================

@@ -126,5 +126,18 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return this.clientId;
     }
 
-
+    @Override
+    public String toString() {
+        return "Client{" +
+                "version=" + version +
+                ", clientId=" + clientId +
+                ", name=" + name +
+                ", vat=" + vat +
+                ", email=" + email +
+                ", phoneNumber=" + phoneNumber +
+                ", birthdate=" + birthdate +
+                ", gender=" + gender +
+                ", addresses=" + addresses +
+                '}';
+    }
 }
