@@ -26,12 +26,19 @@ database OrderRepository{
 database AGVRepository{
 }
 
+database TaskRepository{
+}
+
 class TheOrder{
 +setStatus(status)
 }
 
 class AGV{
 +setTaskStatus(taskStatus)
+}
+
+class TheTask{
++create()
 }
 
 TcpSrvSum --> AutomaticallyAssignOrderToFreeAGVController
@@ -42,8 +49,10 @@ PersistenceContext --> RepositoryFactory
 
 RepositoryFactory --> OrderRepository
 RepositoryFactory --> AGVRepository
+RepositoryFactory --> TaskRepository
 
 AutomaticallyAssignOrderToFreeAGVController --> TheOrder
 AutomaticallyAssignOrderToFreeAGVController --> AGV
+AutomaticallyAssignOrderToFreeAGVController --> TheTask
 
 @enduml

@@ -79,6 +79,9 @@ A interpretação feita deste requisito foi no sentido de, através do AGVManage
 
 Foram aplicados os padrões princípios SOLID e GoF
 
+### Creator
+
+
 ### Repository
 
 
@@ -94,26 +97,27 @@ Foram aplicados os padrões princípios SOLID e GoF
 
     TheOrder selectedOrder;
     AGV selectedAGV;
-    List<TheOrder> ordersToAssign = controller.getOrdersToAssign();
-    List<AGV> agvsAvailable = controller.getAGVsAvailable();
+    List<TheOrder> ordersToAssign = ordersToAGVController.getOrdersToAssign();
+    List<AGV> agvsAvailable = ordersToAGVController.getAGVsAvailable();
     if (ordersToAssign.isEmpty()){
         System.out.println("There are no orders waiting to be assigned.");
     } else if (agvsAvailable.isEmpty()){
         System.out.println("There are no available AGVs.");
-    }
-    int number = 0;
-    int ordersToAssignSize = ordersToAssign.size();
-    int agvsAvailableSize = agvsAvailable.size();
-    do {
-        selectedOrder = ordersToAssign.get(number);
-        selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-        controller.updateOrder(selectedOrder);
-        selectedAGV = agvsAvailable.get(number);
-        selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-        controller.updateAGV(selectedAGV);
-        System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
-        number++;
-    } while (number+1<=ordersToAssignSize && number+1<=agvsAvailableSize);
+    } else {
+        int number = 0;
+        int ordersToAssignSize = ordersToAssign.size();
+        int agvsAvailableSize = agvsAvailable.size();
+        do {
+            selectedOrder = ordersToAssign.get(number);
+            selectedAGV = agvsAvailable.get(number);
+            ordersToAGVController.registerTask(selectedAGV,selectedOrder);
+            selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
+            ordersToAGVController.updateOrder(selectedOrder);
+            selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+            ordersToAGVController.updateAGV(selectedAGV);
+            System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+            number++;
+        } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
 
     [...]
 
