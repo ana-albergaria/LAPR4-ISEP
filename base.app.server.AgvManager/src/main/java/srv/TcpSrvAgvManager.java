@@ -4,8 +4,6 @@ import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFre
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;*/
 
-import cli.TcpCliAgvManager;
-
 import java.io.*;
 import java.net.*;
 //import java.util.List;
@@ -62,7 +60,7 @@ class TcpSrvAgvManagerThread implements Runnable {
             byte[] clientMessage = sIn.readNBytes(4);
 
             if (clientMessage[1] == 4) { //Por exemplo, codigo 4 = Ligar ao AGV Manager e pedir posições do AGV
-                TcpCliAgvManager tcpCliAgvManager = new TcpCliAgvManager(AGV_DIGITAL_TWIN_SERVER_ADDRESS, AGV_DIGITAL_TWIN_SERVER_PORT);
+                //TcpCliAgvManager tcpCliAgvManager = new TcpCliAgvManager(AGV_DIGITAL_TWIN_SERVER_ADDRESS, AGV_DIGITAL_TWIN_SERVER_PORT);
 
             } else {
                 System.out.println("[ERROR] Pacote do Cliente invalido.");
