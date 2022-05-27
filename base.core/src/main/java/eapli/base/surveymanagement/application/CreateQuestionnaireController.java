@@ -10,6 +10,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
@@ -27,7 +28,7 @@ public class CreateQuestionnaireController {
      */
     private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnarie();
 
-    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr";
+    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/";
     private final String FILE_EXTENSION = ".txt";
 
     /**
@@ -60,11 +61,12 @@ public class CreateQuestionnaireController {
 
         return questionnaire.getPath();
     }
-    public void writeQuestionnaireTextFile(String information, String questionnaireName, String filePath){
+    public void writeQuestionnaireTextFile(String information, String filePath){
         if(!filePath.isEmpty()) {
             try {
-                FileWriter questionnaireWriter = new FileWriter(filePath);
-                questionnaireWriter.write(information);
+                FileWriter fileWriter = new FileWriter(filePath, true);
+                PrintWriter questionnaireWriter = new PrintWriter(fileWriter);
+                questionnaireWriter.append(information);
                 questionnaireWriter.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);

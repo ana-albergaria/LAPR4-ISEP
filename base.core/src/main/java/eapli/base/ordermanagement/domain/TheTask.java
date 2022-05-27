@@ -16,11 +16,12 @@ public class TheTask implements AggregateRoot<Long>, Serializable {
     private Long version;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long taskID;
 
     @OneToOne
-    @JoinColumn(name="agvID", referencedColumnName = "agvID")
+    @JoinColumn(name="agvID", referencedColumnName = "ID")
     private AGV agv;
 
     @OneToOne

@@ -10,8 +10,10 @@ participant ":PersistenceContext" as Persistance
 participant ":RepositoryFactory" as Factory
 participant ":OrderRepository" as OrderRep
 participant ":AGVRepository" as AGVRep
+participant ":TaskRepository" as TaskRep
 participant ":TheOrder" as ORDER
 participant ":AGV" as AGV
+participant ":TheTask" as Task
 
 activate AGVM
 AGVM -> UI : automatically request to assign available orders to available AGVs
@@ -59,6 +61,30 @@ deactivate CTRL
 
 alt for each pair or ordersToAssign and availableAGVs
 UI -> UI : selectedOrder
+UI -> UI : selectedAGV
+
+UI -> CTRL : registerTask(selectedAGV, selectedOrder)
+activate CTRL
+CTRL -> Task : newTask = create(selectedAGV, selectedOrder)
+activate Task
+|||
+deactivate Task
+CTRL -> Persistance : repositories()
+activate Persistance
+Persistance -> Factory : create
+activate Factory
+Factory -> TaskRep : create
+activate TaskRep
+|||
+deactivate TaskRep
+deactivate Factory
+deactivate Persistance
+CTRL -> TaskRep : save(newTask)
+activate TaskRep
+|||
+deactivate TaskRep
+deactivate CTRL
+
 UI -> ORDER : setStatus(BEING_PREPARED_ON_WAREHOUSE)
 activate ORDER
 ORDER --> UI : selectedOrder
@@ -67,7 +93,6 @@ UI -> CTRL : updateOrder(selectedOrder)
 activate CTRL
 |||
 deactivate CTRL
-UI -> UI : selectedAGV
 UI -> AGV : setTaskStatus(OCCUPIED)
 activate AGV
 AGV --> UI : selectedAGV
