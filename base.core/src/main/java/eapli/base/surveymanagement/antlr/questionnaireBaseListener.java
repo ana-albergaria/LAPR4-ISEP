@@ -124,25 +124,13 @@ public class questionnaireBaseListener implements questionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRepeatabilityYes(questionnaireParser.RepeatabilityYesContext ctx) { }
+	@Override public void enterRepeatability(questionnaireParser.RepeatabilityContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRepeatabilityYes(questionnaireParser.RepeatabilityYesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRepeatibilityNo(questionnaireParser.RepeatibilityNoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRepeatibilityNo(questionnaireParser.RepeatibilityNoContext ctx) { }
+	@Override public void exitRepeatability(questionnaireParser.RepeatabilityContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -191,78 +179,6 @@ public class questionnaireBaseListener implements questionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitType(questionnaireParser.TypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSingle_choice(questionnaireParser.Single_choiceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSingle_choice(questionnaireParser.Single_choiceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSingle_choice_input(questionnaireParser.Single_choice_inputContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSingle_choice_input(questionnaireParser.Single_choice_inputContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiple_choice(questionnaireParser.Multiple_choiceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiple_choice_input(questionnaireParser.Multiple_choice_inputContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultiple_choice_input(questionnaireParser.Multiple_choice_inputContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSorting_option(questionnaireParser.Sorting_optionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSorting_option(questionnaireParser.Sorting_optionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterScaling_option(questionnaireParser.Scaling_optionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitScaling_option(questionnaireParser.Scaling_optionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

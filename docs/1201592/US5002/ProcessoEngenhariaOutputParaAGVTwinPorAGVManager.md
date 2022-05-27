@@ -7,7 +7,7 @@
 
 **UC5002:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlode comunicação por output do AGV digital twin, para atualizar o seu status no "AGVManager".
 
-A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo enviar informação sobre a sua localização atual, status e.t.c (from the system specification document: "it can send information about its current location, status and so on.").
+A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo enviar informação sobre o seu status atual (from the system specification document: "it can send information about its current [...] status").
 
 
 # 2. Análise

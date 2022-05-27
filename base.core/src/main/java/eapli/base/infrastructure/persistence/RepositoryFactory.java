@@ -26,6 +26,7 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
+import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.base.warehousemanagement.repositories.PlantRepository;
@@ -100,6 +101,8 @@ public interface RepositoryFactory {
     AgvDockRepository agvDocks();
 
     SquareRepository squares();
+
+    SurveyQuestionnareRepository questionnarie();
 
     /**
      *

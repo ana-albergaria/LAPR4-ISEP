@@ -66,19 +66,11 @@ public interface questionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObligatoriness(questionnaireParser.ObligatorinessContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code repeatabilityYes}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
+	 * Visit a parse tree produced by {@link questionnaireParser#repeatability}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRepeatabilityYes(questionnaireParser.RepeatabilityYesContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code repeatibilityNo}
-	 * labeled alternative in {@link questionnaireParser#repeatability}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRepeatibilityNo(questionnaireParser.RepeatibilityNoContext ctx);
+	T visitRepeatability(questionnaireParser.RepeatabilityContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link questionnaireParser#question}.
 	 * @param ctx the parse tree
@@ -103,40 +95,4 @@ public interface questionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType(questionnaireParser.TypeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#single_choice}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSingle_choice(questionnaireParser.Single_choiceContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#single_choice_input}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSingle_choice_input(questionnaireParser.Single_choice_inputContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#multiple_choice}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#multiple_choice_input}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultiple_choice_input(questionnaireParser.Multiple_choice_inputContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#sorting_option}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSorting_option(questionnaireParser.Sorting_optionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#scaling_option}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitScaling_option(questionnaireParser.Scaling_optionContext ctx);
 }
