@@ -28,11 +28,6 @@ public class InMemoryAGVRepository extends InMemoryDomainRepository<AGV, Long> i
         return list;
     }
 
-    @Override
-    public Iterable<TaskStatus> findAllAvailable() {
-        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
-    }
-
     public Iterable<AGV> findByTaskStatus(TaskStatus taskStatus){
         return match(e -> e.getTaskStatus().equals(taskStatus));
     }

@@ -8,7 +8,5 @@ public interface AGVRepository extends DomainRepository<Long, AGV> {
     @Override
     Iterable<AGV> findAll();
 
-    Iterable<TaskStatus> findAllAvailable();
-
     Iterable<AGV> findByTaskStatus(TaskStatus taskStatus);
 }

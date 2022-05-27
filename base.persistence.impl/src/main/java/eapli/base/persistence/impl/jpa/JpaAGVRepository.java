@@ -20,23 +20,6 @@ public class JpaAGVRepository extends BaseJpaRepositoryBase<AGV, Long, Long> imp
     }
 
     @Override
-    public Iterable<TaskStatus> findAllAvailable(){
-        final TypedQuery<AGV> query = entityManager().createQuery(
-                "SELECT a FROM AGV a",
-                AGV.class);
-
-        Iterable<AGV> agvs = query.getResultList();
-        List<TaskStatus> filteredByTaskStatusList = new LinkedList<>();
-
-        for (AGV agv : agvs){
-            if (!filteredByTaskStatusList.contains(agv.getTaskStatus())){
-                filteredByTaskStatusList.add(agv.getTaskStatus());
-            }
-        }
-        return filteredByTaskStatusList;
-    }
-
-    @Override
     public Iterable<AGV> findByTaskStatus(TaskStatus taskStatus){
         final Map<String, Object> params = new HashMap<>();
         params.put("task", taskStatus);

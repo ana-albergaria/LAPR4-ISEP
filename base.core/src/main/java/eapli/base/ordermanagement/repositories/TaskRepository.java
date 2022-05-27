@@ -1,11 +1,12 @@
 package eapli.base.ordermanagement.repositories;
 
-import eapli.base.ordermanagement.domain.Task;
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.warehousemanagement.domain.AGV;
-import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.framework.domain.repositories.DomainRepository;
 
-public interface TaskRepository extends DomainRepository<Long, Task> {
+public interface TaskRepository extends DomainRepository<Long, TheTask> {
     @Override
-    Iterable<Task> findAll();
+    Iterable<TheTask> findAll();
+
+    Iterable<TheTask> findByAgv(AGV agv);
 }
