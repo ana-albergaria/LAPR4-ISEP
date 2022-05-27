@@ -1,8 +1,10 @@
 package eapli.base.productmanagement.domain;
 
+import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
@@ -18,7 +20,7 @@ import java.util.Set;
  * @author Marta Ribeiro 1201592
  */
 @Entity
-public class Product implements AggregateRoot<Code>, Serializable, Comparable<Code> {
+public class Product implements AggregateRoot<Code>, Serializable, Comparable<Code>, DTOable<ProductDTO> {
 
     /**
      * Changes the technical description of the product.
@@ -59,6 +61,11 @@ public class Product implements AggregateRoot<Code>, Serializable, Comparable<Co
 
     public BrandName brandName() {
         return this.brandName;
+    }
+
+    @Override
+    public ProductDTO toDTO() {
+        return new ProductDTO(uniqueInternalCode.toString(),shortDescription.toString(),priceWithoutTaxes.amount());
     }
 
     /**
