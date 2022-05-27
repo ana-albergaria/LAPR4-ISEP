@@ -29,6 +29,7 @@ import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
+import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
@@ -79,6 +80,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public ClientRepository clients() {
         return new JpaClientRepository();
+    }
+
+    @Override
+    public ShoppingCartRepository shoppingCarts() {
+        return new JpaShoppingCartRepository();
     }
 
     @Override

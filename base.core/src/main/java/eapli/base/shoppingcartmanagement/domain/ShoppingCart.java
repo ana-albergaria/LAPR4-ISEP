@@ -1,4 +1,4 @@
-package eapli.base.shoppingcartmanagement;
+package eapli.base.shoppingcartmanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.ordermanagement.domain.OrderItem;

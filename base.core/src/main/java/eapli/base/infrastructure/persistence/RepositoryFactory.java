@@ -26,6 +26,7 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
+import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
@@ -85,6 +86,8 @@ public interface RepositoryFactory {
     TaskRepository tasks();
 
     ClientRepository clients();
+
+    ShoppingCartRepository shoppingCarts();
 
     AGVRepository agvs();
 
