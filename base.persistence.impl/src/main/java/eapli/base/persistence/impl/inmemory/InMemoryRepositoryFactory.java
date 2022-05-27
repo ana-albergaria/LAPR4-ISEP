@@ -29,6 +29,7 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
+import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.base.warehousemanagement.repositories.PlantRepository;
@@ -121,6 +122,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public SquareRepository squares() {
         return new InMemorySquareRepository();
+    }
+
+    @Override
+    public SurveyQuestionnareRepository questionnarie() {
+        return null;
     }
 
     @Override
