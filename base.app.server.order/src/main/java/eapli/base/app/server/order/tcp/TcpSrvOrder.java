@@ -101,15 +101,6 @@ class TcpSrvOrderThread implements Runnable {
                 int i=0, j, m;
                 System.out.println("Do you want to use filters? \n Yes - Y | No - N");
 
-                /*byte[] clientMessageUS = sIn.readNBytes(4);
-
-                if (clientMessageUS[1] == 3) {
-                    System.out.println("Código Mensagem: " + clientMessageUS[1]);
-                }
-
-                byte[] clientMessageUS = sIn.readNBytes(4);
-                System.out.println("Código mensagem: " + clientMessageUS[1]);*/
-
 
                 //AQUI
                 byte[] clientMessageUS = new byte[4];

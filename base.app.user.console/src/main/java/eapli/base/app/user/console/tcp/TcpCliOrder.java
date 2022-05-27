@@ -1,6 +1,7 @@
 package eapli.base.app.user.console.tcp;
 
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.utils.MessageUtils;
 import eapli.framework.validations.Preconditions;
 
 import java.io.*;
@@ -73,17 +74,18 @@ class TcpCliOrderThread implements Runnable {
                 System.out.println(voume);
 
                 String useFilters;
-                byte[] data = new byte[300];
+                //byte[] data = new byte[300];
                 Scanner in = new Scanner(System.in);
                 System.out.print("Answer: ");
                 useFilters = in.nextLine();
                 //useFilters = "yes";
-                data = useFilters.getBytes();
+                /*data = useFilters.getBytes();
 
                 byte[] clienteMessageUS = {(byte) 0, (byte) 3, (byte) useFilters.length(), (byte) 0};
                 sOutData.write(clienteMessageUS, 0, 4);
                 sOutData.write(data,0,useFilters.length());
-                sOutData.flush();
+                sOutData.flush();*/
+                MessageUtils.writeMessageWithData((byte) 3,useFilters,sOutData);
 
                 /*============end of US1501============*/
 
