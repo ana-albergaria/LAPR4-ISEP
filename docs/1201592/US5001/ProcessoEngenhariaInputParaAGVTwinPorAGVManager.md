@@ -7,7 +7,7 @@
 
 **UC5001:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlode comunicação por input do AGV digital twin, para aceitar pedidos do "AGVManager".
 
-A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo receber a warehouse plant, a localização de outros AGVs e o comando para pegar em produtor (from the system specification document: "receive the warehouse plant, the location of the other AGVs as well as the command to pick-up some product(s)").
+A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo receber a warehouse plant, a localização de outros AGVs e o comando para ir buscar produtos (from the system specification document: "receive the warehouse plant, the location of the other AGVs as well as the command to pick-up some product(s)").
 
 
 # 2. Análise
