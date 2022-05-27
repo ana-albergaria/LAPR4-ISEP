@@ -113,20 +113,12 @@ class TcpSrvOrderThread implements Runnable {
 
                 //AQUI
                 byte[] clientMessageUS = new byte[4];
-                //sIn.read(clientMessageUS,0,4);
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
                 System.out.println("Código mensagem: " + clientMessageUS[1]);
 
                 if (clientMessageUS[1] == 3) {
                     System.out.println("Recebeu mensagem código 3");
-                    /*int dataLength = clientMessageUS[2] + 256 * clientMessageUS[3];
-                    if(dataLength != 0) {
-                        byte[] clientMessageData = new byte[dataLength];
-                        sIn.read(clientMessageData,0,dataLength);
-                        useFilters = new String(clientMessageData, 0, dataLength);
-                        System.out.println("Resposta do Cliente: " + useFilters);
-                    }*/
                     useFilters = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     System.out.println("Resposta do Cliente: " + useFilters);
 
