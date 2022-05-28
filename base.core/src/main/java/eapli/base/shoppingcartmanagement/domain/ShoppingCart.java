@@ -30,8 +30,16 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
         this.items = items;
     }
 
+    public ShoppingCart(final Client client) {
+        this.client = client;
+    }
+
     protected ShoppingCart() {
         //for ORM purposes
+    }
+
+    public Client client() {
+        return this.client;
     }
 
     @Override
@@ -47,5 +55,14 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
     @Override
     public Long identity() {
         return this.shoppingCartId;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "shoppingCartId=" + shoppingCartId +
+                ", client=" + client +
+                ", items=" + items +
+                '}';
     }
 }

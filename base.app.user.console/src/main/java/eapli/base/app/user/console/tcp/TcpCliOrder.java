@@ -1,11 +1,15 @@
 package eapli.base.app.user.console.tcp;
 
 import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.utils.MessageUtils;
 import eapli.framework.validations.Preconditions;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class TcpCliOrder {
@@ -20,7 +24,22 @@ public class TcpCliOrder {
         new Thread(new TcpCliOrderThread(address)).start();
     }
 
+    public static void main(String args[]) {
+        if(args.length!=1) {
+            System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
+            System.exit(1);
+        }
+
+        new Thread(new TcpCliOrderThread(args[0])).start();
+
+    }
+
+
 }
+
+
+
+
 
 class TcpCliOrderThread implements Runnable {
 
@@ -69,25 +88,27 @@ class TcpCliOrderThread implements Runnable {
             if (serverMessage[1] == 2) {
 
                 /*============beginning of US1501============*/
-                ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
-                Iterable<Product> voume = (Iterable<Product>) sInputObject.readObject();
-                System.out.println(voume);
-
-                String useFilters;
-                //byte[] data = new byte[300];
                 Scanner in = new Scanner(System.in);
-                System.out.print("Answer: ");
-                useFilters = in.nextLine();
-                //useFilters = "yes";
-                /*data = useFilters.getBytes();
 
-                byte[] clienteMessageUS = {(byte) 0, (byte) 3, (byte) useFilters.length(), (byte) 0};
-                sOutData.write(clienteMessageUS, 0, 4);
-                sOutData.write(data,0,useFilters.length());
-                sOutData.flush();*/
-                MessageUtils.writeMessageWithData((byte) 3,useFilters,sOutData);
+                ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
+                Iterable<ProductDTO> productCatalog = (Iterable<ProductDTO>) sInputObject.readObject();
+                showProductCatalog(productCatalog);
+
+                //receives message from server asking for product id
+                byte[] clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS, sInData);
+
+                if(clientMessageUS[1] == 3) {
+                    //System.out.println("[INFO] Codigo da US1501 (3) enviado pelo Servidor ao Cliente");
+                    String questionServer = MessageUtils.getDataFromMessage(clientMessageUS,sInData);
+                    System.out.print(questionServer);
+                    String productId = in.nextLine();
+
+                    MessageUtils.writeMessageWithData((byte) 3, productId, sOutData);
+                }
 
                 /*============end of US1501============*/
+
 
 
 
@@ -116,5 +137,17 @@ class TcpCliOrderThread implements Runnable {
                 System.out.println("==> ERROR: Falha a fechar o socket");
             }
         }
+    }
+
+    private void showProductCatalog(Iterable<ProductDTO> productCatalog) {
+        System.out.println("######## PRODUCT CATALOG ########");
+
+        Iterator<ProductDTO> listProducts = productCatalog.iterator();
+
+        while(listProducts.hasNext()) {
+            ProductDTO product = listProducts.next();
+            System.out.println(product);
+        }
+        System.out.println();
     }
 }

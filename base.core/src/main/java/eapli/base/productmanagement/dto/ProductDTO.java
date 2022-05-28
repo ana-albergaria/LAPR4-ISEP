@@ -1,6 +1,7 @@
 package eapli.base.productmanagement.dto;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -10,7 +11,7 @@ import java.math.BigInteger;
  * @author Ana Albergaria
  *
  */
-public class ProductDTO {
+public class ProductDTO implements Serializable {
 
     private String productUniqueInternalCode;
 
@@ -22,5 +23,14 @@ public class ProductDTO {
         this.price=price;
         this.productShortDescription=productShortDescription;
         this.productUniqueInternalCode=productUniqueInternalCode;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "productUniqueInternalCode='" + productUniqueInternalCode + '\'' +
+                ", productShortDescription='" + productShortDescription + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
