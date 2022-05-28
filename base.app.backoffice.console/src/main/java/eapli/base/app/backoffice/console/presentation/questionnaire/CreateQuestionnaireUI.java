@@ -1,6 +1,5 @@
 package eapli.base.app.backoffice.console.presentation.questionnaire;
 
-import eapli.base.productmanagement.application.CreateCategoryController;
 import eapli.base.surveymanagement.application.CreateQuestionnaireController;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -14,24 +13,36 @@ public class CreateQuestionnaireUI extends AbstractUI {
     private final String SECTION_OBLIGATORINESS = "Section Obligatoriness: ";
     private final String SECTION_REPEATABILITY = "Repeatability: ";
     private final String QUESTION_TYPE = "Type: ";
+    private final String SCALING_OPTION = "Scale: ";
+    private final String WITH_INPUT = " with input";
+    private final String DECIMALS_ARE_ALLOWED = "Decimal numbers are allowed!";
     private final String VALID_ANSWER_MESSAGE = "Please enter a valid answer.";
     private final String INTERROGATION_POINT = "?";
     private final String LEFT_PARETENSIS = "(";
     private final String RIGHT_PARETENSIS = ")";
     private String option;
-    private String sectionObligatoriness;
+    private String obligatoriness;
+    private String questionType;
     private boolean isValidYesOrNo = false;
     private boolean isValidObligatoriness = false;
+    private boolean isValidQuestionType = false;
+    private boolean isValidNumberOfOptions = false;
     private int j=0;
     private  int m=0;
+    private int z=0;
+    private int a=0;
+    private int numOfChoices;
     private final Scanner input = new Scanner(System.in);
     @Override
     protected boolean doShow() {
         boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false;
-        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID;
+        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions;
         List<String> welcomeMessage = new ArrayList<>();
         String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine = "",
-                sectionObligatorinessOption, condition, repetability, questionHeader, questionText, questionObligatorinessOption, questionObligatorinessHeader, finalMessage, filePath;
+                sectionObligatorinessOption, condition, repetability, questionHeader, questionText, questionObligatorinessOption, questionMessageOption,
+                questionMessageNewLine, questionObligatorinessHeader, questionTypeOption, questionInputChoice, questionTypeInput, questionTypeOptionDescription,
+                questionSortingOptionDescription, questionScale, questionScalingOptionDescription, areDecimalsAllowed, questionFinalMessageOption, questionFinalMessage,
+                filePath, finalMessage;
 
         questionnaireID = Console.readLine("What is the questionnaire ID?");
 
@@ -81,7 +92,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
             sectionID = i+1;
 
-            sectionTitle = Console.readLine("Enter the section title.");
+            sectionTitle = Console.readLine("Enter the section number " + i+1 + " title.");
 
             sectionHeader = sectionID + ". " + sectionTitle;
 
@@ -106,7 +117,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
             }
 
             System.out.println("What is the obligatoriness of this section? (Mandatory | Optional | Condition Dependent)");
-            sectionObligatorinessOption = defineSectionObligatoriness();
+            sectionObligatorinessOption = defineObligatoriness();
 
             if(sectionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
                 condition = Console.readLine("What is the condition?");
@@ -156,12 +167,14 @@ public class CreateQuestionnaireUI extends AbstractUI {
             }while(!isValidNumQuestions);
 
             for(int l=0; l<numQuestionsPerSection; l++){
+                List<String> questionMessage = new ArrayList<>();
+
                 questionID = l+1;
 
-                questionText = Console.readLine("What is the question text?");
+                questionText = Console.readLine("What is the question number " + l+1 +" text?");
 
                 System.out.println("What is the obligatoriness of this question?");
-                questionObligatorinessOption = defineSectionObligatoriness();
+                questionObligatorinessOption = defineObligatoriness();
 
                 if(questionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
                     System.out.println("What is the condition?");
@@ -179,13 +192,98 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
                 controller.writeQuestionnaireTextFile(questionHeader, filePath);
 
+                System.out.println("Do you want to add a message to this question?");
+                questionMessageOption = yesOrNo();
 
+                if(questionMessageOption.equalsIgnoreCase("Yes") || questionMessageOption.equalsIgnoreCase("Y")){
+                    while (input.hasNextLine()) {
+                        questionMessageNewLine = input.nextLine();
+                        if (questionMessageNewLine.isEmpty()) {
+                            break;
+                        }
 
+                        questionMessage.add(questionMessageNewLine);
+                    }
+
+                    for(String queMes : questionMessage){
+                        controller.writeQuestionnaireTextFile(queMes + "\n", filePath);
+                    }
+                }
+
+                System.out.println("What is the question type?");
+                questionTypeOption = defineQuestionType();
+
+                if(questionTypeOption.equalsIgnoreCase("Single Choice") || questionTypeOption.equalsIgnoreCase("Multiple Choice")){
+                    numOfChoicesOption = defineNumberOfOptions();
+                    System.out.println("Will you like to introduce the input?");
+                    questionInputChoice = yesOrNo();
+
+                    if(questionInputChoice.equalsIgnoreCase("Yes") || questionInputChoice.equalsIgnoreCase("Y")){
+                        for(int h=0; h<numOfChoicesOption; h++){
+                            questionTypeInput = Console.readLine("Input for this option: ");
+
+                            controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + WITH_INPUT + "\n", filePath);
+
+                            controller.writeQuestionnaireTextFile(writeOptions(h+1, questionTypeInput), filePath);
+                        }
+                    }else{
+                        for(int h=0; h<numOfChoicesOption; h++){
+                            questionTypeOptionDescription = Console.readLine("Option description: ");
+
+                            controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+
+                            controller.writeQuestionnaireTextFile(writeOptions(h+1, questionTypeOptionDescription), filePath);
+                        }
+                    }
+                }else if(questionTypeOption.equalsIgnoreCase("Sorting Option")){
+                    controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+
+                    numOfSortingOptions = defineNumberOfOptions();
+
+                    for(int e=0; e<numOfSortingOptions; e++){
+                        questionSortingOptionDescription = Console.readLine("Option description: ");
+                        controller.writeQuestionnaireTextFile(writeOptions(e+1, questionSortingOptionDescription), filePath);
+                    }
+                }else if(questionTypeOption.equalsIgnoreCase("Scaling Option")){
+                    controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+
+                    questionScale = Console.readLine("What is the scale?");
+
+                    controller.writeQuestionnaireTextFile(SCALING_OPTION + questionScale + "\n", filePath);
+
+                    numOfScaleOptions = defineNumberOfOptions();
+
+                    for(int u=0; u<numOfScaleOptions; u++){
+                        questionScalingOptionDescription = Console.readLine("Option description: ");
+                        controller.writeQuestionnaireTextFile(writeOptions(u+1, questionScalingOptionDescription), filePath);
+                    }
+                }else if(questionTypeOption.equalsIgnoreCase("Numeric")){
+                    areDecimalsAllowed = yesOrNo();
+
+                    if(areDecimalsAllowed.equalsIgnoreCase("Yes") || areDecimalsAllowed.equalsIgnoreCase("Y")){
+                        controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + " " + LEFT_PARETENSIS +
+                                DECIMALS_ARE_ALLOWED + RIGHT_PARETENSIS + "\n", filePath);
+                    }else{
+                        controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+                    }
+                }else if(questionTypeOption.equalsIgnoreCase("Free Text")){
+                    controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+                }
+
+                System.out.println("Would you like to enter a final message for this question?");
+
+                questionFinalMessageOption = yesOrNo();
+
+                if(questionFinalMessageOption.equalsIgnoreCase("Yes") || questionFinalMessageOption.equalsIgnoreCase("Y")){
+                    questionFinalMessage = Console.readLine("Enter the message:");
+                    controller.writeQuestionnaireTextFile(questionFinalMessage, filePath);
+                }
             }
-
         }
 
+        finalMessage = Console.readLine("Final survey message:");
 
+        controller.writeQuestionnaireTextFile("\n\n" + finalMessage, filePath);
 
         return false;
     }
@@ -215,15 +313,15 @@ public class CreateQuestionnaireUI extends AbstractUI {
         return option;
     }
 
-    private String defineSectionObligatoriness(){
+    private String defineObligatoriness(){
         do{
             if(m > 0){
                 System.out.println(VALID_ANSWER_MESSAGE);
             }
 
-            sectionObligatoriness = Console.readLine("(Mandatory | Optional | Condition Dependent)");
+            obligatoriness = Console.readLine("(Mandatory | Optional | Condition Dependent)");
 
-            if(sectionObligatoriness.equalsIgnoreCase("Mandatory") || sectionObligatoriness.equalsIgnoreCase("Optional") || sectionObligatoriness.equalsIgnoreCase("Condition Dependent")){
+            if(obligatoriness.equalsIgnoreCase("Mandatory") || obligatoriness.equalsIgnoreCase("Optional") || obligatoriness.equalsIgnoreCase("Condition Dependent")){
                 isValidObligatoriness = true;
             }
 
@@ -232,6 +330,51 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         m = 0;
 
-        return sectionObligatoriness;
+        return obligatoriness;
+    }
+
+    private String defineQuestionType(){
+        do{
+            if(z > 0){
+                System.out.println(VALID_ANSWER_MESSAGE);
+            }
+
+            questionType = Console.readLine("(Free Text | Numeric | Single Choice | Multiple Choice | Sorting Option | Scaling Option)");
+
+            if(questionType.equalsIgnoreCase("Free Text") || questionType.equalsIgnoreCase("Numeric") || questionType.equalsIgnoreCase("Single Choice")
+                || questionType.equalsIgnoreCase("Multiple Choice") || questionType.equalsIgnoreCase("Sorting Option") || questionType.equalsIgnoreCase("Scaling Option")){
+                isValidQuestionType = true;
+            }
+
+            z++;
+        }while(!isValidQuestionType);
+
+        z = 0;
+
+        return questionType;
+    }
+
+    private Integer defineNumberOfOptions(){
+        do{
+            if(a > 0){
+                System.out.println(VALID_ANSWER_MESSAGE);
+            }
+
+            numOfChoices = Console.readInteger("How many options would you like to have? (You need, at least, one)");
+
+            if(numOfChoices >= 1){
+                isValidNumberOfOptions = true;
+            }
+
+            a++;
+        }while(!isValidNumberOfOptions);
+
+        a = 0;
+
+        return numOfChoices;
+    }
+
+    private String writeOptions(int numericID, String optionDescription){
+        return numericID + RIGHT_PARETENSIS + optionDescription + "\n";
     }
 }

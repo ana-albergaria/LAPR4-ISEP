@@ -12,7 +12,11 @@ public class WidthTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void ensureWidthIsPositive(){
+    public void ensureWidthIsPositive1(){
         Width width = new Width(0L);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureWidthIsPositive2(){
+        Width width = new Width(-1L);
     }
 }
