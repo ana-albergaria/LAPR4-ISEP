@@ -3,6 +3,8 @@ package eapli.base.app.server.order.tcp;
 import eapli.base.AppSettings;
 import eapli.base.Application;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.productmanagement.domain.Code;
+import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.shoppingcartmanagement.application.AddProductShoppingCartController;
@@ -87,9 +89,21 @@ class TcpSrvOrderThread implements Runnable {
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
                 if(clientMessageUS[1] == 3) {
-                    System.out.println("[SUCCESS] [CODE 3] Product ID received from Client");
                     String productId = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     System.out.println(productId);
+                    //CHAMAR MÉTODO CONTROLLER QUE VAI BUSCAR O PRODUCT
+                }
+
+                //asks for quantity of product to client
+                MessageUtils.writeMessageWithData((byte) 3, "Quantity: ", sOut);
+
+                //receives product id from client
+                clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS, sIn);
+
+                if(clientMessageUS[1] == 3) {
+                    String quantity = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    System.out.println(quantity);
                     //CHAMAR MÉTODO CONTROLLER QUE VAI BUSCAR O PRODUCT
                 }
 

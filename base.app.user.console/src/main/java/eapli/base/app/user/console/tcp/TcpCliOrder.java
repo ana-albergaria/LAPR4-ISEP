@@ -107,6 +107,19 @@ class TcpCliOrderThread implements Runnable {
                     MessageUtils.writeMessageWithData((byte) 3, productId, sOutData);
                 }
 
+                //receives message from server asking for quantity
+                clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS, sInData);
+
+                if(clientMessageUS[1] == 3) {
+                    //System.out.println("[INFO] Codigo da US1501 (3) enviado pelo Servidor ao Cliente");
+                    String questionServer = MessageUtils.getDataFromMessage(clientMessageUS,sInData);
+                    System.out.print(questionServer);
+                    String quantity = in.nextLine();
+
+                    MessageUtils.writeMessageWithData((byte) 3, quantity, sOutData);
+                }
+
                 /*============end of US1501============*/
 
 
