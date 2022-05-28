@@ -5,5 +5,6 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface SurveyQuestionnareRepository extends DomainRepository<String, Questionnaire> {
 
-    Iterable<Questionnaire>findALl();
+    @Override
+    Iterable<Questionnaire>findAll();
 }

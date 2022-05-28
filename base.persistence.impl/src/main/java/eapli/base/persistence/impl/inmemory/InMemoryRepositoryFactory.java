@@ -134,8 +134,8 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public SurveyQuestionnareRepository questionnarie() {
-        return null;
+    public SurveyQuestionnareRepository questionnaries() {
+        return new InMemorySurveyQuestionnaireRepository();
     }
 
     @Override

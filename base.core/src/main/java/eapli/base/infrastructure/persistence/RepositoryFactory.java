@@ -105,7 +105,7 @@ public interface RepositoryFactory {
 
     SquareRepository squares();
 
-    SurveyQuestionnareRepository questionnarie();
+    SurveyQuestionnareRepository questionnaries();
 
     /**
      *

@@ -27,6 +27,7 @@
     <class>eapli.base.ordermanagement.domain.TheTask</class>
     <class>eapli.base.shoppingcartmanagement.domain.ShoppingCart</class>
     <class>eapli.base.shoppingcartmanagement.domain.ShopCarItem</class>
+    <class>eapli.base.surveymanagement.domain.Questionnaire</class>
 
 
 
