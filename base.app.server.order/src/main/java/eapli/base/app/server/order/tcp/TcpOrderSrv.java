@@ -48,6 +48,7 @@ public class TcpOrderSrv {
 class TcpSrvOrderThread implements Runnable {
     private Socket s;
 
+
     private final ListProductDTOService service = new ListProductDTOService();
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
