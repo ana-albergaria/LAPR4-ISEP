@@ -1,5 +1,7 @@
 package eapli.base.warehousemanagement.domain;
 
+import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.representations.dto.DTOable;
 import eapli.framework.util.HashCoder;
@@ -9,7 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
-public class AGVPosition implements ValueObject, Serializable {
+public class AGVPosition implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -33,15 +35,15 @@ public class AGVPosition implements ValueObject, Serializable {
 
     public AGVPosition() {}
 
-    public Long getAGVID(){
+    public Long agvID(){
         return this.agv.getAgvID();
     }
 
-    public Long getLSquare(){
+    public Long lSquare(){
         return this.positionSquare.lSquare();
     }
 
-    public Long getWSquare() {
+    public Long wSquare() {
         return this.positionSquare.wSquare();
     }
 
@@ -61,15 +63,24 @@ public class AGVPosition implements ValueObject, Serializable {
         }
     }
 
-    public int hashCode() {
-        return (new HashCoder()).with(this.id).code();
+
+    @Override
+    public boolean sameAs(Object other) {
+        return DomainEntities.areEqual(this, other);
     }
 
+    @Override
+    public int compareTo(Long other) {
+        return DomainEntities.hashCode(this);
+    }
+
+    @Override
+    public Long identity() {
+        return this.id;
+    }
+
+    @Override
     public String toString() {
         return String.format("AGV Position: %d, %d \n", positionSquare.lSquare(), positionSquare.wSquare());
-    }
-
-    public int compareTo(final AGVPosition o) {
-        return this.id.compareTo(o.id);
     }
 }

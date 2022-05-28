@@ -139,6 +139,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public AgvPositionRepository positions() {return new InMemoryAgvPositionRepository();}
+
+    @Override
     public SignupRequestRepository signupRequests() {
         return signupRequests(null);
     }

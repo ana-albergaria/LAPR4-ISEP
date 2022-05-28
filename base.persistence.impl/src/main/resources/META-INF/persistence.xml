@@ -26,6 +26,7 @@
     <class>eapli.base.ordermanagement.domain.OrderItem</class>
     <class>eapli.base.ordermanagement.domain.TheTask</class>
     <class>eapli.base.shoppingcartmanagement.domain.ShoppingCart</class>
+    <class>eapli.base.warehousemanagement.domain.AGVPosition</class>
 
 
 

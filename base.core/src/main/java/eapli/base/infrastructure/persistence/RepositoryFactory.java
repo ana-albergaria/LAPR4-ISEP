@@ -107,6 +107,8 @@ public interface RepositoryFactory {
 
     SurveyQuestionnareRepository questionnarie();
 
+    AgvPositionRepository positions();
+
     /**
      *
      * @param autoTx

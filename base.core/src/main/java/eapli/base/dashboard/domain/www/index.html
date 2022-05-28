@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AGV Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <script src="web-dashboard.js"></script>
+</head>
+<body onload="refreshPositions()">
+<div class="header">
+    <h1>Welcome to the AGV Dashboard!</h1>
+    <p>A website created by 2DF G01.</p>
+</div>
+
+<div class="box">
+    <div class="insidebox">
+        <div class="title">
+            <p>AGVS and their positions:</p>
+        </div>
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table class="styled-class">
+                    <thead>
+                    <tr>
+                        <th>AGV ID</th>
+                        <th>Width Square</th>
+                        <th>Length Square</th>
+                    </tr>
+                    </thead>
+                    <tbody id="agvs">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

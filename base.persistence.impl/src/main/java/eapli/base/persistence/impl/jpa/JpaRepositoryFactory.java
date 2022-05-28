@@ -132,6 +132,9 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public AgvPositionRepository positions(){return new JpaAgvPositionRepository();}
+
+    @Override
     public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
         return new JpaSignupRequestRepository(autoTx);
     }
