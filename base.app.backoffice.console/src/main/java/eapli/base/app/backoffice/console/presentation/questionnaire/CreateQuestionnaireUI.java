@@ -5,6 +5,7 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,14 +36,16 @@ public class CreateQuestionnaireUI extends AbstractUI {
     private final Scanner input = new Scanner(System.in);
     @Override
     protected boolean doShow() {
-        boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false;
+        boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false, isValidQuestionnaire = false;;
         int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions;
         List<String> welcomeMessage = new ArrayList<>();
-        String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine = "",
+        HashMap<String, String> sectionsAndQuestions = new HashMap<>();
+        String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine,
                 sectionObligatorinessOption, condition, repetability, questionHeader, questionText, questionObligatorinessOption, questionMessageOption,
                 questionMessageNewLine, questionObligatorinessHeader, questionTypeOption, questionInputChoice, questionTypeInput, questionTypeOptionDescription,
                 questionSortingOptionDescription, questionScale, questionScalingOptionDescription, areDecimalsAllowed, questionFinalMessageOption, questionFinalMessage,
                 filePath, finalMessage;
+        StringBuilder welcomeMessageParam = new StringBuilder();
 
         questionnaireID = Console.readLine("What is the questionnaire ID?");
 
@@ -58,6 +61,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
         welcomeMessageOption = yesOrNo();
 
         if(welcomeMessageOption.equalsIgnoreCase("Yes") || welcomeMessageOption.equalsIgnoreCase("Y")){
+            System.out.println("Message: ");
             while (input.hasNextLine()) {
                 welcomeMessageNewLine = input.nextLine();
                 if (welcomeMessageNewLine.isEmpty()) {
@@ -68,6 +72,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
             for(String welMes : welcomeMessage){
                 controller.writeQuestionnaireTextFile(welMes + "\n", filePath);
+                welcomeMessageParam.append(welMes);
             }
         }
 
@@ -77,7 +82,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 System.out.println(VALID_ANSWER_MESSAGE);
             }
 
-            numSections = Console.readInteger("Number os Sections");
+            numSections = Console.readInteger("Number of Sections");
 
             if (numSections >= 1){
                 isValidNumSections = true;
@@ -92,16 +97,17 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
             sectionID = i+1;
 
-            sectionTitle = Console.readLine("Enter the section number " + i+1 + " title.");
+            sectionTitle = Console.readLine("Enter the section number " + (i+1) + " title.");
 
-            sectionHeader = sectionID + ". " + sectionTitle;
+            sectionHeader = sectionID + ". " + sectionTitle + "\n";
 
-            controller.writeQuestionnaireTextFile(sectionHeader + "\n", filePath);
+            controller.writeQuestionnaireTextFile(sectionHeader, filePath);
 
             System.out.println("Do you want to add a message to this section?");
             sectionMessageOption = yesOrNo();
 
             if(sectionMessageOption.equalsIgnoreCase("Yes") || sectionMessageOption.equalsIgnoreCase("Y")){
+                System.out.println("Message: ");
                 while (input.hasNextLine()) {
                     sectionMessageNewLine = input.nextLine();
                     if (sectionMessageNewLine.isEmpty()) {
@@ -122,10 +128,10 @@ public class CreateQuestionnaireUI extends AbstractUI {
             if(sectionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
                 condition = Console.readLine("What is the condition?");
                 //Escrever no ficheiro .txt SECTION_OBLIGATORINESS + obligatoriness + ":" + condition
-                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption + ":" + condition + "\n", filePath);
+                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + (sectionObligatorinessOption + ":" + condition).toLowerCase() + "\n", filePath);
             }else {
                 //Escrever no ficheiro .txt SECTION_OBLIGATORINESS + obligatoriness
-                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption + "\n", filePath);
+                controller.writeQuestionnaireTextFile(SECTION_OBLIGATORINESS + sectionObligatorinessOption.toLowerCase() + "\n", filePath);
             }
 
             System.out.println("Is this section repeatable?");
@@ -171,7 +177,9 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
                 questionID = l+1;
 
-                questionText = Console.readLine("What is the question number " + l+1 +" text?");
+                questionText = Console.readLine("What is the question number " + (l+1) +" text?");
+
+                sectionsAndQuestions.put(sectionTitle + (l+1), questionText);
 
                 System.out.println("What is the obligatoriness of this question?");
                 questionObligatorinessOption = defineObligatoriness();
@@ -179,9 +187,9 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 if(questionObligatorinessOption.equalsIgnoreCase("Condition Dependent")){
                     System.out.println("What is the condition?");
                     condition = Console.readLine("");
-                    questionObligatorinessHeader = sectionObligatorinessOption + ":" + condition;
+                    questionObligatorinessHeader = (sectionObligatorinessOption + ":" + condition).toLowerCase();
                 }else {
-                    questionObligatorinessHeader = sectionObligatorinessOption;
+                    questionObligatorinessHeader = sectionObligatorinessOption.toLowerCase();
                 }
 
                 if(questionText.contains("?")){
@@ -196,6 +204,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 questionMessageOption = yesOrNo();
 
                 if(questionMessageOption.equalsIgnoreCase("Yes") || questionMessageOption.equalsIgnoreCase("Y")){
+                    System.out.println("Message: ");
                     while (input.hasNextLine()) {
                         questionMessageNewLine = input.nextLine();
                         if (questionMessageNewLine.isEmpty()) {
@@ -219,18 +228,16 @@ public class CreateQuestionnaireUI extends AbstractUI {
                     questionInputChoice = yesOrNo();
 
                     if(questionInputChoice.equalsIgnoreCase("Yes") || questionInputChoice.equalsIgnoreCase("Y")){
+                        controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + WITH_INPUT + "\n", filePath);
                         for(int h=0; h<numOfChoicesOption; h++){
-                            questionTypeInput = Console.readLine("Input for this option: ");
-
-                            controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + WITH_INPUT + "\n", filePath);
+                            questionTypeInput = Console.readLine((h+1) + "- Option description: ");
 
                             controller.writeQuestionnaireTextFile(writeOptions(h+1, questionTypeInput), filePath);
                         }
                     }else{
+                        controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
                         for(int h=0; h<numOfChoicesOption; h++){
-                            questionTypeOptionDescription = Console.readLine("Option description: ");
-
-                            controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
+                            questionTypeOptionDescription = Console.readLine((h+1) + "- Option description: ");
 
                             controller.writeQuestionnaireTextFile(writeOptions(h+1, questionTypeOptionDescription), filePath);
                         }
@@ -241,7 +248,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                     numOfSortingOptions = defineNumberOfOptions();
 
                     for(int e=0; e<numOfSortingOptions; e++){
-                        questionSortingOptionDescription = Console.readLine("Option description: ");
+                        questionSortingOptionDescription = Console.readLine((e+1) + "- Option description: ");
                         controller.writeQuestionnaireTextFile(writeOptions(e+1, questionSortingOptionDescription), filePath);
                     }
                 }else if(questionTypeOption.equalsIgnoreCase("Scaling Option")){
@@ -258,6 +265,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
                         controller.writeQuestionnaireTextFile(writeOptions(u+1, questionScalingOptionDescription), filePath);
                     }
                 }else if(questionTypeOption.equalsIgnoreCase("Numeric")){
+                    System.out.println("Are decimals allowed?");
                     areDecimalsAllowed = yesOrNo();
 
                     if(areDecimalsAllowed.equalsIgnoreCase("Yes") || areDecimalsAllowed.equalsIgnoreCase("Y")){
@@ -270,20 +278,39 @@ public class CreateQuestionnaireUI extends AbstractUI {
                     controller.writeQuestionnaireTextFile( QUESTION_TYPE + questionTypeOption + "\n", filePath);
                 }
 
-                System.out.println("Would you like to enter a final message for this question?");
+                /*System.out.println("Would you like to enter a final message for this question?");
 
                 questionFinalMessageOption = yesOrNo();
 
                 if(questionFinalMessageOption.equalsIgnoreCase("Yes") || questionFinalMessageOption.equalsIgnoreCase("Y")){
                     questionFinalMessage = Console.readLine("Enter the message:");
-                    controller.writeQuestionnaireTextFile(questionFinalMessage, filePath);
-                }
+                    controller.writeQuestionnaireTextFile(questionFinalMessage + "\n", filePath);
+                }*/
+
+                controller.writeQuestionnaireTextFile("\n", filePath);
             }
+
+            controller.writeQuestionnaireTextFile("\n", filePath);
         }
 
         finalMessage = Console.readLine("Final survey message:");
 
-        controller.writeQuestionnaireTextFile("\n\n" + finalMessage, filePath);
+        controller.writeQuestionnaireTextFile("\n" + finalMessage, filePath);
+
+        System.out.printf("Questionnaire %s successfully created!\n\n", questionnaireTitle);
+
+        System.out.println("The system will now validate if the questionnaire is valid...");
+
+        isValidQuestionnaire = controller.isQuestionnaireValid(filePath);
+
+        if(isValidQuestionnaire){
+            System.out.println("This questionnaire is valid! It will now be saved.");
+            controller.registerQuestionnaire(questionnaireID, questionnaireTitle, welcomeMessageParam.toString(), finalMessage);
+        }else{
+            System.out.println("This questionnaire is not valid, thus it will not be saved.");
+        }
+
+        System.out.println("All done.");
 
         return false;
     }

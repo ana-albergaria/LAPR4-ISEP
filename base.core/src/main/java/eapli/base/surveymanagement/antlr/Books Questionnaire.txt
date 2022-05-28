@@ -1,0 +1,42 @@
+BOOKS21-22 Books Questionnaire
+
+1. About you
+Section Obligatoriness: Optional
+Repeatability: 2
+1. Where are you from?(Optional)
+Type: free text
+
+2. How old are you?(Optional)
+Type: numeric
+
+3. What is your gender?(Optional)
+Type: single choice
+1)Male
+2)Female
+3)Other
+
+
+2. Product Feedback
+Section Obligatoriness: mandatory
+1. Would you recommend our products to another person?(mandatory)
+Type: single choice
+1)Yes
+2)No
+3)Maybe
+
+2. How would you rate our products?(mandatory)
+Type: scaling option
+Scale: Very bad, bad, neutral, good, very good
+1)Our book selection is...
+
+3. How do you find our prices?(mandatory)
+Type: multiple choice with input
+1)Very cheap
+2)Cheap
+3)Normal
+4)Expensive
+5)Very expensive
+
+
+
+Thanks for answering our book questionnaire

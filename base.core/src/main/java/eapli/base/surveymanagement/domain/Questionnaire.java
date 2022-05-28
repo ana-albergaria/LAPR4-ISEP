@@ -31,17 +31,17 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private String finalMessage;
 
-    @ElementCollection
+    /*@ElementCollection
     @CollectionTable(name = "sections", joinColumns = {@JoinColumn(name = "questionnaire_code", referencedColumnName = "code")})
     @MapKeyColumn(name = "section")
     @Column(name = "question")
-    private HashMap<String, String> sectionsAndQuestions = new HashMap<>();
+    private HashMap<String, String> sectionsAndQuestions = new HashMap<>();*/
 
-    public Questionnaire(final String code, final String title, final String welcomeMessage, final HashMap<String,String> sectionsAndQuestions, final String finalMessage){
+    public Questionnaire(final String code, final String title, final String welcomeMessage, /*final HashMap<String,String> sectionsAndQuestions,*/ final String finalMessage){
         this.code=code;
         this.title=title;
         this.welcomeMessage=welcomeMessage;
-        this.sectionsAndQuestions=sectionsAndQuestions;
+        //this.sectionsAndQuestions=sectionsAndQuestions;
         this.finalMessage=finalMessage;
     }
 
@@ -65,9 +65,9 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
         return finalMessage;
     }
 
-    public HashMap<String, String> sectionsAndQuestions() {
+    /*public HashMap<String, String> sectionsAndQuestions() {
         return sectionsAndQuestions;
-    }
+    }*/
 
     @Override
     public boolean equals(final Object o){

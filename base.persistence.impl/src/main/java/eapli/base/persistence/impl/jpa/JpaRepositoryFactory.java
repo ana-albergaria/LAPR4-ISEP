@@ -133,8 +133,8 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public SurveyQuestionnareRepository questionnarie() {
-        return null;
+    public SurveyQuestionnareRepository questionnaries() {
+        return new JpaSurveyQuestionnaireRepository();
     }
 
     @Override
