@@ -17,7 +17,7 @@ public class ShopCarItem implements AggregateRoot<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long orderItemId;
+    private Long shopCarId;
 
     private int quantity;
 
@@ -53,7 +53,7 @@ public class ShopCarItem implements AggregateRoot<Long>, Serializable {
 
     @Override
     public Long identity() {
-        return this.orderItemId;
+        return this.shopCarId;
     }
 
 }
