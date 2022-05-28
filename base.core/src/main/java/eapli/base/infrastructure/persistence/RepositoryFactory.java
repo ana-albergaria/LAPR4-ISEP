@@ -26,6 +26,7 @@ import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
+import eapli.base.shoppingcartmanagement.repositories.ShopCarItemRepository;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
@@ -89,6 +90,8 @@ public interface RepositoryFactory {
 
     ShoppingCartRepository shoppingCarts();
 
+    ShopCarItemRepository shopCarItems();
+
     AGVRepository agvs();
 
     PlantRepository plants();
@@ -105,7 +108,7 @@ public interface RepositoryFactory {
 
     SquareRepository squares();
 
-    SurveyQuestionnareRepository questionnarie();
+    SurveyQuestionnareRepository questionnaries();
 
     AgvPositionRepository positions();
 

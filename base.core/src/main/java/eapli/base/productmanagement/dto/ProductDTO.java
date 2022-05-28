@@ -27,10 +27,9 @@ public class ProductDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ProductDTO{" +
-                "productUniqueInternalCode='" + productUniqueInternalCode + '\'' +
-                ", productShortDescription='" + productShortDescription + '\'' +
-                ", price=" + price +
-                '}';
+        return "------ Product ------\n" +
+                "Unique Internal Code=" + productUniqueInternalCode +
+                "\nShort Description=" + productShortDescription +
+                "\nPrice=" + price;
     }
 }

@@ -1,6 +1,7 @@
 package eapli.base.surveymanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.surveymanagement.antlr.SurveyMain;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
@@ -26,7 +27,7 @@ public class CreateQuestionnaireController {
     /**
      *
      */
-    private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnarie();
+    private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnaries();
 
     private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/";
     private final String FILE_EXTENSION = ".txt";
@@ -39,11 +40,11 @@ public class CreateQuestionnaireController {
      * @param sectionsAndQuestions
      * @param finalMessage
      */
-    public void createQuestionnaire(String code,String title,String welcomeMessage, HashMap<String,String> sectionsAndQuestions,String finalMessage){
+    public void registerQuestionnaire(String code, String title, String welcomeMessage, /*HashMap<String,String> sectionsAndQuestions,*/ String finalMessage){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER);
 
-        final var questionnaire = new Questionnaire(code, title, welcomeMessage, sectionsAndQuestions,finalMessage);
+        final var questionnaire = new Questionnaire(code, title, welcomeMessage, /*sectionsAndQuestions,*/finalMessage);
 
         repository.save(questionnaire);
 
@@ -72,5 +73,9 @@ public class CreateQuestionnaireController {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public boolean isQuestionnaireValid(String filePath) {
+        return SurveyMain.parseWithVisitor(filePath);
     }
 }

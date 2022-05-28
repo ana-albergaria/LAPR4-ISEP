@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 
 public class TcpCliAGVTwin {
 
+    //client: request
+    //server: waiting for request + send response
+
     static InetAddress serverIP;
     static Socket sock;
 

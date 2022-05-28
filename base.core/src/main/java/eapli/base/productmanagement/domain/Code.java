@@ -28,7 +28,7 @@ public class Code implements ValueObject, Serializable, Comparable<Code> {
 
     public Code(final String value){
         Preconditions.nonEmpty(value, "Code should neither be null nor empty");
-        Preconditions.matches(VALID_CODE_REGEX, value, "The Code does not follow the defined format.");
+        //Preconditions.matches(VALID_CODE_REGEX, value, "The Code does not follow the defined format.");
         this.value=value;
     }
 

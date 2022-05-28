@@ -7,6 +7,7 @@ import eapli.framework.domain.model.DomainEntities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,16 +23,17 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<OrderItem> items;
+    @JoinColumn(name = "shopping_cart_id")
+    private List<ShopCarItem> items;
 
-    public ShoppingCart(final Client client, final List<OrderItem> items) {
+    public ShoppingCart(final Client client, final List<ShopCarItem> items) {
         this.client = client;
         this.items = items;
     }
 
     public ShoppingCart(final Client client) {
         this.client = client;
+        this.items = new ArrayList<>();
     }
 
     protected ShoppingCart() {
@@ -64,5 +66,9 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
                 ", client=" + client +
                 ", items=" + items +
                 '}';
+    }
+
+    public boolean addProductToShoppingCar(ShopCarItem shopCarItem) {
+        return items.add(shopCarItem);
     }
 }
