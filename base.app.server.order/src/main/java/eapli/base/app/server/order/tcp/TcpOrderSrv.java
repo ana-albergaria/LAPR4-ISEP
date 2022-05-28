@@ -115,18 +115,19 @@ class TcpSrvOrderThread implements Runnable {
                     String productUniqueInternalCode = array[2];
                     product = productRepository.ofIdentity(Code.valueOf(productUniqueInternalCode)).get();
                     client = clientRepository.findByEmail(Email.valueOf(email));
-                    System.out.println(client);
                     ShopCarItem item = new ShopCarItem(Integer.parseInt(quantidade),product);
                     if(client.isPresent()) {
                         shoppingCar = shoppingCarRepository.findShoppingCartByClient(client.get());
                         if(shoppingCar.isPresent()) {
                             shoppingCar.get().addProductToShoppingCar(item);
+                            //acrescentei no caso de ja existir -> avisar
+                            shoppingCarRepository.save(shoppingCar.get());
                         } else {
                             ShoppingCart shoppingCar1 = new ShoppingCart(client.get());
-                            shoppingCarRepository.save(shoppingCar1);
                             shoppingCar1.addProductToShoppingCar(item);
+                            shoppingCarRepository.save(shoppingCar1);
                         }
-                        shopCarItemRepository.save(item);
+                        //shopCarItemRepository.save(item);
 
                     }
 
