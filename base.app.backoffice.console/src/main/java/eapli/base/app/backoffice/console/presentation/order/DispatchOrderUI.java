@@ -55,7 +55,7 @@ public class DispatchOrderUI extends AbstractUI {
 
                 System.out.println("Please choose the Order with the corresponding code.");
 
-                for(Integer option: showAgvs.keySet()){
+                for(Integer option: showOrders.keySet()){
                     System.out.printf("%d - Order code: %d", option, showOrders.get(option).getOrderId());
                 }
 

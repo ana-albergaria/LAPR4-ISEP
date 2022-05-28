@@ -36,6 +36,12 @@ package "<<aggragte>> Task" {
     entity Task
 }
 
+entity Task <<entity>> <<root>>{
+    - <<VO>> TaskID
+    - <<VO>> OrderId
+    - <<VO>> AgvID
+}
+
 entity AGVDock <<entity>> <<root>> {
     - <<VO>> DockID
     - <<VO>> BeginSquare
@@ -84,7 +90,6 @@ enum Payment {
 AGV --> "1" Model
 AGV -----> "1" AGVDock
 AGV ------> "1..*" Order
-AGV --> "1" Task
 
 Order --> "1" Shipment : has info about
 Order --> "1" Payment : has info about
@@ -92,6 +97,8 @@ Order -> "1..*" OrderItem : composed by
 Order --> "0..1" SourceChannel
 Order --> "0..1" InteractionDate
 Order --> "0..1" AdditionalComment
-Order --> "1" Task
+
+Task --> "1" Order
+AGV --> "1" Task
 
 @enduml

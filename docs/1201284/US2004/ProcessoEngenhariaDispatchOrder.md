@@ -24,13 +24,9 @@ A interpretação feita deste requisito foi a de alterar o status de uma Order e
  
 ## 2.2. Regras de Negócio
 
-* 
+* É primeiro escolhido o AGV que está encarregue da Order que se quer despachar, só depois é que se escolhe a Order.
 
 # 3. Design
-
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
 
 
 ## 3.1. Realização da Funcionalidade
@@ -42,7 +38,8 @@ A interpretação feita deste requisito foi a de alterar o status de uma Order e
 * Controlador:
   * DispatchOrderController
 * Repository:
-  * OrderRepository
+  * AGVRepository
+  * TaskRepository
 
 
 ### 3.1.2. Diagrama de Sequência do Sistema:
@@ -52,14 +49,14 @@ A interpretação feita deste requisito foi a de alterar o status de uma Order e
 
 ### 3.1.3. Diagrama de Sequência:
 
-!->criar coluna "preparedBy" na order para poder associar a order a um agv
+
 ![US_2004_SD](SD_GetPreparedOrders.svg)
 
 
 
 ## 3.2. Diagrama de Classes
 
-
+![US_2004_CD](CD_GetPreparedOrders.svg)
 
 
 ## 3.3. Padrões Aplicados
@@ -69,10 +66,25 @@ A interpretação feita deste requisito foi a de alterar o status de uma Order e
 ## 3.4. Testes
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar a classe AlphaNumericCode com uma String vazia.
+**Teste 1:** Verificar que Task é criada.
+
+	@Test
+    public void ensureTaskIsCreated(){
+        //test
+    }
+
+**Teste 2:** Verificar que Task não pode ser criada com AGV null.
 
 	@Test(expected = IllegalArgumentException.class)
-        //to develop
+    public void ensureTaskAGVNotNull(){
+        //test
+    }
+
+**Teste 3:** Verificar que Task não pode ser criada com Order null.
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureTaskOrderNotNull(){
+        //test
     }
 
 
@@ -82,9 +94,50 @@ A interpretação feita deste requisito foi a de alterar o status de uma Order e
 
 *Recomenda-se que organize este conteúdo por subsecções.*
 
+    public Map<Integer, AGV> showAGVList(){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        Iterable<AGV> agvs = agvRepository.findAll();
+        Map<Integer, AGV> result = new HashMap<>();
+        int i=1;
+
+        for(AGV agv: agvs) {
+            result.put(i, agv);
+            i++;
+        }
+
+        return result;
+    }
+
+    public Map<Integer, TheOrder> findByAGV(AGV agv){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        Iterable<TheTask> tasks= taskRepository.findByAgv(agv);
+        Map<Integer, TheOrder> result = new HashMap<>();
+        int i=1;
+
+        for(TheTask task: tasks){
+            result.put(i, task.order());
+            i++;
+        }
+
+        return result;
+    }
+
+    public void alterOrderStatus(TheOrder order){
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
+
+        order.setStatus(OrderStatus.valueOf(OrderStatus.Status.DISPATCHED));
+
+       orderRepository.save(order);
+    }
+
+
 # 5. Integração/Demonstração
 
 *Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+
+![DEMO1](DEMO1.jpg)
 
 # 6. Observações
 

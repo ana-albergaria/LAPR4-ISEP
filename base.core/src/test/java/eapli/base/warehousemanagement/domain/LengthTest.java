@@ -12,7 +12,11 @@ public class LengthTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void ensureLengthIsPositive(){
+    public void ensureLengthIsPositive1(){
         Length length = new Length(0L);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureLengthIsPositive2(){
+        Length length = new Length(-1L);
     }
 }
