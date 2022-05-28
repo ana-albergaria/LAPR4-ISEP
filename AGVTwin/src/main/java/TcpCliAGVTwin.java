@@ -1,3 +1,5 @@
+import eapli.framework.validations.Preconditions;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -11,33 +13,21 @@ public class TcpCliAGVTwin {
     static InetAddress serverIP;
     static Socket sock;
 
-    public static void main(String args[]) throws Exception {
+    static String address;
+
+    public TcpCliAGVTwin(String address){
+        Preconditions.nonEmpty(address, "Server IPv4/IPv6 address or DNS name is required");
+        this.address=address;
+        new Thread(new TcpCliAGVTwinThread(address)).start();
+    }
+
+    public static void main(String args[]) {
         if(args.length!=1){
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
         }
+        new Thread(new TcpCliAGVTwinThread(args[0])).start();
 
-        try{
-            serverIP = InetAddress.getByName(args[0]);
-        }
-        catch(UnknownHostException ex){
-            System.out.println("Invalid server specified: " + args[0]);
-            System.exit(1);
-        }
-
-        try{
-            sock = new Socket(serverIP, 2400);
-        }
-        catch(IOException ex){
-            System.out.println("Failed to establish TCP connection");
-            System.exit(1);
-        }
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-        DataInputStream sIn = new DataInputStream(sock.getInputStream());
-
-        sock.close();
     }
 
 
@@ -45,11 +35,9 @@ public class TcpCliAGVTwin {
 
 class TcpCliAGVTwinThread implements Runnable {
     private final String ip;
-    private final Integer port;
 
-    public TcpCliAGVTwinThread(String ip, Integer port) {
+    public TcpCliAGVTwinThread(String ip) {
         this.ip = ip;
-        this.port = port;
     }
 
     public void run() {
@@ -65,13 +53,13 @@ class TcpCliAGVTwinThread implements Runnable {
         }
 
         try {
-            sock = new Socket(this.ip, port); }
+            sock = new Socket(this.ip, 2400); }
         catch(IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);
         }
 
-        System.out.println("Connected to: " + this.ip);
+        System.out.println("Connected to: " + this.ip + ":" + 2020);
 
         try {
 
@@ -88,7 +76,9 @@ class TcpCliAGVTwinThread implements Runnable {
             byte[] serverMessage = sInData.readNBytes(4);
             if (serverMessage[1] == 2) {
 
-                //Mandar um pedido para o servido -> codigo: 1 (Fim)
+                //US5002
+
+                //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                 sOutData.write(clienteMessageEnd);
                 sOutData.flush();
@@ -114,4 +104,7 @@ class TcpCliAGVTwinThread implements Runnable {
             }
         }
     }
+
+    //metodos necessarios (ex: private void)
+
 }
