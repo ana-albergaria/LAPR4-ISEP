@@ -82,16 +82,23 @@ class TcpSrvOrderThread implements Runnable {
                 sOutputObject.flush();
 
                 //asks for product id to client
-                MessageUtils.writeMessageWithData((byte) 3, "Product ID: ", sOut);
+                MessageUtils.writeMessageWithData((byte) 3, "Product Code: ", sOut);
 
                 //receives product id from client
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
                 if(clientMessageUS[1] == 3) {
-                    String productId = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
-                    System.out.println(productId);
-                    //CHAMAR MÉTODO CONTROLLER QUE VAI BUSCAR O PRODUCT
+                    String productCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    System.out.println(productCode);
+                    boolean productExists = theController.verifyProductById(productCode);
+                    if(!productExists) {
+                        //sends message to client saying that there's no product with that id
+                        MessageUtils.writeMessageWithData((byte) 3, "Ther.", sOut);
+                        System.exit(0);
+                    } else {
+                        MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
+                    }
                 }
 
                 //asks for quantity of product to client

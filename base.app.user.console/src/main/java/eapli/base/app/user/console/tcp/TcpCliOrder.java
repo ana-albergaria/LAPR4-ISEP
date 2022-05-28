@@ -107,6 +107,15 @@ class TcpCliOrderThread implements Runnable {
                     MessageUtils.writeMessageWithData((byte) 3, productId, sOutData);
                 }
 
+                //receives confirmation from server that the product exists/does not exist
+                clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS, sInData);
+
+                if(clientMessageUS[1] == 3) {
+                    String productExists = MessageUtils.getDataFromMessage(clientMessageUS,sInData);
+                    System.out.println(productExists);
+                }
+
                 //receives message from server asking for quantity
                 clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sInData);

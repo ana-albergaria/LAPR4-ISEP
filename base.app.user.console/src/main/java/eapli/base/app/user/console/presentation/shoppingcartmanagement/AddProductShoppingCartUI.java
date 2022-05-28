@@ -11,6 +11,7 @@ import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.shoppingcartmanagement.application.AddProductShoppingCartController;
+import eapli.base.shoppingcartmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcartmanagement.domain.ShoppingCart;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
 import eapli.framework.io.util.Console;
@@ -32,12 +33,12 @@ public class AddProductShoppingCartUI extends ClientUserBaseUI {
 
         ProductRepository productRepository = PersistenceContext.repositories().products();
         Product product = productRepository.ofIdentity(Code.valueOf("lmsp.00001")).get();
-        OrderItem orderItem = new OrderItem(3, product);
-        List<OrderItem> list = new ArrayList<>();
+        ShopCarItem orderItem = new ShopCarItem(3, product);
+        List<ShopCarItem> list = new ArrayList<>();
         list.add(orderItem);
-        //ShoppingCart shoppingCart = new ShoppingCart(client.get(), list);
+        ShoppingCart shoppingCart = new ShoppingCart(client.get(), list);
         ShoppingCartRepository shoppingCartRepository = PersistenceContext.repositories().shoppingCarts();
-        //shoppingCartRepository.save(shoppingCart);
+        shoppingCartRepository.save(shoppingCart);
 
         
         ShoppingCart shoppingCart2 = shoppingCartRepository.findShoppingCartByClient(client.get()).get();

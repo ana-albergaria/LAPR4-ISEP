@@ -22,10 +22,10 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<OrderItem> items;
+    @JoinColumn(name = "shopping_cart_id")
+    private List<ShopCarItem> items;
 
-    public ShoppingCart(final Client client, final List<OrderItem> items) {
+    public ShoppingCart(final Client client, final List<ShopCarItem> items) {
         this.client = client;
         this.items = items;
     }
