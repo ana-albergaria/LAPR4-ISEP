@@ -10,7 +10,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Embeddable
+@Entity
 public class AGVPosition implements AggregateRoot<Long>, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class AGVPosition implements AggregateRoot<Long>, Serializable {
     private Square positionSquare;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "AGVID", referencedColumnName = "agvID")
+    @JoinColumn(name = "AGVID", referencedColumnName = "ID")
     private AGV agv;
 
     public AGVPosition(Square positionSquare, AGV agv){
