@@ -18,6 +18,7 @@ public class DashboardUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+        //this.controller.getAgvs(8);
         String ipAddressOption = Console.readLine("Do you want to connect to a Local Server or an Cloud Server? (Local | Cloud)");
         String ipAddress = "";
 
@@ -28,12 +29,12 @@ public class DashboardUI extends AbstractUI {
         }
 
         this.controller.getPositions(6, ipAddress);
-        this.controller.getAgvs(8, ipAddress);
+        //this.controller.getAgvs(8, ipAddress);
         this.controller.showDashboard();
 
         URI uri;
         try {
-            uri = new URI("https://localhost:55090/");
+            uri = new URI("http:127.0.0.1:55090/");
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
