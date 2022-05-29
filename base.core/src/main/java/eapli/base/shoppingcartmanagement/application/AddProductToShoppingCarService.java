@@ -1,6 +1,7 @@
 package eapli.base.shoppingcartmanagement.application;
 
 import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,21 +14,23 @@ import java.util.Iterator;
 
 public class AddProductToShoppingCarService {
 
-    private InetAddress serverIP;
-    private Socket sock;
+    private static class ClientSocket {
+        private Socket sock;
+        private InetAddress serverIP;
+        private DataOutputStream sOutData;
+        private DataInputStream sInData;
 
-    public boolean allProducts(){
-        try {
+        public void connect(final String address, final int port) throws IOException {
 
             try {
-                serverIP = InetAddress.getByName("localhost");
+                serverIP = InetAddress.getByName(address);
             } catch (UnknownHostException ex) {
                 System.out.println("Invalid server specified: " + serverIP);
                 System.exit(1);
             }
 
             try {
-                sock = new Socket(serverIP, 9999); }
+                sock = new Socket(serverIP, port); }
             catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
@@ -35,26 +38,44 @@ public class AddProductToShoppingCarService {
 
             System.out.println("Connected to: " + serverIP + ":" + 9999);
 
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
+        }
+
+        public DataOutputStream dataOutputStream() {
+            return this.sOutData;
+        }
+
+        public DataInputStream dataInputStream() {
+            return this.sInData;
+        }
+
+        public Socket sock() {
+            return this.sock;
+        }
+
+        public void stop() throws IOException {
+            sock.close();
+        }
+
+    }
+
+
+
+    public boolean allProducts(){
+        try {
+
+            final var socket = new ClientSocket();
+            socket.connect(getAddress(), getPort());
+
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
-
-                    byte[] clientMessage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
-                    sOutData.write(clientMessage);
-                    sOutData.flush();
+                    MessageUtils.writeMessage((byte) 4, socket.sOutData);
 
                     // mostrar os produtos existentes
-                    ObjectInputStream sInputObject = new ObjectInputStream(sock.getInputStream());
+                    ObjectInputStream sInputObject = new ObjectInputStream(socket.sock().getInputStream());
                     Iterable<ProductDTO> productCatalog = (Iterable<ProductDTO>) sInputObject.readObject();
 
                     System.out.println("######## Produtos Existentes em Catálogo ########");
@@ -68,16 +89,8 @@ public class AddProductToShoppingCarService {
                     System.out.println();
 
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
 
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
@@ -90,7 +103,7 @@ public class AddProductToShoppingCarService {
                 System.out.println("==> ERROR: Falha durante a troca de informação com o server");
             } finally {
                 try {
-                    sock.close();
+                    socket.stop();
                 } catch (IOException e) {
                     System.out.println("==> ERROR: Falha a fechar o socket");
                 }
@@ -107,52 +120,24 @@ public class AddProductToShoppingCarService {
     public boolean findByUniqueInternalCode(String productUniqueInternalCode) {
         try {
 
-            try {
-                serverIP = InetAddress.getByName("localhost");
-            } catch (UnknownHostException ex) {
-                System.out.println("Invalid server specified: " + serverIP);
-                System.exit(1);
-            }
-
-            try {
-                sock = new Socket(serverIP, 9999); }
-            catch(IOException ex) {
-                System.out.println("Failed to establish TCP connection");
-                System.exit(1);
-            }
-
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
+            final var socket = new ClientSocket();
+            socket.connect(getAddress(), getPort());
 
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
-
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
                     //enviar produto escolhido e verificar se existe
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, socket.sOutData);
                     byte[] clientMessageUS = new byte[4];
-                    eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sInData);
+                    MessageUtils.readMessage(clientMessageUS, socket.sInData);
 
                     if(clientMessageUS[1] == 3) {
-                        String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sInData);
+                        String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,socket.sInData);
                         if(!productExists.equals("[SUCCESS] Product found!")){
-                            //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                            byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                            sOutData.write(clienteMessageEnd);
-                            sOutData.flush();
 
-                            byte[] serverMessageEnd = sInData.readNBytes(4);
-                            if (serverMessageEnd[1] == 2) {
-                                sock.close();
+                            if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                                socket.stop();
 
                             } else {
                                 System.out.println("==> ERROR: Erro no pacote do Servidor");
@@ -162,14 +147,8 @@ public class AddProductToShoppingCarService {
                         }
                     }
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
 
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
@@ -182,7 +161,7 @@ public class AddProductToShoppingCarService {
                 System.out.println("==> ERROR: Falha durante a troca de informação com o server");
             } finally {
                 try {
-                    sock.close();
+                    socket.stop();
                 } catch (IOException e) {
                     System.out.println("==> ERROR: Falha a fechar o socket");
                 }
@@ -201,48 +180,18 @@ public class AddProductToShoppingCarService {
 
         try {
 
-            try {
-                serverIP = InetAddress.getByName("localhost");
-            } catch (UnknownHostException ex) {
-                System.out.println("Invalid server specified: " + serverIP);
-                System.exit(1);
-            }
-
-            try {
-                sock = new Socket(serverIP, 9999); }
-            catch(IOException ex) {
-                System.out.println("Failed to establish TCP connection");
-                System.exit(1);
-            }
-
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
+            final var socket = new ClientSocket();
+            socket.connect(getAddress(), getPort());
 
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
-                DataInputStream sInData = new DataInputStream(sock.getInputStream());
-
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
                     String info = quantidade + " " + clientEmail + " " + uniqueInternalCode;
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 5, info, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 5, info, socket.sOutData);
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
-                        sock.close();
-
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
 
@@ -254,7 +203,7 @@ public class AddProductToShoppingCarService {
                 System.out.println("==> ERROR: Falha durante a troca de informação com o server");
             } finally {
                 try {
-                    sock.close();
+                    socket.stop();
                 } catch (IOException e) {
                     System.out.println("==> ERROR: Falha a fechar o socket");
                 }
@@ -266,5 +215,15 @@ public class AddProductToShoppingCarService {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    private int getPort() {
+        // TODO read from config file
+        return 9999;
+    }
+
+    private String getAddress() {
+        // TODO read from config file
+        return "localhost";
     }
 }

@@ -1,3 +1,5 @@
+package cli;
+
 import eapli.framework.validations.Preconditions;
 
 import java.io.*;
@@ -53,7 +55,7 @@ class TcpCliAGVTwinThread implements Runnable {
         }
 
         try {
-            sock = new Socket(this.ip, 2400); }
+            sock = new Socket(this.ip, 2807); }
         catch(IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);

@@ -10,6 +10,12 @@ public class MessageUtils {
         sIn.read(message, 0, 4);
     }
 
+    public static void writeMessage(byte code, DataOutputStream sOut) throws IOException {
+        byte[] message = {(byte) 0, code, (byte) 0, (byte) 0};
+        sOut.write(message);
+        sOut.flush();
+    }
+
     public static String getDataFromMessage(byte[] message, DataInputStream sIn) throws IOException {
         String data;
 
@@ -31,6 +37,27 @@ public class MessageUtils {
         sOut.write(message, 0, 4);
         sOut.write(data,0,dataToSend.length());
         sOut.flush();
+    }
+
+    public static boolean testCommunicationWithServer(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 0 (Teste)
+        MessageUtils.writeMessage((byte) 0, sOut);
+
+        //Esperar a resposta do servidor a dizer que entendeu a mensagem
+        byte[] serverMessage = new byte[4];
+        MessageUtils.readMessage(serverMessage, sIn);
+
+        return serverMessage[1] == 2;
+    }
+
+    public static boolean wantsToExit(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 1 (Fim)
+        MessageUtils.writeMessage((byte) 1, sOut);
+
+        byte[] serverMessageEnd = new byte[4];
+        MessageUtils.readMessage(serverMessageEnd, sIn);
+
+        return serverMessageEnd[1] == 2;
     }
 
 

@@ -1,4 +1,6 @@
-import eapli.base.productmanagement.dto.ProductDTO;
+package srv;
+
+import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,12 +10,25 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-class TcpSrvAGVTwin {
+public class TcpSrvAGVTwin {
 
     //client: request
     //server: waiting for request + send response
 
     static ServerSocket sock;
+
+    private String ipAddress;
+    private Integer port;
+    private InetAddress address;
+    private Socket socket;
+
+    public TcpSrvAGVTwin(String ipAddress, int port) throws IOException {
+        this.ipAddress = ipAddress;
+        this.port = port;
+        this.address = InetAddress.getByName(this.ipAddress);
+        this.socket = new Socket(this.address, this.port);
+        new Thread(new TcpSrvAGVTwinThread(socket)).start();
+    }
 
     public static void main(String args[]) throws Exception {
         Socket cliSock;
@@ -63,18 +78,24 @@ class TcpSrvAGVTwinThread implements Runnable {
                     " disconnected");
             s.close();*/
 
-            byte[] clientMessage = sIn.readNBytes(4);
+            byte[] clientMessage = new byte[4];
+            MessageUtils.readMessage(clientMessage,sIn);
 
             if (clientMessage[1] == 0) {
                 System.out.println("[SUCCESS] Código de Teste (0) do Cliente recebido.");
 
-                byte[] serverMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+                //byte[] serverMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
-                sOut.write(serverMessage);
+                MessageUtils.writeMessage((byte) 2, sOut);
+
+                byte[] clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS, sIn);
+
+                /*sOut.write(serverMessage);
                 sOut.flush();
 
                 byte[] clientMessageUS = new byte[4];
-                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);
+                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);*/
 
                 //enviar a localização dos agvs
                 if(clientMessageUS[1] == 6) {
@@ -86,16 +107,19 @@ class TcpSrvAGVTwinThread implements Runnable {
                     sOutputObject.flush();
                 }
 
-                //receber o comando para is buscar produtos
+                //receber o comando para is buscar produtos ??
 
-                byte[] clientMessageEnd = sIn.readNBytes(4);
+                //byte[] clientMessageEnd = sIn.readNBytes(4);
+                byte[] clientMessageEnd = new byte[4];
+                MessageUtils.readMessage(clientMessageEnd, sIn);
 
                 if (clientMessageEnd[1] == 1) {
                     System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
-                    byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+                    //byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                     System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
-                    sOut.write(serverMessageEnd);
-                    sOut.flush();
+                    MessageUtils.writeMessage((byte) 2, sOut);
+                    //sOut.write(serverMessageEnd);
+                    //sOut.flush();
                     System.out.println("[INFO] Cliente " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + " desconectado.");
                 } else {
                     System.out.println("[ERROR] Pacote do Cliente invalido.");
