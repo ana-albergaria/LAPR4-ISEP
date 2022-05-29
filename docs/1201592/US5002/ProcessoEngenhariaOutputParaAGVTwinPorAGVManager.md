@@ -29,6 +29,7 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 * Neste sprint, para fins de demonstração, é aceitável simular o processamento de algumas das solicitações recebidas para promover alguma comunicação de saída.
 
 ![AGVManagerETwin](AGVManagerETwin.png)
+![SPOMSP](spomsp.png)
 
 
 # 3. Design
@@ -45,16 +46,27 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 
 # 4. Implementação
 
-## 4.1. Classe TcpSrvAgvManager
+## 4.1. Classe TcpCliAGVTwin
 
 
-
+    [...]
+        sOutObject.writeObject(agvsToUpdate);
+        sOutObject.flush();
+    [...]
     
 
-## 4.2. Classe TcpCliAGVTwin
+## 4.2. Classe TcpSrvAgvManager
 
     
-    
+    [...]
+        ObjectInputStream getAGVsChangedList = new ObjectInputStream(s.getInputStream());
+        List<AGV> agvsToChange = new LinkedList<>();
+        for (AGV agv : taskRepository.findAllAGV()) {
+            if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
+                agvsToChange.add(agv);
+            }
+        }
+    [...]
 
 
 # 5. Integração/Demonstração

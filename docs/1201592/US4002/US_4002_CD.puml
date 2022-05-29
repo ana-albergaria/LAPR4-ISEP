@@ -16,9 +16,6 @@ class RepositoryFactory{
 database OrderRepository{
 }
 
-database AGVRepository{
-}
-
 database TaskRepository{
 }
 

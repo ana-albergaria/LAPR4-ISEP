@@ -31,6 +31,7 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 * Neste sprint, para fins de demonstração, é aceitável simular o processamento de algumas das solicitações recebidas para promover alguma comunicação de entrada.
 
 ![AGVManagerETwin](AGVManagerETwin.png)
+![SPOMSP](spomsp.png)
 
 
 # 3. Design
@@ -50,6 +51,17 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 
 
     [...]
+        if(clientMessageUS[1] == 7){
+            ObjectOutputStream sendAGVsToChangeList = new ObjectOutputStream(s.getOutputStream());
+            [...]
+        }
+    [...]
+
+
+## 4.2. Classe TcpCliAGVTwin
+
+
+    [...]
         byte[] optionMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
         sOutData.write(optionMessage);
         sOutData.flush();
@@ -58,15 +70,7 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
         ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
         agvsToUpdate = (List<AGV>) sInObject.readObject();
         updateAgvStatus(agvsToUpdate);
-        sOutObject.writeObject(agvsToUpdate);
-        sOutObject.flush();
     [...]
-
-
-## 4.2. Classe TcpCliAGVTwin
-
-
-
 
 
 # 5. Integração/Demonstração
