@@ -110,9 +110,10 @@ class TcpSrvAgvManagerThread implements Runnable {
                 if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
                     Iterable<AGVPosition> agvPositionIterable = agvPositionRepository.findAll();
 
-                    byte[] agvPositionMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0, };
-                    //objectOutputStream.write();
+                    objectOutputStream.writeObject(agvPositionIterable);
+                    objectOutputStream.flush();
 
+                    System.out.println("Checkpoint Server");
                 }
 
                 //==============================

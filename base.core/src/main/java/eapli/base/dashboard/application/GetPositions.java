@@ -50,23 +50,23 @@ public class GetPositions {
                 sOut.flush();
 
                 byte[] serverResponse = sIn.readNBytes(4);
-                if (serverResponse[1] == 2) {
 
-                    ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
-                    ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
 
-                    positions = (Iterable<AGVPosition>) sInObject.readObject();
+                ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
+                ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
 
-                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOut.write(endMessage);
-                    sOut.flush();
+                System.out.println("Checkpoint Client");
 
-                    byte[] endResponse = sIn.readNBytes(4);
-                    if (endResponse[1] == 2) {
-                        sock.close();
-                    }
-                } else {
-                    throw new IllegalArgumentException("Couldn't retrieve the needed information!");
+                positions = (Iterable<AGVPosition>) sInObject.readObject();
+
+                System.out.println("Checkpoint Client 1");
+
+                byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                sOut.write(endMessage);
+                sOut.flush();
+                byte[] endResponse = sIn.readNBytes(4);
+                if (endResponse[1] == 2) {
+                    sock.close();
                 }
             } else {
                 throw new IllegalArgumentException("Test message wasn't successful.");
