@@ -39,5 +39,16 @@ public class MessageUtils {
         sOut.flush();
     }
 
+    public static boolean testCommunicationWithServer(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 0 (Teste)
+        MessageUtils.writeMessage((byte) 0, sOut);
+
+        //Esperar a resposta do servidor a dizer que entendeu a mensagem
+        byte[] serverMessage = new byte[4];
+        MessageUtils.readMessage(serverMessage, sIn);
+
+        return serverMessage[1] == 2;
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package eapli.base.shoppingcartmanagement.application;
 
 import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -16,6 +17,8 @@ public class AddProductToShoppingCarService {
     private static class ClientSocket {
         private Socket sock;
         private InetAddress serverIP;
+        private DataOutputStream sOutData;
+        private DataInputStream sInData;
 
         public void connect(final String address, final int port) throws IOException {
 
@@ -34,6 +37,9 @@ public class AddProductToShoppingCarService {
             }
 
             System.out.println("Connected to: " + serverIP + ":" + 9999);
+
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
         }
 
         public Socket sock() {
@@ -59,14 +65,7 @@ public class AddProductToShoppingCarService {
                 DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
                 DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
 
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
 
                     byte[] clientMessage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
                     sOutData.write(clientMessage);
