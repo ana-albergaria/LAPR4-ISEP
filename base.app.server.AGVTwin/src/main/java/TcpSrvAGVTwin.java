@@ -77,7 +77,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                 eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);
 
                 //enviar a localização dos agvs
-                if(clientMessageUS[1] == 3) {
+                if(clientMessageUS[1] == 6) {
                     ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
 
                     //... locations = ....;

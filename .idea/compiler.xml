@@ -22,6 +22,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="base.app.server.agvmanager" target="11" />
+      <module name="base.app.server.AGVTwin" target="11" />
       <module name="core" target="1.7" />
     </bytecodeTargetLevel>
   </component>

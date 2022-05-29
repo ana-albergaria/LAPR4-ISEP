@@ -59,16 +59,16 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
         return this.shoppingCartId;
     }
 
-    @Override
-    public String toString() {
-        return "ShoppingCart{" +
-                "shoppingCartId=" + shoppingCartId +
-                ", client=" + client +
-                ", items=" + items +
-                '}';
-    }
-
     public boolean addProductToShoppingCar(ShopCarItem shopCarItem) {
+        for (ShopCarItem item : items){
+            if(item.product().identity().equals(shopCarItem.product().identity())){
+                int quant = item.quantity() + shopCarItem.quantity();
+                item.setQuantity(quant);
+                return true;
+            }
+        }
         return items.add(shopCarItem);
     }
+
+
 }

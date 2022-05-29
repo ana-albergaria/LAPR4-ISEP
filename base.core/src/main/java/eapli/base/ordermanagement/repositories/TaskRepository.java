@@ -9,4 +9,7 @@ public interface TaskRepository extends DomainRepository<Long, TheTask> {
     Iterable<TheTask> findAll();
 
     Iterable<TheTask> findByAgv(AGV agv);
+
+    Iterable<AGV> findAllAGV();
+
 }

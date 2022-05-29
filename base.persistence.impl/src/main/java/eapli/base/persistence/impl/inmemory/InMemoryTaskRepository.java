@@ -32,4 +32,15 @@ public class InMemoryTaskRepository extends InMemoryDomainRepository<TheTask, Lo
         return match(e -> e.agv().equals(agv));
     }
 
+    @Override
+    public List<AGV> findAllAGV() {
+        TaskRepository repository = PersistenceContext.repositories().tasks();
+        List<AGV> list = new LinkedList<>();
+        for (TheTask task : repository.findAll()){
+            list.add(task.agv());
+        }
+        return list;
+    }
+
+
 }
