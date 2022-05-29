@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GetPositions {
     static private Socket sock;
@@ -17,7 +18,7 @@ public class GetPositions {
 
     public Iterable<AGVPosition> getPositions(int option){
 
-        Iterable<AGVPosition> positions = new ArrayList<>();
+        List<AGVPosition> positions = new ArrayList<>();
 
         try {
             serverIP = InetAddress.getByName(Application.settings().getServerIpKey());
@@ -49,17 +50,9 @@ public class GetPositions {
                 sOut.write(optionMessage);
                 sOut.flush();
 
-                byte[] serverResponse = sIn.readNBytes(4);
-
-
-                ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
                 ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
 
-                System.out.println("Checkpoint Client");
-
-                positions = (Iterable<AGVPosition>) sInObject.readObject();
-
-                System.out.println("Checkpoint Client 1");
+                positions = (List<AGVPosition>) sInObject.readObject();
 
                 byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                 sOut.write(endMessage);
