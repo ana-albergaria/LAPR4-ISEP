@@ -20,14 +20,14 @@ public class AddProductToShoppingCarService {
         public void connect(final String address, final int port) throws IOException {
 
             try {
-                serverIP = InetAddress.getByName("localhost");
+                serverIP = InetAddress.getByName(address);
             } catch (UnknownHostException ex) {
                 System.out.println("Invalid server specified: " + serverIP);
                 System.exit(1);
             }
 
             try {
-                sock = new Socket(serverIP, 9999); }
+                sock = new Socket(serverIP, port); }
             catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
@@ -262,11 +262,11 @@ public class AddProductToShoppingCarService {
 
     private int getPort() {
         // TODO read from config file
-        return 8890;
+        return 9999;
     }
 
     private String getAddress() {
         // TODO read from config file
-        return "127.0.0.1";
+        return "localhost";
     }
 }

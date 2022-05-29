@@ -54,7 +54,6 @@ class TcpSrvOrderThread implements Runnable {
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
     private final ShoppingCartRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCarts();
-    private final ShopCarItemRepository shopCarItemRepository = PersistenceContext.repositories().shopCarItems();
     private Product product;
     private Optional<Client> client;
     private Optional<ShoppingCart> shoppingCar;
