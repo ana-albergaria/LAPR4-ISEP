@@ -114,10 +114,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight();
         this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        if(this.client != null) {
+        /*if(this.client != null) {
             this.notification = new Notification(this.client.email().toString(),
                     String.format("Client Order registered", this.orderId), "Your order has been registered! Thank you, \nG1-2DF.");
-        }
+        }*/
     }
 
     public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
@@ -136,10 +136,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         this.orderWeight = obtainTotalOrderWeight();
         this.orderVolume = obtainTotalOrderVolume();
         this.status = new OrderStatus(OrderStatus.Status.TO_BE_PREPARED);
-        if(this.client != null) {
+        /*if(this.client != null) {
             this.notification = new Notification(this.client.email().toString(),
                     String.format("Client Order registered", this.orderId), "Your order has been registered! Thank you, \nG1-2DF.");
-        }
+        }*/
     }
 
     protected TheOrder() {
