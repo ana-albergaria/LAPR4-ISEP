@@ -211,5 +211,6 @@ public class AddProductToShoppingCarService {
     private String getAddress() {
         // TODO read from config file
         return "localhost";
+        //return "192.168.1.5"; -> ipv4 do terminal local windows
     }
 }

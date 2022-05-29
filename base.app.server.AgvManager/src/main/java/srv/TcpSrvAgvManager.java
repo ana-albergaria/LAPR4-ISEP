@@ -16,10 +16,7 @@ import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 class TcpSrvAgvManager {
     static ServerSocket sock;
@@ -145,33 +142,41 @@ class TcpSrvAgvManagerThread implements Runnable {
                         System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
                         number++;
                     } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
-                    service.updateAgvsStatus();
                 }*/
                 //=============================
                 //======= FIM DA US4002 =======
                 //=============================
 
+
                 //US5002: colocar AGVS designados a uma task como occupied
                 //e AGVS não designados a tasks como free ou charging
-                if (clientMessage[1] == 8){
+                if (clientMessageUS[1] == 8){
+
+                    List<AGV> agvsToChange = new LinkedList<>();
+
+
+
                     for (AGV agv : taskRepository.findAllAGV()) {
                         if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
-                            agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                            //ordersToAGVController.updateAGV(agv);
-                            agvRepository.save(agv);
+                            agvsToChange.add(agv);
+                            /*agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+                            agvRepository.save(agv);*/
                         }
                     }
                     for (AGV agv : agvRepository.findAll()) {
                         if (taskRepository.findByAgv(agv)==null){
                             if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))) {
-                                agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
+                                //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
+                                agvsToChange.add(agv);
                             } else {
-                                agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+                                //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+                                agvsToChange.add(agv);
                             }
-                            //ordersToAGVController.updateAGV(agv);
-                            agvRepository.save(agv);
+                            //agvRepository.save(agv);
                         }
                     }
+
+
                 }
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);

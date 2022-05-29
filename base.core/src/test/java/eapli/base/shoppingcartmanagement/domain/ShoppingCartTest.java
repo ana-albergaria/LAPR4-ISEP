@@ -6,9 +6,6 @@ import eapli.base.productmanagement.domain.*;
 import eapli.framework.general.domain.model.Money;
 import org.junit.jupiter.api.Test;
 
-import javax.transaction.Status;
-
-import java.util.Currency;
 import java.util.HashSet;
 import java.util.Set;
 

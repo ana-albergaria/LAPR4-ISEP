@@ -1,11 +1,13 @@
 package cli;
 
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.domain.AGV;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class TcpCliAGVTwin {
 
@@ -59,7 +61,7 @@ public class TcpCliAGVTwin {
 
     }
 
-    public void updateAgvsStatus(){
+    public void updateAgvsStatus(List<AGV> agvsToUpdate){
         try{
             final var socket = new ClientSocket();
             socket.connect(getAddress(),getPort());
