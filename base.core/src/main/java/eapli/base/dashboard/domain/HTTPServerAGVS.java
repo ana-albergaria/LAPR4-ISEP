@@ -15,10 +15,15 @@ public class HTTPServerAGVS extends Thread{
 
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
+    static  private Iterable<AGVPosition> positions;
 
-    static final int PORT = 3200;
+    static final int PORT = 55090;
 
     private static DashboardController controller;
+
+    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions) {
+        positions=agvPositions;
+    }
 
     public void setController(DashboardController ctrl){
         controller = ctrl;
@@ -26,8 +31,6 @@ public class HTTPServerAGVS extends Thread{
 
     public static void main(String[] args) throws IOException {
         Socket cliSock;
-
-        accessesCounter=0;
 
         try {
             sock = new ServerSocket(PORT);
@@ -42,18 +45,11 @@ public class HTTPServerAGVS extends Thread{
             cliSock=sock.accept();
             HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER);
             req.start();
-            incAccessesCounter();
         }
     }
 
-    private static int accessesCounter;
-
-    private static synchronized void incAccessesCounter() { accessesCounter++; }
-
     public static synchronized String showPositions( ) {
         StringBuilder htmlString = new StringBuilder();
-
-        Iterable<AGVPosition> positions = controller.getPositions(3); //tem de ser updated com as informações do Digital Twin
 
         for(AGVPosition pos: positions) {
             htmlString.append("<tr class=\"active-row\">" +

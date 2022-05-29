@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class GetPositions {
     static private Socket sock;
-    static private final byte[] ip = {(byte) 127, (byte) 0, (byte) 0, (byte) 1};
     static private InetAddress serverIP;
 
     public Iterable<AGVPosition> getPositions(int option){
@@ -21,12 +20,12 @@ public class GetPositions {
         Iterable<AGVPosition> positions = new ArrayList<>();
 
         try {
-            serverIP = InetAddress.getByAddress(ip);
+            serverIP = InetAddress.getByName(Application.settings().getServerIpKey());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
-        System.out.println("Connecting to "+ serverIP + ":" + 3200 + "/");
+        System.out.println("Connecting to "+ serverIP + ":" + 2807 );
 
         try {
             sock = new Socket(serverIP, 2807);
