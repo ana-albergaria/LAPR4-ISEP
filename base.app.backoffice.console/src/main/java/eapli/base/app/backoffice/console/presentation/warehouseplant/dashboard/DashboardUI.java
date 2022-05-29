@@ -29,7 +29,7 @@ public class DashboardUI extends AbstractUI {
         }
 
         this.controller.getPositions(6, ipAddress);
-        //this.controller.getAgvs(8, ipAddress);
+        this.controller.getAgvs(8, ipAddress);
         this.controller.showDashboard();
 
         URI uri;

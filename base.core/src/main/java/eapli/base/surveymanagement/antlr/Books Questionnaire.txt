@@ -1,15 +1,15 @@
 BOOKS21-22 Books Questionnaire
 
 1. About you
-Section Obligatoriness: Optional
+Section Obligatoriness: optional
 Repeatability: 2
-1. Where are you from?(Optional)
+1. Where are you from?(optional)
 Type: free text
 
-2. How old are you?(Optional)
+2. How old are you?(optional)
 Type: numeric
 
-3. What is your gender?(Optional)
+3. What is your gender?(optional)
 Type: single choice
 1)Male
 2)Female

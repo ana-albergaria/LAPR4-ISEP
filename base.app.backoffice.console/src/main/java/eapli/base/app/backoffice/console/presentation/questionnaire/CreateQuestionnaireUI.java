@@ -51,7 +51,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         questionnaireTitle = Console.readLine("What is the questionnaire title?");
 
-        title = questionnaireID + " " + questionnaireTitle + "\n" + "\n";
+        title = questionnaireID + " " + questionnaireTitle + "\n";
 
         filePath = controller.createQuestionnaireTextFile(questionnaireTitle);
 
