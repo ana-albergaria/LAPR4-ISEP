@@ -40,7 +40,13 @@ No âmbito desta US, são efetuados os seguintes requests:
 | 5      | Adicionar o Produto ao Carrinho de Compras|
 
 
+#5 Observações 
 
+### 5.1 Order Server na Cloud
+
+Para este Sprint, foi criado um ambiente virtual destinado à Order Server.  
+Apesar de o jar correr de forma bem sucedida nos servidores do isep, ao chamar os repositórios das bases de dados necessários à execução desta US, dá erro.  
+Será algo a resolver no próximo Sprint.
 
 
 
