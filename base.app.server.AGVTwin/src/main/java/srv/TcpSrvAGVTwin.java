@@ -109,14 +109,17 @@ class TcpSrvAGVTwinThread implements Runnable {
 
                 //receber o comando para is buscar produtos ??
 
-                byte[] clientMessageEnd = sIn.readNBytes(4);
+                //byte[] clientMessageEnd = sIn.readNBytes(4);
+                byte[] clientMessageEnd = new byte[4];
+                MessageUtils.readMessage(clientMessageEnd, sIn);
 
                 if (clientMessageEnd[1] == 1) {
                     System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
-                    byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
+                    //byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                     System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
-                    sOut.write(serverMessageEnd);
-                    sOut.flush();
+                    MessageUtils.writeMessage((byte) 2, sOut);
+                    //sOut.write(serverMessageEnd);
+                    //sOut.flush();
                     System.out.println("[INFO] Cliente " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + " desconectado.");
                 } else {
                     System.out.println("[ERROR] Pacote do Cliente invalido.");
