@@ -1,58 +1,107 @@
-# US3000 - As Project Manager, I want the team to specify a grammar allowing to express several kinds of questionnaires.
-=======================================
-
+# US3000
 
 # 1. Requisitos
 
-**US3000** - As Project Manager, I want the team to specify a grammar allowing to express several kinds of questionnaires.
+**US3000** As Project Manager, I want the team to specify a grammar allowing to express several kinds of questionnaires.
 
-# 2. Análise
+# 2. Explicação da nossa Linguagem/Gramática
 
-*Neste secção a equipa deve relatar o estudo/análise/comparação que fez com o intuito de tomar as melhores opções de design para a funcionalidade bem como aplicar diagramas/artefactos de análise adequados.*
+---
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+### Gramática desenvolvida
 
-# 3. Design
+```
+grammar questionnaire ;
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
+/********* UTILS *********/
 
-*Para além das secções sugeridas, podem ser incluídas outras.*
+alfanumerico : PALAVRA | DIGITO ;
+/* frase: the 2nd condition PALAVRA VIRGULA is for the specific case where it's adequate to only use a word and a comma, usually in the beginning of a message
+ For example: Hello,
+*/
+frase : PALAVRA (VIRGULA? ESPACO (PALAVRA|DIGITO)+)*
+       | DIGITO+ (VIRGULA? ESPACO (PALAVRA|DIGITO)+)*
+       | PALAVRA VIRGULA ;
+//title: it is a mandatory short sentence (for questionnaire and section)
+title : frase   #lengthTitle
+      ;
 
-## 3.1. Realização da Funcionalidade
+message : frase
+        | (frase NEWLINE)+ ;
 
-*Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
 
-## 3.2. Diagrama de Classes
+/********* QUESTIONNAIRE *********/
 
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
+survey : questionnaire_id ESPACO title NEWLINE message? (NEWLINE section)+ NEWLINE NEWLINE message ;
 
-## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+//id -> mandatory alphanumeric value to univocally identify a questionnaire (E.g.: "COSM22-01")
+questionnaire_id : alfanumerico+ ;
 
-## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+/********* SECTION *********/
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+section : numeric_id title NEWLINE message? 'Section Obligatoriness: ' obligatoriness (NEWLINE 'Repeatability: ' repeatability)? NEWLINE (question)+;
 
-# 4. Implementação
+numeric_id : (DIGITO)+ ;
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+obligatoriness : MANDATORY
+               | OPTIONAL
+               | CONDITION_DEPENDENT DOIS_PONTOS ESPACO frase;
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+repeatability : DIGITO+ ;
 
-# 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+/********* QUESTION *********/
 
-# 6. Observações
+question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE message?;
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
+option: numeric_id PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
+
+question_text : frase PONTO_INTERROGACAO ;
+
+type: FREE_TEXT NEWLINE
+    | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE
+    | SINGLE_CHOICE NEWLINE (option)+
+    | MULTIPLE_CHOICE NEWLINE (option)+
+    | SINGLE_CHOICE_WITH_INPUT NEWLINE (option)+
+    | MULTIPLE_CHOICE_WITH_INPUT NEWLINE (option)+
+    | SORTING_OPTION NEWLINE (option)+
+    | SCALING_OPTION NEWLINE 'Scale: ' frase NEWLINE (option)+
+    ;
+```
+
+---
+
+### Variáveis Utilizadas na Gramática desenvolvida
+
+```
+DECIMALS_ALLOWED: 'Decimal numbers are allowed!';
+SINGLE_CHOICE_WITH_INPUT: 'single choice with input';
+MULTIPLE_CHOICE_WITH_INPUT: 'multiple choice with input';
+FREE_TEXT: 'free text' ;
+NUMERIC: 'numeric' ;
+SINGLE_CHOICE: 'single choice' ;
+MULTIPLE_CHOICE: 'multiple choice' ;
+SORTING_OPTION: 'sorting option' ;
+SCALING_OPTION: 'scaling option' ;
+MANDATORY: 'mandatory';
+OPTIONAL: 'optional';
+CONDITION_DEPENDENT: 'condition dependent';
+DIGITO : [0-9] ;
+PALAVRA : [a-zA-Z]+;
+PARENTESIS_DIREITO: ')';
+PARENTESIS_ESQUERDO: '(';
+VIRGULA : ',' ;
+ESPACO : ' ' ;
+DOIS_PONTOS : ':' ;
+PONTO_INTERROGACAO : '?' ;
+PONTO_EXCLAMACAO: '!';
+NEWLINE:'\r'?'\n' ;         //return end of line
+WS : [ \t\r.?!*'-]+ -> skip ; //skip spaces, tabs, newlines
+```
+
+---
 
 
 
