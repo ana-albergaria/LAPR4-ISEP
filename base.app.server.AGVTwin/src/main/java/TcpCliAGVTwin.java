@@ -77,6 +77,11 @@ class TcpCliAGVTwinThread implements Runnable {
             if (serverMessage[1] == 2) {
 
                 //US5002
+                //FAZER SEMPRE, PORQUE OS STATUS DOS AGVS TÊM DE ESTAR ATUALIZADOS
+                //pedir ao agvmanager as tasks em que os agvs estão free
+
+                //mudar os agvs dessas tasks para occupied
+
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
