@@ -103,8 +103,9 @@ public class AssignOrderToFreeAGVUI extends AbstractUI {
         }
 
         if (selectedAGV != null && selectedOrder != null) {
+            controller.assignTask(selectedAGV, selectedOrder);
             controller.updateOrder(selectedOrder);
-            controller.updateAGV(selectedAGV);
+            //controller.updateAGV(selectedAGV); --> AGV Digital Twin is the one to update the AGV Status.
             System.out.printf("Selected AGV (ID: %d) successfully assigned to the selected Order (ID: %d). The selected Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
         } else {
             System.out.println("Error assigning the selected AGV to the selected Order. Try again.");

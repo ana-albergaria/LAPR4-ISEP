@@ -71,8 +71,8 @@ class TcpSrvAgvManagerThread implements Runnable {
     private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
 
     public void run() {
-        //long f,i,num,sum;
         InetAddress clientIP;
+        List<AGV> updatedAGVList = new LinkedList<>();
 
         clientIP=s.getInetAddress();
         System.out.println("New client connection from " + clientIP.getHostAddress() +
@@ -99,15 +99,12 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
-
                 if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
                     Iterable<AGVPosition> agvPositionIterable = agvPositionRepository.findAll();
                     List<AGVPosition> list = (List<AGVPosition>) agvPositionIterable;
                     objectOutputStream.writeObject(list);
                     objectOutputStream.flush();
-
-                    System.out.println("Checkpoint Server");
                 }
 
                 //==============================
@@ -144,9 +141,9 @@ class TcpSrvAgvManagerThread implements Runnable {
                 //======= FIM DA US4002 =======
                 //=============================
 
-
-                //2. US5002: colocar AGVS designados a uma task como occupied
-                if (clientMessageUS[1] == 8){
+                if(clientMessageUS[1] == 7){
+                    ObjectOutputStream sendAGVsToChangeList = new ObjectOutputStream(s.getOutputStream());
+                    ObjectInputStream getAGVsChangedList = new ObjectInputStream(s.getInputStream());
 
                     List<AGV> agvsToChange = new LinkedList<>();
 
@@ -156,8 +153,26 @@ class TcpSrvAgvManagerThread implements Runnable {
                         }
                     }
 
+                    sendAGVsToChangeList.writeObject(agvsToChange);
+                    sendAGVsToChangeList.flush();
+
+                    updatedAGVList = (List<AGV>) getAGVsChangedList.readObject();
+
+                    for(AGV updatedAGV : updatedAGVList){
+                        agvRepository.save(updatedAGV);
+                    }
+                }
+
+
+                //2. US5002: colocar AGVS designados a uma task como occupied
+                if (clientMessageUS[1] == 8){
+                    ObjectOutputStream sendAGVsChangedList = new ObjectOutputStream(s.getOutputStream());
                     //3. enviar lista ao agv twin client
 
+                    List<AGV> allAGVsUpdated = (List<AGV>) agvRepository.findAll();
+
+                    sendAGVsChangedList.writeObject(allAGVsUpdated);
+                    sendAGVsChangedList.flush();
                 }
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);
@@ -176,7 +191,7 @@ class TcpSrvAgvManagerThread implements Runnable {
                 System.out.println("[ERROR] Client's TCP is not valid.");
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
