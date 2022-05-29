@@ -20,7 +20,6 @@ public class SurveyMain {
             ParseTree tree = parser.survey();
             SurveyVisitor eval = new SurveyVisitor();
             eval.visit(tree);
-            System.out.println("Survey has a valid format!");
             return true;
         } catch(IOException e) {
             System.out.println("Make sure the file has the correct path");
