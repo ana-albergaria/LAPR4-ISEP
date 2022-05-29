@@ -31,7 +31,7 @@ public class TcpOrderSrv {
     public static void main(String args[]) throws Exception {
         Socket cliSock;
 
-        try { sock = new ServerSocket(9999); }
+        try { sock = new ServerSocket(10000); }
         catch(IOException ex) {
             System.out.println("Failed to open server socket");
             System.exit(1);

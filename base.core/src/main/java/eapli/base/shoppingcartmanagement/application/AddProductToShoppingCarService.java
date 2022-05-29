@@ -36,22 +36,10 @@ public class AddProductToShoppingCarService {
                 System.exit(1);
             }
 
-            System.out.println("Connected to: " + serverIP + ":" + 9999);
+            System.out.println("Connected to: " + serverIP + ":" + port);
 
             sOutData = new DataOutputStream(sock.getOutputStream());
             sInData = new DataInputStream(sock.getInputStream());
-        }
-
-        public DataOutputStream dataOutputStream() {
-            return this.sOutData;
-        }
-
-        public DataInputStream dataInputStream() {
-            return this.sInData;
-        }
-
-        public Socket sock() {
-            return this.sock;
         }
 
         public void stop() throws IOException {
@@ -75,7 +63,7 @@ public class AddProductToShoppingCarService {
                     MessageUtils.writeMessage((byte) 4, socket.sOutData);
 
                     // mostrar os produtos existentes
-                    ObjectInputStream sInputObject = new ObjectInputStream(socket.sock().getInputStream());
+                    ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
                     Iterable<ProductDTO> productCatalog = (Iterable<ProductDTO>) sInputObject.readObject();
 
                     System.out.println("######## Produtos Existentes em Catálogo ########");
@@ -194,7 +182,6 @@ public class AddProductToShoppingCarService {
                         socket.stop();
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
-
                     }
                 } else {
                     System.out.println("==> ERROR: Erro no pacote do Servidor");
@@ -208,7 +195,6 @@ public class AddProductToShoppingCarService {
                     System.out.println("==> ERROR: Falha a fechar o socket");
                 }
             }
-
             return true;
         } catch (Exception e) {
             System.out.println("Server down");
@@ -219,7 +205,7 @@ public class AddProductToShoppingCarService {
 
     private int getPort() {
         // TODO read from config file
-        return 9999;
+        return 10000;
     }
 
     private String getAddress() {
