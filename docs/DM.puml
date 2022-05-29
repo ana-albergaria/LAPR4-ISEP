@@ -64,7 +64,7 @@ package "<<aggregate>> User" {
 
 package "<<aggregate>> AGV" {
     entity AGV
-    /'class AGVPosition'/
+    entity AGVPosition
     class Model
 }
 
@@ -119,6 +119,11 @@ package "<<aggregate>> Bin" {
 package "<<aggregate>> ShoppingCart"{
     entity ShoppingCart
     entity Item
+}
+
+entity AGVPosition <<entity>> <<root>>{
+    -<VO>> AgvID
+    -<VO> SquareID
 }
 
 entity Product <<entity>> <<root>> {
@@ -451,6 +456,9 @@ Survey --> "*" Answer
 ShoppingCart --> "1..*" Item : composed by
 Client --> "1" ShoppingCart : associated with
 Item --> "1" Product : composed by
+
+AGVPosition --> "1" AGV
+AGVPosition --> "1" Square
 
 class SourceChannel <<(V,#FF8B40) value object>>
 class InteractionDate <<(V,#FF8B40) value object>>
