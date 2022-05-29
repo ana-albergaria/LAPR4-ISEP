@@ -110,7 +110,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                 //receber o comando para is buscar produtos ??
 
                 //byte[] clientMessageEnd = sIn.readNBytes(4);
-                byte[] clientMessageEnd = new byte[6];
+                byte[] clientMessageEnd = new byte[4];
                 MessageUtils.readMessage(clientMessageEnd, sIn);
 
                 if (clientMessageEnd[1] == 1) {
