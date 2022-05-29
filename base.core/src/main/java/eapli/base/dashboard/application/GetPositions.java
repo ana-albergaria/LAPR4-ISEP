@@ -143,6 +143,10 @@ public class GetPositions {
 
                     agvs = (List<AGV>) sInObject.readObject();
 
+                    for(AGV agv : agvs){
+                        System.out.println(agv.getAgvID().toString() + agv.getTaskStatus().toString());
+                    }
+
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                     sOut.write(endMessage);
                     sOut.flush();
