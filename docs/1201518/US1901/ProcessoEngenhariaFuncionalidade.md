@@ -8,9 +8,9 @@ US1901 - As Project Manager, I want that the "OrdersServer" component supports p
 
 # 2. Dados do Servidor da Order
 
-| Servidor        | Port  |
-|--------------|-------|
-| 192.168.1.5    | 10000 |
+| Servidor  | Port  |
+|-----------|-------|
+| 127.0.0.1 | 10000 |
 
 # 3. Fluxo de Troca de Mensagens entre o Servidor e o Cliente
 

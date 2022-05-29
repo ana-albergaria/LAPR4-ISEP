@@ -108,90 +108,12 @@ A interpretação feita deste requisito foi no sentido de permitir ao sales mana
 ## 2.2. Regras de Negócio
 
 * "The set of questions/answers composing the questionnaire should be expressed and validated (parsed) using the grammar being developed for this purpose."
-
-# 3. Design
-
-
-
-## 3.1. Realização da Funcionalidade
-
-
-### 3.1.1. Modelo de Domínio:
-
-![US_3001_DM](US_3001_DM.svg)
-
-
-### 3.1.2. Classes de Domínio:
-
-*
-
-
-### 3.1.3. Diagrama de Sequência do Sistema:
-
-![US_3001_SSD](US_3001_SSD.svg)
-
-
-### 3.1.4. Diagrama de Sequência:
-
-![US_3001_SD](US_3001_SD.svg)
-
-
-## 3.2. Diagrama de Classes
-
-
-![US_3001_CD](US_3001_CD.svg)
-
-
-## 3.3. Padrões Aplicados
-
-Foram aplicados os padrões princípios SOLID e GoF
-
-### Builder
-
-
-### Creator
-
-
-### Repository
-
-
-### Factory
-
-
-### Information Expert
-
-
-## 3.2. Diagrama de Classes
-
-
-![US_3001_CD](US_3001_CD.svg)
+* The rules of the questionnaires are specified in the Client's answers.
 
 
 
+# 3. Integração/Demonstração
 
+Esta User Story depende da User Story 3000, uma vez que é necessária a existência da gramática, para validar os questionários
 
-## 3.4. Testes
-
-**Teste 1:** ...
-
-
-# 4. Implementação
-
-## 4.1. Classe
-
-
-    [...]
-
-    
-    
-    [...]
-
-
-
-
-
-# 5. Integração/Demonstração
-
-Esta User Story depende da User Story 300, uma vez que é necessária a existência da gramática, para validar os questionários
-
-# 6. Observações
+# 4. Observações
