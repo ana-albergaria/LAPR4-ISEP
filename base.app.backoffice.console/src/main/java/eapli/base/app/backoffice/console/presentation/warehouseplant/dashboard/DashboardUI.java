@@ -2,29 +2,37 @@ package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
 import eapli.base.AppSettings;
 import eapli.base.Application;
+import eapli.base.dashboard.application.DashboardController;
 import eapli.base.warehousemanagement.domain.AGVPosition;
+import eapli.framework.presentation.console.AbstractUI;
 
+import java.awt.*;
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.ArrayList;
 
 
-public class DashboardUI {
-    static private Socket sock;
-    static private InetAddress serverIP;
-    static private ObjectOutputStream sOut;
-    static private ObjectInputStream sIn;
-    static private ArrayList<AGVPosition> agvList = new ArrayList<>();
+public class DashboardUI extends AbstractUI {
+    private final DashboardController controller = new DashboardController();
 
-    static final AppSettings app = Application.settings();
-    static final String serverIPProperties = app.getServerIpKey();
-    static final int serverPortProperties = app.getServerPortKey();
+    @Override
+    protected boolean doShow() {
+        this.controller.getPositions(6);
+        this.controller.showDashboard();
 
+        URI uri;
+        try {
+            uri = new URI("https://localhost:3200/");
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
-    public static void main(String[] args) throws Exception {
-
-
+    @Override
+    public String headline() {
+        return "AGV Position Dashboard";
     }
 }

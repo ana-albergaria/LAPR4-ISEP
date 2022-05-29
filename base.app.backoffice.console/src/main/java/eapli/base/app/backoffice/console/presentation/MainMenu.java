@@ -35,6 +35,7 @@ import eapli.base.app.backoffice.console.presentation.product.RegisterProductUI;
 import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
 import eapli.base.app.backoffice.console.presentation.questionnaire.CreateQuestionnaireUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
+import eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard.DashboardUI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -103,6 +104,8 @@ public class MainMenu extends AbstractUI {
     private static final int ASSIGN_AGV_TO_ORDER = 4;
 
     private static final int DISPATCH_ORDER = 5;
+
+    private static final int DASHBOARD = 6;
 
     //private static final int AUTOMATICALLY_ASSIGN_AGV_TO_ORDER = 5;
 
@@ -229,6 +232,7 @@ public class MainMenu extends AbstractUI {
         //menu.addItem(AUTOMATICALLY_ASSIGN_AGV_TO_ORDER, "Automatically assign AGV to Order ready to be prepared", new AutomaticallyAssignOrderToFreeAGVUI()::show);
         menu.addItem(DISPATCH_ORDER, "Dispatch Order prepared by an AGV", new DispatchOrderUI()::show);
         //menu.addItem(AUTOMATICALLY_ASSIGN_AGV_TO_ORDER, "Automatically assign AGV to Order ready to be prepared", new TestAutomaticallyAssignOrderToFreeAGVUI()::show);
+        menu.addItem(DASHBOARD, "Show Dashboard", new DashboardUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

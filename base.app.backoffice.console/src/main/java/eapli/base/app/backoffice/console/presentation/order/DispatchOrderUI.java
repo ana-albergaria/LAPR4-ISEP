@@ -87,7 +87,7 @@ public class DispatchOrderUI extends AbstractUI {
         }
 
 
-        return false;
+        return true;
     }
 
     @Override
