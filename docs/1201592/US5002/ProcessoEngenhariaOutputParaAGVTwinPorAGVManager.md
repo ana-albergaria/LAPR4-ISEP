@@ -43,6 +43,24 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 ### Threads
 
 
+# 3.2 Fluxo de Troca de Mensagens entre o Servidor e o Cliente
+
+* Sempre que o cliente solicita um request, através de uma conexão TCP, segue-se o seguinte fluxo de comunicação:
+
+**1.** Espera pela mensagem do Cliente com o Código de Teste (0).  
+**2.** Manda ao Cliente o Código de Entendido (2).
+**3.** Cliente solicita o request desejado através do seu código associado  
+**4.** Socket aguarda mensagem do client e verifica qual o request a executar através do código
+
+<-----------------------Execução do Request----------------------->
+
+* Para terminar o request, o servidor:
+
+**5.** Espera pela mensagem do Cliente com o Código de Fim (1).  
+**6.** Manda ao Cliente o Código de Entendido (2).  
+**7.** Fecha o Socket.
+
+
 
 # 4. Implementação
 
@@ -71,8 +89,18 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 
 # 5. Integração/Demonstração
 
+No âmbito desta US, são efetuados os seguintes requests:
+
+| Código | Request                     |
+|--------|-----------------------------|
+| 7      | Atualizar os status dos AGV |
+
 Esta User Story depende da User Story 4001, uma vez que é necessária a existência do AGVManager para que esta US funcione do modo pretendido.
 
 # 6. Observações
 
-Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes. Também não foram criados diagramas, uma vez que esta US refere-se apenas à interação entre server e client.
+Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes.
+Também não foram criados diagramas, uma vez que esta US refere-se apenas à interação entre server e client.
+Para este Sprint, foi criado um ambiente virtual destinado ao AGV Digital Twin Client e Server.  
+Apesar de o jar correr de forma bem sucedida nos servidores do isep, ao chamar os repositórios das bases de dados necessários à execução desta US, dá erro.  
+Será algo a resolver no próximo Sprint.
