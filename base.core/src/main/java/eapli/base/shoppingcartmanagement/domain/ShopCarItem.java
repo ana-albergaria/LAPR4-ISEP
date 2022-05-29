@@ -3,6 +3,7 @@ package eapli.base.shoppingcartmanagement.domain;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,6 +26,8 @@ public class ShopCarItem implements AggregateRoot<Long>, Serializable {
     private Product product;
 
     public ShopCarItem(final int quantity, final Product product) {
+        Preconditions.noneNull(product, "The Shopping Cart Item should have a product and a quantity associated to it.");
+        Preconditions.ensure(quantity > 0, "The quantity must be greater than 0.");
         this.product = product;
         this.quantity = quantity;
     }
