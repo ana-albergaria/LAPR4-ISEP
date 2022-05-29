@@ -7,7 +7,7 @@
 
 **UC5002:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlo de comunicação por output do AGV digital twin, para atualizar o seu status no "AGVManager".
 
-A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo enviar informação sobre o seu status atual (from the system specification document: "it can send information about its current [...] status").
+A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo-lhe pedir ao AGV Manager para atualizar os status dos AGVs.
 
 
 # 2. Análise
@@ -32,54 +32,51 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 # 3. Design
 
 
-
-## 3.1. Realização da Funcionalidade
-
-
-### 3.1.1. Modelo de Domínio:
-
-![US_5002_DM](US_5002_DM.svg)
+## 3.1. Padrões Aplicados
 
 
-### 3.1.2. Classes de Domínio:
+### SPOMS2022
 
-* 
-
-
-### 3.1.3. Diagrama de Sequência do Sistema:
-
-![US_5002_SSD](US_5002_SSD.svg)
-
-
-### 3.1.4. Diagrama de Sequência:
-
-![US_5002_SD](US_5002_SD.svg)
-
-
-
-## 3.2. Diagrama de Classes
-
-
-![US_5002_CD](US_5002_CD.svg)
-
-
-## 3.3. Padrões Aplicados
-
+### Threads
 
 
 
 # 4. Implementação
 
-## 4.1. Classe 
+## 4.1. Classe TcpSrvAgvManager
 
 
-    [...]
+    if (clientMessage[1] == 8){
+        for (AGV agv : taskRepository.findAllAGV()) {
+            if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
+                agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
+                agvRepository.save(agv);
+            }
+        }
+        for (AGV agv : agvRepository.findAll()) {
+            if (taskRepository.findByAgv(agv)==null){
+                if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))) {
+                    agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
+                } else {
+                    agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+                }
+                agvRepository.save(agv);
+            }
+        }
+    }
 
-    
-    
-    [...]
+## 4.2. Classe TcpCliAGVTwin
 
-
+    public void updateAgvsStatus(){
+        [...]
+            if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)){
+                MessageUtils.writeMessage((byte) 8, socket.sOutData);
+                [...]
+            } else {
+                [...]
+            }
+        [...]
+    }
     
 
 
@@ -89,4 +86,4 @@ Esta User Story depende da User Story 4001, uma vez que é necessária a existê
 
 # 6. Observações
 
-Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes.
+Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes. Também não foram criados diagramas, uma vez que esta US refere-se apenas à interação entre server e client.
