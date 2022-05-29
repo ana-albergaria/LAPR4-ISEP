@@ -52,12 +52,12 @@ public class GetPositions {
 
 
 
-    public Iterable<AGVPosition> getPositions(int option){
+    public Iterable<AGVPosition> getPositions(int option, String ipAddress){
         List<AGVPosition> positions = new ArrayList<>();
 
         try {
             final var socket = new ClientSocket();
-            socket.connect(getAddress(), getPort());
+            socket.connect(ipAddress, getPort());
 
             try {
                 DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
@@ -114,13 +114,13 @@ public class GetPositions {
         return positions;
     }
 
-    public Iterable<AGV> getAgvs(int option){
+    public Iterable<AGV> getAgvs(int option, String ipAddress){
 
         List<AGV> agvs = new ArrayList<>();
 
         try {
             final var socket = new ClientSocket();
-            socket.connect(getAddress(), getPort());
+            socket.connect(ipAddress, getPort());
             try {
                 DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
                 DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
