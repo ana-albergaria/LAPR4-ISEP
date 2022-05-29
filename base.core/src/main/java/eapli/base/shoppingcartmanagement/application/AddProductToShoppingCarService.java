@@ -186,25 +186,12 @@ public class AddProductToShoppingCarService {
                 DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
                 DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
 
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
 
                     String info = quantidade + " " + clientEmail + " " + uniqueInternalCode;
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 5, info, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 5, info, sOutData);
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
+                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
                         socket.stop();
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
