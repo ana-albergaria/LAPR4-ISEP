@@ -129,6 +129,14 @@ Foram aplicados os padrões princípios SOLID e GoF
 
 Esta User Story depende da User Story 4001, uma vez que é necessária a existência do AGVManager para que esta US funcione do modo pretendido.
 
+TheTask table before US:
+![theTaskBefore](theTaskBefore.png)
+US execution:
+![assigned](assigned.png)
+TheTask table after US:
+![theTaskAfter](theTaskAfter.png)
+
+
 # 6. Observações
 
 Uma vez que para esta US é apenas criada uma UI e um Controller, não sendo criado qualquer tipo de entidade, não foi criada nenhuma classe de testes.
