@@ -18,12 +18,12 @@ public class DashboardUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         this.controller.getPositions(6);
-        this.controller.getAgvs(8);
+        //this.controller.getAgvs(8);
         this.controller.showDashboard();
 
         URI uri;
         try {
-            uri = new URI("https://localhost:55090/");
+            uri = new URI("http:127.0.0.1:55090/");
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

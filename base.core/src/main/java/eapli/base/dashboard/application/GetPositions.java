@@ -3,8 +3,7 @@ package eapli.base.dashboard.application;
 import eapli.base.AppSettings;
 import eapli.base.Application;
 import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.base.warehousemanagement.domain.AGV;
-import eapli.base.warehousemanagement.domain.AGVPosition;
+import eapli.base.warehousemanagement.domain.*;
 
 import java.awt.font.FontRenderContext;
 import java.io.*;
@@ -109,7 +108,12 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-
+        Square posSquare = new Square(1L, 3L);
+        AgvDock dockTest = new AgvDock("D1", new Square(1L, 2L), new Square(2L, 3L), new Square(3L, 4L), new Accessibility("-l"));
+        AGV agvTest = new AGV(10L, new AutonomyStatus("1D"), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED), "refaerfa",
+                "short description 1", 18.0, dockTest);
+        AGVPosition pos = new AGVPosition(posSquare, agvTest);
+        positions.add(pos);
 
         return positions;
     }
