@@ -38,7 +38,7 @@ class TcpSrvAgvManager {
         Socket cliSock;
 
         try{
-            sock = new ServerSocket(2807);
+            sock = new ServerSocket(3700);
             System.out.println("Server connection opened!");
         }
         catch(IOException ex){

@@ -6,6 +6,7 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 
+import java.awt.font.FontRenderContext;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -14,67 +15,101 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetPositions {
-    static private Socket sock;
-    static private InetAddress serverIP;
+
+    private static class ClientSocket {
+        private Socket sock;
+        private InetAddress serverIP;
+        private DataOutputStream sOutData;
+        private DataInputStream sInData;
+
+        public void connect(final String address, final int port) throws IOException {
+
+            try {
+                serverIP = InetAddress.getByName(address);
+            } catch (UnknownHostException ex) {
+                System.out.println("Invalid server specified: " + serverIP);
+                System.exit(1);
+            }
+
+            try {
+                sock = new Socket(serverIP, port); }
+            catch(IOException ex) {
+                System.out.println("Failed to establish TCP connection");
+                System.exit(1);
+            }
+
+            System.out.println("Connected to: " + serverIP + ":" + port);
+
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
+        }
+
+        public void stop() throws IOException {
+            sock.close();
+        }
+
+    }
+
+
 
     public Iterable<AGVPosition> getPositions(int option){
-
         List<AGVPosition> positions = new ArrayList<>();
 
         try {
-            serverIP = InetAddress.getByName(Application.settings().getServerIpKey());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+            final var socket = new ClientSocket();
+            socket.connect(getAddress(), getPort());
 
-        System.out.println("Connecting to "+ serverIP + ":" + 2807 );
+            try {
+                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
 
-        try {
-            sock = new Socket(serverIP, 2807);
-        } catch(IOException ex) {
-            System.out.println("Failed to connect to connect to AGVManager server.");
-            System.out.println("Application aborted.");
-            System.exit(1);
-        }
-
-        try {
-            DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-            DataInputStream sIn = new DataInputStream(sock.getInputStream());
-
-            byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-            sOut.write(testMessage);
-            sOut.flush();
-
-            byte[] testResponse = sIn.readNBytes(4);
-            if(testResponse[1]==2){
-                byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
-                sOut.write(optionMessage);
+                byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+                sOut.write(testMessage);
                 sOut.flush();
 
-                ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
+                byte[] testResponse = sIn.readNBytes(4);
+                if(testResponse[1]==2){
+                    byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
+                    sOut.write(optionMessage);
+                    sOut.flush();
 
-                positions = (List<AGVPosition>) sInObject.readObject();
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
 
-                byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                sOut.write(endMessage);
-                sOut.flush();
-                byte[] endResponse = sIn.readNBytes(4);
-                if (endResponse[1] == 2) {
-                    sock.close();
+                    positions = (List<AGVPosition>) sInObject.readObject();
+
+                    for(AGVPosition pos: positions){
+                        System.out.println(pos.toString());
+
+                    }
+
+                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                    sOut.write(endMessage);
+                    sOut.flush();
+                    byte[] endResponse = sIn.readNBytes(4);
+                    if (endResponse[1] == 2) {
+                        socket.stop();
+                    }
+                } else {
+                    throw new IllegalArgumentException("Test message wasn't successful.");
                 }
-            } else {
-                throw new IllegalArgumentException("Test message wasn't successful.");
+            } catch(IOException | ClassNotFoundException ex) {
+                System.out.println("Error accessing socket's streams. Aborted.");
+                try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+                System.out.println("Application aborted.");
+                System.exit(1);
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
             }
-        } catch(IOException | ClassNotFoundException ex) {
-            System.out.println("Error accessing socket's streams. Aborted.");
-            try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
-            System.out.println("Application aborted.");
-            System.exit(1);
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
         }
 
 
-
-        try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
 
         return positions;
     }
@@ -84,60 +119,65 @@ public class GetPositions {
         List<AGV> agvs = new ArrayList<>();
 
         try {
-            serverIP = InetAddress.getByName(Application.settings().getServerIpKey());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+            final var socket = new ClientSocket();
+            socket.connect(getAddress(), getPort());
+            try {
+                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
 
-        System.out.println("Connecting to "+ serverIP + ":" + 2807 );
-
-        try {
-            sock = new Socket(serverIP, 2807);
-        } catch(IOException ex) {
-            System.out.println("Failed to connect to connect to AGVManager server.");
-            System.out.println("Application aborted.");
-            System.exit(1);
-        }
-
-        try {
-            DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-            DataInputStream sIn = new DataInputStream(sock.getInputStream());
-
-            byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-            sOut.write(testMessage);
-            sOut.flush();
-
-            byte[] testResponse = sIn.readNBytes(4);
-            if(testResponse[1]==2){
-                byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
-                sOut.write(optionMessage);
+                byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+                sOut.write(testMessage);
                 sOut.flush();
 
-                ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
+                byte[] testResponse = sIn.readNBytes(4);
+                if(testResponse[1]==2){
+                    byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
+                    sOut.write(optionMessage);
+                    sOut.flush();
 
-                agvs = (List<AGV>) sInObject.readObject();
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
 
-                byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                sOut.write(endMessage);
-                sOut.flush();
-                byte[] endResponse = sIn.readNBytes(4);
-                if (endResponse[1] == 2) {
-                    sock.close();
+                    agvs = (List<AGV>) sInObject.readObject();
+
+                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                    sOut.write(endMessage);
+                    sOut.flush();
+                    byte[] endResponse = sIn.readNBytes(4);
+                    if (endResponse[1] == 2) {
+                        socket.stop();
+                    }
+                } else {
+                    throw new IllegalArgumentException("Test message wasn't successful.");
                 }
-            } else {
-                throw new IllegalArgumentException("Test message wasn't successful.");
+            } catch(IOException | ClassNotFoundException ex) {
+                System.out.println("Error accessing socket's streams. Aborted.");
+                try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+                System.out.println("Application aborted.");
+                System.exit(1);
+            }finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
             }
-        } catch(IOException | ClassNotFoundException ex) {
-            System.out.println("Error accessing socket's streams. Aborted.");
-            try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
-            System.out.println("Application aborted.");
-            System.exit(1);
+
+        } catch (IOException e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
         }
-
-
-
-        try { sock.close(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
 
         return agvs;
+    }
+
+    private int getPort() {
+        // TODO read from config file
+        return 3700;
+    }
+
+    private String getAddress() {
+        // TODO read from config file
+        return "localhost";
+        //return "192.168.1.5"; -> ipv4 do terminal local windows
     }
 }
