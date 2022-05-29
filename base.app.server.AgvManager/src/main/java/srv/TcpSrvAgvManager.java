@@ -1,8 +1,12 @@
 package srv;
+import cli.TcpCliAGVTwin;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.OrderStatus;
+import eapli.base.ordermanagement.domain.TheOrder;
+import eapli.base.ordermanagement.domain.TheTask;
+import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.utils.MessageUtils;
-import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AutonomyStatus;
 import eapli.base.warehousemanagement.domain.TaskStatus;
@@ -10,6 +14,9 @@ import eapli.base.warehousemanagement.repositories.AGVRepository;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 class TcpSrvAgvManager {
@@ -60,9 +67,11 @@ class TcpSrvAgvManagerThread implements Runnable {
         s=cli_s;
     }
 
-    //private final AutomaticallyAssignOrdersToFreeAGVController ordersToAGVController = new AutomaticallyAssignOrdersToFreeAGVController(); //-> used in US4002
+    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
     private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+
+    private final TcpCliAGVTwin service = new TcpCliAGVTwin();
 
     public void run() {
         //long f,i,num,sum;
@@ -102,29 +111,31 @@ class TcpSrvAgvManagerThread implements Runnable {
                 //==============================
                 /*TheOrder selectedOrder;
                 AGV selectedAGV;
-                List<TheOrder> ordersToAssign = ordersToAGVController.getOrdersToAssign();
-                List<AGV> agvsAvailable = ordersToAGVController.getAGVsAvailable();
-                if (ordersToAssign.isEmpty()){
+                Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+                List<TheOrder> ordersToAssignList = new ArrayList<>();
+                ordersToAssign.forEach(ordersToAssignList::add);
+                ordersToAssignList.sort(Comparator.comparing(TheOrder::getCreatedOn));
+                Iterable<AGV> agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+                List<AGV> agvsAvailableList = new ArrayList<>();
+                agvsAvailable.forEach(agvsAvailableList::add);
+                if (ordersToAssignList.isEmpty()){
                     System.out.println("There are no orders waiting to be assigned.");
-                } else if (agvsAvailable.isEmpty()){
+                } else if (agvsAvailableList.isEmpty()){
                     System.out.println("There are no available AGVs.");
                 } else {
                     int number = 0;
-                    int ordersToAssignSize = ordersToAssign.size();
-                    int agvsAvailableSize = agvsAvailable.size();
+                    int ordersToAssignSize = ordersToAssignList.size();
+                    int agvsAvailableSize = agvsAvailableList.size();
                     do {
-                        selectedOrder = ordersToAssign.get(number);
-                        selectedAGV = agvsAvailable.get(number);
-                        ordersToAGVController.registerTask(selectedAGV,selectedOrder);
+                        selectedOrder = ordersToAssignList.get(number);
+                        selectedAGV = agvsAvailableList.get(number);
+                        taskRepository.save(new TheTask(selectedAGV,selectedOrder));
                         selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-                        ordersToAGVController.updateOrder(selectedOrder);
-                        //apagado:
-                        //selectedAGV.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                        //ordersToAGVController.updateAGV(selectedAGV);
-                        //porque a atualização dos status vai ser feita na us5002
+                        orderRepository.save(selectedOrder);
                         System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
                         number++;
                     } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
+                    service.updateAgvsStatus();
                 }*/
                 //=============================
                 //======= FIM DA US4002 =======

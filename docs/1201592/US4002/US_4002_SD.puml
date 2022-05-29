@@ -3,9 +3,7 @@
 
 autonumber
 
-Actor ":AGVManager" as AGVM
-participant ":TcpSrvSum" as UI
-participant ":AutomaticallyAssignOrderToFreeAGVController" as CTRL
+Actor ":TcpSrvAgvManager" as AGVM
 participant ":PersistenceContext" as Persistance
 participant ":RepositoryFactory" as Factory
 participant ":OrderRepository" as OrderRep
@@ -16,15 +14,8 @@ participant ":AGV" as AGV
 participant ":TheTask" as Task
 
 activate AGVM
-AGVM -> UI : automatically request to assign available orders to available AGVs
-activate UI
-UI -> CTRL : create
-activate CTRL
-|||
-deactivate CTRL
-UI -> CTRL : getOrdersToAssign
-activate CTRL
-CTRL -> Persistance : repositories()
+AGVM -> AGVM : automatically request to assign available orders to available AGVs
+AGVM -> Persistance : repositories()
 activate Persistance
 Persistance -> Factory : create
 activate Factory
@@ -34,15 +25,11 @@ activate OrderRep
 deactivate OrderRep
 deactivate Factory
 deactivate Persistance
-CTRL -> OrderRep : findByOrderStatus(TO_BE_PREPARED)
+AGVM -> OrderRep : findByOrderStatus(TO_BE_PREPARED)
 activate OrderRep
-OrderRep --> CTRL : ordersToAssign
+OrderRep --> AGVM : ordersToAssign
 deactivate OrderRep
-CTRL --> UI : ordersToAssign
-deactivate CTRL
-UI -> CTRL : getAvailableAGVs
-activate CTRL
-CTRL -> Persistance : repositories()
+AGVM -> Persistance : repositories()
 activate Persistance
 Persistance -> Factory : create
 activate Factory
@@ -52,24 +39,20 @@ activate AGVRep
 deactivate AGVRep
 deactivate Factory
 deactivate Persistance
-CTRL -> AGVRep : findByTaskStatus(FREE)
+AGVM -> AGVRep : findByTaskStatus(FREE)
 activate AGVRep
-AGVRep --> CTRL : availableAGVs
+AGVRep --> AGVM : availableAGVs
 deactivate AGVRep
-CTRL --> UI : availableAGVs
-deactivate CTRL
 
 alt for each pair or ordersToAssign and availableAGVs
-UI -> UI : selectedOrder
-UI -> UI : selectedAGV
+AGVM -> AGVM : selectedOrder
+AGVM -> AGVM : selectedAGV
 
-UI -> CTRL : registerTask(selectedAGV, selectedOrder)
-activate CTRL
-CTRL -> Task : newTask = create(selectedAGV, selectedOrder)
+AGVM -> Task : newTask = create(selectedAGV, selectedOrder)
 activate Task
 |||
 deactivate Task
-CTRL -> Persistance : repositories()
+AGVM -> Persistance : repositories()
 activate Persistance
 Persistance -> Factory : create
 activate Factory
@@ -79,34 +62,22 @@ activate TaskRep
 deactivate TaskRep
 deactivate Factory
 deactivate Persistance
-CTRL -> TaskRep : save(newTask)
+AGVM -> TaskRep : save(newTask)
 activate TaskRep
 |||
 deactivate TaskRep
-deactivate CTRL
 
-UI -> ORDER : setStatus(BEING_PREPARED_ON_WAREHOUSE)
+AGVM -> ORDER : setStatus(BEING_PREPARED_ON_WAREHOUSE)
 activate ORDER
-ORDER --> UI : selectedOrder
+ORDER --> AGVM : selectedOrder
 deactivate ORDER
-UI -> CTRL : updateOrder(selectedOrder)
-activate CTRL
-|||
-deactivate CTRL
-UI -> AGV : setTaskStatus(OCCUPIED)
+AGVM -> AGV : setTaskStatus(OCCUPIED)
 activate AGV
-AGV --> UI : selectedAGV
+AGV --> AGVM : selectedAGV
 deactivate AGV
-UI -> CTRL : updateAGV(selectedAGV)
-activate CTRL
-|||
-deactivate CTRL
 
 end
 
 
-UI --> AGVM : informs which orders were assigned to which AGVs
-deactivate UI
-deactivate AGVM
 
 @enduml
