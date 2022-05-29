@@ -1,3 +1,5 @@
+package cli;
+
 import eapli.framework.validations.Preconditions;
 
 import java.io.*;
