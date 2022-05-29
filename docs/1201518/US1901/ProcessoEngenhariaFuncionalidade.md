@@ -16,10 +16,9 @@ US1901 - As Project Manager, I want that the "OrdersServer" component supports p
 
 * Sempre que o cliente solicita um request, através de uma conexão TCP, segue-se o seguinte fluxo de comunicação:
 
-**1.** Espera pela mensagem do Cliente com o Código de Teste (0).
+**1.** Espera pela mensagem do Cliente com o Código de Teste (0).  
 **2.** Manda ao Cliente o Código de Entendido (2).
-
-**3.** Cliente solicita o request desejado através do seu código associado
+**3.** Cliente solicita o request desejado através do seu código associado  
 **4.** Socket aguarda mensagem do client e verifica qual o request a executar através do código
 
 <-----------------------Execução do Request----------------------->
