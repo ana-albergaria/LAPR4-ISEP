@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShoppingCartTest {
+public class ShoppingCartTest {
     private static final Name CLIENT_NAME = Name.valueOf("Ana","de Castro Albergaria");
     private static final Email CLIENT_EMAIL = Email.valueOf("anacalbergaria@gmail.com");
     private static final VAT CLIENT_VAT = VAT.valueOf("PT999999999");
@@ -27,12 +27,12 @@ class ShoppingCartTest {
 
 
     @org.junit.Test(expected = IllegalArgumentException.class)
-    void ensureShoppingCartHasClient() {
+    public void ensureShoppingCartHasClient() {
         new ShoppingCart(null);
     }
 
     @Test
-    void addProductToShoppingCar() {
+    public void addProductToShoppingCar() {
         ShoppingCart shoppingCart = new ShoppingCart(buildClient());
 
         int expQuantity = 3;
