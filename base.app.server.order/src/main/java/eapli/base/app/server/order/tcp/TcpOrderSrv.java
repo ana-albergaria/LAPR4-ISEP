@@ -129,7 +129,7 @@ class TcpSrvOrderThread implements Runnable {
                     }
 
                 }
-                
+
                 byte[] clientMessageEnd = new byte[4];
                 MessageUtils.readMessage(clientMessageEnd, sIn);
 
