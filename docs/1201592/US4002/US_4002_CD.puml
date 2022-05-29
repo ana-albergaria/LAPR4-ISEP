@@ -1,15 +1,8 @@
 @startuml
 
-class TcpSrvSum{
+class TcpSrvAgvManager{
 +main(args)
 +run()
-}
-
-class AutomaticallyAssignOrderToFreeAGVController{
-+getOrdersToAssign()
-+getAGVsAvailable()
-+updateOrder(order)
-+updateAGV(agv)
 }
 
 class PersistenceContext{
@@ -41,9 +34,7 @@ class TheTask{
 +create()
 }
 
-TcpSrvSum --> AutomaticallyAssignOrderToFreeAGVController
-
-AutomaticallyAssignOrderToFreeAGVController --> PersistenceContext
+TcpSrvAgvManager --> PersistenceContext
 
 PersistenceContext --> RepositoryFactory
 
@@ -51,8 +42,8 @@ RepositoryFactory --> OrderRepository
 RepositoryFactory --> AGVRepository
 RepositoryFactory --> TaskRepository
 
-AutomaticallyAssignOrderToFreeAGVController --> TheOrder
-AutomaticallyAssignOrderToFreeAGVController --> AGV
-AutomaticallyAssignOrderToFreeAGVController --> TheTask
+TcpSrvAgvManager --> TheOrder
+TcpSrvAgvManager --> AGV
+TcpSrvAgvManager --> TheTask
 
 @enduml
