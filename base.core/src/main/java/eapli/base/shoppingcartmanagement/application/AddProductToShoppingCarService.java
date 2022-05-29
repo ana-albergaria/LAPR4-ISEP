@@ -67,9 +67,7 @@ public class AddProductToShoppingCarService {
 
                 if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
 
-                    byte[] clientMessage = {(byte) 0, (byte) 4, (byte) 0, (byte) 0};
-                    sOutData.write(clientMessage);
-                    sOutData.flush();
+                    MessageUtils.writeMessage((byte) 4, sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock().getInputStream());
@@ -125,30 +123,18 @@ public class AddProductToShoppingCarService {
                 DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
                 DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
 
-                //Mandar um pedido para o servido -> codigo: 0 (Teste)
-                byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOutData.write(clienteMessage);
-                sOutData.flush();
-
-                //Esperar a resposta do servidor a dizer que entendeu a mensagem
-                byte[] serverMessage = sInData.readNBytes(4);
-                if (serverMessage[1] == 2) {
+                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
 
                     //enviar produto escolhido e verificar se existe
-                    eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, sOutData);
                     byte[] clientMessageUS = new byte[4];
-                    eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sInData);
+                    MessageUtils.readMessage(clientMessageUS, sInData);
 
                     if(clientMessageUS[1] == 3) {
                         String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sInData);
                         if(!productExists.equals("[SUCCESS] Product found!")){
-                            //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                            byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                            sOutData.write(clienteMessageEnd);
-                            sOutData.flush();
 
-                            byte[] serverMessageEnd = sInData.readNBytes(4);
-                            if (serverMessageEnd[1] == 2) {
+                            if (MessageUtils.wantsToExit(sOutData,sInData)) {
                                 socket.stop();
 
                             } else {
@@ -159,13 +145,7 @@ public class AddProductToShoppingCarService {
                         }
                     }
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
+                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
                         socket.stop();
 
                     } else {
