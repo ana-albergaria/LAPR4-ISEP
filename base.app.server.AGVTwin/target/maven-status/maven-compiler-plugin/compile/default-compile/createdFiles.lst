@@ -1,4 +1,4 @@
-cli\TcpCliAGVTwin$ClientSocket.class
+cli\TcpCliAGVTwinThread.class
 cli\TcpCliAGVTwin.class
 Positioning\AGVCurrentPositions.class
 srv\TcpSrvAGVTwin.class

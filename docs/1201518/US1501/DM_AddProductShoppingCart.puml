@@ -14,7 +14,8 @@ package "<<aggregate>> User" {
 }
 
 entity User <<entity>> <<root>> {
-    - <<VO>> isActive
+    - <<VO>> Password
+    - <<VO>> Email
 }
 
 class Role <<(V,#FF8B40) value object>> {}
@@ -36,12 +37,12 @@ entity Client <<entity>> <<root>> {
     /'- <<VO>> Gender'/ /'optional'/
 }
 
-package "<<aggregate>> ShopCar"{
-    entity ShopCar
+package "<<aggregate>> ShoppingCart"{
+    entity ShoppingCart
     entity Item
 }
 
-entity ShopCar <<entity>> <<root>>{}
+entity ShoppingCart <<entity>> <<root>>{}
 
 package "<<aggregate>> Product"{
      entity Product
@@ -53,6 +54,12 @@ class BirthDate <<(V,#FF8B40) value object>> {}
 class Gender <<(V,#FF8B40) value object>> {}
 class Address <<(V,#FF8B40) value object>> {}
 
+entity Product <<entity>> <<root>> {
+    -<<VO>> UniqueInternalCode
+    -<<VO>> ShortDescription
+    -<<VO>> PriceWithoutTaxes
+}
+
 User "1" <-- Client
 
 Client --> "1..*" Address : has
@@ -61,8 +68,8 @@ Client --> "0..1" Gender
 
 User --> "1..*" Role
 
-ShopCar -> "1..*" Item : composed by
-Client --> "1" ShopCar : associated with
+ShoppingCart -> "1..*" Item : composed by
+Client --> "1" ShoppingCart : associated with
 Item --> "1" Product : composed by
 
 @enduml
