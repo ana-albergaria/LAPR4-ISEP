@@ -7,7 +7,7 @@
 
 **UC5002:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlo de comunicação por output do AGV digital twin, para atualizar o seu status no "AGVManager".
 
-A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo-lhe pedir ao AGV Manager para atualizar os status dos AGVs.
+A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo-lhe pedir ao AGV Manager para atualizar os status dos AGVs e, depois, enviar os AGVs com os status atualizados ao AGV Manager, para que este os atualize.
 
 
 # 2. Análise
@@ -28,6 +28,8 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 * Sugere-se a adoção de mecanismos concorrentes (por exemplo, threads) e compartilhamento de estados entre esses mecanismos.
 * Neste sprint, para fins de demonstração, é aceitável simular o processamento de algumas das solicitações recebidas para promover alguma comunicação de saída.
 
+![AGVManagerETwin](AGVManagerETwin.png)
+
 
 # 3. Design
 
@@ -46,37 +48,12 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 ## 4.1. Classe TcpSrvAgvManager
 
 
-    if (clientMessage[1] == 8){
-        for (AGV agv : taskRepository.findAllAGV()) {
-            if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
-                agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                agvRepository.save(agv);
-            }
-        }
-        for (AGV agv : agvRepository.findAll()) {
-            if (taskRepository.findByAgv(agv)==null){
-                if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))) {
-                    agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
-                } else {
-                    agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
-                }
-                agvRepository.save(agv);
-            }
-        }
-    }
+
+    
 
 ## 4.2. Classe TcpCliAGVTwin
 
-    public void updateAgvsStatus(){
-        [...]
-            if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)){
-                MessageUtils.writeMessage((byte) 8, socket.sOutData);
-                [...]
-            } else {
-                [...]
-            }
-        [...]
-    }
+    
     
 
 

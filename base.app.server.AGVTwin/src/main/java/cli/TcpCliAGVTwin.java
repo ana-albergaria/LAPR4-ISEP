@@ -107,7 +107,7 @@ class TcpCliAGVTwinThread implements Runnable {
 
                     //...
                     //4. fazer update dos agvs
-                List<AGV> agvsToUpdate = new LinkedList<>();
+                List<AGV> agvsToUpdate;
 
                 ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
                 ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());

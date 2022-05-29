@@ -34,6 +34,44 @@ class TcpSrvAgvManager {
     }
 
     public static void main(String args[]) throws Exception {
+
+        //==============================
+        //====== INICIO DA US4002 ======
+        //==============================
+        OrderRepository orderRepository = PersistenceContext.repositories().orders();
+        TaskRepository taskRepository = PersistenceContext.repositories().tasks();
+        AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+        TheOrder selectedOrder;
+        AGV selectedAGV;
+        Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+        List<TheOrder> ordersToAssignList = new ArrayList<>();
+        ordersToAssign.forEach(ordersToAssignList::add);
+        ordersToAssignList.sort(Comparator.comparing(TheOrder::getCreatedOn));
+        Iterable<AGV> agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
+        List<AGV> agvsAvailableList = new ArrayList<>();
+        agvsAvailable.forEach(agvsAvailableList::add);
+        if (ordersToAssignList.isEmpty()){
+            System.out.println("There are no orders waiting to be assigned.");
+        } else if (agvsAvailableList.isEmpty()){
+            System.out.println("There are no available AGVs.");
+        } else {
+            int number = 0;
+            int ordersToAssignSize = ordersToAssignList.size();
+            int agvsAvailableSize = agvsAvailableList.size();
+            do {
+                selectedOrder = ordersToAssignList.get(number);
+                selectedAGV = agvsAvailableList.get(number);
+                taskRepository.save(new TheTask(selectedAGV,selectedOrder));
+                selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
+                orderRepository.save(selectedOrder);
+                System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+                number++;
+            } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
+        }
+        //=============================
+        //======= FIM DA US4002 =======
+        //=============================
+
         Socket cliSock;
 
         try{
@@ -106,40 +144,6 @@ class TcpSrvAgvManagerThread implements Runnable {
                     objectOutputStream.writeObject(list);
                     objectOutputStream.flush();
                 }
-
-                //==============================
-                //====== INICIO DA US4002 ======
-                //==============================
-                /*TheOrder selectedOrder;
-                AGV selectedAGV;
-                Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
-                List<TheOrder> ordersToAssignList = new ArrayList<>();
-                ordersToAssign.forEach(ordersToAssignList::add);
-                ordersToAssignList.sort(Comparator.comparing(TheOrder::getCreatedOn));
-                Iterable<AGV> agvsAvailable = agvRepository.findByTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
-                List<AGV> agvsAvailableList = new ArrayList<>();
-                agvsAvailable.forEach(agvsAvailableList::add);
-                if (ordersToAssignList.isEmpty()){
-                    System.out.println("There are no orders waiting to be assigned.");
-                } else if (agvsAvailableList.isEmpty()){
-                    System.out.println("There are no available AGVs.");
-                } else {
-                    int number = 0;
-                    int ordersToAssignSize = ordersToAssignList.size();
-                    int agvsAvailableSize = agvsAvailableList.size();
-                    do {
-                        selectedOrder = ordersToAssignList.get(number);
-                        selectedAGV = agvsAvailableList.get(number);
-                        taskRepository.save(new TheTask(selectedAGV,selectedOrder));
-                        selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
-                        orderRepository.save(selectedOrder);
-                        System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
-                        number++;
-                    } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
-                }*/
-                //=============================
-                //======= FIM DA US4002 =======
-                //=============================
 
                 if(clientMessageUS[1] == 7){
                     ObjectOutputStream sendAGVsToChangeList = new ObjectOutputStream(s.getOutputStream());

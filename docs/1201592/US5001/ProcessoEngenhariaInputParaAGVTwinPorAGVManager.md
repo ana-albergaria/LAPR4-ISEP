@@ -7,7 +7,7 @@
 
 **UC5001:** Como Project Manager pretendo que a equipa comece a desenvolver o modúlode comunicação por input do AGV digital twin, para aceitar pedidos do "AGVManager".
 
-A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo receber a warehouse plant, a localização de outros AGVs e o comando para ir buscar produtos (from the system specification document: "receive the warehouse plant, the location of the other AGVs as well as the command to pick-up some product(s)").
+A interpretação feita deste requisito foi no sentido de desenvolver o AGV digital twin, permitindo receber um conjunto de AGVs e atualizando os seus status.
 
 
 # 2. Análise
@@ -30,6 +30,8 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 * Sugere-se a adoção de mecanismos concorrentes (por exemplo, threads) e compartilhamento de estados entre esses mecanismos.
 * Neste sprint, para fins de demonstração, é aceitável simular o processamento de algumas das solicitações recebidas para promover alguma comunicação de entrada.
 
+![AGVManagerETwin](AGVManagerETwin.png)
+
 
 # 3. Design
 
@@ -44,35 +46,27 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 
 # 4. Implementação
 
-## 4.1. Classe TcpCliAGVTwin
+## 4.1. Classe TcpSrvAgvManager
 
 
     [...]
-
-    
-    
+        byte[] optionMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
+        sOutData.write(optionMessage);
+        sOutData.flush();
+        List<AGV> agvsToUpdate;
+        ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
+        ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
+        agvsToUpdate = (List<AGV>) sInObject.readObject();
+        updateAgvStatus(agvsToUpdate);
+        sOutObject.writeObject(agvsToUpdate);
+        sOutObject.flush();
     [...]
 
 
-## 4.2. Classe TcpSrvAGVTwin
+## 4.2. Classe TcpCliAGVTwin
 
 
-    [...]
 
-    
-    
-    [...]
-
-
-## 4.3. Classe TcpSrvAGVManager
-
-
-    [...]
-
-    
-    
-    [...]
-    
 
 
 # 5. Integração/Demonstração
