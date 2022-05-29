@@ -16,12 +16,12 @@ public class HTTPServerAGVS extends Thread{
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
 
-    static final int PORT = 55090;
+    static final int PORT = 3200;
 
     private static DashboardController controller;
 
     public void setController(DashboardController ctrl){
-        this.controller = ctrl;
+        controller = ctrl;
     }
 
     public static void main(String[] args) throws IOException {
@@ -29,7 +29,10 @@ public class HTTPServerAGVS extends Thread{
 
         accessesCounter=0;
 
-        try { sock = new ServerSocket(PORT); }
+        try {
+            sock = new ServerSocket(PORT);
+            System.out.println("HTTP Server connection opened.");
+        }
         catch(IOException ex) {
             System.out.println("Server failed to open local port " + PORT);
             System.exit(1);
@@ -43,7 +46,6 @@ public class HTTPServerAGVS extends Thread{
         }
     }
 
-    // DATA ACCESSED BY THREADS - LOCKING REQUIRED
     private static int accessesCounter;
 
     private static synchronized void incAccessesCounter() { accessesCounter++; }

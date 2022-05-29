@@ -10,6 +10,12 @@ public class MessageUtils {
         sIn.read(message, 0, 4);
     }
 
+    public static void writeMessage(byte code, DataOutputStream sOut) throws IOException {
+        byte[] message = {(byte) 0, code, (byte) 0, (byte) 0};
+        sOut.write(message);
+        sOut.flush();
+    }
+
     public static String getDataFromMessage(byte[] message, DataInputStream sIn) throws IOException {
         String data;
 

@@ -1,4 +1,2 @@
-cli\TcpCliAgvManagerThread.class
-srv\TcpSrvAgvManagerThread.class
 srv\TcpSrvAgvManager.class
-cli\TcpCliAgvManager.class
+srv\TcpSrvAgvManagerThread.class

@@ -13,6 +13,7 @@ import eapli.base.shoppingcartmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcartmanagement.domain.ShoppingCart;
 import eapli.base.shoppingcartmanagement.repositories.ShopCarItemRepository;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
+import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -73,18 +74,17 @@ class TcpSrvOrderThread implements Runnable {
             DataInputStream sIn = new DataInputStream(this.s.getInputStream());
             DataOutputStream sOut = new DataOutputStream(this.s.getOutputStream());
 
-            byte[] clientMessage = sIn.readNBytes(4);
+            byte[] clientMessage = new byte[4];
+            MessageUtils.readMessage(clientMessage, sIn);
 
             if (clientMessage[1] == 0) {
                 System.out.println("[SUCCESS] Código de Teste (0) do Cliente recebido.");
 
-                byte[] serverMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
-                sOut.write(serverMessage);
-                sOut.flush();
+                MessageUtils.writeMessage((byte) 2, sOut);
 
                 byte[] clientMessageUS = new byte[4];
-                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);
+                MessageUtils.readMessage(clientMessageUS, sIn);
 
                 /*============Enviar produtos ao cliente============*/
                 if(clientMessageUS[1] == 4) {
@@ -97,18 +97,18 @@ class TcpSrvOrderThread implements Runnable {
 
                 /*============Verificar se Produto Existe============*/
                 if(clientMessageUS[1] == 3) {
-                    String productUniqueInternalCode = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String productUniqueInternalCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     Optional<Product> product = productRepository.ofIdentity(Code.valueOf(productUniqueInternalCode));
                     if(!product.isPresent()) {
-                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
+                        MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
                     } else {
-                        eapli.base.utils.MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
+                        MessageUtils.writeMessageWithData((byte) 3, "[SUCCESS] Product found!", sOut);
                     }
                 }
 
                 /*============Adicionar Produto ao Carrinho de Compras============*/
                 if(clientMessageUS[1] == 5) {
-                    String info = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String info = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     String[] array = info.split(" ");
                     String quantidade = array[0];
                     String email = array[1];
@@ -120,27 +120,23 @@ class TcpSrvOrderThread implements Runnable {
                         shoppingCar = shoppingCarRepository.findShoppingCartByClient(client.get());
                         if(shoppingCar.isPresent()) {
                             shoppingCar.get().addProductToShoppingCar(item);
-                            //acrescentei no caso de ja existir -> avisar
                             shoppingCarRepository.save(shoppingCar.get());
                         } else {
                             ShoppingCart shoppingCar1 = new ShoppingCart(client.get());
                             shoppingCar1.addProductToShoppingCar(item);
                             shoppingCarRepository.save(shoppingCar1);
                         }
-                        //shopCarItemRepository.save(item);
-
                     }
 
                 }
 
-                byte[] clientMessageEnd = sIn.readNBytes(4);
+                byte[] clientMessageEnd = new byte[4];
+                MessageUtils.readMessage(clientMessageEnd, sIn);
 
                 if (clientMessageEnd[1] == 1) {
                     System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
-                    byte[] serverMessageEnd = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                     System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
-                    sOut.write(serverMessageEnd);
-                    sOut.flush();
+                    MessageUtils.writeMessage((byte) 2, sOut);
                     System.out.println("[INFO] Cliente " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + " desconectado.");
                 } else {
                     System.out.println("[ERROR] Pacote do Cliente invalido.");
