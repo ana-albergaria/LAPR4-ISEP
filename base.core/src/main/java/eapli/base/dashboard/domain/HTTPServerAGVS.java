@@ -52,21 +52,21 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions( ) {
-        StringBuilder htmlString = new StringBuilder();
+        System.out.println("veio aqui");
 
+        String textHtml = "<table>";
         for(AGVPosition pos: positions) {
             for(AGV agv: allAgvs){
                 if(agv.getAgvID().equals(pos.agvID())){
-                    htmlString.append("<tr class=\"active-row\">" +
+                    textHtml = "<tr class=\"active-row\">" +
                             "<td>" + pos.agvID() + "</td>" +
                             "<td>" + pos.lSquare() + "</td>" +
                             "<td>" + pos.wSquare() + "</td>" +
-                            "<td>" + agv.getTaskStatus().toString() + "</td>"+
-                            "</tr>");
+                            "<td>test</td>";
                 }
             }
         }
-        return htmlString.toString();
+        return textHtml;
     }
 
 
