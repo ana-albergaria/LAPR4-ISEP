@@ -89,6 +89,17 @@ class TcpCliAGVTwinThread implements Runnable {
 
                 //>>>>>>> FAZER US5002
 
+                    //1. enviar sinal ao agv manager
+
+                    //...
+                    //4. fazer update dos agvs
+                    List<AGV> agvsToUpdate = new LinkedList<>();
+                    updateAgvStatus(agvsToUpdate);
+
+                    //5. enviar mensagem ao agv manager server a dizer
+                    //que os status foram alterados com sucesso
+                    //...
+
                 //>>>>>>> FIM DA US5002
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
