@@ -91,14 +91,11 @@ class TcpSrvAGVTwinThread implements Runnable {
                 byte[] clientMessageUS = new byte[6];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
-                /*sOut.write(serverMessage);
-                sOut.flush();
 
-                byte[] clientMessageUS = new byte[4];
-                eapli.base.utils.MessageUtils.readMessage(clientMessageUS, sIn);*/
-
-                //enviar a localização dos agvs
-                if(clientMessageUS[1] == 6) {
+                //recebe codigo
+                    //contactar com o cliente
+                    //updateAgvsStatus()
+                if(clientMessageUS[1] == 8) {
                     ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
 
                     //... locations = ....;
@@ -106,8 +103,6 @@ class TcpSrvAGVTwinThread implements Runnable {
                     //sOutputObject.writeObject(locations);
                     sOutputObject.flush();
                 }
-
-                //receber o comando para is buscar produtos ??
 
                 //byte[] clientMessageEnd = sIn.readNBytes(4);
                 byte[] clientMessageEnd = new byte[4];
