@@ -97,7 +97,7 @@ class TcpSrvOrderThread implements Runnable {
 
                 /*============Verificar se Produto Existe============*/
                 if(clientMessageUS[1] == 3) {
-                    String productUniqueInternalCode = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+                    String productUniqueInternalCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
                     Optional<Product> product = productRepository.ofIdentity(Code.valueOf(productUniqueInternalCode));
                     if(!product.isPresent()) {
                         MessageUtils.writeMessageWithData((byte) 3, "[FAILURE] Product not found! Please try again.", sOut);
@@ -129,8 +129,9 @@ class TcpSrvOrderThread implements Runnable {
                     }
 
                 }
-
-                byte[] clientMessageEnd = sIn.readNBytes(4);
+                
+                byte[] clientMessageEnd = new byte[4];
+                MessageUtils.readMessage(clientMessageEnd, sIn);
 
                 if (clientMessageEnd[1] == 1) {
                     System.out.println("[SUCCESS] Código de Fim (1) do Cliente recebido.");
