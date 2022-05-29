@@ -1,6 +1,8 @@
 package srv;
 
+import cli.TcpCliAGVTwin;
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.domain.AGV;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 public class TcpSrvAGVTwin {
 
@@ -91,14 +94,23 @@ class TcpSrvAGVTwinThread implements Runnable {
                 byte[] clientMessageUS = new byte[6];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
+
 
                 //recebe codigo
                     //contactar com o cliente
                     //updateAgvsStatus()
                 if(clientMessageUS[1] == 8) {
+                    String info = MessageUtils.getDataFromMessage(clientMessageUS, sIn);
+                    String[] array = info.split(" ");
+                    for (String string: array) {
+
+                    }
 
 
-
+                    //objectOutputStream.writeObject(agvsToUpdate);
+                    //objectOutputStream.flush();
+                    //System.out.println("Checkpoint Server");
                 }
 
                 //byte[] clientMessageEnd = sIn.readNBytes(4);
