@@ -34,18 +34,18 @@ public class DashboardController {
     }
 
 
-    public Iterable<AGVPosition> getPositions(int option){
+    public Iterable<AGVPosition> getPositions(int option, String ipAddress){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        agvPositions= positions.getPositions(option);
+        agvPositions= positions.getPositions(option, ipAddress);
 
         return agvPositions;
     }
 
-    public Iterable<AGV> getAgvs(int option){
+    public Iterable<AGV> getAgvs(int option, String ipAddress){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        agvs = positions.getAgvs(option);
+        agvs = positions.getAgvs(option, ipAddress);
 
         return agvs;
     }

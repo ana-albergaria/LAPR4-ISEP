@@ -4,6 +4,7 @@ import eapli.base.AppSettings;
 import eapli.base.Application;
 import eapli.base.dashboard.application.DashboardController;
 import eapli.base.warehousemanagement.domain.AGVPosition;
+import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.awt.*;
@@ -17,8 +18,18 @@ public class DashboardUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        this.controller.getPositions(6);
         //this.controller.getAgvs(8);
+        String ipAddressOption = Console.readLine("Do you want to connect to a Local Server or an Cloud Server? (Local | Cloud)");
+        String ipAddress = "";
+
+        if(ipAddressOption.equalsIgnoreCase("Local") || ipAddressOption.equalsIgnoreCase("Local Server")){
+            ipAddress = "127.0.0.1";
+        }else if(ipAddressOption.equalsIgnoreCase("Cloud") || ipAddressOption.equalsIgnoreCase("Cloud Server")){
+            ipAddress = Console.readLine("What is the Cloud Server's IP?");
+        }
+
+        this.controller.getPositions(6, ipAddress);
+        //this.controller.getAgvs(8, ipAddress);
         this.controller.showDashboard();
 
         URI uri;

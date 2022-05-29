@@ -96,22 +96,7 @@ class TcpSrvAGVTwinThread implements Runnable {
 
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
 
-
-                //recebe codigo
-                    //contactar com o cliente
-                    //updateAgvsStatus()
-                if(clientMessageUS[1] == 8) {
-                    String info = MessageUtils.getDataFromMessage(clientMessageUS, sIn);
-                    String[] array = info.split(" ");
-                    for (String string: array) {
-
-                    }
-
-
-                    //objectOutputStream.writeObject(agvsToUpdate);
-                    //objectOutputStream.flush();
-                    //System.out.println("Checkpoint Server");
-                }
+                // >>>>>>> RECEBER PEDIDOS AQUI <<<<<<<
 
                 //byte[] clientMessageEnd = sIn.readNBytes(4);
                 byte[] clientMessageEnd = new byte[4];

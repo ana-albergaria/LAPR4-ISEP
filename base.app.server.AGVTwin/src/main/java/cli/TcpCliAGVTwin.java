@@ -14,15 +14,17 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class TcpCliAGVTwin {
 
-    static Socket sock;
-    static InetAddress serverIP;
-    static String address;
-
     //client: request
     //server: waiting for request + send response
+
+    static InetAddress serverIP;
+    static Socket sock;
+
+    static String address;
 
     public TcpCliAGVTwin(String address){
         Preconditions.nonEmpty(address, "Server IPv4/IPv6 address or DNS name is required");
@@ -35,6 +37,7 @@ public class TcpCliAGVTwin {
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
         }
+
         new Thread(new TcpCliAGVTwinThread(args[0])).start();
 
     }
@@ -48,17 +51,9 @@ class TcpCliAGVTwinThread implements Runnable {
         this.ip = ip;
     }
 
-    private Socket s;
-
-    public TcpCliAGVTwinThread(Socket cli_s) {
-        s = cli_s;
-    }
-
     public void run() {
 
-        InetAddress serverIP;
-
-
+        InetAddress serverIP = null;
         Socket sock = null;
 
         try {
@@ -81,10 +76,8 @@ class TcpCliAGVTwinThread implements Runnable {
 
             DataOutputStream sOutData = new DataOutputStream(sock.getOutputStream());
             DataInputStream sInData = new DataInputStream(sock.getInputStream());
-            InetAddress clientIP = s.getInetAddress();
-            DataInputStream sIn = new DataInputStream(s.getInputStream());
 
-            //Mandar um pedido para o servido -> codigo: 0 (Teste)
+            //Mandar um pedido para o servidor -> codigo: 0 (Teste)
             byte[] clienteMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
             sOutData.write(clienteMessage);
             sOutData.flush();
@@ -92,41 +85,22 @@ class TcpCliAGVTwinThread implements Runnable {
             //Esperar a resposta do servidor a dizer que entendeu a mensagem
             byte[] serverMessage = sInData.readNBytes(4);
 
-
-            byte[] clientMessageUS = new byte[4];
-            MessageUtils.readMessage(clientMessageUS, sIn);
-
-            if (clientMessageUS[1] == 8) {
-
-
-                String agvsToUpdate = MessageUtils.getDataFromMessage(clientMessageUS, sIn);
-
-                /*List<AGV> agvsToChange = new LinkedList<>();
-
-                for (AGV agv : taskRepository.findAllAGV()) {
-                    if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
-                        agvsToChange.add(agv);
-                        //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                        //agvRepository.save(agv);
-                    }
-                }
-                for (AGV agv : agvRepository.findAll()) {
-                    if (taskRepository.findByAgv(agv)==null){
-                        if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))) {
-                            //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
-                            agvsToChange.add(agv);
-                        } else {
-                            //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
-                            agvsToChange.add(agv);
-                        }
-                        //agvRepository.save(agv);
-                    }
-                }*/
-
-            }
-
-
             if (serverMessage[1] == 2) {
+
+                //>>>>>>> FAZER US5002
+
+                    //1. enviar sinal ao agv manager
+
+                    //...
+                    //4. fazer update dos agvs
+                    List<AGV> agvsToUpdate = new LinkedList<>();
+                    updateAgvStatus(agvsToUpdate);
+
+                    //5. enviar mensagem ao agv manager server a dizer
+                    //que os status foram alterados com sucesso
+                    //...
+
+                //>>>>>>> FIM DA US5002
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
@@ -151,6 +125,12 @@ class TcpCliAGVTwinThread implements Runnable {
             } catch (IOException e) {
                 System.out.println("==> ERROR: Falha a fechar o socket");
             }
+        }
+    }
+
+    private void updateAgvStatus(Iterable<AGV> agvs){
+        for (AGV agv: agvs) {
+            agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
         }
     }
 

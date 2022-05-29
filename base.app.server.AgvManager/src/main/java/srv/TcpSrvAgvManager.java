@@ -145,36 +145,18 @@ class TcpSrvAgvManagerThread implements Runnable {
                 //=============================
 
 
-                //US5002: colocar AGVS designados a uma task como occupied
-                //e AGVS não designados a tasks como free ou charging
+                //2. US5002: colocar AGVS designados a uma task como occupied
                 if (clientMessageUS[1] == 8){
 
                     List<AGV> agvsToChange = new LinkedList<>();
 
-
-
                     for (AGV agv : taskRepository.findAllAGV()) {
                         if (Objects.equals(agv.getTaskStatus(), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE))){
                             agvsToChange.add(agv);
-                            /*agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
-                            agvRepository.save(agv);*/
-                        }
-                    }
-                    for (AGV agv : agvRepository.findAll()) {
-                        if (taskRepository.findByAgv(agv)==null){
-                            if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))) {
-                                //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
-                                agvsToChange.add(agv);
-                            } else {
-                                //agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.FREE));
-                                agvsToChange.add(agv);
-                            }
-                            //agvRepository.save(agv);
                         }
                     }
 
-
-
+                    //3. enviar lista ao agv twin client
 
                 }
 
