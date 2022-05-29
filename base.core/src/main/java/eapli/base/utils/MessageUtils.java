@@ -50,5 +50,15 @@ public class MessageUtils {
         return serverMessage[1] == 2;
     }
 
+    public static boolean wantsToExit(DataOutputStream sOut, DataInputStream sIn) throws IOException {
+        //Mandar um pedido para o servido -> codigo: 1 (Fim)
+        MessageUtils.writeMessage((byte) 1, sOut);
+
+        byte[] serverMessageEnd = new byte[4];
+        MessageUtils.readMessage(serverMessageEnd, sIn);
+
+        return serverMessageEnd[1] == 2;
+    }
+
 
 }

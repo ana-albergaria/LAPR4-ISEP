@@ -86,15 +86,7 @@ public class AddProductToShoppingCarService {
                     System.out.println();
 
 
-                    //Mandar um pedido para o servido -> codigo: 1 (Fim)
-                    byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOutData.write(clienteMessageEnd);
-                    sOutData.flush();
-
-
-
-                    byte[] serverMessageEnd = sInData.readNBytes(4);
-                    if (serverMessageEnd[1] == 2) {
+                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
                         socket.stop();
 
                     } else {
