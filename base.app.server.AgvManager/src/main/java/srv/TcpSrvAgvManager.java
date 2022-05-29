@@ -51,9 +51,9 @@ class TcpSrvAgvManager {
         List<AGV> agvsAvailableList = new ArrayList<>();
         agvsAvailable.forEach(agvsAvailableList::add);
         if (ordersToAssignList.isEmpty()){
-            System.out.println("There are no orders waiting to be assigned.");
+            System.out.println("[ASSIGN AGVS TO ORDERS]: There are no orders waiting to be assigned.");
         } else if (agvsAvailableList.isEmpty()){
-            System.out.println("There are no available AGVs.");
+            System.out.println("[ASSIGN AGVS TO ORDERS]: There are no available AGVs.");
         } else {
             int number = 0;
             int ordersToAssignSize = ordersToAssignList.size();
@@ -64,7 +64,7 @@ class TcpSrvAgvManager {
                 taskRepository.save(new TheTask(selectedAGV,selectedOrder));
                 selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
                 orderRepository.save(selectedOrder);
-                System.out.printf("AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
+                System.out.printf("[ASSIGN AGVS TO ORDERS]: AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
                 number++;
             } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
         }
