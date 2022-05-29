@@ -14,49 +14,137 @@ US1501 - As Customer, I want to view/search the product catalog and be able to a
 
 ## 2.2 System Sequence Diagram (SSD)
 
-![SSD_AddProductShoppingCart.svg](./SSD_AddProductShoppingCart.svg)
+![SSD_AddProductShoppingCart](./SSD_AddProductShoppingCart.svg)
 
 # 3. Design
 
-*Nesta secção a equipa deve descrever o design adotado para satisfazer a funcionalidade. Entre outros, a equipa deve apresentar diagrama(s) de realização da funcionalidade, diagrama(s) de classes, identificação de padrões aplicados e quais foram os principais testes especificados para validar a funcionalidade.*
-
-*Para além das secções sugeridas, podem ser incluídas outras.*
-
 ## 3.1. Realização da Funcionalidade
 
-*Nesta secção deve apresentar e descrever o fluxo/sequência que permite realizar a funcionalidade.*
+## 3.1.1 Sequence Diagram (SD)
+
+![SD_AddProductShoppingCart.svg](./SD_AddProductShoppingCart.svg)
 
 ## 3.2. Diagrama de Classes
 
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
+![CD_AddProductShoppingCart.svg](./CD_AddProductShoppingCart.svg)
+
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+### Creator
+
+### Repository
+
+### Factory
+
+### Information Expert
 
 ## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+### Class ShoppingCart
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+**Teste 1:** Verificar que não é possível criar uma instância da classe ShoppingCart com cliente nulo.
+
+	@org.junit.Test(expected = IllegalArgumentException.class)
+    void ensureShoppingCartHasClient() {
+        new ShoppingCart(null);
+    }
+
+**Teste 2:** Verificar que o método addProductToShoppingCar() guarda corretamente a quantidade e o produto.
+```        
+        @Test
+        void addProductToShoppingCar() {
+        ShoppingCart shoppingCart = new ShoppingCart(buildClient());
+
+        int expQuantity = 3;
+        int expSize = 1;
+        ShopCarItem item = new ShopCarItem(3,new Product(Code.valueOf("aaaa.12345"),Barcode.valueOf("123456789012"),ShortDescription.valueOf("this is a short description"),ExtendedDescription.valueOf("this is a very very very very very extended description"), Money.euros(2.0), Product.Status.AVAILABLE,Weight.valueOf(2.0),Volume.valueOf(3.0),Money.euros(3.0),new ProductCategory(AlphaNumericCode.valueOf("22abc"),CategoryDescription.valueOf("this is a catory description"))));
+
+        shoppingCart.addProductToShoppingCar(item);
+        assertEquals(expSize, shoppingCart.items().size());
+        assertEquals(expQuantity, shoppingCart.items().get(0).quantity());
+        }
+```
+
+### Class ShopCarItem
+
+**Teste 1:** Verificar que não é possível criar uma instância da classe ShopCarItem com produto nulo.
+```
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureShopCartItemHasProduct() {
+    new ShopCarItem(3, null);
+    }
+```
+
+**Teste 2:** Verificar que não é possível criar uma instância da classe ShopCarItem com quantidade inferior a 0.
+```
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureShopCartItemHasQuantityGreater0() {
+        new ShopCarItem(-1, new Product(Code.valueOf("aaaa.12345"), Barcode.valueOf("123456789012"), ShortDescription.valueOf("this is a short description"), ExtendedDescription.valueOf("this is a very very very very very extended description"), Money.euros(2.0), Product.Status.AVAILABLE,Weight.valueOf(2.0),Volume.valueOf(3.0),Money.euros(3.0),new ProductCategory(AlphaNumericCode.valueOf("22abc"),CategoryDescription.valueOf("this is a catory description"))));
+    }
+```
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+### Class AddProductToShoppingCarService
+```
+public class AddProductToShoppingCarService {
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    private static class ClientSocket {
+        private Socket sock;
+        private InetAddress serverIP;
+        private DataOutputStream sOutData;
+        private DataInputStream sInData;
+
+        public void connect(final String address, final int port) throws IOException {
+
+            try {
+                serverIP = InetAddress.getByName(address);
+            } catch (UnknownHostException ex) {
+                System.out.println("Invalid server specified: " + serverIP);
+                System.exit(1);
+            }
+
+            try {
+                sock = new Socket(serverIP, port); }
+            catch(IOException ex) {
+                System.out.println("Failed to establish TCP connection");
+                System.exit(1);
+            }
+
+            System.out.println("Connected to: " + serverIP + ":" + port);
+
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
+        }
+
+        public void stop() throws IOException {
+            sock.close();
+        }
+
+    }
+    
+    public boolean allProducts(){
+        //Omitted...
+    }
+    
+    public boolean findByUniqueInternalCode(String productUniqueInternalCode) {
+        //Omitted...
+    }
+    
+    public boolean addProductToShoppingCarService( String uniqueInternalCode, int quantidade, String clientEmail) {
+        //Omitted...
+    }
+```
+
 
 # 5. Integração/Demonstração
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+Esta User Story foi implementada na sua totalidade, integrando na sua implementação a interação com vários repositórios (ProductRepository, ClientRepository e ShoppingCartRepository) e recorreu ao uso de um serviço denomiado AddProductToShoppingCarService de forma a cumprir com os requisitos e boas práticas.
 
 # 6. Observações
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
+N/A
 
 
 

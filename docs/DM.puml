@@ -116,6 +116,11 @@ package "<<aggregate>> Bin" {
     entity Bin
 }
 
+package "<<aggregate>> ShoppingCart"{
+    entity ShoppingCart
+    entity Item
+}
+
 entity Product <<entity>> <<root>> {
     -<<VO>> UniqueInternalCode
     -<<VO>> Barcode
@@ -397,7 +402,7 @@ Employee --> "1..*" Survey
 
 User --> "1..*" Role
 User "1" <-- Employee
-User --> "0..1" Client
+User "1" <-- Client
 
 WarehousePlant --> "1..*" Aisle
 Aisle --> "1..*" Row
@@ -442,6 +447,10 @@ Survey --> "*" Answer
 /'Report --> "*" Answer'/
 
 /' TaxService ..> Tax '/
+
+ShoppingCart --> "1..*" Item : composed by
+Client --> "1" ShoppingCart : associated with
+Item --> "1" Product : composed by
 
 class SourceChannel <<(V,#FF8B40) value object>>
 class InteractionDate <<(V,#FF8B40) value object>>
