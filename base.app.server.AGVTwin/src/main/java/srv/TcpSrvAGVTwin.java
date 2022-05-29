@@ -96,12 +96,9 @@ class TcpSrvAGVTwinThread implements Runnable {
                     //contactar com o cliente
                     //updateAgvsStatus()
                 if(clientMessageUS[1] == 8) {
-                    ObjectOutputStream sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
 
-                    //... locations = ....;
 
-                    //sOutputObject.writeObject(locations);
-                    sOutputObject.flush();
+
                 }
 
                 //byte[] clientMessageEnd = sIn.readNBytes(4);

@@ -1,5 +1,4 @@
 package srv;
-import cli.TcpCliAGVTwin;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
@@ -70,8 +69,6 @@ class TcpSrvAgvManagerThread implements Runnable {
     private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
     private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
-
-    private final TcpCliAGVTwin service = new TcpCliAGVTwin();
 
     public void run() {
         //long f,i,num,sum;
@@ -175,6 +172,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                             //agvRepository.save(agv);
                         }
                     }
+
+
 
 
                 }
