@@ -18,6 +18,7 @@ public class DashboardUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         this.controller.getPositions(6);
+        this.controller.getAgvs(8);
         this.controller.showDashboard();
 
         URI uri;

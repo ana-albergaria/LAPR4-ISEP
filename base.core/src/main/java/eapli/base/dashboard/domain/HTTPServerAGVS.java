@@ -1,6 +1,7 @@
 package eapli.base.dashboard.domain;
 
 import eapli.base.dashboard.application.DashboardController;
+import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -16,13 +17,15 @@ public class HTTPServerAGVS extends Thread{
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
     static  private Iterable<AGVPosition> positions;
+    static private Iterable<AGV> allAgvs;
 
     static final int PORT = 55090;
 
     private static DashboardController controller;
 
-    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions) {
+    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions, Iterable<AGV> agvs) {
         positions=agvPositions;
+        allAgvs=agvs;
     }
 
     public void setController(DashboardController ctrl){
@@ -52,11 +55,16 @@ public class HTTPServerAGVS extends Thread{
         StringBuilder htmlString = new StringBuilder();
 
         for(AGVPosition pos: positions) {
-            htmlString.append("<tr class=\"active-row\">" +
-                    "<td>" + pos.agvID() + "</td>" +
-                    "<td>" + pos.lSquare() + "</td>" +
-                    "<td>" + pos.wSquare() + "</td>" +
-                    "</tr>");
+            for(AGV agv: allAgvs){
+                if(agv.getAgvID().equals(pos.agvID())){
+                    htmlString.append("<tr class=\"active-row\">" +
+                            "<td>" + pos.agvID() + "</td>" +
+                            "<td>" + pos.lSquare() + "</td>" +
+                            "<td>" + pos.wSquare() + "</td>" +
+                            "<td>" + agv.getTaskStatus().toString() + "</td>"+
+                            "</tr>");
+                }
+            }
         }
         return htmlString.toString();
     }
