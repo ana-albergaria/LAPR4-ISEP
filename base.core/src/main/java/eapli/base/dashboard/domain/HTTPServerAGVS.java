@@ -52,7 +52,6 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions( ) {
-        System.out.println("veio aqui");
 
         String textHtml = "<table>";
         for(AGVPosition pos: positions) {
