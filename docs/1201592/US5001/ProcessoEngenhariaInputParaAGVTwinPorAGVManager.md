@@ -34,45 +34,17 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
 # 3. Design
 
 
-
-## 3.1. Realização da Funcionalidade
-
-
-### 3.1.1. Modelo de Domínio:
-
-![US_5001_DM](US_5001_DM.svg)
+## 3.1. Padrões Aplicados
 
 
-### 3.1.2. Classes de Domínio:
+### SPOMS2022
 
-* 
-
-
-### 3.1.3. Diagrama de Sequência do Sistema:
-
-![US_5001_SSD](US_5001_SSD.svg)
-
-
-### 3.1.4. Diagrama de Sequência:
-
-![US_5001_SD](US_5001_SD.svg)
-
-
-
-## 3.2. Diagrama de Classes
-
-
-![US_5001_CD](US_5001_CD.svg)
-
-
-## 3.3. Padrões Aplicados
-
-
+### Threads
 
 
 # 4. Implementação
 
-## 4.1. Classe 
+## 4.1. Classe TcpCliAGVTwin
 
 
     [...]
@@ -82,6 +54,24 @@ A interpretação feita deste requisito foi no sentido de desenvolver o AGV digi
     [...]
 
 
+## 4.2. Classe TcpSrvAGVTwin
+
+
+    [...]
+
+    
+    
+    [...]
+
+
+## 4.3. Classe TcpSrvAGVManager
+
+
+    [...]
+
+    
+    
+    [...]
     
 
 
@@ -91,4 +81,4 @@ Esta User Story depende da User Story 4001, uma vez que é necessária a existê
 
 # 6. Observações
 
-Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes.
+Uma vez que para esta US não é criada qualquer tipo de entidade, não foi criada nenhuma classe de testes. Também não foram criados diagramas, uma vez que esta US refere-se apenas à interação entre server e client.

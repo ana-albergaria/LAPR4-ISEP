@@ -4,6 +4,7 @@
 autonumber
 
 Actor ":TcpSrvAgvManager" as AGVM
+participant ":TcpCliAGVTwin" as AGVTC
 participant ":PersistenceContext" as Persistance
 participant ":RepositoryFactory" as Factory
 participant ":OrderRepository" as OrderRep
@@ -78,6 +79,6 @@ deactivate AGV
 
 end
 
-
+AGVM -> AGVTC : updateAgvsStatus()
 
 @enduml

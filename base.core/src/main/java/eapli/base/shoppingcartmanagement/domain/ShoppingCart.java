@@ -4,6 +4,7 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.ordermanagement.domain.OrderItem;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,12 +27,8 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "shopping_cart_id")
     private List<ShopCarItem> items;
 
-    public ShoppingCart(final Client client, final List<ShopCarItem> items) {
-        this.client = client;
-        this.items = items;
-    }
-
     public ShoppingCart(final Client client) {
+        Preconditions.noneNull(client);
         this.client = client;
         this.items = new ArrayList<>();
     }
@@ -42,6 +39,10 @@ public class ShoppingCart implements AggregateRoot<Long>, Serializable {
 
     public Client client() {
         return this.client;
+    }
+
+    public List<ShopCarItem> items() {
+        return this.items;
     }
 
     @Override

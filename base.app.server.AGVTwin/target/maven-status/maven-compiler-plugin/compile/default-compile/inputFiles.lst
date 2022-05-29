@@ -1,2 +1,3 @@
-C:\Users\Ana Albergaria\Desktop\lei21_22_s4_2df_01\base.app.server.AGVTwin\src\main\java\TcpCliAGVTwin.java
-C:\Users\Ana Albergaria\Desktop\lei21_22_s4_2df_01\base.app.server.AGVTwin\src\main\java\TcpSrvAGVTwin.java
+C:\Users\Ana Albergaria\Desktop\lei21_22_s4_2df_01\base.app.server.AGVTwin\src\main\java\srv\TcpSrvAGVTwin.java
+C:\Users\Ana Albergaria\Desktop\lei21_22_s4_2df_01\base.app.server.AGVTwin\src\main\java\Positioning\AGVCurrentPositions.java
+C:\Users\Ana Albergaria\Desktop\lei21_22_s4_2df_01\base.app.server.AGVTwin\src\main\java\cli\TcpCliAGVTwin.java
