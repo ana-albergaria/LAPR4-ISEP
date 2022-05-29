@@ -42,6 +42,14 @@ public class AddProductToShoppingCarService {
             sInData = new DataInputStream(sock.getInputStream());
         }
 
+        public DataOutputStream dataOutputStream() {
+            return this.sOutData;
+        }
+
+        public DataInputStream dataInputStream() {
+            return this.sInData;
+        }
+
         public Socket sock() {
             return this.sock;
         }
@@ -62,12 +70,9 @@ public class AddProductToShoppingCarService {
 
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
-                DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
-
-                    MessageUtils.writeMessage((byte) 4, sOutData);
+                    MessageUtils.writeMessage((byte) 4, socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock().getInputStream());
@@ -84,7 +89,7 @@ public class AddProductToShoppingCarService {
                     System.out.println();
 
 
-                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
                         socket.stop();
 
                     } else {
@@ -120,21 +125,18 @@ public class AddProductToShoppingCarService {
 
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
-                DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
-
-                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
                     //enviar produto escolhido e verificar se existe
-                    MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 3, productUniqueInternalCode, socket.sOutData);
                     byte[] clientMessageUS = new byte[4];
-                    MessageUtils.readMessage(clientMessageUS, sInData);
+                    MessageUtils.readMessage(clientMessageUS, socket.sInData);
 
                     if(clientMessageUS[1] == 3) {
-                        String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,sInData);
+                        String productExists = eapli.base.utils.MessageUtils.getDataFromMessage(clientMessageUS,socket.sInData);
                         if(!productExists.equals("[SUCCESS] Product found!")){
 
-                            if (MessageUtils.wantsToExit(sOutData,sInData)) {
+                            if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
                                 socket.stop();
 
                             } else {
@@ -145,7 +147,7 @@ public class AddProductToShoppingCarService {
                         }
                     }
 
-                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
                         socket.stop();
 
                     } else {
@@ -183,15 +185,12 @@ public class AddProductToShoppingCarService {
 
             try {
 
-                DataOutputStream sOutData = new DataOutputStream(socket.sock().getOutputStream());
-                DataInputStream sInData = new DataInputStream(socket.sock().getInputStream());
-
-                if (MessageUtils.testCommunicationWithServer(sOutData, sInData)) {
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
                     String info = quantidade + " " + clientEmail + " " + uniqueInternalCode;
-                    MessageUtils.writeMessageWithData((byte) 5, info, sOutData);
+                    MessageUtils.writeMessageWithData((byte) 5, info, socket.sOutData);
 
-                    if (MessageUtils.wantsToExit(sOutData,sInData)) {
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
                         socket.stop();
                     } else {
                         System.out.println("==> ERROR: Erro no pacote do Servidor");
