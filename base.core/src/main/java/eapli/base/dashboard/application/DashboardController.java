@@ -25,8 +25,8 @@ public class DashboardController {
     Iterable<AGVPosition> agvPositions;
 
     public void showDashboard(){
-
-        HTTPServerAGVS server = new HTTPServerAGVS();
+        HTTPServerAGVS server = new HTTPServerAGVS(agvPositions);
+        server.setController(this);
         server.start();
     }
 
@@ -34,7 +34,7 @@ public class DashboardController {
     public Iterable<AGVPosition> getPositions(int option){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
 
-        //agvPositions= positions.getPositions(option);
+        agvPositions= positions.getPositions(option);
 
         return agvPositions;
     }

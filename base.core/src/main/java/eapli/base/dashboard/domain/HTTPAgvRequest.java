@@ -19,8 +19,7 @@ public class HTTPAgvRequest extends Thread{
         try {
             outS = new DataOutputStream(sock.getOutputStream());
             inS = new DataInputStream(sock.getInputStream());
-        }
-        catch( IOException ex) { System.out.println("Thread error on data streams creation"); }
+        } catch( IOException ex) { System.out.println("Thread error on data streams creation"); }
         try {
             HTTPMessage request = new HTTPMessage(inS);
             HTTPMessage response = new HTTPMessage();
