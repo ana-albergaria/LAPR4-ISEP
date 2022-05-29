@@ -4,9 +4,11 @@ import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.application.AutomaticallyAssignOrdersToFreeAGVController;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.AutonomyStatus;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
 
 import java.io.*;
 import java.net.*;
@@ -63,6 +65,7 @@ class TcpSrvAgvManagerThread implements Runnable {
     //private final AutomaticallyAssignOrdersToFreeAGVController ordersToAGVController = new AutomaticallyAssignOrdersToFreeAGVController(); //-> used in US4002
     private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+    private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
 
     public void run() {
         //long f,i,num,sum;
@@ -93,8 +96,14 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
-                if (clientMessageUS[1] == 6) { //Por exemplo, codigo 4 = Ligar ao AGV Manager e pedir posições do AGV
-                    TcpSrvAGVTwin tcpSrvAGVTwin = new TcpSrvAGVTwin(AGV_DIGITAL_TWIN_SERVER_ADDRESS, AGV_DIGITAL_TWIN_SERVER_PORT);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
+
+                if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
+                    Iterable<AGVPosition> agvPositionIterable = agvPositionRepository.findAll();
+
+                    byte[] agvPositionMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0, };
+                    //objectOutputStream.write();
+
                 }
 
                 //==============================
