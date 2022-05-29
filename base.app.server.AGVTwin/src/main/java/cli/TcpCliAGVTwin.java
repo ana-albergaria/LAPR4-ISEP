@@ -118,14 +118,8 @@ class TcpCliAGVTwinThread implements Runnable {
     }
 
     private void updateAgvStatus(Iterable<AGV> agvs){
-        for (AGV agv: agvs
-             ) {
-            if (Objects.equals(agv.getAutonomyStatus(), AutonomyStatus.valueOf("0h"))){
-                agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.CHARGING));
-            } else {
-
-            }
-
+        for (AGV agv: agvs) {
+            agv.setTaskStatus(TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED));
         }
     }
 
