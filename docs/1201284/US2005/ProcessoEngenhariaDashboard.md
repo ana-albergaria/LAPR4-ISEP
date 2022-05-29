@@ -37,7 +37,7 @@ A interpretação feita deste requisito foi a de recuperar os estados e posiçõ
 
 | Servidor        | Port  |
 |--------------|-------|
-| 10.9.22.170    | 3700 |
+| 127.0.0.1    | 55090 |
 
 # 4. Fluxo de Troca de Mensagens entre o Servidor e o Cliente
 
@@ -64,3 +64,4 @@ No âmbito desta US, são efetuados os seguintes requests:
 |--------|-------|
 | 6      | Buscar AgvPositions disponiveis na base de dados |
 | 8      | Buscar AGVs desponiveis na base de dados |
+
