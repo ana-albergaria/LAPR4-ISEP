@@ -31,6 +31,7 @@ import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.shoppingcartmanagement.repositories.ShopCarItemRepository;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
+import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.warehousemanagement.repositories.*;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
@@ -139,6 +140,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AgvPositionRepository positions(){return new JpaAgvPositionRepository();}
+
+    @Override
+    public AnswerQuestionnaireRepository answers(){
+        return new JpaAnswerQuestionnaireRepository();
+    }
 
     @Override
     public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
