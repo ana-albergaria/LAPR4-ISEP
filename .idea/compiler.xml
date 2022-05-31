@@ -11,7 +11,6 @@
         <module name="base.app.server.order" />
         <module name="base.app.other.console" />
         <module name="base.app.server.AGVTwin" />
-        <module name="AGVTwin" />
         <module name="base.app.user.console" />
         <module name="base.core" />
         <module name="base.app.backoffice.console" />
@@ -21,6 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="AGVTwin" target="11" />
       <module name="base.app.server.agvmanager" target="11" />
       <module name="base.app.server.manager" target="11" />
       <module name="core" target="1.7" />
