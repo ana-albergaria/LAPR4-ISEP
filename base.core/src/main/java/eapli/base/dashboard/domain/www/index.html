@@ -9,27 +9,20 @@
     <meta name="theme-color" content="#ffffff">
     <script src="web-dashboard.js"></script>
 </head>
-<body onload="refreshPositions()">
-<div class="header">
-    <h1>Welcome to the AGV Dashboard!</h1>
-    <p>A website created by 2DF G01.</p>
-</div>
+<body onload="refreshPositions()"><h1>AGVs Positions & Status</h1>
+ <table>
+     <thead>
+     <tr>
+         <td>AGV ID</td>
+         <td>Width Square</td>
+         <td>Length Square</td>
+         <td>AGV Status</td>
+     </tr>
+     </thead>
+     <tbody id="agvs">
 
-<div style="overflow-x:auto;">
-    <table>
-        <thead>
-        <tr>
-            <td>AGV ID</td>
-            <td>Width Square</td>
-            <td>Length Square</td>
-            <td>AGV Status</td>
-        </tr>
-        </thead>
-        <tbody id="agvs">
-
-        </tbody>
-    </table>
-</div>
+     </tbody>
+ </table>
 
 </body>
 </html>

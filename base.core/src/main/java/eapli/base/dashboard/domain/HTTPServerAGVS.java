@@ -53,8 +53,8 @@ public class HTTPServerAGVS extends Thread{
 
     public static synchronized String showPositions( ) {
 
-        String textHtml = "<table>";
-        for(AGVPosition pos: positions) {
+        String textHtml;
+        /*for(AGVPosition pos: positions) {
             for(AGV agv: allAgvs){
                 if(agv.getAgvID().equals(pos.agvID())){
                     textHtml = "<tr class=\"active-row\">" +
@@ -64,7 +64,13 @@ public class HTTPServerAGVS extends Thread{
                             "<td>test</td>";
                 }
             }
-        }
+        }*/
+
+        textHtml = "<tr class=\"active-row\">" +
+                "<td>isto</td>" +
+                "<td>é</td>" +
+                "<td>um</td>" +
+                "<td>test</td>";
         return textHtml;
     }
 
