@@ -145,7 +145,7 @@ class TcpSrvAgvManagerThread implements Runnable {
                     objectOutputStream.flush();
                 }
 
-                if(clientMessageUS[1] == 7){
+                if(clientMessageUS[1] == 7){ //usado na US5001 e US5002
                     ObjectOutputStream sendAGVsToChangeList = new ObjectOutputStream(s.getOutputStream());
                     ObjectInputStream getAGVsChangedList = new ObjectInputStream(s.getInputStream());
 
