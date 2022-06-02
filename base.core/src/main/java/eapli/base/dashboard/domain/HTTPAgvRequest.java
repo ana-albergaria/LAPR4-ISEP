@@ -29,8 +29,10 @@ public class HTTPAgvRequest extends Thread{
                 if(request.getURI().equals("/agvs")) {
                     response.setContentFromString(
                             HTTPServerAGVS.showPositions(), "text/html");
-                    System.out.println("entrou no get");
                     response.setResponseStatus("200 Ok");
+                } else if(request.getURI().equals("/matrix")){
+                    response.setContentFromString(HTTPServerAGVS.getMatrix(), "text/html");
+                    response.setResponseStatus("200 ok");
                 }
                 else {
                     String fullname=baseFolder + "/";

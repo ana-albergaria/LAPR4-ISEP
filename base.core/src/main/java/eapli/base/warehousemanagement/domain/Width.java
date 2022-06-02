@@ -24,6 +24,10 @@ public class Width implements ValueObject, Serializable {
         this.width= null;
     }
 
+    public Long width(){
+        return this.width;
+    }
+
     public static  Width valueOf(final Long width){
         return new Width(width);
     }

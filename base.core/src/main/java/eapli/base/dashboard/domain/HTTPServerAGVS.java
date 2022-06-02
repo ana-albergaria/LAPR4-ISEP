@@ -1,15 +1,14 @@
 package eapli.base.dashboard.domain;
 
 import eapli.base.dashboard.application.DashboardController;
-import eapli.base.warehousemanagement.domain.AGV;
-import eapli.base.warehousemanagement.domain.AGVPosition;
+import eapli.base.utils.CreateWarehouseMatrix;
+import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
 
 public class HTTPServerAGVS extends Thread{
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -18,6 +17,9 @@ public class HTTPServerAGVS extends Thread{
     static private ServerSocket sock;
     static  private Iterable<AGVPosition> positions;
     static private Iterable<AGV> allAgvs;
+    static private WarehousePlant plant;
+    static private Iterable<AgvDock> docks;
+    static private Iterable<Aisle> aisles;
 
     static final int PORT = 55090;
 
@@ -51,13 +53,31 @@ public class HTTPServerAGVS extends Thread{
         }
     }
 
+    public static synchronized  String getMatrix(){
+        //int[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
+        //CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
+
+        String buildInHtml = "<table>";
+        for(int i=0; i<20; i++){
+            buildInHtml = buildInHtml +"<tr>";
+            for(int j=0; j<20; j++){
+                buildInHtml = buildInHtml + "<td>0</td>";
+
+            }
+            buildInHtml = buildInHtml +"</tr>";
+        }
+        buildInHtml = buildInHtml +"</table>";
+
+        return buildInHtml;
+    }
+
     public static synchronized String showPositions( ) {
 
-        String textHtml;
+        String buildInHtml;
         /*for(AGVPosition pos: positions) {
             for(AGV agv: allAgvs){
                 if(agv.getAgvID().equals(pos.agvID())){
-                    textHtml = "<tr class=\"active-row\">" +
+                    textHtml = textHtml + "<tr class=\"active-row\">" +
                             "<td>" + pos.agvID() + "</td>" +
                             "<td>" + pos.lSquare() + "</td>" +
                             "<td>" + pos.wSquare() + "</td>" +
@@ -66,12 +86,12 @@ public class HTTPServerAGVS extends Thread{
             }
         }*/
 
-        textHtml = "<tr class=\"active-row\">" +
+        buildInHtml = "<tr class=\"active-row\">" +
                 "<td>isto</td>" +
                 "<td>é</td>" +
                 "<td>um</td>" +
                 "<td>test</td>";
-        return textHtml;
+        return buildInHtml;
     }
 
 
