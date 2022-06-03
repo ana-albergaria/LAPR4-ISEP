@@ -8,11 +8,15 @@ import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.framework.io.util.Console;
 import eapli.framework.validations.Preconditions;
 
+import javax.net.ssl.*;
 import javax.swing.plaf.PanelUI;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -35,16 +39,17 @@ public class TcpCliAGVTwin {
     }
 
     public static void main(String args[]) {
+
         String ipAddressOption = eapli.framework.io.util.Console.readLine("Do you want to connect to a Local Server or an Cloud Server? (Local | Cloud)");
         String ipAddress = "";
 
-        if(ipAddressOption.equalsIgnoreCase("Local") || ipAddressOption.equalsIgnoreCase("Local Server")){
+        if (ipAddressOption.equalsIgnoreCase("Local") || ipAddressOption.equalsIgnoreCase("Local Server")) {
             ipAddress = "127.0.0.1";
-        }else if(ipAddressOption.equalsIgnoreCase("Cloud") || ipAddressOption.equalsIgnoreCase("Cloud Server")){
+        } else if (ipAddressOption.equalsIgnoreCase("Cloud") || ipAddressOption.equalsIgnoreCase("Cloud Server")) {
             ipAddress = Console.readLine("What is the Cloud Server's IP?");
         }
 
-        if(args.length!=1){
+        if (args.length != 1) {
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
         }
@@ -65,7 +70,7 @@ class TcpCliAGVTwinThread implements Runnable {
     public void run() {
 
         InetAddress serverIP = null;
-        Socket sock = null;
+        SSLSocket sock = null;
 
         try {
             serverIP = InetAddress.getByName(this.ip);
@@ -75,10 +80,83 @@ class TcpCliAGVTwinThread implements Runnable {
         }
 
         try {
-            sock = new Socket(this.ip, 3700);
-        } catch (IOException ex) {
+            System.setProperty("javax.net.debug", "all");
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            String password = "aabbcc";
+            InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("cli/client-certificate.p12");
+            keyStore.load(inputStream, password.toCharArray());
+
+            // TrustManagerFactory ()
+            KeyStore trustStore = KeyStore.getInstance("PKCS12");
+            String password2 = "abcdefg";
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX", "SunJSSE");
+            InputStream inputStream1 = new FileInputStream("base.app.server.AgvManager/src/main/resources/srv/server-certificate.p12");
+            trustStore.load(inputStream1, password2.toCharArray());
+            trustManagerFactory.init(trustStore);
+            X509TrustManager x509TrustManager = null;
+            for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {
+                if (trustManager instanceof X509TrustManager) {
+                    x509TrustManager = (X509TrustManager) trustManager;
+                    break;
+                }
+            }
+
+            if (x509TrustManager == null) throw new NullPointerException();
+
+            // KeyManagerFactory ()
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509", "SunJSSE");
+            keyManagerFactory.init(keyStore, password.toCharArray());
+            X509KeyManager x509KeyManager = null;
+            for (KeyManager keyManager : keyManagerFactory.getKeyManagers()) {
+                if (keyManager instanceof X509KeyManager) {
+                    x509KeyManager = (X509KeyManager) keyManager;
+                    break;
+                }
+            }
+            if (x509KeyManager == null) throw new NullPointerException();
+
+            // set up the SSL Context
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(new KeyManager[]{x509KeyManager}, new TrustManager[]{x509TrustManager}, null);
+
+            SSLSocketFactory socketFactory = sslContext.getSocketFactory();
+            sock = (SSLSocket) socketFactory.createSocket(this.ip, 3700);
+            sock.setEnabledProtocols(new String[]{"TLSv1.2"});
+
+            PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(sock.getInputStream()));
+
+            BufferedReader stdIn =
+                    new BufferedReader(new InputStreamReader(System.in));
+            String fromServer;
+            String fromUser;
+
+            while ((fromServer = in.readLine()) != null) {
+                System.out.println("Server: " + fromServer);
+                if (fromServer.equals("Bye."))
+                    break;
+
+                fromUser = stdIn.readLine();
+                if (fromUser != null) {
+                    System.out.println("Client: " + fromUser);
+                    out.println(fromUser);
+                }
+            }
+
+        } catch (IOException | KeyStoreException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
         }
 
         System.out.println("Connected to: " + this.ip + ", port:" + 3700);
@@ -99,26 +177,28 @@ class TcpCliAGVTwinThread implements Runnable {
 
             if (testResponse[1] == 2) {
 
-                //=========================================================
-                //>>>>>>> US5001 e US5002
-
+                //>>>>>>> FAZER US5002
                 byte[] optionMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
                 sOutData.write(optionMessage);
                 sOutData.flush();
+                //1. enviar sinal ao agv manager
 
+                //...
+                //4. fazer update dos agvs
                 List<AGV> agvsToUpdate;
 
                 ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
                 ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
 
-                agvsToUpdate = (List<AGV>) sInObject.readObject(); //input (US5001)
+                agvsToUpdate = (List<AGV>) sInObject.readObject();
                 updateAgvStatus(agvsToUpdate);
 
+                //5. enviar mensagem ao agv manager server a dizer
+                //que os status foram alterados com sucesso
+                //...
                 sOutObject.writeObject(agvsToUpdate);
-                sOutObject.flush(); //output (US5002)
-
-                //>>>>>>> FIM DA US5001 e US5002
-                //=========================================================
+                sOutObject.flush();
+                //>>>>>>> FIM DA US5002
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
