@@ -1,20 +1,24 @@
 package eapli.base.ordermanagement.domain;
 
 import eapli.base.clientmanagement.domain.Client;
+import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.representations.dto.DTOable;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
-public class TheOrder implements AggregateRoot<Long>, Serializable {
+public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<OrderDTO> {
     private static final long serialVersionUID = 1L;
+
 
     public enum SourceChannel {
         CALL, EMAIL, MEETING;
@@ -186,6 +190,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
         return this.orderVolume = new OrderVolume(totalVolume);
     }
 
+    public void changeOrderStatusTo(final OrderStatus.Status status) {
+        this.status = new OrderStatus(status);
+    }
+
     public OrderStatus getOrderStatus(){
         return this.status;
     }
@@ -215,5 +223,11 @@ public class TheOrder implements AggregateRoot<Long>, Serializable {
 
     public Calendar getCreatedOn() {
         return createdOn;
+    }
+
+    //confirmar date a mostrar -> neste momento mostra a data de criação
+    @Override
+    public OrderDTO toDTO() {
+        return new OrderDTO(this.orderId, new SimpleDateFormat("yyyy/MM/dd").format(this.createdOn), this.client.name().toString(), this.status.toString());
     }
 }

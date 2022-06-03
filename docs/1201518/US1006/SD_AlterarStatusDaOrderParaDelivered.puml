@@ -5,7 +5,7 @@ actor "Sales Clerk" as SC
 participant ViewOrdersSentToCustomerUI as UI <<presentation>>
 participant ViewOrdersSentToCustomerController as Controller <<application>>
 participant ListOrderDTOService as serv <<application>>
-participant "ProductOrder" as Domain <<domain>>
+participant "TheOrder" as Domain <<domain>>
 participant "OrderDTO" as DTO <<dto>>
 participant PersistenceContext as Persistence <<persistence>>
 participant RepositoryFactory as Factory <<factory>>
@@ -17,7 +17,7 @@ activate UI
 UI -> Controller: create
 UI -> Controller: getOrdersDispatchedForCustomerDelivery()
 activate Controller
-Controller -> serv: getOrdersDispatchedForCustomerDelivery()
+Controller -> serv: findOrdersByStatus(DISPATCHED_FOR_CLIENT)
 activate serv
 serv -> Persistence: repositories()
 activate Persistence
@@ -55,7 +55,7 @@ SC -> UI : introduz o id
 activate UI
 UI -> Controller: changeStatusToBeingDelivered(orderId)
 activate Controller
-Controller->repository:findByNumericIdentifier(orderId)
+Controller->repository:ofIdentity(orderId)
 activate repository
 deactivate repository
 Controller -> Domain: changeStatusToBeingDelivered()
