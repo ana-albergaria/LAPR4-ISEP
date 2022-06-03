@@ -18,7 +18,6 @@ public class DashboardUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        //this.controller.getAgvs(8);
         String ipAddressOption = Console.readLine("Do you want to connect to a Local Server or an Cloud Server? (Local | Cloud)");
         String ipAddress = "";
 

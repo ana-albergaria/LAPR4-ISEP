@@ -181,7 +181,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                 if(clientMessageUS[1] == 9){
                     ObjectOutputStream sendWarehousePlant = new ObjectOutputStream(s.getOutputStream());
 
-                    WarehousePlant warehousePlant = (WarehousePlant) warehousePlantRepository.findAll();
+                    Iterable<WarehousePlant> warehousePlantIterable = (Iterable<WarehousePlant>) warehousePlantRepository.findAll();
+                    WarehousePlant warehousePlant = warehousePlantIterable.iterator().next();
 
                     sendWarehousePlant.writeObject(warehousePlant);
                     sendWarehousePlant.flush();

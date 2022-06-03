@@ -202,6 +202,8 @@ public class GetPositions {
 
                     plant = (WarehousePlant) sInObject.readObject();
 
+                    System.out.println(plant.identity());
+
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                     sOut.write(endMessage);
                     sOut.flush();
