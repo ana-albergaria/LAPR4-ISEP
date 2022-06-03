@@ -50,6 +50,12 @@ public class WarehousePlant implements AggregateRoot<Long>, Serializable {
 
     }
 
+    public Length warehouseLength(){
+        return this.length;
+    }
+    public Width warehouseWidth(){
+        return this.width;
+    }
 
     @Override
     public int hashCode() {

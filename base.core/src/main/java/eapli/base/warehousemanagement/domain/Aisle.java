@@ -51,6 +51,16 @@ public class Aisle implements AggregateRoot<Long>, Serializable {
         this.aisleID=null;
     }
 
+    public Square beginSquare(){
+        return this.beginSquare;
+    }
+    public Square endSquare(){
+        return this.endSquare;
+    }
+    public Square depthSquare(){
+        return this.depthSquare;
+    }
+
 
     @Override
     public int hashCode() {

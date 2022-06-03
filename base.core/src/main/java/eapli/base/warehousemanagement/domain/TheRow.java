@@ -48,6 +48,13 @@ public class TheRow implements AggregateRoot<Long>, Serializable {
         this.rowID=null;
     }
 
+    public Square beginSquare(){
+        return this.beginSquare;
+    }
+    public Square endSquare(){
+        return this.endSquare;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

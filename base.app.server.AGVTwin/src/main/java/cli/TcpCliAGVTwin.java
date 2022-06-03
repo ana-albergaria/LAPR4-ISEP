@@ -99,28 +99,26 @@ class TcpCliAGVTwinThread implements Runnable {
 
             if (testResponse[1] == 2) {
 
-                //>>>>>>> FAZER US5002
+                //=========================================================
+                //>>>>>>> US5001 e US5002
+
                 byte[] optionMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
                 sOutData.write(optionMessage);
                 sOutData.flush();
-                    //1. enviar sinal ao agv manager
 
-                    //...
-                    //4. fazer update dos agvs
                 List<AGV> agvsToUpdate;
 
                 ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
                 ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
 
-                agvsToUpdate = (List<AGV>) sInObject.readObject();
+                agvsToUpdate = (List<AGV>) sInObject.readObject(); //input (US5001)
                 updateAgvStatus(agvsToUpdate);
 
-                    //5. enviar mensagem ao agv manager server a dizer
-                    //que os status foram alterados com sucesso
-                    //...
                 sOutObject.writeObject(agvsToUpdate);
-                sOutObject.flush();
-                //>>>>>>> FIM DA US5002
+                sOutObject.flush(); //output (US5002)
+
+                //>>>>>>> FIM DA US5001 e US5002
+                //=========================================================
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};

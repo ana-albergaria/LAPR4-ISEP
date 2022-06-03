@@ -24,6 +24,10 @@ public class Length implements ValueObject, Serializable {
         this.length= null;
     }
 
+    public Long length() {
+        return this.length;
+    }
+
     public static  Length valueOf(final Long length){
         return new Length(length);
     }

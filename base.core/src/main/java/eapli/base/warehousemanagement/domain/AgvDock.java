@@ -54,6 +54,16 @@ public class AgvDock implements AggregateRoot<String>, Serializable {
         return this.agvDockID;
     }
 
+    public Square beginSquare(){
+        return this.beginSquare;
+    }
+    public Square endSquare(){
+        return this.endSquare;
+    }
+    public Square depthSquare(){
+        return this.depthSquare;
+    }
+
 
     @Override
     public int hashCode() {
