@@ -25,9 +25,12 @@ public class HTTPServerAGVS extends Thread{
 
     private static DashboardController controller;
 
-    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions, Iterable<AGV> agvs) {
+    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions, Iterable<AGV> agvs, WarehousePlant warehousePlant, Iterable<AgvDock> agvDocks, Iterable<Aisle> allAisles) {
         positions=agvPositions;
         allAgvs=agvs;
+        plant = warehousePlant;
+        docks = agvDocks;
+        aisles = allAisles;
     }
 
     public void setController(DashboardController ctrl){
@@ -54,14 +57,14 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized  String getMatrix(){
-        //int[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
-        //CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
+        String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
+        CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
 
         String buildInHtml = "<table>";
-        for(int i=0; i<20; i++){
+        for(int i=0; i<matrix.length; i++){
             buildInHtml = buildInHtml +"<tr>";
-            for(int j=0; j<20; j++){
-                buildInHtml = buildInHtml + "<td>0</td>";
+            for(int j=0; j<matrix[0].length; j++){
+                buildInHtml = buildInHtml + "<td>" + matrix[i][j] + "</td>";
 
             }
             buildInHtml = buildInHtml +"</tr>";
@@ -86,11 +89,11 @@ public class HTTPServerAGVS extends Thread{
             }
         }*/
 
-        buildInHtml = "<tr class=\"active-row\">" +
+        buildInHtml = "<table><tr class=\"active-row\">" +
                 "<td>isto</td>" +
                 "<td>é</td>" +
                 "<td>um</td>" +
-                "<td>test</td>";
+                "<td>test</td></table>";
         return buildInHtml;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * An application service to avoid code duplication.
  *
- * @author Rita Ariana Sobral
+ * @author Ana Albergaria
  *
  */
 public class ListProductDTOService {

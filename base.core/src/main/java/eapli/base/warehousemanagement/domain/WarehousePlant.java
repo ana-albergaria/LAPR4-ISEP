@@ -23,10 +23,8 @@ public class WarehousePlant implements AggregateRoot<Long>, Serializable {
     @Transient
     @Embedded
     private WarehouseName warehouseName;
-    @Transient
     @Embedded
     private Length length;
-    @Transient
     @Embedded
     private Width width;
     @Transient

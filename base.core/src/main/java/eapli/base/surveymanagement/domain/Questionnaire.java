@@ -29,20 +29,17 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private String welcomeMessage;
 
+    private String questionnaireContent;
+
     private String finalMessage;
 
-    /*@ElementCollection
-    @CollectionTable(name = "sections", joinColumns = {@JoinColumn(name = "questionnaire_code", referencedColumnName = "code")})
-    @MapKeyColumn(name = "section")
-    @Column(name = "question")
-    private HashMap<String, String> sectionsAndQuestions = new HashMap<>();*/
 
-    public Questionnaire(final String code, final String title, final String welcomeMessage, /*final HashMap<String,String> sectionsAndQuestions,*/ final String finalMessage){
+    public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
         this.code=code;
         this.title=title;
-        this.welcomeMessage=welcomeMessage;
-        //this.sectionsAndQuestions=sectionsAndQuestions;
-        this.finalMessage=finalMessage;
+        this.welcomeMessage = welcomeMessage;
+        this.questionnaireContent = questionnaireContent;
+        this.finalMessage = finalMessage;
     }
 
     protected Questionnaire(){

@@ -178,6 +178,181 @@ public class GetPositions {
         return agvs;
     }
 
+    public WarehousePlant getPlant(int option, String ipAddress){
+        WarehousePlant plant = null;
+
+        try {
+            final var socket = new ClientSocket();
+            socket.connect(ipAddress, getPort());
+            try {
+                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+
+                byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+                sOut.write(testMessage);
+                sOut.flush();
+
+                byte[] testResponse = sIn.readNBytes(4);
+                if(testResponse[1]==2){
+                    byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
+                    sOut.write(optionMessage);
+                    sOut.flush();
+
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+
+                    plant = (WarehousePlant) sInObject.readObject();
+
+                    System.out.println(plant.identity());
+
+                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                    sOut.write(endMessage);
+                    sOut.flush();
+                    byte[] endResponse = sIn.readNBytes(4);
+                    if (endResponse[1] == 2) {
+                        socket.stop();
+                    }
+                } else {
+                    throw new IllegalArgumentException("Test message wasn't successful.");
+                }
+            } catch(IOException | ClassNotFoundException ex) {
+                System.out.println("Error accessing socket's streams. Aborted.");
+                try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+                System.out.println("Application aborted.");
+                System.exit(1);
+            }finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
+
+        return plant;
+    }
+
+    public Iterable<AgvDock> getDocks(int option, String ipAddress){
+        Iterable<AgvDock> docks = new ArrayList<>();
+
+        try {
+            final var socket = new ClientSocket();
+            socket.connect(ipAddress, getPort());
+            try {
+                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+
+                byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+                sOut.write(testMessage);
+                sOut.flush();
+
+                byte[] testResponse = sIn.readNBytes(4);
+                if(testResponse[1]==2){
+                    byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
+                    sOut.write(optionMessage);
+                    sOut.flush();
+
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+
+                    docks = (Iterable<AgvDock>) sInObject.readObject();
+
+                    for (AgvDock dock: docks){
+                        System.out.println(dock.toString());
+                    }
+
+                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                    sOut.write(endMessage);
+                    sOut.flush();
+                    byte[] endResponse = sIn.readNBytes(4);
+                    if (endResponse[1] == 2) {
+                        socket.stop();
+                    }
+                } else {
+                    throw new IllegalArgumentException("Test message wasn't successful.");
+                }
+            } catch(IOException | ClassNotFoundException ex) {
+                System.out.println("Error accessing socket's streams. Aborted.");
+                try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+                System.out.println("Application aborted.");
+                System.exit(1);
+            }finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
+
+        return docks;
+    }
+
+    public Iterable<Aisle> getAisles(int option, String ipAddress){
+        Iterable<Aisle> aisles = new ArrayList<>();
+
+        try {
+            final var socket = new ClientSocket();
+            socket.connect(ipAddress, getPort());
+            try {
+                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+
+                byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+                sOut.write(testMessage);
+                sOut.flush();
+
+                byte[] testResponse = sIn.readNBytes(4);
+                if(testResponse[1]==2){
+                    byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
+                    sOut.write(optionMessage);
+                    sOut.flush();
+
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+
+                    aisles = (Iterable<Aisle>) sInObject.readObject();
+
+                    for (Aisle aisle: aisles){
+                        System.out.println(aisle.toString());
+                    }
+
+                    byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
+                    sOut.write(endMessage);
+                    sOut.flush();
+                    byte[] endResponse = sIn.readNBytes(4);
+                    if (endResponse[1] == 2) {
+                        socket.stop();
+                    }
+                } else {
+                    throw new IllegalArgumentException("Test message wasn't successful.");
+                }
+            } catch(IOException | ClassNotFoundException ex) {
+                System.out.println("Error accessing socket's streams. Aborted.");
+                try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
+                System.out.println("Application aborted.");
+                System.exit(1);
+            }finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+        }
+
+        return aisles;
+    }
+
     private int getPort() {
         // TODO read from config file
         return 3700;
