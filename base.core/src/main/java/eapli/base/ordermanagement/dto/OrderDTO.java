@@ -14,15 +14,16 @@ public class OrderDTO implements Serializable {
 
     private final String orderDate;
 
-    private final String clientName;
-
     private final String status;
 
-    public OrderDTO(final long id, final String date, final String customerName, final String status){
+    public OrderDTO(final long id, final String date, final String status){
         this.orderId = id;
         this.orderDate = date;
-        this.clientName = customerName;
         this.status = status;
+    }
+
+    public Long orderId() {
+        return this.orderId;
     }
 
     @Override
@@ -30,7 +31,6 @@ public class OrderDTO implements Serializable {
         return "------ Order ------\n" +
                 "Id: " + orderId +
                 "\nDate: " + orderDate +
-                "\nClient: " + clientName +
-                "\nStatus='" + status;
+                "\nStatus: " + status;
     }
 }

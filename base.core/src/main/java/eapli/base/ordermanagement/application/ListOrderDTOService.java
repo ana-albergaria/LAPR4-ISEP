@@ -27,8 +27,10 @@ public class ListOrderDTOService {
 
         final Iterable<TheOrder> orders = this.orderRepository.findByOrderStatus(status);
 
+
         // transform for the presentation layer
         final List<OrderDTO> ret = new ArrayList<>();
+
         orders.forEach(e -> ret.add(e.toDTO()));
         return ret;
     }

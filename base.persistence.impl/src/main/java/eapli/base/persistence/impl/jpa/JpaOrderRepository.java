@@ -17,7 +17,7 @@ public class JpaOrderRepository extends BaseJpaRepositoryBase<TheOrder, Long, Lo
     implements OrderRepository {
 
     JpaOrderRepository() {
-        super("order id");
+        super("orderId");
     }
 
     @Override

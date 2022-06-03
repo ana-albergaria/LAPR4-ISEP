@@ -228,6 +228,6 @@ public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<Orde
     //confirmar date a mostrar -> neste momento mostra a data de criação
     @Override
     public OrderDTO toDTO() {
-        return new OrderDTO(this.orderId, new SimpleDateFormat("yyyy/MM/dd").format(this.createdOn), this.client.name().toString(), this.status.toString());
+        return new OrderDTO(this.orderId, new SimpleDateFormat("yyyy/MM/dd").format(this.createdOn.getTime()), this.status.status().toString());
     }
 }

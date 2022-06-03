@@ -30,6 +30,7 @@ import eapli.base.app.backoffice.console.presentation.order.RegisterClientOrderU
 import eapli.base.app.backoffice.console.presentation.agv.ConfigureAvailableAGVUI;
 import eapli.base.app.backoffice.console.presentation.agv.RegisterAGVUI;
 import eapli.base.app.backoffice.console.presentation.client.RegisterClientUI;
+import eapli.base.app.backoffice.console.presentation.order.ViewOrdersSentToCostumerUI;
 import eapli.base.app.backoffice.console.presentation.product.CreateCategoryUI;
 import eapli.base.app.backoffice.console.presentation.product.RegisterProductUI;
 import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
@@ -42,6 +43,7 @@ import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction;
 import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
+import eapli.base.ordermanagement.application.ViewOrdersSentToCostumerController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -94,6 +96,7 @@ public class MainMenu extends AbstractUI {
     private static final int CREATE_CATEGORY = 5;
 
     private static final int SHOW_CATALOG = 6;
+    private static final int CHANGE_ORDER_STATUS_FROM_DISPATCHED_TO_DELIEVERED = 7;
 
     // WAREHOUSE EMPLOYEE
     private static final int REGISTER_AGV = 1;
@@ -164,7 +167,7 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(BaseRoles.SALES_CLERK)) {
-            final Menu salesClerkMenu = buildClientMenu();
+            final Menu salesClerkMenu = buildSalesClerk();
             mainMenu.addSubMenu(COSTUMERS_OPTION, salesClerkMenu);
         }
 
@@ -212,7 +215,7 @@ public class MainMenu extends AbstractUI {
 
 
 
-    private Menu buildClientMenu() {
+    private Menu buildSalesClerk() {
         final Menu menu = new Menu("Sales Clerk >");
 
         menu.addItem(REGISTER_COSTUMER_OPTION, "Register Client", new RegisterClientUI()::show);
@@ -220,6 +223,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(REGISTER_PRODUCT_OPTION, "Register Product", new RegisterProductUI()::show);
         menu.addItem(CREATE_CATEGORY, "Create Product Category", new CreateCategoryUI()::show);
         menu.addItem(SHOW_CATALOG, "Show Products Catalog", new ViewProductCatalogUI()::show);
+        menu.addItem(CHANGE_ORDER_STATUS_FROM_DISPATCHED_TO_DELIEVERED, "Change Order Status from: Dispatched for Client to: Delievered", new ViewOrdersSentToCostumerUI()::show);
         return menu;
     }
 
