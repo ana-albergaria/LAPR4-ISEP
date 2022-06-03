@@ -86,11 +86,11 @@ public class HTTPServerAGVS extends Thread{
             }
         }*/
 
-        buildInHtml = "<tr class=\"active-row\">" +
+        buildInHtml = "<table><tr class=\"active-row\">" +
                 "<td>isto</td>" +
                 "<td>é</td>" +
                 "<td>um</td>" +
-                "<td>test</td>";
+                "<td>test</td></table>";
         return buildInHtml;
     }
 
