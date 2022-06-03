@@ -30,11 +30,14 @@ public class DashboardUI extends AbstractUI {
 
         this.controller.getPositions(6, ipAddress);
         this.controller.getAgvs(8, ipAddress);
+        this.controller.getPlant(9, ipAddress);
+        this.controller.getDocks(10, ipAddress);
+        this.controller.getAisles(11, ipAddress);
         this.controller.showDashboard();
 
         URI uri;
         try {
-            uri = new URI("http:127.0.0.1:55090/");
+            uri = new URI("http://localhost:55090/");
             Desktop.getDesktop().browse(uri);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

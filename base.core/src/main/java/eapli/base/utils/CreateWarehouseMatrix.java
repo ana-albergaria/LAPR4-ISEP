@@ -4,21 +4,21 @@ import eapli.base.warehousemanagement.domain.*;
 
 public class CreateWarehouseMatrix {
 
-    public static int[][] createAccordingWithSize(WarehousePlant plant) {
+    public static String[][] createAccordingWithSize(WarehousePlant plant) {
         Length warehouseLength = plant.warehouseLength();
         Width warehouseWidth = plant.warehouseWidth();
-        int[][] warehouseMatrix = new int[Math.toIntExact(warehouseWidth.width())][Math.toIntExact(warehouseLength.length())];
+        String[][] warehouseMatrix = new String[Math.toIntExact(warehouseWidth.width())][Math.toIntExact(warehouseLength.length())];
 
         for (int i=0; i< warehouseMatrix.length; i++){
             for (int j=0; j<warehouseMatrix[0].length; j++){
-                warehouseMatrix[i][j] = 0;
+                warehouseMatrix[i][j] = String.valueOf(0);
             }
         }
 
         return warehouseMatrix;
     }
 
-    public static void insertObstacles(int[][] warehouseMatrix, Iterable<AgvDock> docks, Iterable<Aisle> aisles){
+    public static void insertObstacles(String[][] warehouseMatrix, Iterable<AgvDock> docks, Iterable<Aisle> aisles){
         int beginW, beginL, endW, endL, depthW, depthL;
         for (AgvDock dock : docks){
             Square beginSquare = dock.beginSquare();
@@ -30,7 +30,7 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = 1;
+                    warehouseMatrix[i][j] = "X";
                 }
             }
         }
@@ -45,7 +45,7 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = 1;
+                    warehouseMatrix[i][j] = "X";
                 }
             }
         }
