@@ -24,6 +24,7 @@ public class ViewOrdersSentToCostumerUI extends AbstractUI {
             final OrderDTO orderDTO = selector.selectedElement();
 
             this.theController.changeStatusToBeingDelievered(orderDTO.orderId());
+            System.out.println(">> Status successfully changed!");
             answer = Console.readLine("Do you wish to change the Status of any more Orders?  (yes/no)");
         }
 

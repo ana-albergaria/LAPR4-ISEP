@@ -26,7 +26,6 @@ public class ViewOrdersSentToCostumerController {
     }
 
     public Iterable<OrderDTO> getOrdersDispatchedForCustomerDelivery() {
-        // MUDAR STATUS PARA DISPATCHED
-        return service.findOrdersWithStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
+        return service.findOrdersWithStatus(OrderStatus.valueOf(OrderStatus.Status.DISPATCHED));
     }
 }
