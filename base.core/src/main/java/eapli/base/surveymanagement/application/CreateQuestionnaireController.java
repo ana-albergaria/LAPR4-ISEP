@@ -40,11 +40,11 @@ public class CreateQuestionnaireController {
      * @param sectionsAndQuestions
      * @param finalMessage
      */
-    public void registerQuestionnaire(String code, String title, String welcomeMessage, /*HashMap<String,String> sectionsAndQuestions,*/ String finalMessage){
+    public void registerQuestionnaire(String code, String title, String welcomeMessage, String questionnaireContent, String finalMessage){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER);
 
-        final var questionnaire = new Questionnaire(code, title, welcomeMessage, /*sectionsAndQuestions,*/finalMessage);
+        final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage);
 
         repository.save(questionnaire);
 

@@ -6,12 +6,8 @@ import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.utils.MessageUtils;
-import eapli.base.warehousemanagement.domain.AGV;
-import eapli.base.warehousemanagement.domain.AGVPosition;
-import eapli.base.warehousemanagement.domain.AutonomyStatus;
-import eapli.base.warehousemanagement.domain.TaskStatus;
-import eapli.base.warehousemanagement.repositories.AGVRepository;
-import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
+import eapli.base.warehousemanagement.domain.*;
+import eapli.base.warehousemanagement.repositories.*;
 
 import java.io.*;
 import java.net.*;
@@ -107,6 +103,9 @@ class TcpSrvAgvManagerThread implements Runnable {
     private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
     private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
     private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
+    private final PlantRepository warehousePlantRepository = PersistenceContext.repositories().plants();
+    private final AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
+    private final AisleRepository aisleRepository = PersistenceContext.repositories().aisles();
 
     public void run() {
         InetAddress clientIP;
@@ -177,6 +176,33 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                     sendAGVsChangedList.writeObject(allAGVsUpdated);
                     sendAGVsChangedList.flush();
+                }
+
+                if(clientMessageUS[1] == 9){
+                    ObjectOutputStream sendWarehousePlant = new ObjectOutputStream(s.getOutputStream());
+
+                    WarehousePlant warehousePlant = (WarehousePlant) warehousePlantRepository.findAll();
+
+                    sendWarehousePlant.writeObject(warehousePlant);
+                    sendWarehousePlant.flush();
+                }
+
+                if(clientMessageUS[1] == 10){
+                    ObjectOutputStream sendAGVDocksList = new ObjectOutputStream(s.getOutputStream());
+
+                    List<AgvDock> agvDocksList = (List<AgvDock>) agvDockRepository.findAll();
+
+                    sendAGVDocksList.writeObject(agvDocksList);
+                    sendAGVDocksList.flush();
+                }
+
+                if(clientMessageUS[1] == 11){
+                    ObjectOutputStream sendAislesList = new ObjectOutputStream(s.getOutputStream());
+
+                    List<Aisle> aisles = (List<Aisle>) aisleRepository.findAll();
+
+                    sendAislesList.writeObject(aisles);
+                    sendAislesList.flush();
                 }
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);

@@ -33,11 +33,14 @@ US4001 - As Project Manager, I want that the "AGVManager" component supports pro
 
 No âmbito desta US, são efetuados os seguintes requests:
 
-| Código | Request  |
-|--------|-------|
-| 6      | Enviar ao Cliente BackOffice a lista de Posições dos AGVS |
+| Código | Request                                                                                |
+|--------|----------------------------------------------------------------------------------------|
+| 6      | Enviar ao Cliente BackOffice a lista de Posições dos AGVS                              |
 | 7      | Enviar ao Cliente do AGVDigitalTwin a lista de AGVS para serem mudados os seus estados |
-| 8      | Enviar ao Cliente BackOffice a lista de AGVS com os seus status atualizados. |
+| 8      | Enviar ao Cliente BackOffice a lista de AGVS com os seus status atualizados.           |
+| 9      | Enviar ao Cliente BackOffice a WarehousePlant que está na Base de Dados.               |
+| 10     | Enviar ao Cliente BackOffice a lista de AGVDocks que está na Base de Dados. |
+| 11     | Enviar ao Cliente BackOffice a lista de Aisles que está na Base de Dados. |
 
 
 #5 Observações
