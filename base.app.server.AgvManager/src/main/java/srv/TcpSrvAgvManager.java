@@ -19,7 +19,8 @@ import eapli.base.warehousemanagement.repositories.*;
 import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
-import java.security.KeyStore;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.*;
 
 class TcpSrvAgvManager {
@@ -80,6 +81,54 @@ class TcpSrvAgvManager {
         Socket cliSock;
 
         try{
+            sock = new ServerSocket(3700);
+
+            System.out.println("Server connection opened!");
+        }
+        catch(IOException ex){
+            System.out.println("Failed to open server socket");
+            System.exit(1);
+        }
+
+        while(true){
+            cliSock=sock.accept();
+            new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
+        }
+    }
+}
+
+
+class TcpSrvAgvManagerThread implements Runnable {
+    private Socket s;
+    private DataOutputStream sOut;
+    private DataInputStream sIn;
+
+    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.167";
+    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2400;
+
+    public TcpSrvAgvManagerThread(Socket cli_s){
+        s=cli_s;
+    }
+
+    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
+    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
+    private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+    private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
+    private final PlantRepository warehousePlantRepository = PersistenceContext.repositories().plants();
+    private final AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
+    private final AisleRepository aisleRepository = PersistenceContext.repositories().aisles();
+
+    public void run() {
+        InetAddress clientIP;
+        List<AGV> updatedAGVList = new LinkedList<>();
+
+        clientIP=s.getInetAddress();
+        System.out.println("New client connection from " + clientIP.getHostAddress() +
+                ", port number " + s.getPort());
+
+        try{
+
+            /*
             // Get the keystore
             System.setProperty("javax.net.debug", "all");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
@@ -146,51 +195,8 @@ class TcpSrvAgvManager {
                 if (outputLine.equals("Bye."))
                     break;
             }
+            */
 
-            System.out.println("Server connection opened!");
-        }
-        catch(IOException ex){
-            System.out.println("Failed to open server socket");
-            System.exit(1);
-        }
-
-        while(true){
-            cliSock=sock.accept();
-            new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
-        }
-    }
-}
-
-
-class TcpSrvAgvManagerThread implements Runnable {
-    private Socket s;
-    private DataOutputStream sOut;
-    private DataInputStream sIn;
-
-    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.167";
-    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2400;
-
-    public TcpSrvAgvManagerThread(Socket cli_s){
-        s=cli_s;
-    }
-
-    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
-    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
-    private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
-    private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
-    private final PlantRepository warehousePlantRepository = PersistenceContext.repositories().plants();
-    private final AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
-    private final AisleRepository aisleRepository = PersistenceContext.repositories().aisles();
-
-    public void run() {
-        InetAddress clientIP;
-        List<AGV> updatedAGVList = new LinkedList<>();
-
-        clientIP=s.getInetAddress();
-        System.out.println("New client connection from " + clientIP.getHostAddress() +
-                ", port number " + s.getPort());
-
-        try{
             clientIP=s.getInetAddress();
             System.out.println("[INFO] New client connection from " + clientIP.getHostAddress() +
                     ", port number " + this.s.getPort());
@@ -298,7 +304,19 @@ class TcpSrvAgvManagerThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();/*
+        } catch (UnrecoverableKeyException e) {
             e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();*/
         } finally {
             try {
                 this.s.close();
