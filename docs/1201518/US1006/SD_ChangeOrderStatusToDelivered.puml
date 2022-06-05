@@ -17,7 +17,7 @@ activate UI
 UI -> Controller: create
 UI -> Controller: getOrdersDispatchedForCustomerDelivery()
 activate Controller
-Controller -> serv: findOrdersByStatus(DISPATCHED_FOR_CLIENT)
+Controller -> serv: findOrdersByStatus(DISPATCHED)
 activate serv
 serv -> Persistence: repositories()
 activate Persistence
@@ -29,7 +29,7 @@ activate Factory
 Factory -> repository: create
 Factory -> serv: orderRepository
 deactivate Factory
-serv->repository:findOrdersDispatchedForCustomerDelivery()
+serv->repository:findOrdersByStatus(DISPATCHED)
 activate repository
 repository --> serv: ordersList
 deactivate repository
@@ -42,32 +42,33 @@ serv --> Controller: ordersListDTO
 deactivate serv
 Controller --> UI: ordersListDTO
 deactivate Controller
+loop enquanto desejar alterar o status de encomendas
 UI --> SC : mostra a lista de encomendas
 deactivate UI
-loop enquanto desejar alterar o status de encomendas
+/'loop enquanto desejar alterar o status de encomendas'/
 /'SC -> UI : Pergunta se pretende alterar o status de alguma\nencomenda para Being Delivered
 activate UI'/
-alt deseja alterar o status
-UI --> SC : solicita o id da encomenda
-activate UI
+/'alt deseja alterar o status'/
+/'UI --> SC : solicita o id da encomenda
+activate UI'/
 deactivate UI
-SC -> UI : introduz o id
+SC -> UI : seleciona a encomenda pretendida
 activate UI
 UI -> Controller: changeStatusToBeingDelivered(orderId)
 activate Controller
 Controller->repository:ofIdentity(orderId)
 activate repository
 deactivate repository
-Controller -> Domain: changeStatusToBeingDelivered()
+Controller -> Domain: changeOrderStatusTo(DELIVERED_BY_CARRIER)
 activate Domain
 deactivate Domain
 Controller --> repository: save(order)
 activate repository
 deactivate repository
 deactivate Controller
-end
-end
 UI --> SC : informa o sucesso da operação
+/'end'/
+end
 deactivate UI
 deactivate SC
 
