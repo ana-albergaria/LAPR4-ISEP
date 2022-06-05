@@ -1,6 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.questionnaire;
 
-import eapli.base.surveymanagement.antlr.application.CreateQuestionnaireController;
+import eapli.base.surveymanagement.application.CreateQuestionnaireController;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 

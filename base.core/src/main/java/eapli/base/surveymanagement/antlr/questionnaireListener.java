@@ -120,6 +120,86 @@ public interface questionnaireListener extends ParseTreeListener {
 	 */
 	void exitQuestion(questionnaireParser.QuestionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#free_text}.
+	 * @param ctx the parse tree
+	 */
+	void enterFree_text(questionnaireParser.Free_textContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#free_text}.
+	 * @param ctx the parse tree
+	 */
+	void exitFree_text(questionnaireParser.Free_textContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#numeric}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumeric(questionnaireParser.NumericContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#numeric}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumeric(questionnaireParser.NumericContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#single_choice}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingle_choice(questionnaireParser.Single_choiceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#single_choice}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingle_choice(questionnaireParser.Single_choiceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#multiple_choice}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#multiple_choice}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#single_choice_with_input}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingle_choice_with_input(questionnaireParser.Single_choice_with_inputContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#single_choice_with_input}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingle_choice_with_input(questionnaireParser.Single_choice_with_inputContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#multiple_choice_with_input}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple_choice_with_input(questionnaireParser.Multiple_choice_with_inputContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#multiple_choice_with_input}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple_choice_with_input(questionnaireParser.Multiple_choice_with_inputContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#sorting_option}.
+	 * @param ctx the parse tree
+	 */
+	void enterSorting_option(questionnaireParser.Sorting_optionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#sorting_option}.
+	 * @param ctx the parse tree
+	 */
+	void exitSorting_option(questionnaireParser.Sorting_optionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link questionnaireParser#scaling_option}.
+	 * @param ctx the parse tree
+	 */
+	void enterScaling_option(questionnaireParser.Scaling_optionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link questionnaireParser#scaling_option}.
+	 * @param ctx the parse tree
+	 */
+	void exitScaling_option(questionnaireParser.Scaling_optionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link questionnaireParser#option}.
 	 * @param ctx the parse tree
 	 */
@@ -139,14 +219,4 @@ public interface questionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitQuestion_text(questionnaireParser.Question_textContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link questionnaireParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterType(questionnaireParser.TypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link questionnaireParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitType(questionnaireParser.TypeContext ctx);
 }

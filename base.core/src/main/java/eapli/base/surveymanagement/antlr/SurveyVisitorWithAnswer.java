@@ -16,108 +16,166 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitQuestion(questionnaireParser.QuestionContext ctx) {
-        String questionID = ctx.numeric_id().getText();
-        System.out.println(questionID);
-
-        List<String> questionAnswers = answers.get(questionID);
-        String questionObligatoriness = ctx.obligatoriness().getText();
-
-        if(questionObligatoriness.equals("mandatory") && questionAnswers==null){
-            //throw new IllegalArgumentException("Question " + questionID + " must be answered, because it is of type: mandatory!");
-            System.out.println("Question " + questionID +  "must be answered, because it is of type: mandatory!");
-        }
-
-        String questionType = ctx.type().getText();
-
-
-
-        //String lastOptionId = ctx.type().option().get(ctx.type().option().size()-1).getText();
+        visitChildren(ctx);
 
         return true;
     }
 
-    private void isFreeText(List<String> questionAnswers){
+    @Override
+    public Boolean visitFree_text(questionnaireParser.Free_textContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+
+        List<String> questionAnswers = answers.get(questionID);
+
         if(questionAnswers.size()>1){
-            System.out.println("In a question with type: Free Text, you can only give one answer.");
+            throw new UnsupportedOperationException("In a question with type: Free Text, you can only give one answer.");
         }
 
         //falta verificar o length da answer com o Nuno
+        return true;
     }
 
-    private void isNumeric(List<String> questionAnswers, questionnaireParser.TypeContext typeContext){
+
+    @Override
+    public Boolean visitNumeric(questionnaireParser.NumericContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+
+        List<String> questionAnswers = answers.get(questionID);
+
+
         if(questionAnswers.size()>1){
-            System.out.println("In a question with type: numeric, you can only give one answer.");
+            throw new UnsupportedOperationException("In a question with type: numeric, you can only give one answer.");
         }
         String answer = questionAnswers.get(0);
         if (!NumberUtils.isParsable(answer)){
-            System.out.println("In a question with type: numeric, you must provide a numeric value as an answer.");
+            throw new UnsupportedOperationException("In a question with type: numeric, you must provide a numeric value as an answer.");
         }
-        if(typeContext.DECIMALS_ALLOWED().getText()== null && Double.parseDouble(answer)%1!=0){
-            System.out.println("This numeric question does not allow decimal values.");
+
+        if(ctx.DECIMALS_ALLOWED() == null && Double.parseDouble(answer)%1!=0){
+            throw new UnsupportedOperationException("This numeric question does not allow decimal values.");
         }
+        return true;
     }
 
-    private void isSingleChoiceWithInput(List<String> questionAnswers, String lastOptionID){
+    @Override
+    public Boolean visitSingle_choice_with_input(questionnaireParser.Single_choice_with_inputContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+
+        List<String> questionAnswers = answers.get(questionID);
+
         if(questionAnswers.size()>1){
-            System.out.println("In a question with type: single choice, you can only give one answer.");
+            throw new UnsupportedOperationException("In a question with type: single choice with input, you can only give one answer.");
         }
         String answer = questionAnswers.get(0);
         if (!NumberUtils.isParsable(answer)){
-            System.out.println("In a question with type: single choice, you must provide a numeric value as an answer.");
+            throw new UnsupportedOperationException("In a question with type: single choice with input, you must provide a numeric value as an answer.");
         }
-        if(lastOptionID.equals(String.valueOf(answer.charAt(0))) && answer.length()==1){
-            System.out.println("In a question with type: single choice, if you select the last option then you have.");
+
+        String lastOptionId = ctx.option().get(ctx.option().size()-1).numeric_id().getText();
+
+        if(lastOptionId.equals(String.valueOf(answer.charAt(0))) && answer.length()==1){
+            throw new UnsupportedOperationException("In a question with type: single choice with input, if you select the last option then you have to write another option.");
         }
+
+        return true;
     }
 
-    private void isSingleChoice(List<String> questionAnswers){
+    @Override
+    public Boolean visitSingle_choice(questionnaireParser.Single_choiceContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+        List<String> questionAnswers = answers.get(questionID);
+
         if(questionAnswers.size()>1){
-            System.out.println("In a question with type: single choice, you can only give one answer.");
+            throw new UnsupportedOperationException("In a question with type: single choice, you can only give one answer.");
         }
         String answer = questionAnswers.get(0);
         if (!NumberUtils.isParsable(answer)){
-            System.out.println("In a question with type: single choice, you must provide a numeric value as an answer.");
+            throw new UnsupportedOperationException("In a question with type: single choice, you must provide a numeric value as an answer.");
         }
+
+        return true;
     }
 
-    private void isMultipleChoice(List<String> questionAnswers){
+
+
+    @Override
+    public Boolean visitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
         //verificar a parte dos limites
+
+        return true;
     }
 
-    private  void isMultipleChoiceWithInput(List<String> questionAnswers, String lastOptionID){
+
+    @Override
+    public Boolean visitMultiple_choice_with_input(questionnaireParser.Multiple_choice_with_inputContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+        List<String> questionAnswers = answers.get(questionID);
+
         String answer = questionAnswers.get(0);
+
+        String lastOptionID = ctx.option().get(ctx.option().size()-1).numeric_id().getText();
+
         if(lastOptionID.equals(String.valueOf(answer.charAt(0))) && answer.length()==1){
-            System.out.println("In a question with type: single choice, if you select the last option then you have.");
+            throw new UnsupportedOperationException("In a question with type: multiple choice with input, if you select the last option then you have to write another option.");
         }
+
+        return true;
     }
 
-    private void isSorting(List<String> questionAnswers, int optionSize){
+    @Override
+    public Boolean visitSorting_option(questionnaireParser.Sorting_optionContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+        List<String> questionAnswers = answers.get(questionID);
+
         if(questionAnswers.size()>1){
-            System.out.println("In a question with type: sorting, you can only give one answer.");
+            throw new UnsupportedOperationException("In a question with type: sorting, you can only give one answer.");
         }
 
         String answer = questionAnswers.get(0);
-        int size = answer.split(",").length;
+        int size = answer.split(", ").length;
+
+        int optionSize = ctx.option().size();
 
         if(size!=optionSize){
-            System.out.println("In a question with type: sorting, you have to sort ALL the options available.");
+            throw new UnsupportedOperationException("In a question with type: sorting, you have to sort ALL the options available.");
         }
+
+        return true;
     }
 
-    private void isScaling(List<String> questionAnswers, int optionSize, questionnaireParser.TypeContext typeContext) {
+    @Override
+    public Boolean visitScaling_option(questionnaireParser.Scaling_optionContext ctx) {
+        String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
+        List<String> questionAnswers = answers.get(questionID);
+
         int answersSize = questionAnswers.size();
+        int optionSize = ctx.option().size();
 
         if(answersSize != optionSize){
-            System.out.println("In a question with type: scaling, you have to sort ALL the options available.");
+            throw new UnsupportedOperationException("In a question with type: scaling, you have to scale ALL the options available.");
         }
 
-        String[] valuesScale = typeContext.frase().getText().split(", ");
+        String[] valuesScale = ctx.frase().getText().split(", ");
         List<String> values = Arrays.asList(valuesScale);
 
         for (String answer : questionAnswers) {
             if(!values.contains(answer)) {
-                System.out.println("In a question with type: scaling, you have choose one value from the given Scale.");
+                throw new UnsupportedOperationException("In a question with type: scaling, you have choose one value from the given Scale.");
             }
         }
+
+
+        return true;
     }
+
+
 }

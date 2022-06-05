@@ -41,21 +41,32 @@ repeatability : DIGITO+ ;
 
 /********* QUESTION *********/
 
-question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE (message NEWLINE)?;
+question: free_text
+        | numeric
+        | single_choice
+        | multiple_choice
+        | single_choice_with_input
+        | multiple_choice_with_input
+        | sorting_option
+        | scaling_option ;
+
+
+
+free_text: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' FREE_TEXT NEWLINE NEWLINE (message NEWLINE)?;
+numeric: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE NEWLINE (message NEWLINE)?;
+single_choice: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' SINGLE_CHOICE NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+multiple_choice: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' MULTIPLE_CHOICE NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+single_choice_with_input: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' SINGLE_CHOICE_WITH_INPUT NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+multiple_choice_with_input: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' MULTIPLE_CHOICE_WITH_INPUT NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+sorting_option: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' SORTING_OPTION NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+scaling_option: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' SCALING_OPTION NEWLINE 'Scale: ' frase NEWLINE (option)+ NEWLINE (message NEWLINE)?;
+
+
 
 option: numeric_id PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
 
 question_text : frase PONTO_INTERROGACAO ;
 
-type: FREE_TEXT NEWLINE
-    | NUMERIC (ESPACO PARENTESIS_ESQUERDO DECIMALS_ALLOWED PARENTESIS_DIREITO)? NEWLINE
-    | SINGLE_CHOICE NEWLINE (option)+
-    | MULTIPLE_CHOICE NEWLINE (option)+
-    | SINGLE_CHOICE_WITH_INPUT NEWLINE (option)+
-    | MULTIPLE_CHOICE_WITH_INPUT NEWLINE (option)+
-    | SORTING_OPTION NEWLINE (option)+
-    | SCALING_OPTION NEWLINE 'Scale: ' frase NEWLINE (option)+
-    ;
 
 
 

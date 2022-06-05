@@ -78,6 +78,54 @@ public interface questionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuestion(questionnaireParser.QuestionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#free_text}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFree_text(questionnaireParser.Free_textContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#numeric}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumeric(questionnaireParser.NumericContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#single_choice}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingle_choice(questionnaireParser.Single_choiceContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#multiple_choice}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#single_choice_with_input}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingle_choice_with_input(questionnaireParser.Single_choice_with_inputContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#multiple_choice_with_input}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple_choice_with_input(questionnaireParser.Multiple_choice_with_inputContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#sorting_option}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSorting_option(questionnaireParser.Sorting_optionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link questionnaireParser#scaling_option}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScaling_option(questionnaireParser.Scaling_optionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link questionnaireParser#option}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -89,10 +137,4 @@ public interface questionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitQuestion_text(questionnaireParser.Question_textContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link questionnaireParser#type}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitType(questionnaireParser.TypeContext ctx);
 }
