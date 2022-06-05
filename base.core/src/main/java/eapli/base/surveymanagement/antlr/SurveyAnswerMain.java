@@ -28,7 +28,7 @@ public class SurveyAnswerMain {
             System.out.println("Make sure the file has the correct path");
             return false;
         } catch (Exception e) {
-            System.out.println("The Survey does not follow the required format.");
+            System.out.println("[ERROR] " + e.getMessage());
             return false;
         }
     }

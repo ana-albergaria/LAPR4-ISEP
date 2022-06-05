@@ -6,8 +6,8 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/base.core/src/main/java/eapli/base/surveymanagement/antlr/questionnaire.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="D:\Faculdade\ano 2\semestre2\LAPR4\projeto_lapr4\base.core\src\main\java\eapli\base\surveymanagement\antlr" />
-          <option name="libDir" value="D:\Faculdade\ano 2\semestre2\LAPR4\projeto_lapr4\base.core\src\main\java\eapli\base\surveymanagement\antlr" />
+          <option name="outputDir" value="" />
+          <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="" />
           <option name="language" value="" />

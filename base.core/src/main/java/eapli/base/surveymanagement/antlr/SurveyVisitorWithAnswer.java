@@ -2,6 +2,8 @@ package eapli.base.surveymanagement.antlr;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -15,17 +17,21 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
     @Override
     public Boolean visitQuestion(questionnaireParser.QuestionContext ctx) {
         String questionID = ctx.numeric_id().getText();
+        System.out.println(questionID);
 
         List<String> questionAnswers = answers.get(questionID);
         String questionObligatoriness = ctx.obligatoriness().getText();
 
         if(questionObligatoriness.equals("mandatory") && questionAnswers==null){
+            //throw new IllegalArgumentException("Question " + questionID + " must be answered, because it is of type: mandatory!");
             System.out.println("Question " + questionID +  "must be answered, because it is of type: mandatory!");
         }
 
         String questionType = ctx.type().getText();
 
-        String lastOptionId = ctx.type().option().get(ctx.type().option().size()-1).getText();
+
+
+        //String lastOptionId = ctx.type().option().get(ctx.type().option().size()-1).getText();
 
         return true;
     }
@@ -95,6 +101,23 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
         if(size!=optionSize){
             System.out.println("In a question with type: sorting, you have to sort ALL the options available.");
+        }
+    }
+
+    private void isScaling(List<String> questionAnswers, int optionSize, questionnaireParser.TypeContext typeContext) {
+        int answersSize = questionAnswers.size();
+
+        if(answersSize != optionSize){
+            System.out.println("In a question with type: scaling, you have to sort ALL the options available.");
+        }
+
+        String[] valuesScale = typeContext.frase().getText().split(", ");
+        List<String> values = Arrays.asList(valuesScale);
+
+        for (String answer : questionAnswers) {
+            if(!values.contains(answer)) {
+                System.out.println("In a question with type: scaling, you have choose one value from the given Scale.");
+            }
         }
     }
 }

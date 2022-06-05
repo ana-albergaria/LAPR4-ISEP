@@ -1,4 +1,4 @@
-package eapli.base.surveymanagement.application;
+package eapli.base.surveymanagement.antlr.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.antlr.SurveyMain;

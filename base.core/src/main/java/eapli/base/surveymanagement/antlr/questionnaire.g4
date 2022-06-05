@@ -41,7 +41,7 @@ repeatability : DIGITO+ ;
 
 /********* QUESTION *********/
 
-question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE message?;
+question: numeric_id question_text PARENTESIS_ESQUERDO obligatoriness PARENTESIS_DIREITO (NEWLINE message)? NEWLINE 'Type: ' type NEWLINE (message NEWLINE)?;
 
 option: numeric_id PARENTESIS_DIREITO frase (DOIS_PONTOS)? NEWLINE;
 
