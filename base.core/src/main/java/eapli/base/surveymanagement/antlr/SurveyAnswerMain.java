@@ -39,18 +39,22 @@ public class SurveyAnswerMain {
         /*answers.add("1, 3, 5");
         map.put("10", answers);*/
 
-        answers.add("Strongly Agree");
+        /*answers.add("Strongly Agree");
         answers.add("Agree");
-        map.put("6", answers);
+        map.put("6", answers);*/
 
-        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/questions/scaling.txt", map);
+        /*answers.add("4");
+        answers.add("3");
+        answers.add("2");
+        answers.add("1");
+        map.put("9", answers);*/
+
+        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/questions/multiple_choice.txt", map);
     }
 
     public static boolean parseWithVisitor(String filePath, Map<String, List<String>> answers) {
 
         try {
-            if(answers == null)
-                throw new UnsupportedOperationException("[ERROR] There must be answers to be analysed.");
 
             questionnaireLexer lexer = new questionnaireLexer(CharStreams.fromFileName(filePath));
             CommonTokenStream tokens = new CommonTokenStream(lexer);

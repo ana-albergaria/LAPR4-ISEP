@@ -11,6 +11,8 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
     private final Map<String, List<String>> answers;
 
     public SurveyVisitorWithAnswer (Map<String, List<String>> answers){
+        if(answers == null || answers.isEmpty())
+            throw new UnsupportedOperationException("There must be answers to be analysed.");
         this.answers=answers;
     }
 
@@ -106,7 +108,15 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
     public Boolean visitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx) {
         String questionID = ctx.numeric_id().getText();
         System.out.println(questionID);
-        //verificar a parte dos limites
+
+        List<String> questionAnswers = answers.get(questionID);
+
+        if(ctx.LIMIT() != null) {
+            String maxOptions = ctx.DIGITO().getText();
+
+            if(questionAnswers.size() > Integer.parseInt(maxOptions))
+                throw new UnsupportedOperationException("In a question with type: multiple choice with a limit, you must respect the max options limit.");
+        }
 
         return true;
     }
