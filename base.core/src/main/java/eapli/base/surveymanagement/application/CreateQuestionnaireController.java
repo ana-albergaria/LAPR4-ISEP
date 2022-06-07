@@ -29,7 +29,7 @@ public class CreateQuestionnaireController {
      */
     private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnaries();
 
-    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/";
+    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/";
     private final String FILE_EXTENSION = ".txt";
 
     /**

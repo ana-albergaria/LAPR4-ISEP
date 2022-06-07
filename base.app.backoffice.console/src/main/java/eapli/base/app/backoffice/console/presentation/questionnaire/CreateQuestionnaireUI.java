@@ -37,7 +37,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false, isValidQuestionnaire = false;;
-        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions;
+        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions, c=1;
         List<String> welcomeMessage = new ArrayList<>();
         HashMap<String, String> sectionsAndQuestions = new HashMap<>();
         String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine,
@@ -71,8 +71,15 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 welcomeMessage.add(welcomeMessageNewLine);
             }
 
+            int index = welcomeMessage.size();
+
             for(String welMes : welcomeMessage){
-                controller.writeQuestionnaireTextFile(welMes + "\n", filePath);
+                if(c == index) {
+                    controller.writeQuestionnaireTextFile(welMes + "\n\n", filePath);
+                }else{
+                    controller.writeQuestionnaireTextFile(welMes + "\n", filePath);
+                }
+                c++;
                 welcomeMessageParam.append(welMes);
             }
         }

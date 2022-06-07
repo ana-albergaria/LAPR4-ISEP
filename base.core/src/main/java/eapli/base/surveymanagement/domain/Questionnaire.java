@@ -29,6 +29,7 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private String welcomeMessage;
 
+    @Column(length = 2000)
     private String questionnaireContent;
 
     private String finalMessage;
