@@ -10,9 +10,10 @@ public class HTTPAgvRequest extends Thread{
     Socket sock;
     DataInputStream inS;
     DataOutputStream outS;
+    private String ipAddress;
 
-    public HTTPAgvRequest(Socket s, String f) {
-        baseFolder=f; sock=s;
+    public HTTPAgvRequest(Socket s, String f, String ipAddress) {
+        baseFolder=f; sock=s; this.ipAddress=ipAddress;
     }
 
     public void run() {
@@ -28,10 +29,10 @@ public class HTTPAgvRequest extends Thread{
             if(request.getMethod().equals("GET")) {
                 if(request.getURI().equals("/agvs")) {
                     response.setContentFromString(
-                            HTTPServerAGVS.showPositions(), "text/html");
+                            HTTPServerAGVS.showPositions(ipAddress), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else if(request.getURI().equals("/matrix")){
-                    response.setContentFromString(HTTPServerAGVS.getMatrix(), "text/html");
+                    response.setContentFromString(HTTPServerAGVS.getMatrix(ipAddress), "text/html");
                     response.setResponseStatus("200 ok");
                 }
                 else {

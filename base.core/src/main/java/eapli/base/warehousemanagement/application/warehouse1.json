@@ -1,7 +1,7 @@
 {
 	"Warehouse": "Warehouse Example 1",
-	"Length": 800,
-	"Width": 720,
+	"Length": 20,
+	"Width": 20,
 	"Square": 40,
 	"Unit": "cm",
 	"Aisles":[ 

@@ -12,9 +12,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class HTTPServerAGVS extends Thread{
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    private static String ipAddress;
     private static final GetPositions getPositions = new GetPositions();
-
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
     static  private Iterable<AGVPosition> positions;
@@ -27,12 +26,8 @@ public class HTTPServerAGVS extends Thread{
 
     private static DashboardController controller;
 
-    public HTTPServerAGVS(Iterable<AGVPosition> agvPositions, Iterable<AGV> agvs, WarehousePlant warehousePlant, Iterable<AgvDock> agvDocks, Iterable<Aisle> allAisles) {
-        positions=agvPositions;
-        allAgvs=agvs;
-        plant = warehousePlant;
-        docks = agvDocks;
-        aisles = allAisles;
+    public HTTPServerAGVS(String ip) {
+        ipAddress=ip;
     }
 
     public void setController(DashboardController ctrl){
@@ -53,22 +48,25 @@ public class HTTPServerAGVS extends Thread{
 
         while(true) {
             cliSock=sock.accept();
-            HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER);
+            HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER, ipAddress);
             req.start();
         }
     }
 
-    public static synchronized  String getMatrix(){
-        plant = getPositions.getPlant(9,"127.0.0.1");
-        docks = getPositions.getDocks(10, "127.0.0.1");
-        aisles = getPositions.getAisles(11, "127.0.0.1");
+    public static synchronized  String getMatrix(String ip){
+        plant = getPositions.getPlant(9, ip);
+        docks = getPositions.getDocks(10, ip);
+        aisles = getPositions.getAisles(11, ip);
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
         CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
 
+        int width = Math.toIntExact(plant.warehouseWidth().width());
+        int length = Math.toIntExact(plant.warehouseLength().length());
+
         String buildInHtml = "<table>";
-        for(int i=0; i<matrix.length; i++){
+        for(int i=0; i<width; i++){
             buildInHtml = buildInHtml +"<tr>";
-            for(int j=0; j<matrix[0].length; j++){
+            for(int j=0; j<length; j++){
                 buildInHtml = buildInHtml + "<td>" + matrix[i][j] + "</td>";
 
             }
@@ -79,26 +77,24 @@ public class HTTPServerAGVS extends Thread{
         return buildInHtml;
     }
 
-    public static synchronized String showPositions( ) {
+    public static synchronized String showPositions(String ip) {
+        positions = getPositions.getPositions(6, ip);
+        allAgvs = getPositions.getAgvs(8, ip);
 
-        String buildInHtml;
-        /*for(AGVPosition pos: positions) {
+        String buildInHtml = "<table>";
+        for(AGVPosition pos: positions) {
             for(AGV agv: allAgvs){
                 if(agv.getAgvID().equals(pos.agvID())){
-                    textHtml = textHtml + "<tr class=\"active-row\">" +
+                    buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
                             "<td>" + pos.agvID() + "</td>" +
                             "<td>" + pos.lSquare() + "</td>" +
                             "<td>" + pos.wSquare() + "</td>" +
-                            "<td>test</td>";
+                            "<td>" + agv.getTaskStatus().toString() + "</td>";
                 }
             }
-        }*/
+        }
 
-        buildInHtml = "<table><tr class=\"active-row\">" +
-                "<td>isto</td>" +
-                "<td>é</td>" +
-                "<td>um</td>" +
-                "<td>test</td></table>";
+        buildInHtml = buildInHtml + "</table>";
         return buildInHtml;
     }
 

@@ -11,7 +11,7 @@ public class CreateWarehouseMatrix {
 
         for (int i=0; i< warehouseMatrix.length; i++){
             for (int j=0; j<warehouseMatrix[0].length; j++){
-                warehouseMatrix[i][j] = String.valueOf(0);
+                warehouseMatrix[i][j] = "X";
             }
         }
 
@@ -30,7 +30,7 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = "X";
+                    warehouseMatrix[i][j] = dock.getAgvDockID();
                 }
             }
         }
@@ -45,7 +45,7 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = "X";
+                    warehouseMatrix[i][j] = "A" + String.valueOf(aisle.identity());
                 }
             }
         }
