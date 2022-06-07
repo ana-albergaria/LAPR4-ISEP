@@ -1,5 +1,5 @@
 cli\TcpCliAGVTwinThread.class
+srv\TcpSrvAGVTwin.class
 cli\TcpCliAGVTwin.class
 Positioning\AGVCurrentPositions.class
-srv\TcpSrvAGVTwin.class
 srv\TcpSrvAGVTwinThread.class
