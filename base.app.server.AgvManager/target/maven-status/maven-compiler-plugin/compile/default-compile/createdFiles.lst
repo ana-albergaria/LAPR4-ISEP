@@ -1,2 +1,3 @@
-srv\TcpSrvAgvManager.class
 srv\TcpSrvAgvManagerThread.class
+srv\TcpSrvAgvManager.class
+protocol\KnockKnockProtocol.class

@@ -27,12 +27,7 @@ public class DashboardUI extends AbstractUI {
             ipAddress = Console.readLine("What is the Cloud Server's IP?");
         }
 
-        this.controller.getPositions(6, ipAddress);
-        this.controller.getAgvs(8, ipAddress);
-        this.controller.getPlant(9, ipAddress);
-        this.controller.getDocks(10, ipAddress);
-        this.controller.getAisles(11, ipAddress);
-        this.controller.showDashboard();
+        this.controller.showDashboard(ipAddress);
 
         URI uri;
         try {

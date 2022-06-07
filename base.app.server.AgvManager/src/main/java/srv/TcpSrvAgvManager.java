@@ -6,6 +6,7 @@ import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.application.SetUpPlantController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.AutonomyStatus;
@@ -24,6 +25,7 @@ import java.security.cert.CertificateException;
 import java.util.*;
 
 class TcpSrvAgvManager {
+
     static ServerSocket sock;
 
     private String ipAddress;
@@ -260,6 +262,8 @@ class TcpSrvAgvManagerThread implements Runnable {
                 }
 
                 if(clientMessageUS[1] == 9){
+
+
                     ObjectOutputStream sendWarehousePlant = new ObjectOutputStream(s.getOutputStream());
 
                     Iterable<WarehousePlant> warehousePlantIterable = (Iterable<WarehousePlant>) warehousePlantRepository.findAll();

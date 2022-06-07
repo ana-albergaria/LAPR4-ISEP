@@ -16,8 +16,8 @@ public class DashboardController {
     static private Iterable<Aisle> aisles;
 
 
-    public void showDashboard(){
-        HTTPServerAGVS server = new HTTPServerAGVS(agvPositions, agvs, plant, docks, aisles);
+    public void showDashboard(String ipAddress){
+        HTTPServerAGVS server = new HTTPServerAGVS(ipAddress);
         server.setController(this);
         server.start();
     }

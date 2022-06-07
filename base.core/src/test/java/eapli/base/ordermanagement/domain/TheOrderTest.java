@@ -76,4 +76,16 @@ public class TheOrderTest {
     public void ensureOrderAddressMustHaveCountry() {
         new OrderAddress("Travessa do Outeiro", "7", "4520-463", "Rio Meão", null);
     }
+
+    @Test
+    public void ensureChangeOrderStatusToExpected() {
+        OrderStatus expOrderStatus = OrderStatus.valueOf(OrderStatus.Status.DELIVERED_BY_CARRIER);
+
+        TheOrder order = new TheOrder(client,billingAddress,shippingAdddress,Shipment.BLUE,Payment.APPLE_PAY, TheOrder.SourceChannel.CALL,Calendars.now(),salesClerk,newOrderItems);
+        order.changeOrderStatusTo(OrderStatus.Status.DELIVERED_BY_CARRIER);
+
+        OrderStatus orderStatus = order.getOrderStatus();
+
+        assertEquals(expOrderStatus, orderStatus);
+    }
 }

@@ -11,15 +11,20 @@ public class CreateWarehouseMatrix {
 
         for (int i=0; i< warehouseMatrix.length; i++){
             for (int j=0; j<warehouseMatrix[0].length; j++){
-                warehouseMatrix[i][j] = String.valueOf(0);
+                warehouseMatrix[i][j] = "X";
             }
         }
 
         return warehouseMatrix;
     }
 
-    public static void insertObstacles(String[][] warehouseMatrix, Iterable<AgvDock> docks, Iterable<Aisle> aisles){
-        int beginW, beginL, endW, endL, depthW, depthL;
+    public static void insertObstacles(String[][] warehouseMatrix, Iterable<AgvDock> docks, Iterable<Aisle> aisles, Iterable<AGVPosition> positions){
+        int beginW;
+        int beginL;
+        int endW;
+        int endL;
+        int depthW;
+        int depthL;
         for (AgvDock dock : docks){
             Square beginSquare = dock.beginSquare();
             Square endSquare = dock.endSquare();
@@ -30,7 +35,7 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = "X";
+                    warehouseMatrix[i][j] = dock.getAgvDockID();
                 }
             }
         }
@@ -45,9 +50,16 @@ public class CreateWarehouseMatrix {
             depthW = Math.toIntExact(depthSquare.wSquare())-1;
             for(int i= beginW; i<= depthW; i++){
                 for(int j = beginL; j<= endL; j++){
-                    warehouseMatrix[i][j] = "X";
+                    warehouseMatrix[i][j] = "A" + String.valueOf(aisle.identity());
                 }
             }
+        }
+
+        for (AGVPosition pos: positions) {
+            beginL = Math.toIntExact(pos.lSquare())-1;
+            beginW = Math.toIntExact(pos.wSquare())-1;
+
+            warehouseMatrix[beginW][beginL] = "AGV" + String.valueOf(pos.agvID());
         }
     }
 }
