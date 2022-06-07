@@ -1,6 +1,7 @@
 package eapli.base.dashboard.domain;
 
 import eapli.base.dashboard.application.DashboardController;
+import eapli.base.dashboard.application.GetPositions;
 import eapli.base.utils.CreateWarehouseMatrix;
 import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -12,6 +13,7 @@ import java.net.Socket;
 
 public class HTTPServerAGVS extends Thread{
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    private static final GetPositions getPositions = new GetPositions();
 
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
@@ -57,6 +59,9 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized  String getMatrix(){
+        plant = getPositions.getPlant(9,"127.0.0.1");
+        docks = getPositions.getDocks(10, "127.0.0.1");
+        aisles = getPositions.getAisles(11, "127.0.0.1");
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
         CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
 
