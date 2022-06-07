@@ -57,8 +57,9 @@ public class HTTPServerAGVS extends Thread{
         plant = getPositions.getPlant(9, ip);
         docks = getPositions.getDocks(10, ip);
         aisles = getPositions.getAisles(11, ip);
+        positions = getPositions.getPositions(6, ip);
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
-        CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles);
+        CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles, positions);
 
         int width = Math.toIntExact(plant.warehouseWidth().width());
         int length = Math.toIntExact(plant.warehouseLength().length());
