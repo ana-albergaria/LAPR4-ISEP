@@ -15,12 +15,17 @@ public class SurveyAnswerMainTest {
     List<String> answers = new ArrayList<>();
 
     @Test
-    void ensureSingleChoiceWithInputWithOneOption() {
-        /*answers.add("1");
-        answers.add("2");
-        map.put("1", answers);
+    public void ensureSingleChoiceWithInputWithOneOption() {
 
-        SurveyAnswerMain.parseWithVisitor("./single_choice_with_input.txt", map);*/
+        //answers.add("1");
+        //answers.add("2");
+        //map.put("9", answers);
+
+        String TRUSTED_STORE= System.getProperty("user.dir") + "/src/main/java/eapli/base/surveymanagement/antlr/questions/multiple_choice.txt";
+
+        SurveyAnswerMain.parseWithVisitor(TRUSTED_STORE, map);
+
+
 
 
     }
