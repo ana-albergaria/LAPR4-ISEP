@@ -46,8 +46,8 @@ public class ClientUserBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        signupAndApprove(TestDataConstants.USER_TEST1, "Password1", "John", "Smith",
-                "john@smith.com", TestDataConstants.USER_TEST1);
+        signupAndApprove(TestDataConstants.USER_TEST1, "Password1", "Ana", "Albergaria",
+                "1201518@isep.ipp.pt", TestDataConstants.USER_TEST1);
         signupAndApprove("isep959", "Password1", "Manuel", "Santos Oliveira", "123456@isep.ipp.pt", "isep959");
         return true;
     }
