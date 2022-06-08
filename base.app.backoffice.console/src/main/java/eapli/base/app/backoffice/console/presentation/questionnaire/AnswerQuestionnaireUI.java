@@ -5,15 +5,18 @@ import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class AnswerQuestionnaireUI extends AbstractUI {
     private AnswerQuestionnaireController controller = new AnswerQuestionnaireController();
 
     @Override
     protected boolean doShow() {
-        int numOfQuestionnaires, n=1, selectedQuestionnaireNumber;
+        int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;
+        List<String> sections = new ArrayList<>();
+        List<String> questions = new ArrayList<>();
+        List<String> questionsPerSection = new LinkedList<>();
+        Map<String, List<String>> sectionsAndQuestions = new HashMap<>();
 
         Questionnaire selectedQuestionnaire = null;
 
@@ -39,17 +42,31 @@ public class AnswerQuestionnaireUI extends AbstractUI {
             }
         }
 
-        System.out.println("Questionnaire successfully selected. It's time to answer it!");
+        System.out.println("Questionnaire successfully selected. It's time to answer it!\n");
 
-        /*System.out.println(selectedQuestionnaire.identity() + " " + selectedQuestionnaire.title());
 
-        if(!selectedQuestionnaire.welcomeMessage().isEmpty()){
-            System.out.println(selectedQuestionnaire.welcomeMessage() + "\n");
-        }else{
-            System.out.println();
+        sections = controller.allSectionsText(selectedQuestionnaire.content());
+        questions = controller.allQuestionsText(selectedQuestionnaire.content());
+
+        numOfSections = sections.size();
+        numOfQuestions = questions.size();
+
+
+        /*for (int m = 0; m < numOfQuestions; m++) {
+            if ((int) questions.get(m).charAt(0) < (int) questions.get(m + 1).charAt(0)) {
+                sectionsAndQuestions.put(, new LinkedList<>().add(questions.get(m)));
+            }else{
+                break;
+            }
         }*/
 
-        
+        for(int j=0; j<numOfSections; j++){
+            System.out.println(sections.get(j));
+
+            int sIndex = questions.get(j).indexOf("(");
+            System.out.println(questions.get(j).substring(0, sIndex));
+
+        }
 
         //TODO for each section, print section and each question's information.
 

@@ -3,6 +3,7 @@ package eapli.base.surveymanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,6 +37,7 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
 
     public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
+        Preconditions.noneNull(code, title, questionnaireContent, finalMessage);
         this.code=code;
         this.title=title;
         this.welcomeMessage = welcomeMessage;
@@ -63,9 +65,9 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
         return finalMessage;
     }
 
-    /*public HashMap<String, String> sectionsAndQuestions() {
-        return sectionsAndQuestions;
-    }*/
+    public String content(){
+        return questionnaireContent;
+    }
 
     @Override
     public boolean equals(final Object o){
