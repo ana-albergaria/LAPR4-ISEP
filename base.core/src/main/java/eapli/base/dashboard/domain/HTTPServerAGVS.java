@@ -7,6 +7,9 @@ import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,6 +19,7 @@ public class HTTPServerAGVS extends Thread{
     private static final GetPositions getPositions = new GetPositions();
     static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
     static private ServerSocket sock;
+    static private SSLServerSocket socket;
     static  private Iterable<AGVPosition> positions;
     static private Iterable<AGV> allAgvs;
     static private WarehousePlant plant;
@@ -35,10 +39,16 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static void main(String[] args) throws IOException {
-        Socket cliSock;
+        //Socket cliSock;
+        SSLSocket cliSock1;
+
+        System.setProperty("javax.net.ssl.keyStore", "base.core/src/main/java/eapli/base/dashboard/domain/server.jks");
+        System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");
 
         try {
-            sock = new ServerSocket(PORT);
+            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            socket = (SSLServerSocket) sslF.createServerSocket(PORT);
+            //sock = new ServerSocket(PORT);
             System.out.println("HTTP Server connection opened.");
         }
         catch(IOException ex) {
@@ -47,8 +57,9 @@ public class HTTPServerAGVS extends Thread{
         }
 
         while(true) {
-            cliSock=sock.accept();
-            HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER, ipAddress);
+            //cliSock=sock.accept();
+            cliSock1= (SSLSocket) socket.accept();
+            HTTPAgvRequest req=new HTTPAgvRequest(cliSock1, BASE_FOLDER, ipAddress);
             req.start();
         }
     }
