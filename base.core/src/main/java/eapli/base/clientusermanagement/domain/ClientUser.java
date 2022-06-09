@@ -100,4 +100,6 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
     public MecanographicNumber identity() {
         return this.mecanographicNumber;
     }
+
+
 }

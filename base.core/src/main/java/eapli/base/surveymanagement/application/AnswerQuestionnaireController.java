@@ -12,6 +12,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AnswerQuestionnaireController {
@@ -20,7 +23,7 @@ public class AnswerQuestionnaireController {
 
     private final AuthorizationService authz= AuthzRegistry.authorizationService();
 
-    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/";
+    private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/";
     private final String FILE_EXTENSION = ".txt";
 
     public List<Questionnaire> allQuestionnairesInTheSystem(){
@@ -33,6 +36,48 @@ public class AnswerQuestionnaireController {
         return answersRepository.save(newAnswer);
     }
 
+    public List<String> allSectionsText(String questionnaireContent){
+        List<String> sectionsText = new LinkedList<>();
+
+        List<Object> lines = multipleLineStringToArray(questionnaireContent);
+
+        for(Object line : lines){
+            if(!line.toString().isEmpty() && Character.isDigit(line.toString().charAt(0)) && !line.toString().contains("?") && !line.toString().contains(")")){
+                sectionsText.add(line.toString());
+            }
+        }
+
+        return sectionsText;
+    }
+
+    public List<String> allQuestionsText(String questionnaireContent){
+        List<String> questionsText = new LinkedList<>();
+
+        List<Object> lines = multipleLineStringToArray(questionnaireContent);
+
+        for(Object line : lines){
+            if(!line.toString().isEmpty() && line.toString().contains("?")){
+                questionsText.add(line.toString());
+            }
+        }
+
+        return questionsText;
+    }
+
+    public String questionType(String questionnaireContent){
+        List<Object> lines = multipleLineStringToArray(questionnaireContent);
+
+        String questionType = "";
+
+        for(Object line : lines){
+            if(line.toString().contains("Type")){
+                questionType = line.toString().replace("Type: ", "");
+            }
+        }
+
+        return questionType;
+    }
+
     public void printQuestionnaire(Questionnaire questionnaire) throws IOException {
         String completeFilePath = FILE_PATH + questionnaire.title() + FILE_EXTENSION;
         Path questionnaireFilePath = Paths.get(completeFilePath);
@@ -42,7 +87,6 @@ public class AnswerQuestionnaireController {
 
         byte[] questionnaireFileSize = new byte[(int) Files.size(questionnaireFilePath)];
 
-
         try{
             for(int length = 0; (length = questionnaireInput.read(questionnaireFileSize)) != -1;){
                 System.out.write(questionnaireFileSize, 0, length);
@@ -50,5 +94,12 @@ public class AnswerQuestionnaireController {
         }finally {
             questionnaireInput.close();
         }
+    }
+
+    private List<Object> multipleLineStringToArray(String questionnaireContent){
+        long numOfLines = questionnaireContent.lines().count();
+        Object[] linesArray = questionnaireContent.lines().toArray();
+
+        return new LinkedList<>(Arrays.asList(linesArray).subList(0, (int) numOfLines));
     }
 }

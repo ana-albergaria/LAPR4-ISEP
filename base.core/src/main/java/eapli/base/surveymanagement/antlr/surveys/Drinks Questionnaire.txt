@@ -1,15 +1,13 @@
 DRI21-22 Drinks Questionnaire
 Hello, welcome to the Drinks Questionnaire
-Enjoy it
-
-1. About You
+1. About you
 Section Obligatoriness: mandatory
 Repeatability: 3
-1. Where are you from?(mandatory)
-Type: free text
-
-2. How old are you?(mandatory)
+1. How old are you?(mandatory)
 Type: numeric
+
+2. Where are you from?(mandatory)
+Type: free text
 
 3. What is your gender?(mandatory)
 Type: single choice
@@ -20,11 +18,14 @@ Type: single choice
 
 2. Product Feedback
 Section Obligatoriness: mandatory
-1. Do you like our products?(mandatory)
-Type: multiple choice
-1)Yes
-2)No
-3)Maybe
+1. How do you rate our drinks?(mandatory)
+Type: scaling option
+Scale: Strongly agree, agree, neutral, disagree, strongly disagree
+1)Our drinks are the best on the market
+2)Our drinks are better than most on the market
+3)Our drinks are as good as another in the market
+4)Our drinks are worse than most on the market
+5)Our drinks are the worst on the market
 
 
 
