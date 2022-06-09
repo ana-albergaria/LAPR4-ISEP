@@ -27,8 +27,12 @@ public class TcpCliAGVTwin {
     //client: request
     //server: waiting for request + send response
 
+    static final int SERVER_PORT=3700;
+    static final String KEYSTORE_PASS="Password1";
+    private static final String TRUSTED_STORE = "base.app.server.AGVTwin/src/main/resources/AgvDigitalTwin.jks";
+
     static InetAddress serverIP;
-    static Socket sock;
+    static SSLSocket sock;
 
     static String address;
 
@@ -38,7 +42,7 @@ public class TcpCliAGVTwin {
         new Thread(new TcpCliAGVTwinThread(address)).start();
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
 
         String ipAddressOption = eapli.framework.io.util.Console.readLine("Do you want to connect to a Local Server or an Cloud Server? (Local | Cloud)");
         String ipAddress = "";
@@ -53,6 +57,34 @@ public class TcpCliAGVTwin {
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
         }
+
+        // Trust these certificates provided by servers
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        // Use this certificate and private key for client certificate when requested by the server
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+
+        try {
+            serverIP = InetAddress.getByName(address);
+        } catch (UnknownHostException ex) {
+            System.out.println("Invalid server specified: " + serverIP);
+            System.exit(1);
+        }
+
+        try {
+            sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
+        catch(IOException ex) {
+            System.out.println("Failed to establish TCP connection");
+            System.exit(1);
+        }
+
+        System.out.println("Connected to: " + serverIP + ":" + 3700);
+
+        sock.startHandshake();
 
         new Thread(new TcpCliAGVTwinThread(ipAddress)).start();
 
@@ -70,7 +102,8 @@ class TcpCliAGVTwinThread implements Runnable {
     public void run() {
 
         InetAddress serverIP = null;
-        SSLSocket sock = null;
+        //SSLSocket sock = null;
+        Socket sock = null;
 
         try {
             serverIP = InetAddress.getByName(this.ip);
@@ -79,84 +112,11 @@ class TcpCliAGVTwinThread implements Runnable {
             System.exit(1);
         }
 
-        try {
-            System.setProperty("javax.net.debug", "all");
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String password = "aabbcc";
-            InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("cli/client-certificate.p12");
-            keyStore.load(inputStream, password.toCharArray());
-
-            // TrustManagerFactory ()
-            KeyStore trustStore = KeyStore.getInstance("PKCS12");
-            String password2 = "abcdefg";
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX", "SunJSSE");
-            InputStream inputStream1 = new FileInputStream("base.app.server.AgvManager/src/main/resources/srv/server-certificate.p12");
-            trustStore.load(inputStream1, password2.toCharArray());
-            trustManagerFactory.init(trustStore);
-            X509TrustManager x509TrustManager = null;
-            for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {
-                if (trustManager instanceof X509TrustManager) {
-                    x509TrustManager = (X509TrustManager) trustManager;
-                    break;
-                }
-            }
-
-            if (x509TrustManager == null) throw new NullPointerException();
-
-            // KeyManagerFactory ()
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509", "SunJSSE");
-            keyManagerFactory.init(keyStore, password.toCharArray());
-            X509KeyManager x509KeyManager = null;
-            for (KeyManager keyManager : keyManagerFactory.getKeyManagers()) {
-                if (keyManager instanceof X509KeyManager) {
-                    x509KeyManager = (X509KeyManager) keyManager;
-                    break;
-                }
-            }
-            if (x509KeyManager == null) throw new NullPointerException();
-
-            // set up the SSL Context
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(new KeyManager[]{x509KeyManager}, new TrustManager[]{x509TrustManager}, null);
-
-            SSLSocketFactory socketFactory = sslContext.getSocketFactory();
-            sock = (SSLSocket) socketFactory.createSocket(this.ip, 3700);
-            sock.setEnabledProtocols(new String[]{"TLSv1.2"});
-
-            PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(sock.getInputStream()));
-
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
-            String fromServer;
-            String fromUser;
-
-            while ((fromServer = in.readLine()) != null) {
-                System.out.println("Server: " + fromServer);
-                if (fromServer.equals("Bye."))
-                    break;
-
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
-                }
-            }
-
-        } catch (IOException | KeyStoreException ex) {
+        try{
+            sock = new Socket(this.ip, 3700);
+        } catch (IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
         }
 
         System.out.println("Connected to: " + this.ip + ", port:" + 3700);

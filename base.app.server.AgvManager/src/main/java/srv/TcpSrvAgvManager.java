@@ -6,14 +6,11 @@ import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.utils.MessageUtils;
-import eapli.base.warehousemanagement.application.SetUpPlantController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
-import eapli.base.warehousemanagement.domain.AutonomyStatus;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
-import protocol.KnockKnockProtocol;
 import eapli.base.warehousemanagement.domain.*;
 import eapli.base.warehousemanagement.repositories.*;
 
@@ -26,20 +23,9 @@ import java.util.*;
 
 class TcpSrvAgvManager {
 
-    static ServerSocket sock;
-
-    private String ipAddress;
-    private Integer port;
-    private InetAddress address;
-    private Socket socket;
-
-    public TcpSrvAgvManager(String ipAddress, int port) throws IOException {
-        this.ipAddress = ipAddress;
-        this.port = port;
-        this.address = InetAddress.getByName(this.ipAddress);
-        this.socket = new Socket(this.address, this.port);
-        new Thread(new TcpSrvAGVTwinThread(socket)).start();
-    }
+    static final int SERVER_PORT=3700;
+    static final String TRUSTED_STORE= "base.app.server.AgvManager/src/main/resources/AgvManager.jks";
+    static final String KEYSTORE_PASS="Password1";
 
     public static void main(String args[]) throws Exception {
 
@@ -80,17 +66,29 @@ class TcpSrvAgvManager {
         //======= FIM DA US4002 =======
         //=============================
 
+        SSLServerSocket sock = null;
         Socket cliSock;
 
-        try{
-            sock = new ServerSocket(3700);
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
 
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+        try {
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
             System.out.println("Server connection opened!");
         }
-        catch(IOException ex){
+        catch(IOException ex) {
             System.out.println("Failed to open server socket");
             System.exit(1);
         }
+
 
         while(true){
             cliSock=sock.accept();
@@ -122,89 +120,16 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     public void run() {
         InetAddress clientIP;
-        List<AGV> updatedAGVList = new LinkedList<>();
-
-        clientIP=s.getInetAddress();
-        System.out.println("New client connection from " + clientIP.getHostAddress() +
-                ", port number " + s.getPort());
+        List<AGV> updatedAGVList;
 
         try{
 
-            /*
-            // Get the keystore
-            System.setProperty("javax.net.debug", "all");
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String password = "abcdefg";
-            InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("server/certificate-server.p12");
-            keyStore.load(inputStream, password.toCharArray());
-
-            // TrustManagerFactory
-            String password2 = "aabbcc";
-            KeyStore trustStore = KeyStore.getInstance("PKCS12");
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX", "SunJSSE");
-            InputStream inputStream1 = new FileInputStream("base.app.server.AGVTwin/src/main/resources/cli/client-certificate.p12");
-            trustStore.load(inputStream1, password2.toCharArray());
-            trustManagerFactory.init(trustStore);
-            X509TrustManager x509TrustManager = null;
-            for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {
-                if (trustManager instanceof X509TrustManager) {
-                    x509TrustManager = (X509TrustManager) trustManager;
-                    break;
-                }
-            }
-
-            if (x509TrustManager == null) throw new NullPointerException();
-
-
-            // KeyManagerFactory ()
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509", "SunJSSE");
-            keyManagerFactory.init(keyStore, password.toCharArray());
-            X509KeyManager x509KeyManager = null;
-            for (KeyManager keyManager : keyManagerFactory.getKeyManagers()) {
-                if (keyManager instanceof X509KeyManager) {
-                    x509KeyManager = (X509KeyManager) keyManager;
-                    break;
-                }
-            }
-            if (x509KeyManager == null) throw new NullPointerException();
-
-            // set up the SSL Context
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(new KeyManager[]{x509KeyManager}, new TrustManager[]{x509TrustManager}, null);
-
-            SSLServerSocketFactory serverSocketFactory = sslContext.getServerSocketFactory();
-            SSLServerSocket serverSocket = (SSLServerSocket) serverSocketFactory.createServerSocket(3700);
-            serverSocket.setNeedClientAuth(true);
-            serverSocket.setEnabledProtocols(new String[]{"TLSv1.2"});
-            SSLSocket socket = (SSLSocket) serverSocket.accept();
-
-            // InputStream and OutputStream Stuff
-            PrintWriter out =
-                    new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-
-            String inputLine, outputLine;
-
-            // Initiate conversation with client
-            KnockKnockProtocol kkp = new KnockKnockProtocol();
-            outputLine = kkp.processInput(null);
-            out.println(outputLine);
-
-            while ((inputLine = in.readLine()) != null) {
-                outputLine = kkp.processInput(inputLine);
-                out.println(outputLine);
-                if (outputLine.equals("Bye."))
-                    break;
-            }
-            */
-
-            clientIP=s.getInetAddress();
+            clientIP=this.s.getInetAddress();
             System.out.println("[INFO] New client connection from " + clientIP.getHostAddress() +
                     ", port number " + this.s.getPort());
 
-            sOut = new DataOutputStream(s.getOutputStream());
-            sIn = new DataInputStream(s.getInputStream());
+            sOut = new DataOutputStream(this.s.getOutputStream());
+            sIn = new DataInputStream(this.s.getInputStream());
 
             byte[] clientMessage = sIn.readNBytes(4);
 
@@ -308,19 +233,7 @@ class TcpSrvAgvManagerThread implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();/*
-        } catch (UnrecoverableKeyException e) {
             e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();*/
         } finally {
             try {
                 this.s.close();
