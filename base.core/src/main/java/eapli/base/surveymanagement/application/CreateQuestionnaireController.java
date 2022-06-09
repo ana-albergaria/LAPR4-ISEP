@@ -37,12 +37,11 @@ public class CreateQuestionnaireController {
      * @param code
      * @param title
      * @param welcomeMessage
-     * @param sectionsAndQuestions
      * @param finalMessage
      */
     public void registerQuestionnaire(String code, String title, String welcomeMessage, String questionnaireContent, String finalMessage){
 
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.SALES_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_MANAGER);
 
         final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage);
 

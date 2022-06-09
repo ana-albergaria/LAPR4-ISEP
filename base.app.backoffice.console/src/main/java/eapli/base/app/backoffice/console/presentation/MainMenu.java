@@ -34,6 +34,7 @@ import eapli.base.app.backoffice.console.presentation.order.ViewOrdersSentToCost
 import eapli.base.app.backoffice.console.presentation.product.CreateCategoryUI;
 import eapli.base.app.backoffice.console.presentation.product.RegisterProductUI;
 import eapli.base.app.backoffice.console.presentation.product.ViewProductCatalogUI;
+import eapli.base.app.backoffice.console.presentation.questionnaire.AnswerQuestionnaireUI;
 import eapli.base.app.backoffice.console.presentation.questionnaire.CreateQuestionnaireUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.SetUpPlantUI;
 import eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard.DashboardUI;
@@ -114,6 +115,7 @@ public class MainMenu extends AbstractUI {
 
     //SALES MANAGER
     private static final int CREATE_QUESTIONNAIRE = 1;
+    private static final int ANSWER_QUESTIONNAIRE = 2;
 
     private static final int SALES_MANAGER_OPTION = 2;
 
@@ -245,6 +247,7 @@ public class MainMenu extends AbstractUI {
     private Menu buildSalesManagerMenu(){
         final Menu menu = new Menu("Sales Manager >");
         menu.addItem(CREATE_QUESTIONNAIRE, "Create Questionnaire", new CreateQuestionnaireUI()::show);
+        menu.addItem(ANSWER_QUESTIONNAIRE, "Answer Questionnaire", new AnswerQuestionnaireUI()::show);
 
         return menu;
     }
