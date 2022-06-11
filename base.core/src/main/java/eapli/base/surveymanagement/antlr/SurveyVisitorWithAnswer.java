@@ -29,15 +29,21 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitFree_text(questionnaireParser.Free_textContext ctx) {
-        String question =ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
-
 
         List<String> free_text = new ArrayList<>();
 
         if(ctx.obligatoriness().getText().equals("mandatory")){
+            isMandatory=true;
+        }else {
+            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
+            isMandatory= isAnswering.equalsIgnoreCase("yes");
+        }
+
+        if(isMandatory){
             while(free_text.isEmpty()){
-                System.out.println("This question is mandatory, so you need to provide an answer");
+                System.out.println("You must provide an answer.");
                 free_text=readMultipleLines();
             }
         }else {
@@ -53,7 +59,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitNumeric(questionnaireParser.NumericContext ctx) {
-        String question =ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> numeric = new ArrayList<>();
@@ -99,7 +105,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitSingle_choice_with_input(questionnaireParser.Single_choice_with_inputContext ctx) {
-        String question= ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> singleChoiceInput = new ArrayList<>();
@@ -131,7 +137,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
                         throw new UnsupportedOperationException("In a question with type: single choice with input, you must provide a numeric value as an answer.");
                     }
 
-                     if (!options.contains(answer.charAt(0))){
+                     if (!options.contains(String.valueOf(answer.charAt(0)))){
                         throw new UnsupportedOperationException("You must choose one of the given options!");
                     }
 
@@ -158,7 +164,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitSingle_choice(questionnaireParser.Single_choiceContext ctx) {
-        String question= ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> singleChoice = new ArrayList<>();
@@ -209,7 +215,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitMultiple_choice(questionnaireParser.Multiple_choiceContext ctx) {
-        String question= ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> multipleChoice = new ArrayList<>();
@@ -293,7 +299,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitMultiple_choice_with_input(questionnaireParser.Multiple_choice_with_inputContext ctx) {
-        String question= ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> multipleChoiceInput = new ArrayList<>();
@@ -375,7 +381,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
     @Override
     public Boolean visitSorting_option(questionnaireParser.Sorting_optionContext ctx) {
-        String question= ctx.getText();
+        String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
         System.out.println(question);
 
         List<String> sortingOption = new ArrayList<>();
