@@ -15,12 +15,12 @@ Type: single choice with input
 
 2. What age group do you belong to?(mandatory)
 Type: single choice
-1)18-24
-2)25-34
-3)35-44
-4)45-54
-5)55-64
-6)65-74
+1)18 to 24
+2)25 to 34
+3)35 to 44
+4)45 to 54
+5)55 to 64
+6)65 to 74
 7)Over 75
 
 3. What country do you live in?(mandatory)
@@ -63,7 +63,7 @@ Type: single choice
 6)0 stars
 
 9. When do you feel the need to buy our products?(mandatory)
-Type: multiple choice
+Type: multiple choice (select only 2)
 1)When I have no more stock of them
 2)When they are in discount
 3)When they are cheaper than our competitors

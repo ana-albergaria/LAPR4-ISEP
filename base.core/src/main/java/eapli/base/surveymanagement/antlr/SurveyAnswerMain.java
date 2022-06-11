@@ -49,7 +49,7 @@ public class SurveyAnswerMain {
         answers.add("1");
         map.put("9", answers);*/
 
-        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/questions/multiple_choice.txt", map);
+        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/teste.txt", map);
     }
 
     public static boolean parseWithVisitor(String filePath, Map<String, List<String>> answers) {
@@ -59,8 +59,8 @@ public class SurveyAnswerMain {
             questionnaireLexer lexer = new questionnaireLexer(CharStreams.fromFileName(filePath));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             questionnaireParser parser = new questionnaireParser(tokens);
-            ParseTree tree = parser.question();
-            SurveyVisitorWithAnswer eval = new SurveyVisitorWithAnswer(answers);
+            ParseTree tree = parser.survey();
+            SurveyVisitorWithAnswer eval = new SurveyVisitorWithAnswer();
             eval.visit(tree);
             return true;
         } catch(IOException e) {

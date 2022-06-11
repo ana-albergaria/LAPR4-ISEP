@@ -6,7 +6,6 @@
     <file url="file://$PROJECT_DIR$/base.app.bootstrap/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.app.bootstrap/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.app.common.console/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/base.app.common.console/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.app.other.console/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.app.other.console/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.app.server.AGVTwin/src/main/java" charset="UTF-8" />
@@ -23,7 +22,5 @@
     <file url="file://$PROJECT_DIR$/base.core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.persistence.impl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base.persistence.impl/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>

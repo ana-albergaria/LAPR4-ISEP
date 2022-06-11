@@ -18,8 +18,6 @@ public class SurveyMain {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             questionnaireParser parser = new questionnaireParser(tokens);
             ParseTree tree = parser.survey();
-            SurveyVisitor eval = new SurveyVisitor();
-            eval.visit(tree);
             return true;
         } catch(IOException e) {
             System.out.println("Make sure the file has the correct path");
