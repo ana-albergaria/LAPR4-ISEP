@@ -12,6 +12,17 @@ public class AnswerQuestionnaireUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
+        /*Iterable<Questionnaire> surveys = controller.questionnairesForClient();
+        final SelectWidget<Questionnaire> selector = new SelectWidget<>("Questionnaires For Client:", surveys,
+                    new QuestionnairePrinter());
+            selector.show();
+            final Questionnaire survey = selector.selectedElement();
+
+
+        */
+
+
         int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;
         List<String> sections = new ArrayList<>();
         List<String> questions = new ArrayList<>();
