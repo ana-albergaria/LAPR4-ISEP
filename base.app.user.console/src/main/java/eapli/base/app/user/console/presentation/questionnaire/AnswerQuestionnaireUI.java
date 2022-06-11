@@ -35,12 +35,12 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         Map<String, List<String>> answers = new HashMap<>();
         // CHAMAR O VISITOR E OBTER AS RESPOSTAS
 
-        List<String> list = new ArrayList<>();
-        //list.add("isto é um teste");
+        /*List<String> list = new ArrayList<>();
+        list.add("isto é um teste");
         answers.put("1", list);
-        //list = new ArrayList<>();
-        //list.add("lala");
-        answers.put("2", list);
+        list = new ArrayList<>();
+        list.add("lala");
+        answers.put("2", list);*/
 
 
         System.out.println("Your answers will be now saved!");

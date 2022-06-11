@@ -25,9 +25,6 @@ public class SaveAnswersRequest extends OrderServerRequest {
     public void execute() {
         try {
             Map<String, List<String>> answers = (Map<String, List<String>>) sInObject.readObject();
-            for (Map.Entry<String, List<String>> entry : answers.entrySet()) {
-                System.out.println(entry.getKey() + ":" + entry.getValue().toString());
-            }
             QuestionnaireDTO surveyDTO = (QuestionnaireDTO) sInObject.readObject();
 
             //to obtain the email from the current client
