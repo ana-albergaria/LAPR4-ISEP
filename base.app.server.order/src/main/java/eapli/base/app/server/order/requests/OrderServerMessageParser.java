@@ -41,6 +41,10 @@ public class OrderServerMessageParser {
             request = new GetQuestionnairesRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
         }
 
+        if(messageRequest == 13){
+            request = new GetClientOpenOrdersRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+        }
+
         if(request == null)
             throw new UnsupportedOperationException("The request " + messageRequest + " is not valid - unable to parse.");
 

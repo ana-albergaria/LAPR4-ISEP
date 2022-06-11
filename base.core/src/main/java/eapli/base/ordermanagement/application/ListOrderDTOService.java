@@ -12,6 +12,7 @@ import eapli.base.productmanagement.repositories.ProductRepository;
 
 import javax.persistence.criteria.Order;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,6 +33,15 @@ public class ListOrderDTOService {
         final List<OrderDTO> ret = new ArrayList<>();
 
         orders.forEach(e -> ret.add(e.toDTO()));
+        return ret;
+    }
+
+    public Iterable<OrderDTO> allOpenOrders(OrderStatus orderStatus){
+        final Iterable<TheOrder> openOrders = orderRepository.findOpenOrders(orderStatus);
+
+        final List<OrderDTO> ret = new LinkedList<>();
+
+        openOrders.forEach(e -> ret.add(e.toDTO()));
         return ret;
     }
 }

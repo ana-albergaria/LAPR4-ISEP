@@ -5,6 +5,7 @@ import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.Order;
@@ -42,5 +43,12 @@ public class JpaOrderRepository extends BaseJpaRepositoryBase<TheOrder, Long, Lo
         final Map<String, Object> params = new HashMap<>();
         params.put("orderStatus", orderStatus);
         return match("e.status=:orderStatus", params);
+    }
+
+    @Override
+    public Iterable<TheOrder> findOpenOrders(OrderStatus orderStatus){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("orderStatus", orderStatus);
+        return match("e.status!=:orderStatus", params);
     }
 }

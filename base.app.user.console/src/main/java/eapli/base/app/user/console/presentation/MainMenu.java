@@ -24,6 +24,7 @@
 package eapli.base.app.user.console.presentation;
 
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.user.console.presentation.ordermanagement.ViewClientOpenOrdersUI;
 import eapli.base.app.user.console.presentation.questionnaire.AnswerQuestionnaireUI;
 import eapli.base.app.user.console.presentation.shoppingcartmanagement.AddProductToShoppingCarUi;
 import eapli.framework.actions.menu.Menu;
@@ -52,6 +53,7 @@ class MainMenu extends ClientUserBaseUI {
     private static final int MY_USER_OPTION = 1;
     private static final int ADD_PRODUCTS_SHOPPING_CART = 2;
     private static final int ANSWER_QUESTIONNAIRE = 3;
+    private static final int SHOW_MY_ORDER_STATUS = 4;
 
     // BOOKINGS MENU
     private static final int BOOK_A_MEAL_OPTION = 2;
@@ -90,6 +92,7 @@ class MainMenu extends ClientUserBaseUI {
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
         mainMenu.addItem(ADD_PRODUCTS_SHOPPING_CART, "Add Products To Shopping Cart >", new AddProductToShoppingCarUi()::show);
         mainMenu.addItem(ANSWER_QUESTIONNAIRE, "Answer Available Questionnaire(s) >", new AnswerQuestionnaireUI()::show);
+        mainMenu.addItem(SHOW_MY_ORDER_STATUS, "Show My Order(s) Status >", new ViewClientOpenOrdersUI()::show);
 
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
 
