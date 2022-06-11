@@ -2,20 +2,7 @@ package eapli.base.app.server.order.tcp;
 
 import eapli.base.app.server.order.requests.OrderServerMessageParser;
 import eapli.base.app.server.order.requests.OrderServerRequest;
-import eapli.base.clientmanagement.domain.Client;
-import eapli.base.clientmanagement.domain.Email;
-import eapli.base.clientmanagement.repositories.ClientRepository;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.productmanagement.application.ListProductDTOService;
-import eapli.base.productmanagement.domain.Code;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.dto.ProductDTO;
-import eapli.base.productmanagement.repositories.ProductRepository;
-import eapli.base.shoppingcartmanagement.application.OrderSrvAddProductToShoppingCarController;
-import eapli.base.shoppingcartmanagement.domain.ShopCarItem;
-import eapli.base.shoppingcartmanagement.domain.ShoppingCart;
-import eapli.base.shoppingcartmanagement.repositories.ShopCarItemRepository;
-import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
+import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 import eapli.base.utils.MessageUtils;
 
 import javax.net.ssl.SSLServerSocket;
@@ -25,9 +12,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Optional;
 
 
 public class TcpOrderSrv {
@@ -71,7 +56,7 @@ public class TcpOrderSrv {
 class TcpSrvOrderThread implements Runnable {
     private Socket s;
 
-    private final OrderSrvAddProductToShoppingCarController ctrl = new OrderSrvAddProductToShoppingCarController();
+    private final OrderSrvController ctrl = new OrderSrvController();
     private final OrderServerMessageParser parser = new OrderServerMessageParser(ctrl);
 
     public TcpSrvOrderThread(Socket cli_s) {

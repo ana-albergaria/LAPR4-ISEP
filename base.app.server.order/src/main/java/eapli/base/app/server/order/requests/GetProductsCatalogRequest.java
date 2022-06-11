@@ -1,7 +1,7 @@
 package eapli.base.app.server.order.requests;
 
 import eapli.base.productmanagement.dto.ProductDTO;
-import eapli.base.shoppingcartmanagement.application.OrderSrvAddProductToShoppingCarController;
+import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class GetProductsCatalogRequest extends OrderServerRequest {
 
-    public GetProductsCatalogRequest(final OrderSrvAddProductToShoppingCarController ctrl,
+    public GetProductsCatalogRequest(final OrderSrvController ctrl,
                                      final byte request,
                                      final ObjectOutputStream sOutObject,
                                      final DataInputStream sIn,

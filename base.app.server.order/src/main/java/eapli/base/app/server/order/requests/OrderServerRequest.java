@@ -1,6 +1,6 @@
 package eapli.base.app.server.order.requests;
 
-import eapli.base.shoppingcartmanagement.application.OrderSrvAddProductToShoppingCarController;
+import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,13 +8,13 @@ import java.io.ObjectOutputStream;
 
 public abstract class OrderServerRequest {
     protected final byte request;
-    protected final OrderSrvAddProductToShoppingCarController ctrlShopCart;
+    protected final OrderSrvController ctrlShopCart;
     protected final ObjectOutputStream sOutputObject;
     protected final DataInputStream sIn;
     protected final DataOutputStream sOut;
     protected final byte[] clientMessageUS;
 
-    protected OrderServerRequest(final OrderSrvAddProductToShoppingCarController ctrlShopCart,
+    protected OrderServerRequest(final OrderSrvController ctrlShopCart,
                                  final byte request,
                                  final ObjectOutputStream sOutObject,
                                  final DataInputStream sIn,

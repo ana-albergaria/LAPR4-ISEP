@@ -19,7 +19,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
-public class OrderSrvAddProductToShoppingCarController {
+public class OrderSrvController {
 
     private final ListProductDTOService service = new ListProductDTOService();
     private final ProductRepository productRepository = PersistenceContext.repositories().products();

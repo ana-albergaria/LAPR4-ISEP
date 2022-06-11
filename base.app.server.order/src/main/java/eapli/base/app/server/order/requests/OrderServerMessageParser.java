@@ -1,27 +1,21 @@
 package eapli.base.app.server.order.requests;
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.productmanagement.domain.Code;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.repositories.ProductRepository;
-import eapli.base.shoppingcartmanagement.application.OrderSrvAddProductToShoppingCarController;
-import eapli.base.utils.MessageUtils;
+import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Optional;
 
 public class OrderServerMessageParser {
 
-    private final OrderSrvAddProductToShoppingCarController ctrlShopCart;
+    private final OrderSrvController ctrlShopCart;
 
-    public OrderServerMessageParser(final OrderSrvAddProductToShoppingCarController ctrlShopCart) {
+    public OrderServerMessageParser(final OrderSrvController ctrlShopCart) {
         this.ctrlShopCart = ctrlShopCart;
     }
 
-    public OrderSrvAddProductToShoppingCarController getCtrlShopCart() {
+    public OrderSrvController getCtrlShopCart() {
         return ctrlShopCart;
     }
 
