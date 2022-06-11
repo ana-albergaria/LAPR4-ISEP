@@ -1,21 +1,18 @@
 package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
-import eapli.base.clientmanagement.domain.Email;
-import eapli.base.clientmanagement.repositories.ClientRepository;
-import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.surveymanagement.antlr.SurveyAnswerMain;
+import eapli.base.surveymanagement.antlr.SurveyVisitorWithAnswer;
+import eapli.base.surveymanagement.antlr.questionnaireLexer;
+import eapli.base.surveymanagement.antlr.questionnaireParser;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
-import eapli.base.surveymanagement.domain.Answer;
-import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
-import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
-import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
-import javax.crypto.spec.PSource;
-import javax.persistence.Persistence;
 import java.util.*;
 
 public class AnswerQuestionnaireUI extends AbstractUI {
@@ -29,25 +26,48 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         selector.show();
         final QuestionnaireDTO survey = selector.selectedElement();
 
-        //OBTER A STRING DO QUESTIONARIO
-
+        String surveyString = extractSurvey(survey);
 
         Map<String, List<String>> answers = new HashMap<>();
-        // CHAMAR O VISITOR E OBTER AS RESPOSTAS
 
-        /*List<String> list = new ArrayList<>();
-        list.add("isto é um teste");
-        answers.put("1", list);
-        list = new ArrayList<>();
-        list.add("lala");
-        answers.put("2", list);*/
+        boolean validAnswers = parseSurveyAnswersWithVisitor(surveyString, answers);
 
+        if(validAnswers) {
+            System.out.println("Your answers will be now saved!");
+            this.controller.sendAnswersToBeSaved(answers, survey);
+            System.out.println("Answers successfuly saved!");
+        }
 
-        System.out.println("Your answers will be now saved!");
-        this.controller.sendAnswersToBeSaved(answers, survey);
-        System.out.println("Answers successfuly saved!");
 
         return false;
+    }
+
+    private String extractSurvey(QuestionnaireDTO survey) {
+        StringBuilder text = new StringBuilder();
+        text.append(survey.code() + " " + survey.title() + "\n");
+        if(!survey.welcomeMessage().isEmpty())
+            text.append(survey.welcomeMessage() + "\n\n");
+        text.append(survey.questionnaireContent() + "\n\n\n\n");
+        text.append(survey.finalMessage());
+        System.out.println(text);
+        return text.toString();
+    }
+
+    private boolean parseSurveyAnswersWithVisitor(String survey, Map<String, List<String>> answers) {
+
+        try {
+
+            questionnaireLexer lexer = new questionnaireLexer(CharStreams.fromString(survey));
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            questionnaireParser parser = new questionnaireParser(tokens);
+            ParseTree tree = parser.survey();
+            SurveyVisitorWithAnswer eval = new SurveyVisitorWithAnswer(answers);
+            eval.visit(tree);
+            return true;
+        } catch (Exception e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return false;
+        }
     }
 
     @Override

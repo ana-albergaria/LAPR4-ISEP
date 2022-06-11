@@ -21,8 +21,25 @@ public class QuestionnaireDTO implements Serializable {
         this.finalMessage = finalMessage;
     }
 
+
     public String code() {
         return this.code;
+    }
+
+    public String title() {
+        return this.title;
+    }
+
+    public String welcomeMessage() {
+        return this.welcomeMessage;
+    }
+
+    public String questionnaireContent() {
+        return this.questionnaireContent;
+    }
+
+    public String finalMessage() {
+        return this.finalMessage;
     }
 
     @Override

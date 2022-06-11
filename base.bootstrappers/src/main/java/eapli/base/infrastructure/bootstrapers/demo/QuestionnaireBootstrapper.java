@@ -28,7 +28,7 @@ public class QuestionnaireBootstrapper implements Action {
                 "\n" +
                 "2. Product feedback\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "1. Do you like our products?(mandatory)\n" +
+                "3. Do you like our products?(mandatory)\n" +
                 "Type: single choice\n" +
                 "1)Yes\n" +
                 "2)No\n" +
@@ -52,7 +52,7 @@ public class QuestionnaireBootstrapper implements Action {
                 "\n" +
                 "2. Product Feedback\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "1. How do you rate our drinks?(mandatory)\n" +
+                "4. How do you rate our drinks?(mandatory)\n" +
                 "Type: scaling option\n" +
                 "Scale: Strongly agree, agree, neutral, disagree, strongly disagree\n" +
                 "1)Our drinks are the best on the market\n" +
@@ -73,7 +73,7 @@ public class QuestionnaireBootstrapper implements Action {
                 "\n" +
                 "2. Product feedback\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "1. Would you recommend our sports products to another person?(mandatory)\n" +
+                "3. Would you recommend our sports products to another person?(mandatory)\n" +
                 "Type: single choice\n" +
                 "1)Yes\n" +
                 "2)No\n" +

@@ -498,7 +498,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
                     validAnswer=true;
                 }
                 validAnswer=false;
-                scalingOption.add(scale[Integer.parseInt(answer)]);
+                scalingOption.add(scale[Integer.parseInt(answer)-1]);
                 answer="";
             }
 
