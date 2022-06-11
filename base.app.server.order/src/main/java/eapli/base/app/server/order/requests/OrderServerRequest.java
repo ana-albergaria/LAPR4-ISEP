@@ -2,9 +2,7 @@ package eapli.base.app.server.order.requests;
 
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public abstract class OrderServerRequest {
     protected final byte request;
@@ -12,20 +10,23 @@ public abstract class OrderServerRequest {
     protected final ObjectOutputStream sOutputObject;
     protected final DataInputStream sIn;
     protected final DataOutputStream sOut;
-    protected final byte[] clientMessageUS;
+    protected byte[] clientMessageUS;
+    protected final ObjectInputStream sInObject;
 
     protected OrderServerRequest(final OrderSrvController orderSrvController,
                                  final byte request,
                                  final ObjectOutputStream sOutObject,
                                  final DataInputStream sIn,
                                  final DataOutputStream sOut,
-                                 final byte[] clientMessageUS) {
+                                 final byte[] clientMessageUS,
+                                 final ObjectInputStream sInObject) {
         this.request = request;
         this.orderSrvController = orderSrvController;
         this.sOutputObject = sOutObject;
         this.sIn = sIn;
         this.sOut = sOut;
         this.clientMessageUS = clientMessageUS;
+        this.sInObject = sInObject;
     }
 
     /**

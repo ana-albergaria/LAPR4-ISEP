@@ -3,10 +3,7 @@ package eapli.base.app.server.order.requests;
 import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class GetProductsCatalogRequest extends OrderServerRequest {
 
@@ -15,8 +12,9 @@ public class GetProductsCatalogRequest extends OrderServerRequest {
                                      final ObjectOutputStream sOutObject,
                                      final DataInputStream sIn,
                                      final DataOutputStream sOut,
-                                     final byte[] clientMessageUS) {
-        super(ctrl, request, sOutObject, sIn, sOut, clientMessageUS);
+                                     final byte[] clientMessageUS,
+                                     final ObjectInputStream sInObject) {
+        super(ctrl, request, sOutObject, sIn, sOut, clientMessageUS, sInObject);
     }
 
     @Override

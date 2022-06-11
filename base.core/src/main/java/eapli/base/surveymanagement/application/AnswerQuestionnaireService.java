@@ -1,17 +1,18 @@
 package eapli.base.surveymanagement.application;
 
+import eapli.base.productmanagement.dto.ProductDTO;
+import eapli.base.shoppingcartmanagement.application.AddProductToShoppingCarService;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.utils.MessageUtils;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class AnswerQuestionnaireService {
 
@@ -110,6 +111,59 @@ public class AnswerQuestionnaireService {
             System.out.println("Server down");
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public boolean sendAnswersToBeSaved(Map<String, List<String>> answers, QuestionnaireDTO survey, String email){
+        try {
+
+            final var socket = new AnswerQuestionnaireService.ClientSocket();
+            socket.connect(getAddress(), getPort());
+
+            try {
+
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
+
+                    MessageUtils.writeMessage((byte) 14, socket.sOutData);
+
+                    // sending the map with answers to the order server
+                    ObjectOutputStream sOutputObject = new ObjectOutputStream(socket.sock.getOutputStream());
+                    sOutputObject.writeObject(answers);
+                    sOutputObject.flush();
+
+                    //sending the DTO of the chosen Questionnaire
+                    sOutputObject.writeObject(survey);
+                    sOutputObject.flush();
+
+                    //sending the client e-mail
+                    MessageUtils.writeMessageWithData((byte) 15, email, socket.sOutData);
+
+
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
+
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                    }
+                } else {
+                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+                }
+            } catch (IOException e) {
+                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 

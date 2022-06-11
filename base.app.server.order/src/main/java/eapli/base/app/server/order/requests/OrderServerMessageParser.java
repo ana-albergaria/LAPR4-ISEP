@@ -2,10 +2,7 @@ package eapli.base.app.server.order.requests;
 
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class OrderServerMessageParser {
 
@@ -23,26 +20,33 @@ public class OrderServerMessageParser {
                                     final ObjectOutputStream sOutObject,
                                     final DataInputStream sIn,
                                     final DataOutputStream sOut,
-                                    final byte[] clientMessageUS) throws IOException {
+                                    final byte[] clientMessageUS,
+                                    final ObjectInputStream sInObject) throws IOException {
+
+        // TODO Do NOT choose request 15 as it is a subrequest of request 14!
 
         OrderServerRequest request = null;
 
         if(messageRequest == 4) {
-            request = new GetProductsCatalogRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new GetProductsCatalogRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
         if(messageRequest == 3) {
-            request = new VerifyIfProductExistsRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new VerifyIfProductExistsRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
         if(messageRequest == 5) {
-            request = new AddProductToShoppingCartRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new AddProductToShoppingCartRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
         if(messageRequest == 12){
-            request = new GetQuestionnairesRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new GetQuestionnairesRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
         if(messageRequest == 13){
-            request = new GetClientOpenOrdersRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new GetClientOpenOrdersRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+        }
+
+        if(messageRequest == 14) {
+            request = new SaveAnswersRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
         if(request == null)

@@ -6,10 +6,7 @@ import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 import org.hibernate.criterion.Order;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class GetClientOpenOrdersRequest extends OrderServerRequest{
     protected GetClientOpenOrdersRequest(OrderSrvController orderSrvController,
@@ -17,8 +14,9 @@ public class GetClientOpenOrdersRequest extends OrderServerRequest{
                                          ObjectOutputStream sOutObject,
                                          DataInputStream sIn,
                                          DataOutputStream sOut,
-                                         byte[] clientMessageUS){
-        super(orderSrvController, request, sOutObject, sIn, sOut, clientMessageUS);
+                                         byte[] clientMessageUS,
+                                         final ObjectInputStream sInObject){
+        super(orderSrvController, request, sOutObject, sIn, sOut, clientMessageUS, sInObject);
     }
 
     @Override

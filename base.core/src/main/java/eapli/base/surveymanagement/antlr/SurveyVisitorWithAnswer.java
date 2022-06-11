@@ -6,9 +6,17 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.*;
 
 public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
-    private final Map<String, List<String>> answers= new HashMap<>();
+    //private final Map<String, List<String>> answers= new HashMap<>();
     private final Scanner scan = new Scanner(System.in);
     private boolean isMandatory = false;
+
+    /* ANA: voltei a colocar o construtor a receber um map vazio,
+    pois é necessario fazer um request à order server para guardar as answers*/
+    private final Map<String, List<String>> answers;
+    public SurveyVisitorWithAnswer(Map<String, List<String>> answers) {
+        this.answers = answers;
+    }
+
 
     @Override
     public Boolean visitQuestion(questionnaireParser.QuestionContext ctx) {

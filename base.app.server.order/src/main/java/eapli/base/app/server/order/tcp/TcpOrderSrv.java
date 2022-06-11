@@ -7,10 +7,7 @@ import eapli.base.utils.MessageUtils;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -74,6 +71,8 @@ class TcpSrvOrderThread implements Runnable {
             DataInputStream sIn = new DataInputStream(this.s.getInputStream());
             DataOutputStream sOut = new DataOutputStream(this.s.getOutputStream());
             ObjectOutputStream sOutputObject = null; //initializing with null, because not all requests require this
+            ObjectInputStream sInputObject = null;
+
 
             byte[] clientMessage = new byte[4];
             MessageUtils.readMessage(clientMessage, sIn);
@@ -92,10 +91,13 @@ class TcpSrvOrderThread implements Runnable {
                 if(clientMessageUS[1] == 4 || clientMessageUS[1] == 12 || clientMessageUS[1] == 13) {
                     sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
                 }
+                if(clientMessageUS[1] == 14) {
+                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                }
 
 
                 //executing the appropriate request according to the message code
-                final OrderServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS);
+                final OrderServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
                 request.execute();
 
 

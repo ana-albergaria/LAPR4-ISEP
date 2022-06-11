@@ -21,6 +21,10 @@ public class QuestionnaireDTO implements Serializable {
         this.finalMessage = finalMessage;
     }
 
+    public String code() {
+        return this.code;
+    }
+
     @Override
     public String toString(){
         return String.format("Questionnaire: %s %s \n", code, title);

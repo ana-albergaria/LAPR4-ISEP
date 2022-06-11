@@ -16,12 +16,18 @@ import eapli.base.shoppingcartmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcartmanagement.domain.ShoppingCart;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
 import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
+import eapli.base.surveymanagement.domain.Answer;
+import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
+import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class OrderSrvController {
@@ -36,6 +42,11 @@ public class OrderSrvController {
     private Optional<Client> client;
     private Optional<ShoppingCart> shoppingCar;
 
+    //for US3501
+    private final SurveyQuestionnareRepository surveyRepository = PersistenceContext.repositories().questionnaries();
+    private final AnswerQuestionnaireRepository answerRepository = PersistenceContext.repositories().answers();
+
+
     public Iterable<ProductDTO> allProducts() {
         return productService.allProducts();
     }
@@ -46,6 +57,18 @@ public class OrderSrvController {
 
     public Iterable<QuestionnaireDTO> allSurveys(){
         return questionnaireService.allSurveys();
+    }
+
+    public void saveQuestionnaireAnswers(Map<String, List<String>> answers, QuestionnaireDTO surveyDTO, String email) {
+        Questionnaire survey = surveyRepository.ofIdentity(surveyDTO.code()).get();
+        Client client = clientRepository.findByEmail(Email.valueOf(email)).get();
+
+        for (Map.Entry<String, List<String>> entry : answers.entrySet()) {
+            String questionID = entry.getKey();
+            List<String> listAnswers = entry.getValue();
+            Answer answer = new Answer(survey, client, questionID, listAnswers);
+            answerRepository.save(answer);
+        }
     }
 
     public void verifyIfProductExists(byte[] clientMessageUS, DataInputStream sIn, DataOutputStream sOut) throws IOException {

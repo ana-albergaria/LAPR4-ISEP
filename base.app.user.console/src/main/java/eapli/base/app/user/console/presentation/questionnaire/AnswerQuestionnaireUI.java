@@ -14,6 +14,7 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
+import javax.crypto.spec.PSource;
 import javax.persistence.Persistence;
 import java.util.*;
 
@@ -28,71 +29,23 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         selector.show();
         final QuestionnaireDTO survey = selector.selectedElement();
 
-        /*
-        APENAS PARA TESTAR SE FAZIA SAVE DA ANSWER CORRETAMENTE
-        SurveyQuestionnareRepository surveyRep = PersistenceContext.repositories().questionnaries();
-        ClientRepository clientRepository = PersistenceContext.repositories().clients();
-
-        AnswerQuestionnaireRepository answerQuestionnaireRepository = PersistenceContext.repositories().answers();
-        answerQuestionnaireRepository.save(new Answer(surveyRep.ofIdentity("BOOKS21-22").get(),clientRepository.findByEmail(Email.valueOf("1201518@isep.ipp.pt")).get(),"1",new ArrayList<>()));*/
+        //OBTER A STRING DO QUESTIONARIO
 
 
-        /*int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;
-        List<String> sections = new ArrayList<>();
-        List<String> questions = new ArrayList<>();
-        List<String> questionsPerSection = new LinkedList<>();
-        Map<String, List<String>> sectionsAndQuestions = new HashMap<>();
+        Map<String, List<String>> answers = new HashMap<>();
+        // CHAMAR O VISITOR E OBTER AS RESPOSTAS
 
-        Questionnaire selectedQuestionnaire = null;
-
-        List<Questionnaire> questionnaires = controller.allQuestionnairesInTheSystem();
-
-        HashMap<Integer, Questionnaire> questionnaireOptions = new HashMap<>();
-
-        numOfQuestionnaires = questionnaires.size();
-
-        System.out.println("Which questionnaire would you like to answer?");
-
-        for(Questionnaire questionnaire : questionnaires){
-            System.out.printf("%d - %s\n", n, questionnaire.title());
-            questionnaireOptions.put(n, questionnaire);
-            n++;
-        }
-
-        selectedQuestionnaireNumber = Console.readOption(1, numOfQuestionnaires, 0);
-
-        for(Integer selectedQuestionnaireOption : questionnaireOptions.keySet()){
-            if(selectedQuestionnaireNumber == selectedQuestionnaireOption){
-                selectedQuestionnaire = questionnaireOptions.get(selectedQuestionnaireOption);
-            }
-        }
-
-        System.out.println("Questionnaire successfully selected. It's time to answer it!\n");
+        List<String> list = new ArrayList<>();
+        //list.add("isto é um teste");
+        answers.put("1", list);
+        //list = new ArrayList<>();
+        //list.add("lala");
+        answers.put("2", list);
 
 
-        sections = controller.allSectionsText(selectedQuestionnaire.content());
-        questions = controller.allQuestionsText(selectedQuestionnaire.content());
-
-        numOfSections = sections.size();
-        numOfQuestions = questions.size();
-
-
-        /*for (int m = 0; m < numOfQuestions; m++) {
-            if ((int) questions.get(m).charAt(0) < (int) questions.get(m + 1).charAt(0)) {
-                sectionsAndQuestions.put(, new LinkedList<>().add(questions.get(m)));
-            }else{
-                break;
-            }
-        }
-
-        for(int j=0; j<numOfSections; j++){
-            System.out.println(sections.get(j));
-
-            int sIndex = questions.get(j).indexOf("(");
-            System.out.println(questions.get(j).substring(0, sIndex));
-
-        }*/
-
+        System.out.println("Your answers will be now saved!");
+        this.controller.sendAnswersToBeSaved(answers, survey);
+        System.out.println("Answers successfuly saved!");
 
         return false;
     }

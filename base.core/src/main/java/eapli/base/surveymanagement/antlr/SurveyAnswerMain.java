@@ -60,7 +60,7 @@ public class SurveyAnswerMain {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             questionnaireParser parser = new questionnaireParser(tokens);
             ParseTree tree = parser.survey();
-            SurveyVisitorWithAnswer eval = new SurveyVisitorWithAnswer();
+            SurveyVisitorWithAnswer eval = new SurveyVisitorWithAnswer(answers);
             eval.visit(tree);
             return true;
         } catch(IOException e) {
