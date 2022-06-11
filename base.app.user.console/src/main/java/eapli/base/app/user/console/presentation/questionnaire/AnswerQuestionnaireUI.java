@@ -49,7 +49,6 @@ public class AnswerQuestionnaireUI extends AbstractUI {
             text.append(survey.welcomeMessage() + "\n\n");
         text.append(survey.questionnaireContent() + "\n\n\n\n");
         text.append(survey.finalMessage());
-        System.out.println(text);
         return text.toString();
     }
 
