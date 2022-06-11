@@ -6,6 +6,6 @@ import eapli.base.warehousemanagement.domain.AGV;
 
 public class JpaSurveyQuestionnaireRepository extends BaseJpaRepositoryBase<Questionnaire, String, String> implements SurveyQuestionnareRepository {
     JpaSurveyQuestionnaireRepository(){
-        super("Questionnaire ID");
+        super("code");
     }
 }

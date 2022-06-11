@@ -33,7 +33,7 @@ public class AnswerQuestionnaireController {
         return service.allSurveys();
     }
 
-    public Answer registerAnswer(String answerID){ //TODO put all the Answers' constructor parameter here!
+    /*public Answer registerAnswer(String answerID){ //TODO put all the Answers' constructor parameter here!
         final var newAnswer = new Answer(answerID);
 
         return answersRepository.save(newAnswer);
@@ -104,5 +104,5 @@ public class AnswerQuestionnaireController {
         Object[] linesArray = questionnaireContent.lines().toArray();
 
         return new LinkedList<>(Arrays.asList(linesArray).subList(0, (int) numOfLines));
-    }
+    }*/
 }

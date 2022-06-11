@@ -1,13 +1,20 @@
 package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
+import eapli.base.clientmanagement.domain.Email;
+import eapli.base.clientmanagement.repositories.ClientRepository;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
+import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
+import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
+import javax.persistence.Persistence;
 import java.util.*;
 
 public class AnswerQuestionnaireUI extends AbstractUI {
@@ -20,6 +27,14 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         final SelectWidget<QuestionnaireDTO> selector = new SelectWidget<>("Questionnaires For Client:", surveys, new QuestionnaireDTOPrinter());
         selector.show();
         final QuestionnaireDTO survey = selector.selectedElement();
+
+        /*
+        APENAS PARA TESTAR SE FAZIA SAVE DA ANSWER CORRETAMENTE
+        SurveyQuestionnareRepository surveyRep = PersistenceContext.repositories().questionnaries();
+        ClientRepository clientRepository = PersistenceContext.repositories().clients();
+
+        AnswerQuestionnaireRepository answerQuestionnaireRepository = PersistenceContext.repositories().answers();
+        answerQuestionnaireRepository.save(new Answer(surveyRep.ofIdentity("BOOKS21-22").get(),clientRepository.findByEmail(Email.valueOf("1201518@isep.ipp.pt")).get(),"1",new ArrayList<>()));*/
 
 
         /*int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;

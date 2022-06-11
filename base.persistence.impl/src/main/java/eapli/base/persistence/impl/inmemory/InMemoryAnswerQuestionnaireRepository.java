@@ -4,7 +4,7 @@ import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
-public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainRepository<Answer, String> implements AnswerQuestionnaireRepository {
+public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainRepository<Answer, Long> implements AnswerQuestionnaireRepository {
     static {
         InMemoryInitializer.init();
     }

@@ -29,6 +29,7 @@
     <class>eapli.base.warehousemanagement.domain.AGVPosition</class>
     <class>eapli.base.shoppingcartmanagement.domain.ShopCarItem</class>
     <class>eapli.base.surveymanagement.domain.Questionnaire</class>
+    <class>eapli.base.surveymanagement.domain.Answer</class>
 
 
 
