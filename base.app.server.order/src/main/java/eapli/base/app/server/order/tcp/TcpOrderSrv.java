@@ -89,7 +89,7 @@ class TcpSrvOrderThread implements Runnable {
 
                 //for the requests that require ObjectOutputStream
                 //IMPORTANT: it will be needed for Sprint D: show list of questionnaires and open orders
-                if(clientMessageUS[1] == 4) {
+                if(clientMessageUS[1] == 4 || clientMessageUS[1] == 12) {
                     sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
                 }
 

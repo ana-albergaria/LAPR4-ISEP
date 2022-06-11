@@ -21,7 +21,7 @@ public class AddProductToShoppingCartRequest extends OrderServerRequest {
     @Override
     public void execute() {
         try {
-            this.ctrlShopCart.addProductToShoppingCart(clientMessageUS, sIn);
+            this.orderSrvController.addProductToShoppingCart(clientMessageUS, sIn);
         } catch (IOException e) {
             e.printStackTrace();
         }

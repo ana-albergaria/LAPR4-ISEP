@@ -1,9 +1,12 @@
-package eapli.base.app.backoffice.console.presentation.questionnaire;
+package eapli.base.app.user.console.presentation.questionnaire;
 
+import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 
 import java.util.*;
 
@@ -13,17 +16,13 @@ public class AnswerQuestionnaireUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        /*Iterable<Questionnaire> surveys = controller.questionnairesForClient();
-        final SelectWidget<Questionnaire> selector = new SelectWidget<>("Questionnaires For Client:", surveys,
-                    new QuestionnairePrinter());
-            selector.show();
-            final Questionnaire survey = selector.selectedElement();
+        Iterable<QuestionnaireDTO> surveys = this.controller.allQuestionnairesInTheSystem();
+        final SelectWidget<QuestionnaireDTO> selector = new SelectWidget<>("Questionnaires For Client:", surveys, new QuestionnaireDTOPrinter());
+        selector.show();
+        final QuestionnaireDTO survey = selector.selectedElement();
 
 
-        */
-
-
-        int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;
+        /*int numOfQuestionnaires, n=1, selectedQuestionnaireNumber, numOfSections, numOfQuestions, numOfQuestionsPerSection;
         List<String> sections = new ArrayList<>();
         List<String> questions = new ArrayList<>();
         List<String> questionsPerSection = new LinkedList<>();
@@ -69,7 +68,7 @@ public class AnswerQuestionnaireUI extends AbstractUI {
             }else{
                 break;
             }
-        }*/
+        }
 
         for(int j=0; j<numOfSections; j++){
             System.out.println(sections.get(j));
@@ -77,10 +76,7 @@ public class AnswerQuestionnaireUI extends AbstractUI {
             int sIndex = questions.get(j).indexOf("(");
             System.out.println(questions.get(j).substring(0, sIndex));
 
-        }
-
-        //TODO for each section, print section and each question's information.
-
+        }*/
 
 
         return false;

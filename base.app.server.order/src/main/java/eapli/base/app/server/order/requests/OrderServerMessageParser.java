@@ -9,14 +9,14 @@ import java.io.ObjectOutputStream;
 
 public class OrderServerMessageParser {
 
-    private final OrderSrvController ctrlShopCart;
+    private final OrderSrvController orderSrvController;
 
-    public OrderServerMessageParser(final OrderSrvController ctrlShopCart) {
-        this.ctrlShopCart = ctrlShopCart;
+    public OrderServerMessageParser(final OrderSrvController orderSrvController) {
+        this.orderSrvController = orderSrvController;
     }
 
-    public OrderSrvController getCtrlShopCart() {
-        return ctrlShopCart;
+    public OrderSrvController getOrderSrvController() {
+        return orderSrvController;
     }
 
     public OrderServerRequest parse(final byte messageRequest,
@@ -28,13 +28,17 @@ public class OrderServerMessageParser {
         OrderServerRequest request = null;
 
         if(messageRequest == 4) {
-            request = new GetProductsCatalogRequest(ctrlShopCart, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new GetProductsCatalogRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
         }
         if(messageRequest == 3) {
-            request = new VerifyIfProductExistsRequest(ctrlShopCart, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new VerifyIfProductExistsRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
         }
         if(messageRequest == 5) {
-            request = new AddProductToShoppingCartRequest(ctrlShopCart, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+            request = new AddProductToShoppingCartRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
+        }
+
+        if(messageRequest == 12){
+            request = new GetQuestionnairesRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS);
         }
 
         if(request == null)
