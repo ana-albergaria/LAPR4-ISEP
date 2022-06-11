@@ -26,6 +26,10 @@ public class OrderDTO implements Serializable {
         return this.orderId;
     }
 
+    public String status(){
+        return this.status;
+    }
+
     @Override
     public String toString() {
         return "------ Order ------\n" +

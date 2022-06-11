@@ -8,4 +8,6 @@ public interface OrderRepository extends DomainRepository<Long, TheOrder> {
 
     Iterable<OrderStatus> findAllOrderStatus();
     Iterable<TheOrder> findByOrderStatus(OrderStatus orderStatus);
+
+    Iterable<TheOrder> findOpenOrders(OrderStatus orderStatus);
 }

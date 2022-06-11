@@ -4,6 +4,9 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.clientmanagement.domain.Email;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.application.ListOrderDTOService;
+import eapli.base.ordermanagement.domain.OrderStatus;
+import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.productmanagement.application.ListProductDTOService;
 import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.domain.Product;
@@ -25,6 +28,7 @@ public class OrderSrvController {
 
     private final ListProductDTOService productService = new ListProductDTOService();
     private final ListQuestionnaireDTOService questionnaireService = new ListQuestionnaireDTOService();
+    private final ListOrderDTOService orderService = new ListOrderDTOService();
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
     private final ShoppingCartRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCarts();
@@ -34,6 +38,10 @@ public class OrderSrvController {
 
     public Iterable<ProductDTO> allProducts() {
         return productService.allProducts();
+    }
+
+    public Iterable<OrderDTO> allOpenOrders(OrderStatus orderStatus){
+        return orderService.allOpenOrders(orderStatus);
     }
 
     public Iterable<QuestionnaireDTO> allSurveys(){
