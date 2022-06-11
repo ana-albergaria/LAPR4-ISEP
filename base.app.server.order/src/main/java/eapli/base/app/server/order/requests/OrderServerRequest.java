@@ -8,20 +8,20 @@ import java.io.ObjectOutputStream;
 
 public abstract class OrderServerRequest {
     protected final byte request;
-    protected final OrderSrvController ctrlShopCart;
+    protected final OrderSrvController orderSrvController;
     protected final ObjectOutputStream sOutputObject;
     protected final DataInputStream sIn;
     protected final DataOutputStream sOut;
     protected final byte[] clientMessageUS;
 
-    protected OrderServerRequest(final OrderSrvController ctrlShopCart,
+    protected OrderServerRequest(final OrderSrvController orderSrvController,
                                  final byte request,
                                  final ObjectOutputStream sOutObject,
                                  final DataInputStream sIn,
                                  final DataOutputStream sOut,
                                  final byte[] clientMessageUS) {
         this.request = request;
-        this.ctrlShopCart = ctrlShopCart;
+        this.orderSrvController = orderSrvController;
         this.sOutputObject = sOutObject;
         this.sIn = sIn;
         this.sOut = sOut;

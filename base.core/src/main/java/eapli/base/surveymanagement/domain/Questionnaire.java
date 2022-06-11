@@ -1,6 +1,7 @@
 package eapli.base.surveymanagement.domain;
 
 
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
@@ -67,6 +68,10 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     public String content(){
         return questionnaireContent;
+    }
+
+    public QuestionnaireDTO toDTO(){
+        return new QuestionnaireDTO(this.code, this.title, this.welcomeMessage, this.questionnaireContent, this.finalMessage);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class GetProductsCatalogRequest extends OrderServerRequest {
     @Override
     public void execute() {
         try {
-            Iterable<ProductDTO> productCatalog = this.ctrlShopCart.allProducts();
+            Iterable<ProductDTO> productCatalog = this.orderSrvController.allProducts();
             sOutputObject.writeObject(productCatalog);
             sOutputObject.flush();
         } catch (IOException e) {

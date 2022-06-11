@@ -3,6 +3,7 @@ package eapli.base.surveymanagement.application;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.domain.Answer;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -23,11 +24,13 @@ public class AnswerQuestionnaireController {
 
     private final AuthorizationService authz= AuthzRegistry.authorizationService();
 
+    private final AnswerQuestionnaireService service = new AnswerQuestionnaireService();
+
     private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/";
     private final String FILE_EXTENSION = ".txt";
 
-    public List<Questionnaire> allQuestionnairesInTheSystem(){
-        return (List<Questionnaire>) questionnairesRepository.findAll();
+    public Iterable<QuestionnaireDTO> allQuestionnairesInTheSystem(){
+        return service.allSurveys();
     }
 
     public Answer registerAnswer(String answerID){ //TODO put all the Answers' constructor parameter here!

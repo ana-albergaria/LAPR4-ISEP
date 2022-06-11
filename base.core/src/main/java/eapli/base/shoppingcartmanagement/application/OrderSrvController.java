@@ -12,6 +12,8 @@ import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.shoppingcartmanagement.domain.ShopCarItem;
 import eapli.base.shoppingcartmanagement.domain.ShoppingCart;
 import eapli.base.shoppingcartmanagement.repositories.ShoppingCartRepository;
+import eapli.base.surveymanagement.application.ListQuestionnaireDTOService;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.utils.MessageUtils;
 
 import java.io.DataInputStream;
@@ -21,7 +23,8 @@ import java.util.Optional;
 
 public class OrderSrvController {
 
-    private final ListProductDTOService service = new ListProductDTOService();
+    private final ListProductDTOService productService = new ListProductDTOService();
+    private final ListQuestionnaireDTOService questionnaireService = new ListQuestionnaireDTOService();
     private final ProductRepository productRepository = PersistenceContext.repositories().products();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
     private final ShoppingCartRepository shoppingCarRepository = PersistenceContext.repositories().shoppingCarts();
@@ -30,7 +33,11 @@ public class OrderSrvController {
     private Optional<ShoppingCart> shoppingCar;
 
     public Iterable<ProductDTO> allProducts() {
-        return service.allProducts();
+        return productService.allProducts();
+    }
+
+    public Iterable<QuestionnaireDTO> allSurveys(){
+        return questionnaireService.allSurveys();
     }
 
     public void verifyIfProductExists(byte[] clientMessageUS, DataInputStream sIn, DataOutputStream sOut) throws IOException {

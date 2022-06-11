@@ -1,32 +1,31 @@
 package eapli.base.app.server.order.requests;
 
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
+import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class VerifyIfProductExistsRequest extends OrderServerRequest {
+public class GetQuestionnairesRequest extends OrderServerRequest{
 
-
-    public VerifyIfProductExistsRequest(final OrderSrvController ctrl,
+    public GetQuestionnairesRequest(final OrderSrvController ctrl,
                                      final byte request,
                                      final ObjectOutputStream sOutObject,
                                      final DataInputStream sIn,
                                      final DataOutputStream sOut,
-                                        final byte[] clientMessageUS) {
+                                     final byte[] clientMessageUS) {
         super(ctrl, request, sOutObject, sIn, sOut, clientMessageUS);
     }
-
     @Override
     public void execute() {
         try {
-            this.orderSrvController.verifyIfProductExists(clientMessageUS,sIn,sOut);
+            Iterable<QuestionnaireDTO> questionnaires = this.orderSrvController.allSurveys();
+            sOutputObject.writeObject(questionnaires);
+            sOutputObject.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("[ERROR] An error because of the ObjectOutputStream has occured");
         }
-
-
     }
 }
