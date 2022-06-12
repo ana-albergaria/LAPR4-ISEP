@@ -26,17 +26,22 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         selector.show();
         final QuestionnaireDTO survey = selector.selectedElement();
 
-        String surveyString = extractSurvey(survey);
+        //verificar que o client ainda nao respondeu ao questionario
 
-        Map<String, List<String>> answers = new HashMap<>();
+        if(survey != null) { //the client doesn't want to exit
+            String surveyString = extractSurvey(survey);
 
-        boolean validAnswers = parseSurveyAnswersWithVisitor(surveyString, answers);
+            Map<String, List<String>> answers = new HashMap<>();
 
-        if(validAnswers) {
-            System.out.println("Your answers will be now saved!");
-            this.controller.sendAnswersToBeSaved(answers, survey);
-            System.out.println("Answers successfuly saved!");
+            boolean validAnswers = parseSurveyAnswersWithVisitor(surveyString, answers);
+
+            if(validAnswers) {
+                System.out.println("Your answers will be now saved!");
+                this.controller.sendAnswersToBeSaved(answers, survey);
+                System.out.println("Answers successfuly saved!");
+            }
         }
+
 
 
         return false;
