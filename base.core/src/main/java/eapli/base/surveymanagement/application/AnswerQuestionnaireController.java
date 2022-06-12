@@ -35,5 +35,9 @@ public class AnswerQuestionnaireController {
         service.sendAnswersToBeSaved(answers, survey, authz.session().get().authenticatedUser().email().toString());
     }
 
+    public boolean verifyIfClientAnswered(QuestionnaireDTO survey) {
+        return service.verifyIfClientHasAnswered(authz.session().get().authenticatedUser().email().toString(), survey);
+    }
+
 
 }

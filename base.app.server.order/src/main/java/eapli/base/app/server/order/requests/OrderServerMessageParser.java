@@ -49,6 +49,10 @@ public class OrderServerMessageParser {
             request = new SaveAnswersRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
+        if(messageRequest == 16) {
+            request = new VerifyIfClientHasAnsweredRequest(orderSrvController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+        }
+
         if(request == null)
             throw new UnsupportedOperationException("The request " + messageRequest + " is not valid - unable to parse.");
 

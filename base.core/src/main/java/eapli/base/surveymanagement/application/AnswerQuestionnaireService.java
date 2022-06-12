@@ -167,6 +167,68 @@ public class AnswerQuestionnaireService {
         }
     }
 
+    public boolean verifyIfClientHasAnswered(String email, QuestionnaireDTO survey){
+        try {
+
+            final var socket = new AnswerQuestionnaireService.ClientSocket();
+            socket.connect(getAddress(), getPort());
+
+            try {
+
+                if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
+
+
+                    String info = survey.code() + " " + email;
+
+                    //sending the code of the chosen Questionnaire
+                    //sending the client e-mail
+                    MessageUtils.writeMessageWithData((byte) 16, info, socket.sOutData);
+
+                    byte[] clientMessageUS = new byte[4];
+                    MessageUtils.readMessage(clientMessageUS, socket.sInData);
+
+                    if(clientMessageUS[1] == 16) {
+                        String hasNotAnswered = MessageUtils.getDataFromMessage(clientMessageUS,socket.sInData);
+
+                        if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                            socket.stop();
+
+                        } else {
+                            System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                        }
+                        return hasNotAnswered.equals("True");
+                    }
+
+
+                    if (MessageUtils.wantsToExit(socket.sOutData,socket.sInData)) {
+                        socket.stop();
+
+                    } else {
+                        System.out.println("==> ERROR: Erro no pacote do Servidor");
+
+                    }
+                } else {
+                    System.out.println("==> ERROR: Erro no pacote do Servidor");
+                }
+            } catch (IOException e) {
+                System.out.println("==> ERROR: Falha durante a troca de informação com o server");
+            } finally {
+                try {
+                    socket.stop();
+                } catch (IOException e) {
+                    System.out.println("==> ERROR: Falha a fechar o socket");
+                }
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Server down");
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     private int getPort() {
         // TODO read from config file
         return 10000;

@@ -44,18 +44,13 @@ public class Answer implements AggregateRoot<Long>, Serializable {
         //for ORM only
     }
 
-
-    /*@Id
-    @Column (name = "AnswerID")
-    private String answerID;
-
-    public Answer(String answerID){
-        this.answerID = answerID;
+    public Client client() {
+        return client;
     }
 
-    public Answer() {
-
-    }*/
+    public Questionnaire questionnaire() {
+        return questionnaire;
+    }
 
     @Override
     public boolean sameAs(Object other) {

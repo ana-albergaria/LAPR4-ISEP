@@ -21,10 +21,24 @@ public class AnswerQuestionnaireUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        Iterable<QuestionnaireDTO> surveys = this.controller.allQuestionnairesInTheSystem();
-        final SelectWidget<QuestionnaireDTO> selector = new SelectWidget<>("Questionnaires For Client:", surveys, new QuestionnaireDTOPrinter());
-        selector.show();
-        final QuestionnaireDTO survey = selector.selectedElement();
+        QuestionnaireDTO survey = null;
+
+        boolean hasNotAnsweredYet = false;
+
+        while(!hasNotAnsweredYet) {
+            Iterable<QuestionnaireDTO> surveys = this.controller.allQuestionnairesInTheSystem();
+            final SelectWidget<QuestionnaireDTO> selector = new SelectWidget<>("Questionnaires For Client:", surveys, new QuestionnaireDTOPrinter());
+            selector.show();
+            survey = selector.selectedElement();
+            if(survey == null)
+                break;
+            hasNotAnsweredYet = controller.verifyIfClientAnswered(survey);
+            if(!hasNotAnsweredYet)
+                System.out.println("You have already answered that survey! Please, choose another one.");
+
+        }
+
+
 
         //verificar que o client ainda nao respondeu ao questionario
 
