@@ -16,6 +16,43 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
         this.answers = answers;
     }
 
+    @Override
+    public Boolean visitSurvey(questionnaireParser.SurveyContext ctx) {
+        String title =ctx.questionnaire_id().getText() + " - " + ctx.title().getText();
+        System.out.println(title);
+
+        if(ctx.message(0)!=null){
+            String welcomeMessage = ctx.message(0).getText();
+            System.out.println(welcomeMessage);
+        }
+
+
+        visitChildren(ctx);
+
+        System.out.println(ctx.message(1).getText());
+        return true;
+    }
+
+    @Override
+    public Boolean visitSection(questionnaireParser.SectionContext ctx){
+        String title =ctx.numeric_id().getText() + ". " + ctx.title().getText();
+        System.out.println(title);
+
+        if(ctx.message()!=null){
+            String sectionMessage = ctx.message().getText();
+            System.out.println(sectionMessage);
+        }
+
+        System.out.println("Section Obligatoriness: " + ctx.obligatoriness().getText());
+
+        if(ctx.repeatability()!=null){
+            System.out.println("Repeatability: " + ctx.repeatability().getText());
+        }
+
+        visitChildren(ctx);
+        return true;
+    }
+
 
     @Override
     public Boolean visitQuestion(questionnaireParser.QuestionContext ctx) {
