@@ -33,13 +33,16 @@ public class TcpCliAGVTwin {
 
     static InetAddress serverIP;
     static SSLSocket sock;
+    private static Socket socket;
 
     static String address;
+    private AGV agv;
 
-    public TcpCliAGVTwin(String address){
+    public TcpCliAGVTwin(AGV agv, String address){
         Preconditions.nonEmpty(address, "Server IPv4/IPv6 address or DNS name is required");
+        this.agv = agv;
         this.address=address;
-        new Thread(new TcpCliAGVTwinThread(address)).start();
+        new Thread(new TcpCliAGVTwinThread(agv, address)).start();
     }
 
     public static void main(String args[]) throws IOException {
@@ -53,20 +56,20 @@ public class TcpCliAGVTwin {
             ipAddress = Console.readLine("What is the Cloud Server's IP?");
         }
 
-        /*if (args.length != 1) {
+        if (args.length != 1) {
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
-        }*/
+        }
 
         // Trust these certificates provided by servers
-        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        /*System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
         System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
 
         // Use this certificate and private key for client certificate when requested by the server
         System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
         System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
 
-        SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();*/
 
         try {
             serverIP = InetAddress.getByName(address);
@@ -76,17 +79,18 @@ public class TcpCliAGVTwin {
         }
 
         try {
-            sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
-        catch(IOException ex) {
+            socket = new Socket(serverIP, SERVER_PORT);
+            //sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
+        }catch(IOException ex) {
             System.out.println("Failed to establish TCP connection");
             System.exit(1);
         }
 
         System.out.println("Connected to: " + serverIP + ":" + 3700);
 
-        sock.startHandshake();
+        //sock.startHandshake();
 
-        new Thread(new TcpCliAGVTwinThread(ipAddress)).start();
+        new Thread(new TcpCliAGVTwinThread(new AGV(), ipAddress)).start();
 
     }
 
@@ -94,8 +98,10 @@ public class TcpCliAGVTwin {
 
 class TcpCliAGVTwinThread implements Runnable {
     private String ip;
+    private AGV agv;
 
-    public TcpCliAGVTwinThread(String ip) {
+    public TcpCliAGVTwinThread(AGV agv, String ip) {
+        this.agv = agv;
         this.ip = ip;
     }
 
@@ -136,29 +142,9 @@ class TcpCliAGVTwinThread implements Runnable {
             //Esperar a resposta do servidor a dizer que entendeu a mensagem
 
             if (testResponse[1] == 2) {
+                //AGVPosition position = agv.getPosition() >>>>> The AGV will get its position and send it to the Manager.
+                MessageUtils.writeMessageWithData((byte) 7, agv.getTaskStatus().toString(), sOutData);
 
-                //>>>>>>> FAZER US5002
-                byte[] optionMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
-                sOutData.write(optionMessage);
-                sOutData.flush();
-                //1. enviar sinal ao agv manager
-
-                //...
-                //4. fazer update dos agvs
-                List<AGV> agvsToUpdate;
-
-                ObjectInputStream sInObject = new ObjectInputStream(sock.getInputStream());
-                ObjectOutputStream sOutObject = new ObjectOutputStream(sock.getOutputStream());
-
-                agvsToUpdate = (List<AGV>) sInObject.readObject();
-                updateAgvStatus(agvsToUpdate);
-
-                //5. enviar mensagem ao agv manager server a dizer
-                //que os status foram alterados com sucesso
-                //...
-                sOutObject.writeObject(agvsToUpdate);
-                sOutObject.flush();
-                //>>>>>>> FIM DA US5002
 
                 //Mandar um pedido para o servidor -> codigo: 1 (Fim)
                 byte[] clienteMessageEnd = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
@@ -177,8 +163,6 @@ class TcpCliAGVTwinThread implements Runnable {
             }
         } catch (IOException e) {
             System.out.println("==> ERROR: Falha durante a troca de informação com o server");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         } finally {
             try {
                 sock.close();

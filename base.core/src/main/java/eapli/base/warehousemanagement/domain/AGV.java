@@ -42,7 +42,7 @@ public class AGV implements AggregateRoot<Long>, Serializable {
         this.agvDock = agvDock;
     }
 
-    protected AGV(){
+    public AGV(){
 
     }
 

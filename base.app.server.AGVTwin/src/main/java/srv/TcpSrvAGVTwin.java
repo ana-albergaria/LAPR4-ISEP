@@ -23,14 +23,16 @@ public class TcpSrvAGVTwin {
     private String ipAddress;
     private Integer port;
     private InetAddress address;
+    private AGV agv;
     private Socket socket;
 
-    public TcpSrvAGVTwin(String ipAddress, int port) throws IOException {
+    public TcpSrvAGVTwin(AGV agv, String ipAddress, int port) throws IOException {
+        this.agv = agv;
         this.ipAddress = ipAddress;
         this.port = port;
         this.address = InetAddress.getByName(this.ipAddress);
         this.socket = new Socket(this.address, this.port);
-        new Thread(new TcpSrvAGVTwinThread(socket)).start();
+        new Thread(new TcpSrvAGVTwinThread(agv, socket)).start();
     }
 
     public static void main(String args[]) throws Exception {
@@ -47,22 +49,22 @@ public class TcpSrvAGVTwin {
 
         while(true){
             cliSock=sock.accept();
-            new Thread(new TcpSrvAGVTwinThread(cliSock)).start();
+            new Thread(new TcpSrvAGVTwinThread(new AGV(), cliSock)).start();
         }
     }
 }
-
-
 
 class TcpSrvAGVTwinThread implements Runnable {
     private Socket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
+    private AGV agv;
 
     //developing the input communication module of the AGV digital twin
     //to accept requests from the "AGVManager"
 
-    public TcpSrvAGVTwinThread(Socket cli_s){
+    public TcpSrvAGVTwinThread(AGV agv, Socket cli_s){
+        this.agv = agv;
         s=cli_s;
     }
 
@@ -91,10 +93,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
                 MessageUtils.writeMessage((byte) 2, sOut);
 
-                byte[] clientMessageUS = new byte[6];
-                MessageUtils.readMessage(clientMessageUS, sIn);
-
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
+                TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
 
                 // >>>>>>> RECEBER PEDIDOS AQUI <<<<<<<
 
