@@ -1,16 +1,11 @@
 package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
-import eapli.base.AppSettings;
-import eapli.base.Application;
-import eapli.base.dashboard.application.DashboardController;
-import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
 
 
 public class DashboardUI extends AbstractUI {

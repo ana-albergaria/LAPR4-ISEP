@@ -1,4 +1,4 @@
-package eapli.base.dashboard.domain;
+package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
 import java.io.*;
 

@@ -1,23 +1,19 @@
-package eapli.base.dashboard.domain;
+package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
-import eapli.base.dashboard.application.DashboardController;
 import eapli.base.dashboard.application.GetPositions;
 import eapli.base.utils.CreateWarehouseMatrix;
 import eapli.base.warehousemanagement.domain.*;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class HTTPServerAGVS extends Thread{
     private static String ipAddress;
     private static final GetPositions getPositions = new GetPositions();
-    static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/dashboard/domain/www";
+    static private final String BASE_FOLDER = "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/warehouseplant/dashboard/www";
     static private ServerSocket sock;
     static private SSLServerSocket socket;
     static  private Iterable<AGVPosition> positions;
@@ -42,7 +38,7 @@ public class HTTPServerAGVS extends Thread{
         //Socket cliSock;
         SSLSocket cliSock1;
 
-        System.setProperty("javax.net.ssl.keyStore", "base.core/src/main/java/eapli/base/dashboard/domain/server.jks");
+        System.setProperty("javax.net.ssl.keyStore", "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/warehouseplant/dashboard/server.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");
 
         try {
