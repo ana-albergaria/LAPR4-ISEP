@@ -3,7 +3,6 @@ Hello, Welcome to the Cosmetics Questionnaire
 
 1. About You
 Section Obligatoriness: mandatory
-Repeatability: 3
 1. Where are you from?(mandatory)
 Type: free text
 

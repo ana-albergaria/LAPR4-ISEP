@@ -49,7 +49,7 @@ public class SurveyAnswerMain {
         answers.add("1");
         map.put("9", answers);*/
 
-        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/teste.txt", map);
+        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/Drinks Questionnaire.txt", map);
     }
 
     public static boolean parseWithVisitor(String filePath, Map<String, List<String>> answers) {

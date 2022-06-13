@@ -3,7 +3,6 @@ HIG21-22 Higiene Questionnaire
 1. About you
 Welcome Message for the higiene questionnaire
 Section Obligatoriness: optional
-Repeatability: 2
 1. What is your gender?(optional)
 Type: single choice
 1)Male

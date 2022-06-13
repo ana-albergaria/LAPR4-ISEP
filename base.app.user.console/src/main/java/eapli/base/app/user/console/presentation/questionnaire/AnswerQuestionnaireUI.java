@@ -2,6 +2,8 @@ package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
 import eapli.base.surveymanagement.antlr.SurveyVisitorWithAnswer;
+import eapli.base.surveymanagement.antlr.questionnaireLexer;
+import eapli.base.surveymanagement.antlr.questionnaireParser;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.presentation.console.AbstractUI;
@@ -37,10 +39,10 @@ public class AnswerQuestionnaireUI extends AbstractUI {
 
 
 
-        //verificar que o client ainda nao respondeu ao questionario
 
         if(survey != null) { //the client doesn't want to exit
             String surveyString = extractSurvey(survey);
+            System.out.println(surveyString);
 
             Map<String, List<String>> answers = new HashMap<>();
 

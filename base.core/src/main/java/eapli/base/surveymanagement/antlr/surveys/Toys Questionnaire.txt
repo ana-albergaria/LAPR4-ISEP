@@ -2,7 +2,6 @@ TOYS21-22 Toys Questionnaire
 Hello, welcome to the Toys Questionnaire
 1. About You
 Section Obligatoriness: mandatory
-Repeatability: 3
 1. Where are you from?(mandatory)
 Type: free text
 

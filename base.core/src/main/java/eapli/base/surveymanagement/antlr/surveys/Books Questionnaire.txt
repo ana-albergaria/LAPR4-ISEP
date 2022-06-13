@@ -2,7 +2,6 @@ BOOKS21-22 Books Questionnaire
 Hello, welcome to the Books Questionnaire
 1. About You
 Section Obligatoriness: mandatory
-Repeatability: 3
 1. Where are you from?(mandatory)
 Type: free text
 
