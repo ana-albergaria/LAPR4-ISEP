@@ -82,6 +82,9 @@ deactivate ORDER_SERVER
 deactivate SERVICE
 deactivate CONTROLLER
 end
+UI -> UI : validAnswers = parseSurveyAnswersWithVisitor(surveyString, answers)
+activate UI
+deactivate UI
 
 loop enquanto o questionário tiver questões
 UI --> C : apresenta a questão
@@ -89,6 +92,9 @@ deactivate UI
 C -> UI : responde à questão
 activate UI
 end
+
+
+
 
 UI -> CONTROLLER : sendAnswersToBeSaved(answers, surveyDTO)
 activate CONTROLLER
@@ -139,6 +145,7 @@ ORDER_REQUEST --> ORDER_SERVER : success
 ORDER_SERVER --> SERVICE : success
 SERVICE --> CONTROLLER : success
 CONTROLLER --> UI : success
+
 
 deactivate ORDER_CONTROLLER
 deactivate ORDER_REQUEST
