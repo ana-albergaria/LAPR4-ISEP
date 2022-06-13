@@ -18,7 +18,6 @@ public class QuestionnaireBootstrapper implements Action {
     public boolean execute() {
         String booksContent = "1. About You\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "Repeatability: 3\n" +
                 "1. Where are you from?(mandatory)\n" +
                 "Type: free text\n" +
                 "\n" +
@@ -36,7 +35,6 @@ public class QuestionnaireBootstrapper implements Action {
 
         String drinksContent = "1. About you\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "Repeatability: 3\n" +
                 "1. How old are you?(mandatory)\n" +
                 "Type: numeric\n" +
                 "\n" +
@@ -63,7 +61,6 @@ public class QuestionnaireBootstrapper implements Action {
 
         String sportsContent = "1. About you\n" +
                 "Section Obligatoriness: mandatory\n" +
-                "Repeatability: 3\n" +
                 "1. How old are you?(mandatory)\n" +
                 "Type: numeric\n" +
                 "\n" +
