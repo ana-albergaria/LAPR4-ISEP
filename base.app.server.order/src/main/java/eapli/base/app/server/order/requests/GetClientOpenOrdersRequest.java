@@ -23,8 +23,8 @@ public class GetClientOpenOrdersRequest extends OrderServerRequest{
     public void execute() {
         try {
             OrderStatus status = OrderStatus.valueOf(OrderStatus.Status.DELIVERED_BY_CARRIER);
-            Iterable<OrderDTO> productCatalog = this.orderSrvController.allOpenOrders(status);
-            sOutputObject.writeObject(productCatalog);
+            /*Iterable<OrderDTO> productCatalog = this.orderSrvController.allOpenOrders(status);
+            sOutputObject.writeObject(productCatalog);*/
             sOutputObject.flush();
         } catch (IOException e) {
             System.out.println("[ERROR] An error because of the ObjectOutputStream has occured");

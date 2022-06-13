@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.clientmanagement.domain.Client;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.repositories.OrderRepository;
@@ -22,7 +23,7 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<TheOrder, 
     }
 
     @Override
-    public Iterable<TheOrder> findOpenOrders(OrderStatus orderStatus){
-        return match(e -> !e.getOrderStatus().equals(orderStatus));
+    public Iterable<TheOrder> findClientOpenOrders(Client client, OrderStatus orderStatus){
+        return match(e -> !e.getOrderStatus().equals(orderStatus) && e.ofClient().equals(client));
     }
 }

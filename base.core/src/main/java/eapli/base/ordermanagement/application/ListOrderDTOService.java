@@ -1,16 +1,12 @@
 package eapli.base.ordermanagement.application;
 
+import eapli.base.clientmanagement.domain.Client;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.ordermanagement.repositories.OrderRepository;
-import eapli.base.productmanagement.application.ListProductDTOService;
-import eapli.base.productmanagement.domain.Product;
-import eapli.base.productmanagement.dto.ProductDTO;
-import eapli.base.productmanagement.repositories.ProductRepository;
 
-import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,8 +32,8 @@ public class ListOrderDTOService {
         return ret;
     }
 
-    public Iterable<OrderDTO> allOpenOrders(OrderStatus orderStatus){
-        final Iterable<TheOrder> openOrders = orderRepository.findOpenOrders(orderStatus);
+    public Iterable<OrderDTO> allOpenOrders(Client client, OrderStatus orderStatus){
+        final Iterable<TheOrder> openOrders = orderRepository.findClientOpenOrders(client, orderStatus);
 
         final List<OrderDTO> ret = new LinkedList<>();
 
