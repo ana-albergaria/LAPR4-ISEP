@@ -1,6 +1,5 @@
 package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
-import eapli.base.dashboard.application.GetPositions;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

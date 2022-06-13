@@ -1,10 +1,13 @@
-package eapli.base.dashboard.application;
+package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
 import eapli.base.AppSettings;
 import eapli.base.Application;
 import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.domain.*;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.awt.font.FontRenderContext;
 import java.io.*;
 import java.net.InetAddress;
@@ -15,13 +18,27 @@ import java.util.List;
 
 public class GetPositions {
 
+    static final String TRUSTED_STORE= "certificates/clienBackoffice_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
     private static class ClientSocket {
         private Socket sock;
+        private SSLSocket socket;
         private InetAddress serverIP;
         private DataOutputStream sOutData;
         private DataInputStream sInData;
 
         public void connect(final String address, final int port) throws IOException {
+
+            // Trust these certificates provided by servers
+            /*System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+            // Use this certificate and private key for client certificate when requested by the server
+            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();*/
 
             try {
                 serverIP = InetAddress.getByName(address);
@@ -31,11 +48,15 @@ public class GetPositions {
             }
 
             try {
-                sock = new Socket(serverIP, port); }
+                sock = new Socket(serverIP, port);
+                //socket = (SSLSocket) sf.createSocket(serverIP, port);
+            }
             catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
             }
+
+            //socket.startHandshake();
 
             System.out.println("Connected to: " + serverIP + ":" + port);
 
@@ -45,6 +66,7 @@ public class GetPositions {
 
         public void stop() throws IOException {
             sock.close();
+            //socket.close();
         }
 
     }
@@ -59,39 +81,45 @@ public class GetPositions {
             socket.connect(ipAddress, getPort());
 
             try {
-                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
-                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+                //DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
+                //DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
 
                 byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
-                sOut.write(testMessage);
-                sOut.flush();
+                socket.sOutData.write(testMessage);
+                socket.sOutData.flush();
 
-                byte[] testResponse = sIn.readNBytes(4);
+                byte[] testResponse = socket.sInData.readNBytes(4);
                 if(testResponse[1]==2){
                     byte[] optionMessage = {(byte) 0, (byte) option, (byte) 0, (byte) 0};
-                    sOut.write(optionMessage);
-                    sOut.flush();
+                    socket.sOutData.write(optionMessage);
+                    socket.sOutData.flush();
 
-                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    //ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
 
-                    positions = (List<AGVPosition>) sInObject.readObject();
+                    //positions = (List<AGVPosition>) sInObject.readObject();
 
-                    for(AGVPosition pos: positions){
+                    /*for(AGVPosition pos: positions){
                         System.out.println(pos.toString());
 
-                    }
+                    }*/
+
+                    byte[] statusMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
+
+                    String allStatus = MessageUtils.getDataFromMessage(statusMessage, socket.sInData);
+
+                    System.out.println(allStatus);
 
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
-                    sOut.write(endMessage);
-                    sOut.flush();
-                    byte[] endResponse = sIn.readNBytes(4);
+                    socket.sOutData.write(endMessage);
+                    socket.sOutData.flush();
+                    byte[] endResponse = socket.sInData.readNBytes(4);
                     if (endResponse[1] == 2) {
                         socket.stop();
                     }
                 } else {
                     throw new IllegalArgumentException("Test message wasn't successful.");
                 }
-            } catch(IOException | ClassNotFoundException ex) {
+            } catch(IOException /*| ClassNotFoundException*/ ex) {
                 System.out.println("Error accessing socket's streams. Aborted.");
                 try { socket.stop(); } catch(IOException ex2) { System.out.println("Error closing socket."); }
                 System.out.println("Application aborted.");

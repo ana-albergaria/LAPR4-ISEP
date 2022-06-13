@@ -54,8 +54,8 @@ public class OrderSrvController {
         return productService.allProducts();
     }
 
-    public Iterable<OrderDTO> allOpenOrders(OrderStatus orderStatus){
-        return orderService.allOpenOrders(orderStatus);
+    public Iterable<OrderDTO> allOpenOrders(Client client, OrderStatus orderStatus){
+        return orderService.allOpenOrders(client, orderStatus);
     }
 
     //====================================US 3501 =========================================================//

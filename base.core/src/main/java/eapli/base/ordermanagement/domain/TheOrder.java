@@ -201,6 +201,9 @@ public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<Orde
     public Long getOrderId() {
         return orderId;
     }
+    public Client ofClient(){
+        return this.client;
+    }
 
     public void setStatus(OrderStatus status) {
         this.status = status;

@@ -1,6 +1,5 @@
 package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
-import eapli.base.dashboard.application.GetPositions;
 import eapli.base.utils.CreateWarehouseMatrix;
 import eapli.base.warehousemanagement.domain.*;
 
