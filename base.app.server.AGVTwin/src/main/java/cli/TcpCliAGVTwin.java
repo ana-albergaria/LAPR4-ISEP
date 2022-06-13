@@ -28,8 +28,8 @@ public class TcpCliAGVTwin {
     //server: waiting for request + send response
 
     static final int SERVER_PORT=3700;
-    static final String KEYSTORE_PASS="Password1";
-    private static final String TRUSTED_STORE = "base.app.server.AGVTwin/src/main/resources/AgvDigitalTwin.jks";
+    static final String KEYSTORE_PASS="forgotten";
+    private static final String TRUSTED_STORE = System.getProperty("user.dir") + "/certificates/client1_J.jks";
 
     static InetAddress serverIP;
     static SSLSocket sock;
