@@ -74,7 +74,7 @@ public class ViewClientOpenOrdersService {
 
 
 
-    public Iterable<OrderDTO> allOpenOrders(){
+    public Iterable<OrderDTO> allOpenOrders(String email){
         Iterable<OrderDTO> openOrders = null;
         try {
 
@@ -85,7 +85,9 @@ public class ViewClientOpenOrdersService {
 
                 if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                    MessageUtils.writeMessage((byte) 13, socket.sOutData);
+
+                    MessageUtils.writeMessageWithData((byte) 13, email, socket.sOutData);
+                    //MessageUtils.writeMessage((byte) 13, socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());

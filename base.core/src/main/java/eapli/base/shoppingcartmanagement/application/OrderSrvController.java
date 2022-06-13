@@ -54,7 +54,8 @@ public class OrderSrvController {
         return productService.allProducts();
     }
 
-    public Iterable<OrderDTO> allOpenOrders(Client client, OrderStatus orderStatus){
+    public Iterable<OrderDTO> allOpenOrders(String clientEmail, OrderStatus orderStatus){
+        Client client = clientRepository.findByEmail(Email.valueOf(clientEmail)).get();
         return orderService.allOpenOrders(client, orderStatus);
     }
 
