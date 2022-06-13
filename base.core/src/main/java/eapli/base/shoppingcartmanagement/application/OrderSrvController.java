@@ -75,7 +75,7 @@ public class OrderSrvController {
         }
     }
 
-    //ESTOU AQUI - FALTA RECEBER O QUESTIONNAIREDTO surveyDTO como parametro e guardar a survey escolhida
+    //APAGAR - FALTA RECEBER O QUESTIONNAIREDTO surveyDTO como parametro e guardar a survey escolhida
     public boolean verifyIfClientAnswered(String email, String surveyCode) {
         survey = surveyRepository.ofIdentity(surveyCode).get();
         clientSurvey = clientRepository.findByEmail(Email.valueOf(email)).get();
