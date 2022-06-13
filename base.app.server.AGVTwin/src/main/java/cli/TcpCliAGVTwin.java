@@ -29,7 +29,7 @@ public class TcpCliAGVTwin {
 
     static final int SERVER_PORT=3700;
     static final String KEYSTORE_PASS="forgotten";
-    private static final String TRUSTED_STORE = System.getProperty("user.dir") + "/certificates/client1_J.jks";
+    private static final String TRUSTED_STORE = System.getProperty("user.dir") + "/certificates/clientTwin_J.jks";
 
     static InetAddress serverIP;
     static SSLSocket sock;
@@ -53,10 +53,10 @@ public class TcpCliAGVTwin {
             ipAddress = Console.readLine("What is the Cloud Server's IP?");
         }
 
-        if (args.length != 1) {
+        /*if (args.length != 1) {
             System.out.println("Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
-        }
+        }*/
 
         // Trust these certificates provided by servers
         System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);

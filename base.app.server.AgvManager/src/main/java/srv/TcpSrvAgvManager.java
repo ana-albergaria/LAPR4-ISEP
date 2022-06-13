@@ -24,7 +24,7 @@ import java.util.*;
 class TcpSrvAgvManager {
 
     static final int SERVER_PORT=3700;
-    static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/server_J.jks";
+    static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/serverAgvManager_J.jks";
     static final String KEYSTORE_PASS="forgotten";
 
     public static void main(String args[]) throws Exception {

@@ -1,10 +1,12 @@
-package eapli.base.dashboard.application;
+package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
 import eapli.base.AppSettings;
 import eapli.base.Application;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.domain.*;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.awt.font.FontRenderContext;
 import java.io.*;
 import java.net.InetAddress;
@@ -15,13 +17,27 @@ import java.util.List;
 
 public class GetPositions {
 
+    static final String TRUSTED_STORE= "certificates/clienBackoffice_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
     private static class ClientSocket {
         private Socket sock;
+        private SSLSocket socket;
         private InetAddress serverIP;
         private DataOutputStream sOutData;
         private DataInputStream sInData;
 
         public void connect(final String address, final int port) throws IOException {
+
+            // Trust these certificates provided by servers
+            System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+            // Use this certificate and private key for client certificate when requested by the server
+            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
             try {
                 serverIP = InetAddress.getByName(address);
@@ -31,7 +47,9 @@ public class GetPositions {
             }
 
             try {
-                sock = new Socket(serverIP, port); }
+                //sock = new Socket(serverIP, port);
+                socket = (SSLSocket) sf.createSocket(serverIP, port);
+            }
             catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
@@ -39,12 +57,15 @@ public class GetPositions {
 
             System.out.println("Connected to: " + serverIP + ":" + port);
 
-            sOutData = new DataOutputStream(sock.getOutputStream());
-            sInData = new DataInputStream(sock.getInputStream());
+            socket.startHandshake();
+
+            sOutData = new DataOutputStream(socket.getOutputStream());
+            sInData = new DataInputStream(socket.getInputStream());
         }
 
         public void stop() throws IOException {
-            sock.close();
+            //sock.close();
+            socket.close();
         }
 
     }
