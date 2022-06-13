@@ -115,7 +115,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     //FALTA ACRESCENTAR RETURN
     @Override
     public ProductCategoryRepository productCategories() {
-        return null;
+        return new InMemoryProductCategoryRepository();
+    }
+
+    @Override
+    public BinRepository bins(){
+        return new InMemoryBinRepository();
     }
 
     @Override

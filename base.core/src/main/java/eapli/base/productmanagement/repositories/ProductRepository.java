@@ -21,4 +21,5 @@ public interface ProductRepository extends DomainRepository<Code, Product> {
     Iterable<Product> findByExtendedDescription(ExtendedDescription description);
 
     Iterable<Product> findByCategory(ProductCategory category);
+
 }

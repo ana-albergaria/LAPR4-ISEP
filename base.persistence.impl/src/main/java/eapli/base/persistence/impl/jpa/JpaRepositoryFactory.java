@@ -109,6 +109,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaProductCategoryRepository();
     }
 
+    @Override
+    public BinRepository bins() {
+        return new JpaBinRepository();
+    }
+
     /* Acrescentei - Dúvida */
     @Override
     public OrderRepository orders() {

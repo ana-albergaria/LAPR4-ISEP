@@ -1,5 +1,6 @@
 package eapli.base.warehousemanagement.domain;
 
+import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
@@ -22,21 +23,32 @@ public class Bin implements AggregateRoot<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long binID;
 
+    @Column(name = "volume_in_cubic_meters")
     private Double size;
 
-    private Long aisleID;
+    @OneToOne
+    @JoinColumn(name = "aisle_id")
+    private Aisle aisle;
 
-    private Long rowID;
+    @OneToOne
+    @JoinColumn(name = "row_id")
+    private TheRow row;
 
-    private Long shelfID;
+    @OneToOne
+    @JoinColumn(name = "shelf_id")
+    private Shelf shelf;
 
-    public Bin(final Long binID, final Double size, final Long aisleID, final Long rowID, final Long shelfID){
-        Preconditions.noneNull(binID,size,aisleID,rowID,shelfID);
-        this.binID=binID;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    public Bin(final Double size, final Aisle aisle, final TheRow row, final Shelf shelf, final Product product){
+        Preconditions.noneNull(size,aisle,row,shelf,product);
         this.size=size;
-        this.aisleID=aisleID;
-        this.rowID=rowID;
-        this.shelfID=shelfID;
+        this.aisle=aisle;
+        this.row=row;
+        this.shelf=shelf;
+        this.product=product;
     }
 
     protected Bin(){}
@@ -45,16 +57,20 @@ public class Bin implements AggregateRoot<Long>, Serializable {
         return size;
     }
 
-    public Long aisleID() {
-        return aisleID;
+    public Aisle aisle() {
+        return aisle;
     }
 
-    public Long rowID() {
-        return rowID;
+    public TheRow row() {
+        return row;
     }
 
-    public Long shelfID() {
-        return shelfID;
+    public Shelf shelf() {
+        return shelf;
+    }
+
+    public Product product() {
+        return product;
     }
 
     @Override

@@ -101,6 +101,8 @@ public interface RepositoryFactory {
 
     ProductCategoryRepository productCategories();
 
+    BinRepository bins();
+
     OrderRepository orders();
     AisleRepository aisles();
     RowRepository rows();

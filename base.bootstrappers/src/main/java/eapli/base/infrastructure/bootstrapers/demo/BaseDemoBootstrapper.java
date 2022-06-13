@@ -60,6 +60,7 @@ public class BaseDemoBootstrapper implements Action {
                 new AGVsBootstrapper(),
                 new OrdersBootstrapper(),
                 new QuestionnaireBootstrapper(),
+                //new BinsBootstrapper(),
         };
 
         authenticateForBootstrapping();
