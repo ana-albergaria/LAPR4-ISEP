@@ -36,6 +36,10 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private String finalMessage;
 
+    //list<Client> targetAudience
+    //set<Rule> rules
+    //createdOn
+    //endDate -> opcional
 
     public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
         Preconditions.noneNull(code, title, questionnaireContent, finalMessage);
