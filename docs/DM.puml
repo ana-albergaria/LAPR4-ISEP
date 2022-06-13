@@ -381,7 +381,7 @@ Order --> "0..1" InteractionDate
 Order --> "0..1" AdditionalComment
 
 Client --> "1..*" Address : has
-Client --> "*" Survey: answers
+Client -- "*" Survey: answers
 Client --> "0..1" BirthDate
 Client --> "0..1" Gender
 

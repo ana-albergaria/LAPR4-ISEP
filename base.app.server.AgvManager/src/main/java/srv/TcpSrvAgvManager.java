@@ -5,7 +5,9 @@ import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
+import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.application.AGVManagerServerController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.TaskStatus;
@@ -13,6 +15,8 @@ import eapli.base.warehousemanagement.repositories.AGVRepository;
 import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
 import eapli.base.warehousemanagement.domain.*;
 import eapli.base.warehousemanagement.repositories.*;
+import requests.AGVManagerServerMessageParser;
+import requests.AGVManagerServerRequest;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -22,7 +26,7 @@ import java.security.cert.CertificateException;
 import java.util.*;
 
 class TcpSrvAgvManager {
-
+    static ServerSocket sock;
     static final int SERVER_PORT=3700;
     static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/serverAgvManager_J.jks";
     static final String KEYSTORE_PASS="forgotten";
@@ -66,9 +70,11 @@ class TcpSrvAgvManager {
         //======= FIM DA US4002 =======
         //=============================
 
-        SSLServerSocket sock = null;
-        Socket cliSock;
+        //SSLServerSocket sock = null;
+        /*Socket cliSock;
+        ServerSocket sock = new ServerSocket(3700);
 
+        /*
         // Trust these certificates provided by authorized clients
         System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
         System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
@@ -80,8 +86,9 @@ class TcpSrvAgvManager {
         SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
         try {
-            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
-            sock.setNeedClientAuth(true);
+            cliSock = sock.accept();
+            //sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            //sock.setNeedClientAuth(true);
             System.out.println("Server connection opened!");
         }
         catch(IOException ex) {
@@ -89,6 +96,22 @@ class TcpSrvAgvManager {
             System.exit(1);
         }
 
+
+        while(true){
+            cliSock=sock.accept();
+            new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
+        }*/
+
+        Socket cliSock;
+
+        try{
+            sock = new ServerSocket(3700);
+            System.out.println("Server connection opened!");
+        }
+        catch(IOException ex){
+            System.out.println("Failed to open server socket");
+            System.exit(1);
+        }
 
         while(true){
             cliSock=sock.accept();
@@ -103,8 +126,8 @@ class TcpSrvAgvManagerThread implements Runnable {
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
-    private final String AGV_DIGITAL_TWIN_SERVER_ADDRESS = "10.9.22.167";
-    private final Integer AGV_DIGITAL_TWIN_SERVER_PORT = 2400;
+    private final AGVManagerServerController ctrl = new AGVManagerServerController();
+    private final AGVManagerServerMessageParser parser = new AGVManagerServerMessageParser(ctrl);
 
     public TcpSrvAgvManagerThread(Socket cli_s){
         s=cli_s;
@@ -120,7 +143,6 @@ class TcpSrvAgvManagerThread implements Runnable {
 
     public void run() {
         InetAddress clientIP;
-        List<AGV> updatedAGVList;
 
         try{
 
@@ -130,6 +152,8 @@ class TcpSrvAgvManagerThread implements Runnable {
 
             sOut = new DataOutputStream(this.s.getOutputStream());
             sIn = new DataInputStream(this.s.getInputStream());
+            ObjectOutputStream sOutputObject = null; //initializing with null, because not all requests require this
+            ObjectInputStream sInputObject = null;
 
             byte[] clientMessage = sIn.readNBytes(4);
 
@@ -144,7 +168,15 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
-                if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
+                if(clientMessageUS[1] == 7){
+                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                }
+
+                final AGVManagerServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
+                request.execute();
+
+                /*if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
                     Iterable<AGVPosition> agvPositionIterable = agvPositionRepository.findAll();
                     List<AGVPosition> list = (List<AGVPosition>) agvPositionIterable;
@@ -214,7 +246,7 @@ class TcpSrvAgvManagerThread implements Runnable {
 
                     sendAislesList.writeObject(aisles);
                     sendAislesList.flush();
-                }
+                }*/
 
                 byte[] clientMessageEnd = sIn.readNBytes(4);
                 if (clientMessageEnd[1] == 1) {
@@ -232,7 +264,7 @@ class TcpSrvAgvManagerThread implements Runnable {
                 System.out.println("[ERROR] Client's TCP is not valid.");
             }
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {

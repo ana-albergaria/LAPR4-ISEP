@@ -1,5 +1,6 @@
 package eapli.base.persistence.impl.jpa;
 
+import eapli.base.clientmanagement.domain.Client;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.repositories.OrderRepository;
@@ -46,9 +47,10 @@ public class JpaOrderRepository extends BaseJpaRepositoryBase<TheOrder, Long, Lo
     }
 
     @Override
-    public Iterable<TheOrder> findOpenOrders(OrderStatus orderStatus){
+    public Iterable<TheOrder> findClientOpenOrders(Client client, OrderStatus orderStatus){
         final Map<String, Object> params = new HashMap<>();
         params.put("orderStatus", orderStatus);
-        return match("e.status!=:orderStatus", params);
+        params.put("client", client);
+        return match("e.status!=:orderStatus AND e.client=:client", params);
     }
 }
