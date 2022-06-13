@@ -6,7 +6,6 @@ Thank you very much for your time and support.
 
 1. About You
 Section Obligatoriness: mandatory
-Repeatability: 2
 1. What is your gender?(optional)
 Type: single choice with input
 1)Male
@@ -26,14 +25,18 @@ Type: single choice
 3. What country do you live in?(mandatory)
 Type: free text
 
+4. How many products do you buy on average?(mandatory)
+Type: numeric
+
 
 2. Product Feedback
 This is section 2 with questions regarding your opinion on our products.
 Section Obligatoriness: mandatory
-4. How often do you use our products?(mandatory)
+Repeatability: Q4
+5. How often do you use our products?(mandatory)
 Type: numeric
 
-5. Which features are most valuable to you in a product?(mandatory)
+6. Which features are most valuable to you in a product?(mandatory)
 Type: multiple choice with input
 1)Efficiency
 2)Stock availability
@@ -42,7 +45,7 @@ Type: multiple choice with input
 5)Brand
 6)Other:
 
-6. How would you compare our products to our competitors?(mandatory)
+7. How would you compare our products to our competitors?(mandatory)
 Type: scaling option
 Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
 1)Our products have a higher quality than the ones from our competitors.
@@ -50,10 +53,10 @@ Scale: Strongly Agree, Agree, Neutral, Disagree, Strongly disagree
 3)Our products have more availability than the ones from our competitors.
 4)You prefer to buy products from us.
 
-7. What important features are we missing?(mandatory)
+8. What important features are we missing?(mandatory)
 Type: free text
 
-8. How would you rate the value for money?(mandatory)
+9. How would you rate the value for money?(mandatory)
 Type: single choice
 1)5 stars
 2)4 stars
@@ -62,14 +65,14 @@ Type: single choice
 5)1 star
 6)0 stars
 
-9. When do you feel the need to buy our products?(mandatory)
+10. When do you feel the need to buy our products?(mandatory)
 Type: multiple choice (select only 2)
 1)When I have no more stock of them
 2)When they are in discount
 3)When they are cheaper than our competitors
 4)When I feel like it
 
-10. Which categories are you the most fond of?(mandatory)
+11. Which categories are you the most fond of?(mandatory)
 Sort the following categories according to your taste
 Type: sorting option
 1)Skin care

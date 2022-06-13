@@ -1,4 +1,4 @@
-// Generated from D:/Faculdade/ano 2/semestre2/LAPR4/projeto_lapr4/base.core/src/main/java/eapli/base/surveymanagement/antlr\questionnaire.g4 by ANTLR 4.10.1
+// Generated from C:/Users/Ana Albergaria/Desktop/lei21_22_s4_2df_01/base.core/src/main/java/eapli/base/surveymanagement/antlr\questionnaire.g4 by ANTLR 4.10.1
 package eapli.base.surveymanagement.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -44,7 +44,7 @@ public class questionnaireParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'Section Obligatoriness: '", "'Repeatability: '", "'Type: '", 
+			null, "'Section Obligatoriness: '", "'Repeatability: Q'", "'Type: '", 
 			"'Scale: '", "'select only '", "'Decimal numbers are allowed!'", "'single choice with input'", 
 			"'multiple choice with input'", "'free text'", "'numeric'", "'single choice'", 
 			"'multiple choice'", "'sorting option'", "'scaling option'", "'mandatory'", 

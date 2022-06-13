@@ -10,8 +10,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
     private final Scanner scan = new Scanner(System.in);
     private boolean isMandatory = false;
 
-    /* ANA: voltei a colocar o construtor a receber um map vazio,
-    pois lembrei me que é necessario fazer um request à order server para guardar as answers*/
+
     public SurveyVisitorWithAnswer(Map<String, List<String>> answers) {
         this.answers = answers;
     }
@@ -26,8 +25,44 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             System.out.println(welcomeMessage);
         }
 
+        for (int i = 0; i < ctx.section().size(); i++) {
+            visit(ctx.section(i));
 
-        visitChildren(ctx);
+            int repeatQuestionAmount = 0;
+
+            if(ctx.section(i).repeatability()!=null){
+                System.out.println("Repeatability: " + ctx.section(i).repeatability().getText());
+                String questionID = ctx.section(i).repeatability().getText();
+                List<String> listAnswers = answers.get(questionID);
+                for (Map.Entry<String, List<String>> entry : answers.entrySet()) {
+                    if(questionID.equals(entry.getKey())) {
+
+                        //only loops through the previous sections of i
+                        for (int k = 0; k < i; k++) {
+                            if(ctx.section(k).question(Integer.parseInt(questionID)-1).numeric() != null) {
+                                String answer = listAnswers.get(0);
+                                repeatQuestionAmount = Integer.parseInt(answer);
+                            } else if(ctx.section(k).question(Integer.parseInt(questionID)-1).multiple_choice() != null || ctx.section(i).question(Integer.parseInt(questionID)).multiple_choice_with_input() != null) {
+                                repeatQuestionAmount = listAnswers.size();
+                            }
+                        }
+
+                    }
+                }
+
+                //decidir com Diogo: decide if we will repeat each quetion N times or repeat all question N times
+                for (int j = 0; j < repeatQuestionAmount; j++) {
+                    visitChildren(ctx.section(i));
+                }
+
+
+
+
+            } else {
+                visitChildren(ctx.section(i));
+            }
+        }
+
 
         System.out.println(ctx.message(1).getText());
         return true;
@@ -45,11 +80,6 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
         System.out.println("Section Obligatoriness: " + ctx.obligatoriness().getText());
 
-        if(ctx.repeatability()!=null){
-            System.out.println("Repeatability: " + ctx.repeatability().getText());
-        }
-
-        visitChildren(ctx);
         return true;
     }
 

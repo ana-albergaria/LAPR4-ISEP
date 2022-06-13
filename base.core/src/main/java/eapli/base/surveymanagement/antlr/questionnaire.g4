@@ -28,7 +28,7 @@ questionnaire_id : alfanumerico+ ;
 
 /********* SECTION *********/
 
-section : numeric_id title NEWLINE message? 'Section Obligatoriness: ' obligatoriness (NEWLINE 'Repeatability: ' repeatability)? NEWLINE (question)+;
+section : numeric_id title NEWLINE message? 'Section Obligatoriness: ' obligatoriness (NEWLINE 'Repeatability: Q' repeatability)? NEWLINE (question)+;
 
 numeric_id : (DIGITO)+ ;
 
