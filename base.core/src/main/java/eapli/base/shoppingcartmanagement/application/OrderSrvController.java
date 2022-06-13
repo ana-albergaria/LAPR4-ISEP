@@ -26,6 +26,7 @@ import eapli.base.utils.MessageUtils;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,7 +46,9 @@ public class OrderSrvController {
     //for US3501
     private final SurveyQuestionnareRepository surveyRepository = PersistenceContext.repositories().questionnaries();
     private final AnswerQuestionnaireRepository answerRepository = PersistenceContext.repositories().answers();
-
+    private Client clientSurvey;
+    private Questionnaire survey;
+    //end US3501
 
     public Iterable<ProductDTO> allProducts() {
         return productService.allProducts();
@@ -55,6 +58,7 @@ public class OrderSrvController {
         return orderService.allOpenOrders(orderStatus);
     }
 
+    //====================================US 3501 =========================================================//
     public Iterable<QuestionnaireDTO> allSurveys(){
         return questionnaireService.allSurveys();
     }
@@ -70,6 +74,17 @@ public class OrderSrvController {
             answerRepository.save(answer);
         }
     }
+
+    //ESTOU AQUI - FALTA RECEBER O QUESTIONNAIREDTO surveyDTO como parametro e guardar a survey escolhida
+    public boolean verifyIfClientAnswered(String email, String surveyCode) {
+        survey = surveyRepository.ofIdentity(surveyCode).get();
+        clientSurvey = clientRepository.findByEmail(Email.valueOf(email)).get();
+        Iterable<Answer> answers = answerRepository.findAnswersByClient(clientSurvey, survey);
+        //answers.iterator().next();
+        System.out.println("ANSWERS: " + answers);
+        return !answers.iterator().hasNext();
+    }
+    //==================================== END US 3501 =========================================================//
 
     public void verifyIfProductExists(byte[] clientMessageUS, DataInputStream sIn, DataOutputStream sOut) throws IOException {
         String productUniqueInternalCode = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
