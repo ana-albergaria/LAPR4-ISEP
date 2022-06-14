@@ -35,6 +35,10 @@ public class Shelf implements AggregateRoot<Long>, Serializable {
 
     }
 
+    public Long getShelfID() {
+        return shelfID;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GetPositions {
 
-    static final String TRUSTED_STORE= "certificates/clienBackoffice_J.jks";
+    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
     static final String KEYSTORE_PASS="forgotten";
 
     private static class ClientSocket {
@@ -28,7 +28,16 @@ public class GetPositions {
         private DataOutputStream sOutData;
         private DataInputStream sInData;
 
+        public DataOutputStream getOutput(){
+            return this.sOutData;
+        }
+
+        public DataInputStream getInput(){
+            return this.sInData;
+        }
+
         public void connect(final String address, final int port) throws IOException {
+
 
             // Trust these certificates provided by servers
             /*System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
@@ -81,6 +90,8 @@ public class GetPositions {
             socket.connect(ipAddress, getPort());
 
             try {
+                DataOutputStream sOut = socket.getOutput();
+                DataInputStream sIn = socket.getInput();
                 //DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
                 //DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
 
@@ -154,8 +165,8 @@ public class GetPositions {
             final var socket = new ClientSocket();
             socket.connect(ipAddress, getPort());
             try {
-                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
-                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+                DataOutputStream sOut = socket.getOutput();
+                DataInputStream sIn = socket.getInput();
 
                 byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
                 sOut.write(testMessage);
@@ -213,8 +224,8 @@ public class GetPositions {
             final var socket = new ClientSocket();
             socket.connect(ipAddress, getPort());
             try {
-                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
-                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+                DataOutputStream sOut = socket.getOutput();
+                DataInputStream sIn = socket.getInput();
 
                 byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
                 sOut.write(testMessage);
@@ -270,8 +281,8 @@ public class GetPositions {
             final var socket = new ClientSocket();
             socket.connect(ipAddress, getPort());
             try {
-                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
-                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+                DataOutputStream sOut = socket.getOutput();
+                DataInputStream sIn = socket.getInput();
 
                 byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
                 sOut.write(testMessage);
@@ -329,8 +340,8 @@ public class GetPositions {
             final var socket = new ClientSocket();
             socket.connect(ipAddress, getPort());
             try {
-                DataOutputStream sOut = new DataOutputStream(socket.sock.getOutputStream());
-                DataInputStream sIn = new DataInputStream(socket.sock.getInputStream());
+                DataOutputStream sOut = socket.getOutput();
+                DataInputStream sIn = socket.getInput();
 
                 byte[] testMessage = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
                 sOut.write(testMessage);
