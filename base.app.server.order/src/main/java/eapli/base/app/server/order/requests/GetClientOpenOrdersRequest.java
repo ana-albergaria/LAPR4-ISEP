@@ -4,6 +4,7 @@ import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.dto.OrderDTO;
 import eapli.base.productmanagement.dto.ProductDTO;
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
+import eapli.base.utils.MessageUtils;
 import org.hibernate.criterion.Order;
 
 import java.io.*;
@@ -22,8 +23,10 @@ public class GetClientOpenOrdersRequest extends OrderServerRequest{
     @Override
     public void execute() {
         try {
+            String clientEmail = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+
             OrderStatus status = OrderStatus.valueOf(OrderStatus.Status.DELIVERED_BY_CARRIER);
-            Iterable<OrderDTO> productCatalog = this.orderSrvController.allOpenOrders(status);
+            Iterable<OrderDTO> productCatalog = this.orderSrvController.allOpenOrders(clientEmail, status);
             sOutputObject.writeObject(productCatalog);
             sOutputObject.flush();
         } catch (IOException e) {

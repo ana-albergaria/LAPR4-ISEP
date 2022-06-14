@@ -7,4 +7,5 @@ eapli\base\app\server\order\requests\VerifyIfProductExistsRequest.class
 eapli\base\app\server\order\tcp\TcpSrvOrderThread.class
 eapli\base\app\server\order\requests\SaveAnswersRequest.class
 eapli\base\app\server\order\requests\OrderServerMessageParser.class
+eapli\base\app\server\order\requests\VerifyIfClientHasAnsweredRequest.class
 eapli\base\app\server\order\requests\GetClientOpenOrdersRequest.class

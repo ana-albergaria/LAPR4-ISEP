@@ -1,2 +1,6 @@
-srv\TcpSrvAgvManager.class
 srv\TcpSrvAgvManagerThread.class
+requests\AGVManagerServerMessageParser.class
+requests\GetAGVPositionAndStatusRequest.class
+requests\SentAGVPositionAndStatusRequest.class
+srv\TcpSrvAgvManager.class
+requests\AGVManagerServerRequest.class

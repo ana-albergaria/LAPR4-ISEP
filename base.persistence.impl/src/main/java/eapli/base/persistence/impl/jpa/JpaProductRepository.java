@@ -1,10 +1,8 @@
 package eapli.base.persistence.impl.jpa;
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.productmanagement.domain.*;
 import eapli.base.productmanagement.repositories.ProductRepository;
 
-import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
 import java.util.*;
 
@@ -73,4 +71,5 @@ public class JpaProductRepository extends BaseJpaRepositoryBase<Product, Code, C
         params.put("category", category);
         return match("e.productCategory=:category", params);
     }
+
 }
