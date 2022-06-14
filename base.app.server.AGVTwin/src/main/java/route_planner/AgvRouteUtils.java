@@ -1,11 +1,8 @@
-package eapli.base.warehousemanagement.utils;
+package route_planner;
 
 import java.util.*;
 
-/**
- *
- * @author Ana Albergaria
- */
+
 
 // A queue node used in BFS
 class Node
