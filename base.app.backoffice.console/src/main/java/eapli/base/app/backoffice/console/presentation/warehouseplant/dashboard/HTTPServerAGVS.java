@@ -8,6 +8,7 @@ import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class HTTPServerAGVS extends Thread{
     private static String ipAddress;
@@ -29,21 +30,21 @@ public class HTTPServerAGVS extends Thread{
         ipAddress=ip;
     }
 
-    public void setController(DashboardController ctrl){
+    /*public void setController(DashboardController ctrl){
         controller = ctrl;
-    }
+    }*/
 
     public static void main(String[] args) throws IOException {
-        //Socket cliSock;
-        SSLSocket cliSock1;
+        Socket cliSock;
+        /*SSLSocket cliSock1;
 
         System.setProperty("javax.net.ssl.keyStore", "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/warehouseplant/dashboard/server.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");
+        System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");*/
 
         try {
-            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-            socket = (SSLServerSocket) sslF.createServerSocket(PORT);
-            //sock = new ServerSocket(PORT);
+            /*SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            socket = (SSLServerSocket) sslF.createServerSocket(PORT);*/
+            sock = new ServerSocket(PORT);
             System.out.println("HTTP Server connection opened.");
         }
         catch(IOException ex) {
@@ -52,9 +53,9 @@ public class HTTPServerAGVS extends Thread{
         }
 
         while(true) {
-            //cliSock=sock.accept();
-            cliSock1= (SSLSocket) socket.accept();
-            HTTPAgvRequest req=new HTTPAgvRequest(cliSock1, BASE_FOLDER, ipAddress);
+            cliSock=sock.accept();
+            //cliSock1= (SSLSocket) socket.accept();
+            HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER, "127.0.0.1");
             req.start();
         }
     }
