@@ -10,7 +10,7 @@ public class DashboardController {
 
     public void showDashboard(String ipAddress){
         HTTPServerAGVS server = new HTTPServerAGVS(ipAddress);
-        //server.setController(this);
+        server.setController(this);
         server.start();
     }
 

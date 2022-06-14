@@ -114,11 +114,11 @@ public class GetPositions {
 
                     }*/
 
-                    byte[] statusMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
+                    /*byte[] statusMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
 
                     String allStatus = MessageUtils.getDataFromMessage(statusMessage, socket.sInData);
 
-                    System.out.println(allStatus);
+                    System.out.println(allStatus);*/
 
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                     socket.sOutData.write(endMessage);

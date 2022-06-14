@@ -9,6 +9,7 @@ import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class HTTPServerAGVS extends Thread{
     private static String ipAddress;
@@ -61,9 +62,9 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized  String getMatrix(String ip){
-        plant = getPositions.getPlant(9, ip);
+        /*plant = getPositions.getPlant(9, ip);
         docks = getPositions.getDocks(10, ip);
-        aisles = getPositions.getAisles(11, ip);
+        aisles = getPositions.getAisles(11, ip);*/
         positions = getPositions.getPositions(6, ip);
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
         CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles, positions);
@@ -87,7 +88,8 @@ public class HTTPServerAGVS extends Thread{
 
     public static synchronized String showPositions(String ip) {
         positions = getPositions.getPositions(6, ip);
-        allAgvs = getPositions.getAgvs(8, ip);
+        //allAgvs = getPositions.getAgvs(8, ip);
+        allAgvs = new ArrayList<>();
 
         String buildInHtml = "<table>";
         for(AGVPosition pos: positions) {
