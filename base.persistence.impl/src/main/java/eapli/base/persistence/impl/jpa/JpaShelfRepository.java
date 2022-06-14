@@ -11,10 +11,10 @@ public class JpaShelfRepository extends BaseJpaRepositoryBase<Shelf, Long, Long>
     JpaShelfRepository(){super("shelfID");}
 
     @Override
-    public Optional<Shelf> findByID(Long id){
+    public Optional<Shelf> findByID(Long shelfID){
         final Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
-        return matchOne("e.shelf.shelfID=:id", params);
+        params.put("id", shelfID);
+        return matchOne("e.shelfID=:id", params);
     }
 
 }

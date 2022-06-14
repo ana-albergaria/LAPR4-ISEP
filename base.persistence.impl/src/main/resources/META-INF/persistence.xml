@@ -30,7 +30,7 @@
     <class>eapli.base.shoppingcartmanagement.domain.ShopCarItem</class>
     <class>eapli.base.surveymanagement.domain.Questionnaire</class>
     <class>eapli.base.surveymanagement.domain.Answer</class>
-
+    <class>eapli.base.warehousemanagement.domain.Bin</class>
 
 
     <properties>

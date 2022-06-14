@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Entity
 public class Bin implements AggregateRoot<Long>, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Version
     private Long version;
 
