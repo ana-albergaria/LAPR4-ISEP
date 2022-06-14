@@ -1,5 +1,8 @@
 package eapli.base.surveymanagement.application;
 
+import eapli.base.clientmanagement.domain.Client;
+import eapli.base.clientmanagement.domain.Email;
+import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.antlr.SurveyMain;
 import eapli.base.surveymanagement.domain.Questionnaire;
@@ -12,7 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Controloller of Questionnaire
@@ -28,6 +31,7 @@ public class CreateQuestionnaireController {
      *
      */
     private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnaries();
+    private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
 
     private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/";
     private final String FILE_EXTENSION = ".txt";
@@ -43,7 +47,13 @@ public class CreateQuestionnaireController {
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_MANAGER);
 
-        final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage);
+        //at this moment it adds all clients in the system to all questionnaires -> fix this
+        Iterator<Client> targetAudience = clientRepository.findAll().iterator();
+        List<Client> list = new ArrayList<>();
+        targetAudience.forEachRemaining(list::add);
+
+
+        final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage, list);
 
         repository.save(questionnaire);
 

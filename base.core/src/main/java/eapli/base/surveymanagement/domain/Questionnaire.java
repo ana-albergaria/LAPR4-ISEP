@@ -1,6 +1,7 @@
 package eapli.base.surveymanagement.domain;
 
 
+import eapli.base.clientmanagement.domain.Client;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
@@ -9,6 +10,7 @@ import eapli.framework.validations.Preconditions;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A Questionnaire.
@@ -36,18 +38,22 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private String finalMessage;
 
+    //we're aware that ManytoMany relationships are to be avoided, however, due to lack of time, for this Sprint it will be mapped like this
+    @ManyToMany
+    private List<Client> targetAudience;
     //list<Client> targetAudience
     //set<Rule> rules
     //createdOn
     //endDate -> opcional
 
-    public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
+    public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage, final List<Client> targetAudience){
         Preconditions.noneNull(code, title, questionnaireContent, finalMessage);
         this.code=code;
         this.title=title;
         this.welcomeMessage = welcomeMessage;
         this.questionnaireContent = questionnaireContent;
         this.finalMessage = finalMessage;
+        this.targetAudience = targetAudience;
     }
 
     protected Questionnaire(){

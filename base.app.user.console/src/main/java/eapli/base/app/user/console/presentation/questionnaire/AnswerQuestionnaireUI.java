@@ -1,11 +1,15 @@
 package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
+import eapli.base.clientmanagement.domain.Email;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.antlr.SurveyVisitorWithAnswer;
 import eapli.base.surveymanagement.antlr.questionnaireLexer;
 import eapli.base.surveymanagement.antlr.questionnaireParser;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
+import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 import org.antlr.v4.runtime.CharStreams;
@@ -19,6 +23,9 @@ public class AnswerQuestionnaireUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+        /*SurveyQuestionnareRepository rep = PersistenceContext.repositories().questionnaries();
+        Iterable<Questionnaire> test = rep.findAllQuestionnaireWithClient(PersistenceContext.repositories().clients().findByEmail(Email.valueOf("1201518@isep.ipp.pt")).get());
+        System.out.println(test);*/
 
         QuestionnaireDTO survey = null;
 
@@ -42,7 +49,6 @@ public class AnswerQuestionnaireUI extends AbstractUI {
 
         if(survey != null) { //the client doesn't want to exit
             String surveyString = extractSurvey(survey);
-            System.out.println(surveyString);
 
             Map<String, List<String>> answers = new HashMap<>();
 
