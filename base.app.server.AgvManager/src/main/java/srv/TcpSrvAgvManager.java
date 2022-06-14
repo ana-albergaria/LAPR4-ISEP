@@ -133,14 +133,6 @@ class TcpSrvAgvManagerThread implements Runnable {
         s=cli_s;
     }
 
-    private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
-    private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
-    private final AGVRepository agvRepository = PersistenceContext.repositories().agvs();
-    private final AgvPositionRepository agvPositionRepository = PersistenceContext.repositories().positions();
-    private final PlantRepository warehousePlantRepository = PersistenceContext.repositories().plants();
-    private final AgvDockRepository agvDockRepository = PersistenceContext.repositories().agvDocks();
-    private final AisleRepository aisleRepository = PersistenceContext.repositories().aisles();
-
     public void run() {
         InetAddress clientIP;
 

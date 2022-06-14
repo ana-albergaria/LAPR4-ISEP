@@ -26,14 +26,14 @@ public class TcpSrvAGVTwin {
     private AGV agv;
     private Socket socket;
 
-    public TcpSrvAGVTwin(AGV agv, String ipAddress, int port) throws IOException {
+    /*public TcpSrvAGVTwin(String ipAddress, int port) throws IOException {
         this.agv = agv;
         this.ipAddress = ipAddress;
         this.port = port;
         this.address = InetAddress.getByName(this.ipAddress);
         this.socket = new Socket(this.address, this.port);
         new Thread(new TcpSrvAGVTwinThread(agv, socket)).start();
-    }
+    }*/
 
     public static void main(String args[]) throws Exception {
         Socket cliSock;
@@ -49,7 +49,7 @@ public class TcpSrvAGVTwin {
 
         while(true){
             cliSock=sock.accept();
-            new Thread(new TcpSrvAGVTwinThread(new AGV(), cliSock)).start();
+            new Thread(new TcpSrvAGVTwinThread(cliSock)).start();
         }
     }
 }
@@ -58,13 +58,11 @@ class TcpSrvAGVTwinThread implements Runnable {
     private Socket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
-    private AGV agv;
 
     //developing the input communication module of the AGV digital twin
     //to accept requests from the "AGVManager"
 
-    public TcpSrvAGVTwinThread(AGV agv, Socket cli_s){
-        this.agv = agv;
+    public TcpSrvAGVTwinThread(Socket cli_s){
         s=cli_s;
     }
 
@@ -93,7 +91,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
                 MessageUtils.writeMessage((byte) 2, sOut);
 
-                TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
+                //TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
 
                 // >>>>>>> RECEBER PEDIDOS AQUI <<<<<<<
 

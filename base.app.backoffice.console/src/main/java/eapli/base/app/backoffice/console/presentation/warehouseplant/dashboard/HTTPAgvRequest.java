@@ -14,14 +14,14 @@ public class HTTPAgvRequest extends Thread{
     DataOutputStream outS;
     private String ipAddress;
 
-    public HTTPAgvRequest(SSLSocket s, String f, String ipAddress) {
-        baseFolder=f; socket=s; this.ipAddress=ipAddress;
+    public HTTPAgvRequest(Socket s, String f, String ipAddress) {
+        baseFolder=f; sock=s; this.ipAddress=ipAddress;
     }
 
     public void run() {
         try {
-            outS = new DataOutputStream(socket.getOutputStream());
-            inS = new DataInputStream(socket.getInputStream());
+            outS = new DataOutputStream(sock.getOutputStream());
+            inS = new DataInputStream(sock.getInputStream());
         } catch( IOException ex) { System.out.println("Thread error on data streams creation"); }
         try {
             HTTPMessage request = new HTTPMessage(inS);
@@ -70,7 +70,7 @@ public class HTTPAgvRequest extends Thread{
         }
         catch(IOException ex) {
             System.out.println("Thread error when reading request"); }
-        try { socket.close();}
+        try { sock.close();}
         catch(IOException ex) { System.out.println("CLOSE IOException"); }
     }
 }
