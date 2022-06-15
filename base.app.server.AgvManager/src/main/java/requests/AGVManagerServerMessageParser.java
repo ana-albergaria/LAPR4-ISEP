@@ -23,8 +23,6 @@ public class AGVManagerServerMessageParser {
                                     final byte[] clientMessageUS,
                                     final ObjectInputStream sInObject) throws IOException {
 
-        // TODO Do NOT choose request 15 as it is a subrequest of request 14!
-
         AGVManagerServerRequest request = null;
 
         if(messageRequest == 6) { //Get the AGVStatus

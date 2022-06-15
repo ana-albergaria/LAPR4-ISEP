@@ -2,8 +2,12 @@ package srv;
 
 import cli.TcpCliAGVTwin;
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.application.AGVManagerServerController;
+import eapli.base.warehousemanagement.application.AGVTwinServerController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
+import requests.AGVTwinServerMessageParser;
+import requests.AGVTwinServerRequest;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -82,6 +86,9 @@ class TcpSrvAGVTwinThread implements Runnable {
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
+    private final AGVTwinServerController ctrl = new AGVTwinServerController();
+    private final AGVTwinServerMessageParser parser = new AGVTwinServerMessageParser(ctrl);
+
     //developing the input communication module of the AGV digital twin
     //to accept requests from the "AGVManager"
 
@@ -97,6 +104,8 @@ class TcpSrvAGVTwinThread implements Runnable {
             System.out.println("[INFO] Nova conexão de cliente: " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + ".");
             sOut = new DataOutputStream(this.s.getOutputStream());
             sIn = new DataInputStream(this.s.getInputStream());
+            ObjectOutputStream sOutputObject = null; //initializing with null, because not all requests require this
+            ObjectInputStream sInputObject = null;
 
             /*System.out.println("I am client " + clientIP.getHostAddress() + " and I am finally connected to the server " + s.getLocalAddress() + "! :)");
 
@@ -117,7 +126,19 @@ class TcpSrvAGVTwinThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS,sIn);
 
+
                 if(clientMessageUS[1] == 6){
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                }
+
+                if(clientMessageUS[1] == 6){
+                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                }
+
+                final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
+                request.execute();
+
+                /*if(clientMessageUS[1] == 6){
                     MessageUtils.writeMessage((byte) 7, sOut);
                     AGV agv = null;
                     TaskStatus agvStatus = null;
@@ -134,7 +155,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                     ObjectOutputStream sendStatus = new ObjectOutputStream(s.getOutputStream());
                     sendStatus.writeObject(agvStatus);
                     sendStatus.flush();
-                }
+                }*/
 
                 //TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
 
