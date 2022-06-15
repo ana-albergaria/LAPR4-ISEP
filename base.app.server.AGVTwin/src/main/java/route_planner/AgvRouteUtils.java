@@ -1,5 +1,6 @@
 package route_planner;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 
@@ -32,25 +33,25 @@ public class AgvRouteUtils {
     private static int[] col = { 0, -1, 1, 0 };
 
     // The function returns false if (x, y) is not a valid position
-    private static boolean isValid(int x, int y, int N, int[][] matrix) {
-        return (x >= 0 && x < N) && (y >= 0 && y < N) && (matrix[x][y] != 4); //currently it is avoiding all 4
+    private static boolean isValid(int x, int y, int N, String[][] matrix) {
+        return (x >= 0 && x < N) && (y >= 0 && y < N) && (!matrix[x][y].equals("X")); //the obstacles are marked as X in the matrix
     }
 
     // Utility function to find path from source to destination
-    private static void findPath(Node node, List<String> path)
+    private static void findPath(Node node, List<Point2D> path)
     {
         if (node != null) {
             findPath(node.parent, path);
-            path.add(node.toString());
+            path.add(new Point2D.Double(node.x, node.y));
         }
     }
 
     // Find the shortest route in a matrix from source cell (x, y) to
-    // destination cell (N-1, N-1)
-    public static List<String> findPath(int[][] matrix, int x, int y, int xDest, int yDest)
+    // destination cell (xDest, yDest)
+    public static LinkedList<Point2D> findPath(String[][] matrix, int x, int y, int xDest, int yDest)
     {
         // list to store shortest path
-        List<String> path = new ArrayList<>();
+        LinkedList<Point2D> path = new LinkedList<>();
 
         // base case
         if (matrix == null || matrix.length == 0) {
@@ -85,7 +86,7 @@ public class AgvRouteUtils {
             }
 
             // value of the current cell
-            int n = matrix[i][j];
+            //int n = matrix[i][j];
 
             // check all four possible movements from the current cell
             // and recur for each valid movement
@@ -121,23 +122,25 @@ public class AgvRouteUtils {
 
     public static void main(String[] args)
     {
-        int[][] matrix =
+        String[][] matrix =
                 {
-                        { 4, 4, 6, 5, 5, 1, 1, 1, 7, 4 },
-                        { 3, 6, 2, 4, 6, 5, 7, 2, 6, 6 },
-                        { 1, 3, 6, 1, 1, 1, 7, 1, 4, 5 },
-                        { 7, 5, 6, 3, 1, 3, 3, 1, 1, 7 },
-                        { 3, 4, 6, 4, 7, 2, 6, 5, 4, 4 },
-                        { 3, 2, 5, 1, 2, 5, 1, 2, 3, 4 },
-                        { 4, 2, 2, 2, 5, 2, 3, 7, 7, 3 },
-                        { 7, 2, 4, 3, 5, 2, 2, 3, 6, 3 },
-                        { 5, 1, 4, 2, 6, 4, 6, 7, 3, 7 },
-                        { 1, 4, 1, 7, 5, 3, 6, 5, 3, 9 }
+                        { "1", "X", "6", "5", "5", "1", "1", "1", "7", "X" },
+                        { "3", "6", "2", "X", "6", "5", "7", "2", "6", "6" },
+                        { "1", "3", "6", "1", "1", "1", "7", "1", "X", "5" },
+                        { "7", "5", "6", "3", "1", "3", "3", "1", "1", "7" },
+                        { "3", "X", "6", "X", "7", "2", "6", "5", "X", "X" },
+                        { "3", "2", "5", "1", "2", "5", "1", "2", "3", "X" },
+                        { "4", "2", "2", "2", "5", "2", "3", "7", "7", "3" },
+                        { "7", "2", "X", "3", "5", "2", "2", "3", "6", "3" },
+                        { "5", "1", "X", "2", "6", "X", "6", "7", "3", "7" },
+                        { "1", "X", "1", "7", "5", "3", "6", "5", "3", "9" }
                 };
+
+
 
         // Find a route in the matrix from source cell (0, 0) to
         // destination cell (N-1, N-1)
-        List<String> path = findPath(matrix, 0, 0, 3,9);
+        LinkedList<Point2D> path = findPath(matrix, 0, 0, 3,9);
 
         if (path != null && path.size() > 0) {
             System.out.print("The shortest path is " + path);
