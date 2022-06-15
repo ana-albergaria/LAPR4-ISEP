@@ -27,26 +27,24 @@ public class AGVManagerServerMessageParser {
 
         AGVManagerServerRequest request = null;
 
-        if(messageRequest == 6) {
-            request = new GetAGVPositionAndStatusRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
-        }
-        if(messageRequest == 7) {
-            request = new SentAGVPositionAndStatusRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
-        }
-        if(messageRequest == 8) {
-
+        if(messageRequest == 6) { //Get the AGVStatus
+            request = new GetAGVStatusRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
-        if(messageRequest == 9){
-
+        if(messageRequest == 8) { //Get the AGVPosition
+            request = new GetAGVPosition(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
-        if(messageRequest == 10){
-
+        if(messageRequest == 10){ //Get the WarehousePlant
+            request = new GetWarehousePlantRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
-        if(messageRequest == 11) {
+        if(messageRequest == 11) { //Get all the AGVDocks
+            request = new GetAGVDocksRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+        }
 
+        if(messageRequest == 12){ //Get all the Aisles
+            request = new GetAislesRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
         if(request == null)

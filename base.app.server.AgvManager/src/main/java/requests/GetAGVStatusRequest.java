@@ -4,30 +4,28 @@ import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.application.AGVManagerServerController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
-import srv.TcpSrvAGVTwin;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GetAGVPositionAndStatusRequest extends AGVManagerServerRequest{
+public class GetAGVStatusRequest extends AGVManagerServerRequest{
     private final int PORT = 2400;
     private final String IP_ADDRESS = "127.0.0.1";
     private Socket socket;
-    public GetAGVPositionAndStatusRequest(final AGVManagerServerController ctrl,
-                                          final byte request,
-                                          final ObjectOutputStream sOutObject,
-                                          final DataInputStream sIn,
-                                          final DataOutputStream sOut,
-                                          final byte[] clientMessageUS,
-                                          final ObjectInputStream sInObject){
+    public GetAGVStatusRequest(final AGVManagerServerController ctrl,
+                               final byte request,
+                               final ObjectOutputStream sOutObject,
+                               final DataInputStream sIn,
+                               final DataOutputStream sOut,
+                               final byte[] clientMessageUS,
+                               final ObjectInputStream sInObject){
         super(ctrl, request, sOutObject, sIn, sOut, clientMessageUS, sInObject);
     }
 
     @Override
-    public Iterable<Object> execute() {
+    public void execute() {
         List<Object> agvStatusList = new LinkedList<>();
         Iterable<AGV> agvsInTheSystem = this.agvManagerServerController.allAGVS();
 
@@ -68,6 +66,11 @@ public class GetAGVPositionAndStatusRequest extends AGVManagerServerRequest{
             }
         }
 
-        return agvStatusList;
+        try {
+            this.sOutputObject.writeObject(agvStatusList);
+            this.sOutputObject.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

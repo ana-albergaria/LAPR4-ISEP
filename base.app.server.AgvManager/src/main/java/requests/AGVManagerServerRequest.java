@@ -39,6 +39,6 @@ public abstract class AGVManagerServerRequest{
      *
      * @return the response to send back to the client
      */
-    public abstract Iterable<Object> execute();
+    public abstract void execute();
 }
 
