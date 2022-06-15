@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CreateQuestionnaireUI extends AbstractUI {
     private final CreateQuestionnaireController controller = new CreateQuestionnaireController();
     private final String SECTION_OBLIGATORINESS = "Section Obligatoriness: ";
-    private final String SECTION_REPEATABILITY = "Repeatability: ";
+    private final String SECTION_REPEATABILITY = "Repeatability: Q";
     private final String QUESTION_TYPE = "Type: ";
     private final String SCALING_OPTION = "Scale: ";
     private final String WITH_INPUT = " with input";
@@ -37,7 +37,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         boolean isValidNumSections = false, isValidRepeatability = false, isValidNumQuestions = false, isValidQuestionnaire = false;;
-        int k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions, c=1;
+        int q=1, k=0, n=0, numSections, sectionID, numRepeats, numQuestionsPerSection, questionID, numOfChoicesOption, numOfSortingOptions, numOfScaleOptions, c=1;
         List<String> welcomeMessage = new ArrayList<>();
         HashMap<String, String> sectionsAndQuestions = new HashMap<>();
         String questionnaireID, questionnaireTitle, title, welcomeMessageOption, welcomeMessageNewLine, sectionHeader, sectionTitle, sectionMessageOption, sectionMessageNewLine,
@@ -191,9 +191,9 @@ public class CreateQuestionnaireUI extends AbstractUI {
             for(int l=0; l<numQuestionsPerSection; l++){
                 List<String> questionMessage = new ArrayList<>();
 
-                questionID = l+1;
+                questionID = q;
 
-                questionText = Console.readLine("What is the question number " + (l+1) +" text?");
+                questionText = Console.readLine("What is the question number " + (q) +" text?");
 
                 sectionsAndQuestions.put(sectionTitle + (l+1), questionText);
 
@@ -327,6 +327,8 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
                 controller.writeQuestionnaireTextFile("\n", filePath);
                 questionnaireContent.append("\n");
+
+                q++;
             }
 
             controller.writeQuestionnaireTextFile("\n", filePath);
