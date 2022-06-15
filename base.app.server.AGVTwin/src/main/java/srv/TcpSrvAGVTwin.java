@@ -3,11 +3,9 @@ package srv;
 import cli.TcpCliAGVTwin;
 import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.TaskStatus;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -90,6 +88,28 @@ class TcpSrvAGVTwinThread implements Runnable {
                 //byte[] serverMessage = {(byte) 0, (byte) 2, (byte) 0, (byte) 0};
                 System.out.println("[INFO] A Mandar Código de Entendido (2) ao Cliente.");
                 MessageUtils.writeMessage((byte) 2, sOut);
+
+                byte[] clientMessageUS = new byte[4];
+                MessageUtils.readMessage(clientMessageUS,sIn);
+
+                if(clientMessageUS[1] == 6){
+                    MessageUtils.writeMessage((byte) 7, sOut);
+                    AGV agv = null;
+                    TaskStatus agvStatus = null;
+                    ObjectInputStream receiveAGV = new ObjectInputStream(s.getInputStream());
+
+                    try {
+                        agv = (AGV) receiveAGV.readObject();
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    agvStatus = agv.getTaskStatus();
+
+                    ObjectOutputStream sendStatus = new ObjectOutputStream(s.getOutputStream());
+                    sendStatus.writeObject(agvStatus);
+                    sendStatus.flush();
+                }
 
                 //TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
 

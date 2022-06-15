@@ -14,7 +14,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GetPositions {
 
@@ -147,19 +149,12 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-        Square posSquare = new Square(1L, 3L);
-        AgvDock dockTest = new AgvDock("D1", new Square(1L, 2L), new Square(2L, 3L), new Square(3L, 4L), new Accessibility("-l"));
-        AGV agvTest = new AGV(10L, new AutonomyStatus("1D"), TaskStatus.valueOf(TaskStatus.TaskStatusEnum.OCCUPIED), "refaerfa",
-                "short description 1", 18.0, dockTest);
-        AGVPosition pos = new AGVPosition(posSquare, agvTest);
-        positions.add(pos);
-
         return positions;
     }
 
-    public Iterable<AGV> getAgvs(int option, String ipAddress){
-
-        List<AGV> agvs = new ArrayList<>();
+    public Map<Long, TaskStatus> getAgvStatus(int option, String ipAddress){
+        Map<Long, TaskStatus> agvAndStatusMap = new HashMap<>();
+        List<TaskStatus> agvTaskStatus = new ArrayList<>();
 
         try {
             final var socket = new ClientSocket();
@@ -180,10 +175,10 @@ public class GetPositions {
 
                     ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
 
-                    agvs = (List<AGV>) sInObject.readObject();
+                    agvAndStatusMap = (Map<Long, TaskStatus>) sInObject.readObject();
 
-                    for(AGV agv : agvs){
-                        System.out.println(agv.getAgvID().toString() + agv.getTaskStatus().toString());
+                    for(TaskStatus status : agvAndStatusMap.values()){
+                        System.out.println(status.toString());
                     }
 
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
@@ -214,7 +209,7 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-        return agvs;
+        return agvAndStatusMap;
     }
 
     public WarehousePlant getPlant(int option, String ipAddress){

@@ -160,13 +160,20 @@ class TcpSrvAgvManagerThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS, sIn);
 
-                if(clientMessageUS[1] == 7){
-                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                if(clientMessageUS[1] == 6 || clientMessageUS[1] == 10 || clientMessageUS[1] == 11 || clientMessageUS[1] == 12){
                     sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                    //sInputObject = new ObjectInputStream(this.s.getInputStream());
                 }
 
                 final AGVManagerServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
                 request.execute();
+
+                /*if(clientMessageUS[1] == 6) {
+                    List<Object> returnedList = (List<Object>) iterable;
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                    sOutputObject.writeObject(returnedList);
+                    sOutputObject.flush();
+                }*/
 
                 /*if (clientMessageUS[1] == 6) { //Por exemplo, codigo 6 = Ligar ao AGV Manager e pedir posições do AGV
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(s.getOutputStream());
