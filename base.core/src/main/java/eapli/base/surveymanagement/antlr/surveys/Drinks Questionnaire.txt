@@ -9,7 +9,7 @@ Type: numeric
 2. Where are you from?(mandatory)
 Type: free text
 
-3. What is your gender?(mandatory)
+3. What is your gender?(condition dependent: 2)
 Type: single choice
 1)Male
 2)Female
@@ -17,7 +17,7 @@ Type: single choice
 
 
 2. Product Feedback
-Section Obligatoriness: mandatory
+Section Obligatoriness: condition dependent: 1
 4. How do you rate our drinks?(mandatory)
 Type: scaling option
 Scale: Strongly agree, agree, neutral, disagree, strongly disagree
