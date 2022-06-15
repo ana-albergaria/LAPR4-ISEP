@@ -20,9 +20,6 @@ import java.util.Map;
 
 public class GetPositions {
 
-    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
-    static final String KEYSTORE_PASS="forgotten";
-
     private static class ClientSocket {
         //private Socket sock;
         private SSLSocket socket;
@@ -39,15 +36,6 @@ public class GetPositions {
         }
 
         public void connect(final String address, final int port) throws IOException {
-
-
-            // Trust these certificates provided by servers
-            System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
-
-            // Use this certificate and private key for client certificate when requested by the server
-            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
 
             SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
 

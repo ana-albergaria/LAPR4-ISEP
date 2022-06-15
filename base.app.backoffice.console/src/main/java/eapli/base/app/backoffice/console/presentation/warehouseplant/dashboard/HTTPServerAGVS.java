@@ -26,6 +26,9 @@ public class HTTPServerAGVS extends Thread{
     static private Iterable<AgvDock> docks;
     static private Iterable<Aisle> aisles;
 
+    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
     static final int PORT = 55090;
 
     private static DashboardController controller;
@@ -38,12 +41,9 @@ public class HTTPServerAGVS extends Thread{
         controller = ctrl;
     }
 
-    public static void main(String[] args) throws IOException {
-        //Socket cliSock;
-        SSLSocket cliSock1;
-
-        System.setProperty("javax.net.ssl.keyStore", "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/warehouseplant/dashboard/server.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");
+    @Override
+    public void run(){
+        SSLSocket cliSock1=null;
 
         try {
             SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -58,7 +58,11 @@ public class HTTPServerAGVS extends Thread{
 
         while(true) {
             //cliSock=sock.accept();
-            cliSock1= (SSLSocket) socket.accept();
+            try {
+                cliSock1= (SSLSocket) socket.accept();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
             HTTPAgvRequest req=new HTTPAgvRequest(cliSock1, BASE_FOLDER, ipAddress);
             req.start();
         }
@@ -68,7 +72,8 @@ public class HTTPServerAGVS extends Thread{
         plant = getPositions.getPlant(10, ip);
         docks = getPositions.getDocks(11, ip);
         aisles = getPositions.getAisles(12, ip);
-        positions = getPositions.getPositions(8, ip);
+        //positions = getPositions.getPositions(8, ip);
+        positions= new ArrayList<>();
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
         CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles, positions);
 
@@ -90,12 +95,13 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions(String ip) {
-        positions = getPositions.getPositions(8, ip);
+        /*positions = getPositions.getPositions(8, ip);
+        positions= new ArrayList<>();
         allAgvsStatus = getPositions.getAgvStatus(6, ip);
-        int counter = 0;
+        int counter = 0;*/
 
         String buildInHtml = "<table>";
-        for(AGVPosition pos: positions) {
+        /*for(AGVPosition pos: positions) {
             for(Long id: allAgvsStatus.keySet()){
                 if(Objects.equals(id, pos.agvID())){
                     buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
@@ -106,7 +112,7 @@ public class HTTPServerAGVS extends Thread{
                 }
             }
 
-        }
+        }*/
 
         buildInHtml = buildInHtml + "</table>";
         return buildInHtml;
