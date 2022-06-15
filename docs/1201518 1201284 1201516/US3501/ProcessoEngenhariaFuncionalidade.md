@@ -15,7 +15,7 @@ US3501 - Enquanto cliente, pretendo responder a um questionário
 
 ## 2.1 Excerto do Modelo de Domínio
 
-![DM_Client.svg](./DM_Client.svg)
+![DM_Survey.svg](./DM_Survey.svg)
 
 ## 2.2 System Sequence Diagram (SSD)
 
