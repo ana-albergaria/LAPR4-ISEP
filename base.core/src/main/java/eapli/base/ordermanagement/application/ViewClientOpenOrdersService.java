@@ -87,7 +87,6 @@ public class ViewClientOpenOrdersService {
 
 
                     MessageUtils.writeMessageWithData((byte) 13, email, socket.sOutData);
-                    //MessageUtils.writeMessage((byte) 13, socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());
