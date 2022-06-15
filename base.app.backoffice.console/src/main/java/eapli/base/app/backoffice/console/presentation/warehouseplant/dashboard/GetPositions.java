@@ -14,7 +14,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GetPositions {
 
@@ -150,8 +152,8 @@ public class GetPositions {
         return positions;
     }
 
-    public Iterable<TaskStatus> getAgvStatus(int option, String ipAddress){
-
+    public Map<Long, TaskStatus> getAgvStatus(int option, String ipAddress){
+        Map<Long, TaskStatus> agvAndStatusMap = new HashMap<>();
         List<TaskStatus> agvTaskStatus = new ArrayList<>();
 
         try {
@@ -173,9 +175,9 @@ public class GetPositions {
 
                     ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
 
-                    agvTaskStatus = (List<TaskStatus>) sInObject.readObject();
+                    agvAndStatusMap = (Map<Long, TaskStatus>) sInObject.readObject();
 
-                    for(TaskStatus status : agvTaskStatus){
+                    for(TaskStatus status : agvAndStatusMap.values()){
                         System.out.println(status.toString());
                     }
 
@@ -207,7 +209,7 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-        return agvTaskStatus;
+        return agvAndStatusMap;
     }
 
     public WarehousePlant getPlant(int option, String ipAddress){
