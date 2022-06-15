@@ -7,8 +7,10 @@ import eapli.base.warehousemanagement.domain.TaskStatus;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class GetAGVStatusRequest extends AGVManagerServerRequest{
     private final int PORT = 2400;
@@ -26,7 +28,7 @@ public class GetAGVStatusRequest extends AGVManagerServerRequest{
 
     @Override
     public void execute() {
-        List<Object> agvStatusList = new LinkedList<>();
+        Map<Long, TaskStatus> agvAndStatusMap = new HashMap<>();
         Iterable<AGV> agvsInTheSystem = this.agvManagerServerController.allAGVS();
 
         for(AGV agv : agvsInTheSystem){
@@ -52,7 +54,7 @@ public class GetAGVStatusRequest extends AGVManagerServerRequest{
                         ObjectInputStream receivedAgvStatus = new ObjectInputStream(socket.getInputStream());
                         try {
                             TaskStatus agvStatus = (TaskStatus) receivedAgvStatus.readObject();
-                            agvStatusList.add(agvStatus);
+                            agvAndStatusMap.put(agv.getAgvID(), agvStatus);
                         }catch (ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
@@ -67,7 +69,7 @@ public class GetAGVStatusRequest extends AGVManagerServerRequest{
         }
 
         try {
-            this.sOutputObject.writeObject(agvStatusList);
+            this.sOutputObject.writeObject(agvAndStatusMap);
             this.sOutputObject.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);

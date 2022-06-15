@@ -1,13 +1,13 @@
-# 5003 - "As Project Manager, I want the input communications (of the AGV Digital Twin) made through the SPOMS2022 protocol to be secured/protected."
+# 5004 - "As Project Manager, I want the output communications (of the AGV Digital Twin) made through the SPOMS2022 protocol to be secured/protected."
 
 
 
 # 1. Requisitos
 
 
-**UC5003:** Como Project Manager pretendo que o modúlo de comunicação por input do AGV digital twin, feito a partir do protocolo SPOMS2022, esteja seguro/protegido.
+**UC5004:** Como Project Manager pretendo que o modúlo de comunicação por output do AGV digital twin, feito a partir do protocolo SPOMS2022, esteja seguro/protegido.
 
-A interpretação feita deste requisito foi no sentido de deixar seguras as ligações de input para o AGV digital twin.
+A interpretação feita deste requisito foi no sentido de deixar seguras as ligações de output para o AGV digital twin.
 
 
 # 2. Análise
@@ -19,7 +19,7 @@ n/a
 
 ## 2.2. Regras de Negócio
 
-* Deve complementar a US5001.
+* Deve complementar a US5002.
 * Deve adotar SSL/TLS com autenticação mútua, baseado em certificados de chave públicos.
 
 ![AGVManagerETwin](AGVManagerETwin.png)
@@ -82,7 +82,7 @@ Connection success in the AGV Manager:
 Connection success in the AGV Digital Twin:
 ![agvDigitalTwin](agvDigitalTwin.png)
 
-Esta User Story depende da User Story 5001, uma vez que é necessário que a comunicação entre o AGV Manager e o AGV Digital Twin exista, para que esta seja protegida.
+Esta User Story depende da User Story 5002, uma vez que é necessário que a comunicação entre o AGV Manager e o AGV Digital Twin exista, para que esta seja protegida.
 
 # 6. Observações
 

@@ -18,7 +18,7 @@ public abstract class AGVManagerServerRequest{
     protected byte[] clientMessageUS;
     protected final ObjectInputStream sInObject;
 
-    protected AGVManagerServerRequest(final AGVManagerServerController orderSrvController,
+    protected AGVManagerServerRequest(final AGVManagerServerController agvManagerServerController,
                                  final byte request,
                                  final ObjectOutputStream sOutObject,
                                  final DataInputStream sIn,
@@ -26,7 +26,7 @@ public abstract class AGVManagerServerRequest{
                                  final byte[] clientMessageUS,
                                  final ObjectInputStream sInObject) {
         this.request = request;
-        this.agvManagerServerController = orderSrvController;
+        this.agvManagerServerController = agvManagerServerController;
         this.sOutputObject = sOutObject;
         this.sIn = sIn;
         this.sOut = sOut;
