@@ -1,7 +1,5 @@
 package eapli.base.surveymanagement.application;
 
-import eapli.base.productmanagement.dto.ProductDTO;
-import eapli.base.shoppingcartmanagement.application.AddProductToShoppingCarService;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.utils.MessageUtils;
 
@@ -10,7 +8,6 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +66,7 @@ public class AnswerQuestionnaireService {
 
 
 
-    public Iterable<QuestionnaireDTO> allSurveys(){
+    public Iterable<QuestionnaireDTO> questionnairesForClient(String email){
         Iterable<QuestionnaireDTO> questionnaireCatalog = null;
         try {
 
@@ -80,7 +77,8 @@ public class AnswerQuestionnaireService {
 
                 if (MessageUtils.testCommunicationWithServer(socket.sOutData, socket.sInData)) {
 
-                    MessageUtils.writeMessage((byte) 12, socket.sOutData);
+                    //sends the client email
+                    MessageUtils.writeMessageWithData((byte) 12, email, socket.sOutData);
 
                     // mostrar os produtos existentes
                     ObjectInputStream sInputObject = new ObjectInputStream(socket.sock.getInputStream());

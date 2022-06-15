@@ -2,6 +2,7 @@ package eapli.base.app.server.order.requests;
 
 import eapli.base.shoppingcartmanagement.application.OrderSrvController;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
+import eapli.base.utils.MessageUtils;
 
 import java.io.*;
 
@@ -19,7 +20,9 @@ public class GetQuestionnairesRequest extends OrderServerRequest{
     @Override
     public void execute() {
         try {
-            Iterable<QuestionnaireDTO> questionnaires = this.orderSrvController.allSurveys();
+            String email = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
+
+            Iterable<QuestionnaireDTO> questionnaires = this.orderSrvController.questionnairesForClient(email);
             sOutputObject.writeObject(questionnaires);
             sOutputObject.flush();
         } catch (IOException e) {

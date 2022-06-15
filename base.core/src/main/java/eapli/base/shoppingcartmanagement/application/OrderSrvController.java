@@ -26,7 +26,6 @@ import eapli.base.utils.MessageUtils;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -60,8 +59,9 @@ public class OrderSrvController {
     }
 
     //====================================US 3501 =========================================================//
-    public Iterable<QuestionnaireDTO> allSurveys(){
-        return questionnaireService.allSurveys();
+    public Iterable<QuestionnaireDTO> questionnairesForClient(String email){
+        Client client = clientRepository.findByEmail(Email.valueOf(email)).get();
+        return questionnaireService.questionnairesForClient(client);
     }
 
     public void saveQuestionnaireAnswers(Map<String, List<String>> answers, QuestionnaireDTO surveyDTO, String email) {
@@ -76,13 +76,10 @@ public class OrderSrvController {
         }
     }
 
-    //APAGAR - FALTA RECEBER O QUESTIONNAIREDTO surveyDTO como parametro e guardar a survey escolhida
     public boolean verifyIfClientAnswered(String email, String surveyCode) {
         survey = surveyRepository.ofIdentity(surveyCode).get();
         clientSurvey = clientRepository.findByEmail(Email.valueOf(email)).get();
         Iterable<Answer> answers = answerRepository.findAnswersByClient(clientSurvey, survey);
-        //answers.iterator().next();
-        System.out.println("ANSWERS: " + answers);
         return !answers.iterator().hasNext();
     }
     //==================================== END US 3501 =========================================================//
