@@ -2,10 +2,9 @@ package eapli.base.app.backoffice.console.presentation.warehouseplant.dashboard;
 
 import eapli.base.utils.CreateWarehouseMatrix;
 import eapli.base.warehousemanagement.domain.*;
+import org.springframework.scheduling.config.Task;
 
 import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
-import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,7 +17,7 @@ public class HTTPServerAGVS extends Thread{
     static private ServerSocket sock;
     static private SSLServerSocket socket;
     static  private Iterable<AGVPosition> positions;
-    static private Iterable<AGV> allAgvs;
+    static private Iterable<TaskStatus> allAgvsStatus;
     static private WarehousePlant plant;
     static private Iterable<AgvDock> docks;
     static private Iterable<Aisle> aisles;
@@ -87,21 +86,17 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions(String ip) {
-        positions = getPositions.getPositions(6, ip);
-        //allAgvs = getPositions.getAgvs(8, ip);
-        allAgvs = new ArrayList<>();
+        //positions = getPositions.getPositions(6, ip);
+        allAgvsStatus = getPositions.getAgvStatus(6, ip); //TODO Colocar código 6
+        int counter = 0;
 
         String buildInHtml = "<table>";
         for(AGVPosition pos: positions) {
-            for(AGV agv: allAgvs){
-                if(agv.getAgvID().equals(pos.agvID())){
-                    buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
-                            "<td>" + pos.agvID() + "</td>" +
-                            "<td>" + pos.lSquare() + "</td>" +
-                            "<td>" + pos.wSquare() + "</td>" +
-                            "<td>" + agv.getTaskStatus().toString() + "</td>";
-                }
-            }
+            buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
+                    "<td>" + pos.agvID() + "</td>" +
+                    "<td>" + pos.lSquare() + "</td>" +
+                    "<td>" + pos.wSquare() + "</td>" +
+                    "<td>" + allAgvsStatus.iterator().next() + "</td>";
         }
 
         buildInHtml = buildInHtml + "</table>";

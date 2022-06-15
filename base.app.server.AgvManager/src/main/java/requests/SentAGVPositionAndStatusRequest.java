@@ -18,12 +18,14 @@ public class SentAGVPositionAndStatusRequest extends AGVManagerServerRequest{
     }
 
     @Override
-    public void execute() {
+    public Iterable<Object> execute() {
         try {
             String status = MessageUtils.getDataFromMessage(clientMessageUS, sIn);
             MessageUtils.writeMessageWithData((byte) 7, status, sOut);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        return null;
     }
 }
