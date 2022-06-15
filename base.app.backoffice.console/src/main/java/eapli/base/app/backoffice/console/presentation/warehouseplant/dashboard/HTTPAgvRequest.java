@@ -8,20 +8,20 @@ import java.net.Socket;
 
 public class HTTPAgvRequest extends Thread{
     String baseFolder;
-    Socket sock;
+    //Socket sock;
     SSLSocket socket;
     DataInputStream inS;
     DataOutputStream outS;
     private final String ipAddress;
 
-    public HTTPAgvRequest(Socket s, String f, String ipAddress) {
-        baseFolder=f; sock=s; this.ipAddress=ipAddress;
+    public HTTPAgvRequest(SSLSocket s, String f, String ipAddress) {
+        baseFolder=f; socket=s; this.ipAddress=ipAddress;
     }
 
     public void run() {
         try {
-            outS = new DataOutputStream(sock.getOutputStream());
-            inS = new DataInputStream(sock.getInputStream());
+            outS = new DataOutputStream(socket.getOutputStream());
+            inS = new DataInputStream(socket.getInputStream());
         } catch( IOException ex) { System.out.println("Thread error on data streams creation"); }
         try {
             HTTPMessage request = new HTTPMessage(inS);
@@ -70,7 +70,7 @@ public class HTTPAgvRequest extends Thread{
         }
         catch(IOException ex) {
             System.out.println("Thread error when reading request"); }
-        try { sock.close();}
+        try { socket.close();}
         catch(IOException ex) { System.out.println("CLOSE IOException"); }
     }
 }

@@ -5,6 +5,9 @@ import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -18,35 +21,57 @@ public class TcpSrvAGVTwin {
 
     static ServerSocket sock;
 
+    static final int SERVER_PORT=2400;
+    static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/clientTwin_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
     private String ipAddress;
     private Integer port;
     private InetAddress address;
     private AGV agv;
     private Socket socket;
 
-    /*public TcpSrvAGVTwin(String ipAddress, int port) throws IOException {
-        this.agv = agv;
-        this.ipAddress = ipAddress;
-        this.port = port;
-        this.address = InetAddress.getByName(this.ipAddress);
-        this.socket = new Socket(this.address, this.port);
-        new Thread(new TcpSrvAGVTwinThread(agv, socket)).start();
-    }*/
-
     public static void main(String args[]) throws Exception {
-        Socket cliSock;
+        SSLServerSocket sock = null;
+        SSLSocket cliSock;
+        //Socket cliSock;
+        //ServerSocket sock = new ServerSocket(3700);
 
-        try{
+
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+        try {
+            //cliSock = sock.accept();
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
+            System.out.println("Server connection opened!");
+        }
+        catch(IOException ex) {
+            System.out.println("Failed to open server socket");
+            System.exit(1);
+        }
+
+        //Socket cliSock;
+
+        /*try{
             sock = new ServerSocket(2400);
             System.out.println("Server connection opened.");
         }
         catch(IOException ex){
             System.out.println("Failed to open server socket.");
             System.exit(1);
-        }
+        }*/
 
         while(true){
-            cliSock=sock.accept();
+            cliSock= (SSLSocket) sock.accept();
             new Thread(new TcpSrvAGVTwinThread(cliSock)).start();
         }
     }
