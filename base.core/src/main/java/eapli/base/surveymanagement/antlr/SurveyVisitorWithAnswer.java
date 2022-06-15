@@ -26,41 +26,56 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
         }
 
         for (int i = 0; i < ctx.section().size(); i++) {
-            visit(ctx.section(i));
+            visit(ctx.section(i));//este visit parece estar a mais
 
             int repeatQuestionAmount = 0;
-
-            if(ctx.section(i).repeatability()!=null){
-                System.out.println("Repeatability: " + ctx.section(i).repeatability().getText());
-                String questionID = ctx.section(i).repeatability().getText();
+            if(ctx.section(i).obligatoriness().getText().equals("mandatory")){
+                isMandatory=true;
+            }else if(ctx.section(i).obligatoriness().CONDITION_DEPENDENT()!=null){
+                String questionID = String.valueOf(ctx.section(i).obligatoriness().frase().getText());
                 List<String> listAnswers = answers.get(questionID);
-                for (Map.Entry<String, List<String>> entry : answers.entrySet()) {
-                    if(questionID.equals(entry.getKey())) {
-
-                        //only loops through the previous sections of i
-                        for (int k = 0; k < i; k++) {
-                            if(ctx.section(k).question(Integer.parseInt(questionID)-1).numeric() != null) {
-                                String answer = listAnswers.get(0);
-                                repeatQuestionAmount = Integer.parseInt(answer);
-                            } else if(ctx.section(k).question(Integer.parseInt(questionID)-1).multiple_choice() != null || ctx.section(i).question(Integer.parseInt(questionID)).multiple_choice_with_input() != null) {
-                                repeatQuestionAmount = listAnswers.size();
-                            }
-                        }
-
-                    }
+                if(listAnswers.size()!=0){
+                    isMandatory=true;
                 }
+            } else {
+                String isAnswering = Console.readLine("This section is optional, do you wish to answer it?(YES/NO)");
+                isMandatory= isAnswering.equalsIgnoreCase("yes");
+            }
 
-                //decidir com Diogo: decide if we will repeat each quetion N times or repeat all question N times
-                for (int j = 0; j < repeatQuestionAmount; j++) {
+            if(isMandatory){
+                if(ctx.section(i).repeatability()!=null){
+                    System.out.println("Repeatability: " + ctx.section(i).repeatability().getText());
+                    String questionID = ctx.section(i).repeatability().getText();
+                    List<String> listAnswers = answers.get(questionID);
+                    for (Map.Entry<String, List<String>> entry : answers.entrySet()) {
+                        if(questionID.equals(entry.getKey())) {
+
+                            //only loops through the previous sections of i
+                            for (int k = 0; k < i; k++) {
+                                if(ctx.section(k).question(Integer.parseInt(questionID)-1).numeric() != null) {
+                                    String answer = listAnswers.get(0);
+                                    repeatQuestionAmount = Integer.parseInt(answer);
+                                } else if(ctx.section(k).question(Integer.parseInt(questionID)-1).multiple_choice() != null || ctx.section(i).question(Integer.parseInt(questionID)).multiple_choice_with_input() != null) {
+                                    repeatQuestionAmount = listAnswers.size();
+                                }
+                            }
+
+                        }
+                    }
+
+                    //decidir com Diogo: decide if we will repeat each quetion N times or repeat all question N times
+                    for (int j = 0; j < repeatQuestionAmount; j++) {
+                        visitChildren(ctx.section(i));
+                    }
+
+
+
+
+                } else {
                     visitChildren(ctx.section(i));
                 }
-
-
-
-
-            } else {
-                visitChildren(ctx.section(i));
             }
+            isMandatory=false;
         }
 
 
@@ -100,7 +115,6 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
         return true;
     }
 
-
     @Override
     public Boolean visitFree_text(questionnaireParser.Free_textContext ctx) {
         String question = ctx.numeric_id().getText() + ". " + ctx.getText().substring(1);
@@ -108,14 +122,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
         List<String> free_text = new ArrayList<>();
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(free_text.isEmpty()){
                 System.out.println("You must provide an answer.");
                 free_text=readMultipleLines();
@@ -140,14 +147,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
         String answer = "";
         boolean validAnswer=false;
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory ){
+        if(checkObligatoriness(ctx.obligatoriness()) ){
             while(answer.isEmpty() || !validAnswer){
                 try {
                     answer=Console.readLine("Answer: ");
@@ -192,14 +192,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             options.add(id.numeric_id().getText());
         }
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(answer.isEmpty() || !validAnswer){
                 try {
                     answer=Console.readLine("Answer: ");
@@ -251,14 +244,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             options.add(id.numeric_id().getText());
         }
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(answer.isEmpty() || !validAnswer){
                 try {
                     answer=Console.readLine("Answer: ");
@@ -304,14 +290,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             options.add(id.numeric_id().getText());
         }
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(!noMoreOptions){
 
                 while(answer.isEmpty() || !validAnswer){
@@ -388,14 +367,8 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             options.add(id.numeric_id().getText());
         }
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
 
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(!noMoreOptions){
 
                 while(answer.isEmpty() || !validAnswer){
@@ -468,14 +441,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
             options.add(id.numeric_id().getText());
         }
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             while(answer.isEmpty() || !validAnswer){
                 try {
                     answer=Console.readLine("Answer: ");
@@ -529,14 +495,7 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
 
         String[] scale= ctx.frase().getText().split(", ");
 
-        if(ctx.obligatoriness().getText().equals("mandatory")){
-            isMandatory=true;
-        }else {
-            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
-            isMandatory= isAnswering.equalsIgnoreCase("yes");
-        }
-
-        if(isMandatory){
+        if(checkObligatoriness(ctx.obligatoriness())){
             for (questionnaireParser.OptionContext optionText: ctx.option()) {
                 System.out.println(optionText.getText());
                 while(answer.isEmpty() || !validAnswer){
@@ -601,5 +560,18 @@ public class SurveyVisitorWithAnswer extends questionnaireBaseVisitor {
         }
 
         return free_text;
+    }
+
+    private boolean checkObligatoriness(questionnaireParser.ObligatorinessContext ctx){
+        if(ctx.getText().equals("mandatory")){
+            return true;
+        }else if(ctx.CONDITION_DEPENDENT()!=null){
+            String questionID = ctx.frase().getText();
+            List<String> listAnswers = answers.get(questionID);
+            return listAnswers.size() != 0;
+        }else {
+            String isAnswering = Console.readLine("This question is optional, do you wish to answer it?(YES/NO)");
+            return isAnswering.equalsIgnoreCase("yes");
+        }
     }
 }
