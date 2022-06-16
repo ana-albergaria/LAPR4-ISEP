@@ -1,12 +1,15 @@
 package eapli.base.infrastructure.bootstrapers.demo;
 
 import eapli.base.surveymanagement.application.CreateQuestionnaireController;
+import eapli.base.surveymanagement.domain.TheRule;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
+
+import java.util.Set;
 
 public class QuestionnaireBootstrapper implements Action {
 
@@ -76,16 +79,16 @@ public class QuestionnaireBootstrapper implements Action {
                 "2)No\n" +
                 "3)Maybe";
 
-        register("BOOKS21-22", "Books Questionnaire", "Hello, welcome to the Books Questionnaire", booksContent, "Thanks for answering the Books Questionnaire");
-        register("DRI21-22", "Drinks Questionnaire", "Hello, welcome to the Drinks Questionnaire", drinksContent, "Thanks for answering the Drinks Questionnaire");
-        register("SPO21-22", "Sports Questionnaire", "Hello, welcome to the Sports Questionnaire", sportsContent, "Thanks for answering the Sports Questionnaire");
+        register("BOOKS21-22", "Books Questionnaire", "Hello, welcome to the Books Questionnaire", booksContent, "Thanks for answering the Books Questionnaire",null);
+        register("DRI21-22", "Drinks Questionnaire", "Hello, welcome to the Drinks Questionnaire", drinksContent, "Thanks for answering the Drinks Questionnaire",null);
+        register("SPO21-22", "Sports Questionnaire", "Hello, welcome to the Sports Questionnaire", sportsContent, "Thanks for answering the Sports Questionnaire",null);
 
         return true;
     }
 
-    public void register(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
+    public void register(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage, final Set<TheRule> rules){
         try{
-            controller.registerQuestionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage);
+            controller.registerQuestionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage, rules);
             LOGGER.debug(code);
         } catch (final IntegrityViolationException | ConcurrencyException | TransactionSystemException e){
             // ignoring exception. assuming it is just a primary key violation

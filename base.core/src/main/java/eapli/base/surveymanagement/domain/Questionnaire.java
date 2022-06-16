@@ -5,12 +5,15 @@ import eapli.base.clientmanagement.domain.Client;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A Questionnaire.
@@ -42,22 +45,38 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     @ManyToMany
     private List<Client> targetAudience;
     //list<Client> targetAudience
-    //set<Rule> rules
-    //createdOn
-    //endDate -> opcional
 
-    public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage, final List<Client> targetAudience){
-        Preconditions.noneNull(code, title, questionnaireContent, finalMessage);
+    //set<Rule> rules
+    @ElementCollection
+    private Set<TheRule> rules;
+
+    //createdOn
+    @Temporal(TemporalType.DATE)
+    private Calendar createdOn;
+
+    //endDate -> opcional
+    @Temporal(TemporalType.DATE)
+    private Calendar endDate;
+
+
+    public Questionnaire(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage, final List<Client> targetAudience, final Set<TheRule> rules){
+        Preconditions.noneNull(code, title, questionnaireContent, finalMessage, rules);
         this.code=code;
         this.title=title;
         this.welcomeMessage = welcomeMessage;
         this.questionnaireContent = questionnaireContent;
         this.finalMessage = finalMessage;
         this.targetAudience = targetAudience;
+        this.rules = rules;
+        this.createdOn = Calendars.now();
     }
 
     protected Questionnaire(){
 
+    }
+
+    public void changeEndDate(Calendar newEndDate){
+        endDate = newEndDate;
     }
 
     public String code() {
