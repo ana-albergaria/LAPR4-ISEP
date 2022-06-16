@@ -66,6 +66,10 @@ public class AGV implements AggregateRoot<Long>, Serializable {
         return agvDock;
     }
 
+    public void changeBattery(AutonomyStatus autonomyStatus) {
+        this.autonomyStatus = autonomyStatus;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);
