@@ -72,8 +72,9 @@ public class GetPositions {
 
 
 
-    public Iterable<AGVPosition> getPositions(int option, String ipAddress){
+    public String[][] getPositions(int option, String ipAddress){
         List<AGVPosition> positions = new ArrayList<>();
+        String[][] matrix = new String[0][];
 
         try {
             final var socket = new ClientSocket();
@@ -95,7 +96,9 @@ public class GetPositions {
                     socket.sOutData.write(optionMessage);
                     socket.sOutData.flush();
 
-                    //ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.socket.getInputStream());
+
+                    matrix = (String[][]) sInObject.readObject();
 
                     //positions = (List<AGVPosition>) sInObject.readObject();
 
@@ -137,7 +140,7 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-        return positions;
+        return matrix;
     }
 
     public Map<Long, TaskStatus> getAgvStatus(int option, String ipAddress){

@@ -69,16 +69,15 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized  String getMatrix(String ip){
-        plant = getPositions.getPlant(10, ip);
-        docks = getPositions.getDocks(11, ip);
-        aisles = getPositions.getAisles(12, ip);
+        //plant = getPositions.getPlant(10, ip);
+        //docks = getPositions.getDocks(11, ip);
+        //aisles = getPositions.getAisles(12, ip);
         //positions = getPositions.getPositions(8, ip);
         positions= new ArrayList<>();
-        String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
-        CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles, positions);
+        String[][] matrix = getPositions.getPositions(10, ip);
 
-        int width = Math.toIntExact(plant.warehouseWidth().width());
-        int length = Math.toIntExact(plant.warehouseLength().length());
+        int width = matrix.length;
+        int length = matrix[0].length;
 
         String buildInHtml = "<table>";
         for(int i=0; i<width; i++){

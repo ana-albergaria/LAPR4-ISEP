@@ -133,6 +133,12 @@ class TcpSrvAGVTwinThread implements Runnable {
                     sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
                 }
 
+                if(clientMessageUS[1] == 10){
+                    MessageUtils.writeMessage((byte) 11, this.sOut);
+                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                }
+
                 final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
                 request.execute();
 

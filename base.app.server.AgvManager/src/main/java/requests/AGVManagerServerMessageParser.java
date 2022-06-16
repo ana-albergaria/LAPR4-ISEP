@@ -34,15 +34,7 @@ public class AGVManagerServerMessageParser {
         }
 
         if(messageRequest == 10){ //Get the WarehousePlant
-            request = new GetWarehousePlantRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
-        }
-
-        if(messageRequest == 11) { //Get all the AGVDocks
-            request = new GetAGVDocksRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
-        }
-
-        if(messageRequest == 12){ //Get all the Aisles
-            request = new GetAislesRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+            request = new CreateAndSendMatrixRequest(agvManagerServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
         if(request == null)

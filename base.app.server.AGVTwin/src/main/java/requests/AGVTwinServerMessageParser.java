@@ -28,6 +28,10 @@ public class AGVTwinServerMessageParser {
             request = new SendAGVStatusRequest(agvTwinServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
         }
 
+        if(messageRequest == 10) { //Update the Matrix
+            request = new UpdateMatrixRequest(agvTwinServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+        }
+
         if(request == null)
             throw new UnsupportedOperationException("The request " + messageRequest + " is not valid - unable to parse.");
 
