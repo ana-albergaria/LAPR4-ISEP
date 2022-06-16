@@ -1,6 +1,8 @@
-package route_planner;
+package eapli.base.app.user.console.presentation.route_planner;
 
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.warehousemanagement.domain.Bin;
+import eapli.base.warehousemanagement.repositories.BinRepository;
 
 import java.awt.geom.Point2D;
 import java.util.*;
@@ -157,6 +159,7 @@ public class AgvRouteUtils {
 
     public static LinkedList<Point2D> computeFinalRoute(String[][] matrix, int xSource, int ySource, List<Bin> bins) {
         Bin firstBin = bins.get(0);
+        System.out.println(firstBin.row().beginSquare());
         int xBin = Math.toIntExact(firstBin.row().beginSquare().wSquare());
         int yBin = Math.toIntExact(firstBin.row().beginSquare().lSquare());
         int xNextBin, yNextBin;
