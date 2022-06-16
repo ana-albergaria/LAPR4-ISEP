@@ -1,10 +1,8 @@
-package Positioning;
+package positioning;
 
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.Square;
-import eapli.base.warehousemanagement.repositories.AgvPositionRepository;
 
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
