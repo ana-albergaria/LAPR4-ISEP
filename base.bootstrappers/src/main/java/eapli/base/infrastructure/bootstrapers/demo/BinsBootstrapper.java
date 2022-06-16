@@ -117,11 +117,44 @@ public class BinsBootstrapper implements Action {
         Iterator<Aisle> aisles = getAisles();
         Aisle aisle1 = aisles.next();
         Aisle aisle2 = aisles.next();
+        Aisle aisle3 = aisles.next();
+        Aisle aisle4 = aisles.next();
 
         Iterator<Shelf> shelves = getShelves();
         Shelf shelf1 = shelves.next();
         Shelf shelf2 = shelves.next();
         Shelf shelf3 = shelves.next();
+        Shelf shelf4 = shelves.next();
+        Shelf shelf5 = shelves.next();
+        Shelf shelf6 = shelves.next();
+        Shelf shelf7 = shelves.next();
+        Shelf shelf8 = shelves.next();
+        Shelf shelf9 = shelves.next();
+        Shelf shelf10 = shelves.next();
+        Shelf shelf11 = shelves.next();
+        Shelf shelf12 = shelves.next();
+        Shelf shelf13 = shelves.next();
+        Shelf shelf14 = shelves.next();
+        Shelf shelf15 = shelves.next();
+        Shelf shelf16 = shelves.next();
+        Shelf shelf17 = shelves.next();
+        Shelf shelf18 = shelves.next();
+        Shelf shelf19 = shelves.next();
+        Shelf shelf20 = shelves.next();
+        Shelf shelf21 = shelves.next();
+        Shelf shelf22 = shelves.next();
+        Shelf shelf23 = shelves.next();
+        Shelf shelf24 = shelves.next();
+        Shelf shelf25 = shelves.next();
+        Shelf shelf26 = shelves.next();
+        Shelf shelf27 = shelves.next();
+        Shelf shelf28 = shelves.next();
+        Shelf shelf29 = shelves.next();
+        Shelf shelf30 = shelves.next();
+
+
+
+
 
         List<TheRow> listRows = getRows();
 
@@ -130,37 +163,37 @@ public class BinsBootstrapper implements Action {
         Product product3 = getProduct(Code.valueOf("tnfs.00001"));
 
         register(size1,aisle1,listRows.get(0),shelf1,product1);
-        register(size1,aisle1,listRows.get(1),shelf1,product1);
-        register(size1,aisle1,listRows.get(2),shelf1,product1);
-        register(size1,aisle1,listRows.get(3),shelf1,product1);
-        register(size1,aisle1,listRows.get(4),shelf1,product1);
-        register(size1,aisle1,listRows.get(5),shelf1,product1);
-        register(size1,aisle1,listRows.get(6),shelf1,product1);
-        register(size1,aisle1,listRows.get(7),shelf1,product1);
-        register(size1,aisle1,listRows.get(8),shelf1,product1);
-        register(size1,aisle1,listRows.get(9),shelf1,product1);
+        register(size1,aisle1,listRows.get(0),shelf2,product1);
+        register(size1,aisle1,listRows.get(0),shelf3,product1);
+        register(size1,aisle1,listRows.get(1),shelf4,product1);
+        register(size1,aisle1,listRows.get(1),shelf5,product1);
+        register(size1,aisle1,listRows.get(1),shelf6,product1);
+        register(size1,aisle1,listRows.get(1),shelf7,product1);
+        register(size1,aisle1,listRows.get(2),shelf8,product1);
+        register(size1,aisle1,listRows.get(2),shelf9,product1);
+        register(size1,aisle1,listRows.get(2),shelf10,product1);
 
-        register(size1,aisle1,listRows.get(0),shelf2,product2);
-        register(size1,aisle1,listRows.get(1),shelf2,product2);
-        register(size1,aisle1,listRows.get(2),shelf2,product2);
-        register(size1,aisle1,listRows.get(3),shelf2, product2);
-        register(size1,aisle1,listRows.get(4),shelf2,product2);
-        register(size1,aisle2,listRows.get(5),shelf2,product2);
-        register(size1,aisle2,listRows.get(6),shelf2,product2);
-        register(size1,aisle2,listRows.get(7),shelf2,product2);
-        register(size1,aisle2,listRows.get(8),shelf2,product2);
-        register(size1,aisle2,listRows.get(9),shelf2,product2);
+        register(size1,aisle1,listRows.get(2),shelf11,product2);
+        register(size1,aisle1,listRows.get(2),shelf12,product2);
+        register(size1,aisle1,listRows.get(2),shelf13,product2);
+        register(size1,aisle1,listRows.get(2),shelf14, product2);
+        register(size1,aisle1,listRows.get(2),shelf15,product2);
+        register(size1,aisle2,listRows.get(3),shelf16,product2);
+        register(size1,aisle2,listRows.get(3),shelf17,product2);
+        register(size1,aisle2,listRows.get(3),shelf18,product2);
+        register(size1,aisle2,listRows.get(3),shelf19,product2);
+        register(size1,aisle2,listRows.get(3),shelf20,product2);
 
-        register(size2,aisle2,listRows.get(0),shelf3,product3);
-        register(size2,aisle2,listRows.get(1),shelf3,product3);
-        register(size2,aisle2,listRows.get(2),shelf3,product3);
-        register(size2,aisle2,listRows.get(3),shelf3,product3);
-        register(size2,aisle2,listRows.get(4),shelf3,product3);
-        register(size2,aisle2,listRows.get(5),shelf3,product3);
-        register(size2,aisle2,listRows.get(6),shelf3,product3);
-        register(size2,aisle2,listRows.get(7),shelf3,product3);
-        register(size2,aisle2,listRows.get(8),shelf3,product3);
-        register(size2,aisle2,listRows.get(9),shelf3,product3);
+        register(size2,aisle2,listRows.get(4),shelf21,product3);
+        register(size2,aisle2,listRows.get(5),shelf22,product3);
+        register(size2,aisle2,listRows.get(5),shelf23,product3);
+        register(size2,aisle2,listRows.get(5),shelf24,product3);
+        register(size2,aisle2,listRows.get(5),shelf25,product3);
+        register(size2,aisle2,listRows.get(6),shelf26,product3);
+        register(size2,aisle2,listRows.get(6),shelf27,product3);
+        register(size2,aisle2,listRows.get(6),shelf28,product3);
+        register(size2,aisle2,listRows.get(6),shelf29,product3);
+        register(size2,aisle2,listRows.get(6),shelf30,product3);
 
         return true;
     }
