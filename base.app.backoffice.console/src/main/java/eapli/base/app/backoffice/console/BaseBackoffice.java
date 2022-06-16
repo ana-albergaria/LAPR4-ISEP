@@ -42,6 +42,8 @@ import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
  */
 @SuppressWarnings("squid:S106")
 public final class BaseBackoffice extends BaseApplication {
+    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
 
     /**
      * avoid instantiation of this class.
@@ -54,6 +56,13 @@ public final class BaseBackoffice extends BaseApplication {
      *            the command line arguments
      */
     public static void main(final String[] args) {
+        // Trust these certificates provided by servers
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        // Use this certificate and private key for client certificate when requested by the server
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(), new PlainTextEncoder());

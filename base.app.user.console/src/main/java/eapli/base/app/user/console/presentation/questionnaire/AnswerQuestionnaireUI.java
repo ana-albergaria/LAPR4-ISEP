@@ -1,15 +1,11 @@
 package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
-import eapli.base.clientmanagement.domain.Email;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.surveymanagement.antlr.SurveyVisitorWithAnswer;
 import eapli.base.surveymanagement.antlr.questionnaireLexer;
 import eapli.base.surveymanagement.antlr.questionnaireParser;
 import eapli.base.surveymanagement.application.AnswerQuestionnaireController;
-import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.dto.QuestionnaireDTO;
-import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 import org.antlr.v4.runtime.CharStreams;
@@ -32,7 +28,7 @@ public class AnswerQuestionnaireUI extends AbstractUI {
         boolean hasNotAnsweredYet = false;
 
         while(!hasNotAnsweredYet) {
-            Iterable<QuestionnaireDTO> surveys = this.controller.allQuestionnairesInTheSystem();
+            Iterable<QuestionnaireDTO> surveys = this.controller.questionnairesForClient();
             final SelectWidget<QuestionnaireDTO> selector = new SelectWidget<>("Questionnaires For Client:", surveys, new QuestionnaireDTOPrinter());
             selector.show();
             survey = selector.selectedElement();

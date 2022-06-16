@@ -70,11 +70,12 @@ class TcpSrvAgvManager {
         //======= FIM DA US4002 =======
         //=============================
 
-        //SSLServerSocket sock = null;
-        /*Socket cliSock;
-        ServerSocket sock = new ServerSocket(3700);
+        SSLServerSocket sock = null;
+        SSLSocket cliSock;
+        //Socket cliSock;
+        //ServerSocket sock = new ServerSocket(3700);
 
-        /*
+
         // Trust these certificates provided by authorized clients
         System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
         System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
@@ -86,9 +87,9 @@ class TcpSrvAgvManager {
         SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
         try {
-            cliSock = sock.accept();
-            //sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
-            //sock.setNeedClientAuth(true);
+            //cliSock = sock.accept();
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
             System.out.println("Server connection opened!");
         }
         catch(IOException ex) {
@@ -98,13 +99,13 @@ class TcpSrvAgvManager {
 
 
         while(true){
-            cliSock=sock.accept();
+            cliSock= (SSLSocket) sock.accept();
             new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
-        }*/
+        }
 
-        Socket cliSock;
+        //Socket cliSock;
 
-        try{
+        /*try{
             sock = new ServerSocket(3700);
             System.out.println("Server connection opened!");
         }
@@ -116,7 +117,7 @@ class TcpSrvAgvManager {
         while(true){
             cliSock=sock.accept();
             new Thread(new TcpSrvAgvManagerThread(cliSock)).start();
-        }
+        }*/
     }
 }
 

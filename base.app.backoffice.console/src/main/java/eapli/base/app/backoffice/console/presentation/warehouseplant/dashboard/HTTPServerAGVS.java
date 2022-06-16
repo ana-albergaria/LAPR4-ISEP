@@ -5,10 +5,14 @@ import eapli.base.warehousemanagement.domain.*;
 import org.springframework.scheduling.config.Task;
 
 import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 public class HTTPServerAGVS extends Thread{
     private static String ipAddress;
@@ -17,10 +21,13 @@ public class HTTPServerAGVS extends Thread{
     static private ServerSocket sock;
     static private SSLServerSocket socket;
     static  private Iterable<AGVPosition> positions;
-    static private Iterable<TaskStatus> allAgvsStatus;
+    static private Map<Long, TaskStatus> allAgvsStatus;
     static private WarehousePlant plant;
     static private Iterable<AgvDock> docks;
     static private Iterable<Aisle> aisles;
+
+    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
 
     static final int PORT = 55090;
 
@@ -34,17 +41,14 @@ public class HTTPServerAGVS extends Thread{
         controller = ctrl;
     }
 
-    public static void main(String[] args) throws IOException {
-        Socket cliSock;
-        //SSLSocket cliSock1;
-
-        //System.setProperty("javax.net.ssl.keyStore", "base.app.backoffice.console/src/main/java/eapli/base/app/backoffice/console/presentation/warehouseplant/dashboard/server.jks");
-        //System.setProperty("javax.net.ssl.keyStorePassword", "forgotten");
+    @Override
+    public void run(){
+        SSLSocket cliSock1=null;
 
         try {
-            //SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-            //socket = (SSLServerSocket) sslF.createServerSocket(PORT);
-            sock = new ServerSocket(PORT);
+            SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            socket = (SSLServerSocket) sslF.createServerSocket(PORT);
+            //sock = new ServerSocket(PORT);
             System.out.println("HTTP Server connection opened.");
         }
         catch(IOException ex) {
@@ -53,18 +57,23 @@ public class HTTPServerAGVS extends Thread{
         }
 
         while(true) {
-            cliSock=sock.accept();
-            //cliSock1= (SSLSocket) socket.accept();
-            HTTPAgvRequest req=new HTTPAgvRequest(cliSock, BASE_FOLDER, ipAddress);
+            //cliSock=sock.accept();
+            try {
+                cliSock1= (SSLSocket) socket.accept();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            HTTPAgvRequest req=new HTTPAgvRequest(cliSock1, BASE_FOLDER, ipAddress);
             req.start();
         }
     }
 
     public static synchronized  String getMatrix(String ip){
-        /*plant = getPositions.getPlant(9, ip);
-        docks = getPositions.getDocks(10, ip);
-        aisles = getPositions.getAisles(11, ip);*/
-        positions = getPositions.getPositions(6, ip);
+        plant = getPositions.getPlant(10, ip);
+        docks = getPositions.getDocks(11, ip);
+        aisles = getPositions.getAisles(12, ip);
+        //positions = getPositions.getPositions(8, ip);
+        positions= new ArrayList<>();
         String[][] matrix = CreateWarehouseMatrix.createAccordingWithSize(plant);
         CreateWarehouseMatrix.insertObstacles(matrix, docks, aisles, positions);
 
@@ -86,18 +95,23 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions(String ip) {
-        //positions = getPositions.getPositions(6, ip);
-        allAgvsStatus = getPositions.getAgvStatus(6, ip); //TODO Colocar código 6
-        int counter = 0;
+        /*positions = getPositions.getPositions(8, ip);
+        positions= new ArrayList<>();*/
+        allAgvsStatus = getPositions.getAgvStatus(6, ip);
 
         String buildInHtml = "<table>";
-        for(AGVPosition pos: positions) {
-            buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
-                    "<td>" + pos.agvID() + "</td>" +
-                    "<td>" + pos.lSquare() + "</td>" +
-                    "<td>" + pos.wSquare() + "</td>" +
-                    "<td>" + allAgvsStatus.iterator().next() + "</td>";
-        }
+        /*for(AGVPosition pos: positions) {
+            for(Long id: allAgvsStatus.keySet()){
+                if(Objects.equals(id, pos.agvID())){
+                    buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
+                            "<td>" + pos.agvID() + "</td>" +
+                            "<td>" + pos.lSquare() + "</td>" +
+                            "<td>" + pos.wSquare() + "</td>" +
+                            "<td>" + allAgvsStatus.get(id) + "</td>";
+                }
+            }
+
+        }*/
 
         buildInHtml = buildInHtml + "</table>";
         return buildInHtml;

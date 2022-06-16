@@ -24,9 +24,7 @@ public class VerifyIfClientHasAnsweredRequest extends OrderServerRequest {
             String info = MessageUtils.getDataFromMessage(clientMessageUS,sIn);
             String[] array = info.split(" ");
             String surveyCode = array[0];
-            System.out.println(surveyCode);
             String email = array[1];
-            System.out.println(email);
             boolean hasNotAnswered = this.orderSrvController.verifyIfClientAnswered(email, surveyCode);
             if(hasNotAnswered) {
                 MessageUtils.writeMessageWithData((byte) 16, "True", sOut);

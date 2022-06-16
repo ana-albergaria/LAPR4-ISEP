@@ -14,15 +14,14 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GetPositions {
 
-    static final String TRUSTED_STORE= "base.app.backoffice.console/src/main/resources/clientBackoffice_J.jks";
-    static final String KEYSTORE_PASS="forgotten";
-
     private static class ClientSocket {
-        private Socket sock;
+        //private Socket sock;
         private SSLSocket socket;
         private InetAddress serverIP;
         private DataOutputStream sOutData;
@@ -38,16 +37,7 @@ public class GetPositions {
 
         public void connect(final String address, final int port) throws IOException {
 
-
-            // Trust these certificates provided by servers
-            /*System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
-
-            // Use this certificate and private key for client certificate when requested by the server
-            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
-            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
-
-            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();*/
+            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
             try {
                 serverIP = InetAddress.getByName(address);
@@ -57,25 +47,25 @@ public class GetPositions {
             }
 
             try {
-                sock = new Socket(serverIP, port);
-                //socket = (SSLSocket) sf.createSocket(serverIP, port);
+                //sock = new Socket(serverIP, port);
+                socket = (SSLSocket) sf.createSocket(serverIP, port);
             }
             catch(IOException ex) {
                 System.out.println("Failed to establish TCP connection");
                 System.exit(1);
             }
 
-            //socket.startHandshake();
+            socket.startHandshake();
 
             System.out.println("Connected to: " + serverIP + ":" + port);
 
-            sOutData = new DataOutputStream(sock.getOutputStream());
-            sInData = new DataInputStream(sock.getInputStream());
+            sOutData = new DataOutputStream(socket.getOutputStream());
+            sInData = new DataInputStream(socket.getInputStream());
         }
 
         public void stop() throws IOException {
-            sock.close();
-            //socket.close();
+            //sock.close();
+            socket.close();
         }
 
     }
@@ -150,8 +140,8 @@ public class GetPositions {
         return positions;
     }
 
-    public Iterable<TaskStatus> getAgvStatus(int option, String ipAddress){
-
+    public Map<Long, TaskStatus> getAgvStatus(int option, String ipAddress){
+        Map<Long, TaskStatus> agvAndStatusMap = new HashMap<>();
         List<TaskStatus> agvTaskStatus = new ArrayList<>();
 
         try {
@@ -171,11 +161,11 @@ public class GetPositions {
                     sOut.write(optionMessage);
                     sOut.flush();
 
-                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.socket.getInputStream());
 
-                    agvTaskStatus = (List<TaskStatus>) sInObject.readObject();
+                    agvAndStatusMap = (Map<Long, TaskStatus>) sInObject.readObject();
 
-                    for(TaskStatus status : agvTaskStatus){
+                    for(TaskStatus status : agvAndStatusMap.values()){
                         System.out.println(status.toString());
                     }
 
@@ -207,7 +197,7 @@ public class GetPositions {
             System.out.println(e.getMessage());
         }
 
-        return agvTaskStatus;
+        return agvAndStatusMap;
     }
 
     public WarehousePlant getPlant(int option, String ipAddress){
@@ -230,7 +220,7 @@ public class GetPositions {
                     sOut.write(optionMessage);
                     sOut.flush();
 
-                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.socket.getInputStream());
 
                     plant = (WarehousePlant) sInObject.readObject();
 
@@ -287,7 +277,7 @@ public class GetPositions {
                     sOut.write(optionMessage);
                     sOut.flush();
 
-                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.socket.getInputStream());
 
                     docks = (Iterable<AgvDock>) sInObject.readObject();
 
@@ -346,7 +336,7 @@ public class GetPositions {
                     sOut.write(optionMessage);
                     sOut.flush();
 
-                    ObjectInputStream sInObject = new ObjectInputStream(socket.sock.getInputStream());
+                    ObjectInputStream sInObject = new ObjectInputStream(socket.socket.getInputStream());
 
                     aisles = (Iterable<Aisle>) sInObject.readObject();
 

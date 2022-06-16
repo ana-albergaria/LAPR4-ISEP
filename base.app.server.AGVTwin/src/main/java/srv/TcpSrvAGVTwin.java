@@ -2,9 +2,16 @@ package srv;
 
 import cli.TcpCliAGVTwin;
 import eapli.base.utils.MessageUtils;
+import eapli.base.warehousemanagement.application.AGVManagerServerController;
+import eapli.base.warehousemanagement.application.AGVTwinServerController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
+import requests.AGVTwinServerMessageParser;
+import requests.AGVTwinServerRequest;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -18,49 +25,74 @@ public class TcpSrvAGVTwin {
 
     static ServerSocket sock;
 
+    static final int SERVER_PORT=2400;
+    static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/clientTwin_J.jks";
+    static final String KEYSTORE_PASS="forgotten";
+
     private String ipAddress;
     private Integer port;
     private InetAddress address;
     private AGV agv;
     private Socket socket;
 
-    /*public TcpSrvAGVTwin(String ipAddress, int port) throws IOException {
-        this.agv = agv;
-        this.ipAddress = ipAddress;
-        this.port = port;
-        this.address = InetAddress.getByName(this.ipAddress);
-        this.socket = new Socket(this.address, this.port);
-        new Thread(new TcpSrvAGVTwinThread(agv, socket)).start();
-    }*/
-
     public static void main(String args[]) throws Exception {
-        Socket cliSock;
+        SSLServerSocket sock = null;
+        SSLSocket cliSock;
+        //Socket cliSock;
+        //ServerSocket sock = new ServerSocket(3700);
 
-        try{
+
+        // Trust these certificates provided by authorized clients
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+        // Use this certificate and private key as server certificate
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+
+        try {
+            //cliSock = sock.accept();
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
+            System.out.println("Server connection opened!");
+        }
+        catch(IOException ex) {
+            System.out.println("Failed to open server socket");
+            System.exit(1);
+        }
+
+        //Socket cliSock;
+
+        /*try{
             sock = new ServerSocket(2400);
             System.out.println("Server connection opened.");
         }
         catch(IOException ex){
             System.out.println("Failed to open server socket.");
             System.exit(1);
-        }
+        }*/
 
         while(true){
-            cliSock=sock.accept();
+            cliSock= (SSLSocket) sock.accept();
             new Thread(new TcpSrvAGVTwinThread(cliSock)).start();
         }
     }
 }
 
 class TcpSrvAGVTwinThread implements Runnable {
-    private Socket s;
+    private SSLSocket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
+
+    private final AGVTwinServerController ctrl = new AGVTwinServerController();
+    private final AGVTwinServerMessageParser parser = new AGVTwinServerMessageParser(ctrl);
 
     //developing the input communication module of the AGV digital twin
     //to accept requests from the "AGVManager"
 
-    public TcpSrvAGVTwinThread(Socket cli_s){
+    public TcpSrvAGVTwinThread(SSLSocket cli_s){
         s=cli_s;
     }
 
@@ -72,6 +104,8 @@ class TcpSrvAGVTwinThread implements Runnable {
             System.out.println("[INFO] Nova conexão de cliente: " + clientIP.getHostAddress() + ", porta: " + this.s.getPort() + ".");
             sOut = new DataOutputStream(this.s.getOutputStream());
             sIn = new DataInputStream(this.s.getInputStream());
+            ObjectOutputStream sOutputObject = null; //initializing with null, because not all requests require this
+            ObjectInputStream sInputObject = null;
 
             /*System.out.println("I am client " + clientIP.getHostAddress() + " and I am finally connected to the server " + s.getLocalAddress() + "! :)");
 
@@ -92,7 +126,17 @@ class TcpSrvAGVTwinThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS,sIn);
 
+
                 if(clientMessageUS[1] == 6){
+                    MessageUtils.writeMessage((byte) 7, sOut);
+                    sInputObject = new ObjectInputStream(this.s.getInputStream());
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+                }
+
+                final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
+                request.execute();
+
+                /*if(clientMessageUS[1] == 6){
                     MessageUtils.writeMessage((byte) 7, sOut);
                     AGV agv = null;
                     TaskStatus agvStatus = null;
@@ -109,7 +153,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                     ObjectOutputStream sendStatus = new ObjectOutputStream(s.getOutputStream());
                     sendStatus.writeObject(agvStatus);
                     sendStatus.flush();
-                }
+                }*/
 
                 //TcpCliAGVTwin cliAGVTwin = new TcpCliAGVTwin(agv, s.getLocalAddress().toString());
 
