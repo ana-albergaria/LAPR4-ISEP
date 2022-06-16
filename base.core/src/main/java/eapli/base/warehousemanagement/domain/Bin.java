@@ -120,4 +120,17 @@ public class Bin implements AggregateRoot<Long>, Serializable {
         return binID;
     }
 
+    @Override
+    public String toString() {
+        return "Bin{" +
+                "version=" + version +
+                ", binID=" + binID +
+                ", size=" + size +
+                ", aisle=" + aisle +
+                ", row=" + row +
+                ", shelf=" + shelf +
+                ", product=" + product +
+                ", status=" + status +
+                '}';
+    }
 }

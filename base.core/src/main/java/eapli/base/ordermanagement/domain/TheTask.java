@@ -56,6 +56,10 @@ public class TheTask implements AggregateRoot<Long>, Serializable {
         return this.order;
     }
 
+    public List<Bin> bins() {
+        return this.bins;
+    }
+
 
     @Override
     public boolean sameAs(Object other) {

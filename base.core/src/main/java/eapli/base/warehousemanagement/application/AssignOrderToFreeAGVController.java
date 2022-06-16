@@ -83,11 +83,11 @@ public class AssignOrderToFreeAGVController {
         Bin binToAdd;
         for (OrderItem item:
                 order.orderItems()) {
-            for (int i = 0; i < item.quantity(); i++) {
+            //for (int i = 0; i < item.quantity(); i++) {
                 binToAdd = repository.findInStockByProduct(item.product()).iterator().next();
                 binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
                 result.add(binToAdd);
-            }
+            //}
         }
         return result;
     }

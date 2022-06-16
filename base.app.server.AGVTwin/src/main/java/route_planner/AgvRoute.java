@@ -1,6 +1,10 @@
 package route_planner;
 
+import eapli.base.ordermanagement.domain.TheTask;
+import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.Bin;
+
 
 import java.awt.geom.Point2D;
 import java.util.*;
@@ -29,7 +33,19 @@ class Node
     }
 }
 
-public class AgvRouteUtils {
+public class AgvRoute {
+    private AGV currentAGV;
+    private AGVPosition currentAGVPosition;
+    private TheTask agvTask;
+    private String[][] warehousePlant;
+
+    public AgvRoute(AGV currentAGV, AGVPosition currentAGVPosition, TheTask agvTask, String[][] warehousePlant) {
+        this.currentAGV = currentAGV;
+        this.currentAGVPosition = currentAGVPosition;
+        this.agvTask = agvTask;
+        this.warehousePlant = warehousePlant;
+    }
+
     // Below arrays detail all four possible movements from a cell
     private static int[] row = { -1, 0, 0, 1 };
     private static int[] col = { 0, -1, 1, 0 };
@@ -122,7 +138,60 @@ public class AgvRouteUtils {
         return path;
     }
 
-    public static void main(String[] args)
+    public synchronized LinkedList<Point2D> computeFinalRoute() {
+        /*ONLY FOR TESTING HARD CODED ROUTES*/
+        //if(currnetAGV id == 10)
+        //      devolver esta route hard coded
+        //else if(current agv id == 11)
+        //      outra route
+        //...
+
+
+
+
+
+
+        // start position of route: current position of AGV
+        int xSource = Math.toIntExact(this.currentAGVPosition.wSquare());
+        int ySource = Math.toIntExact(this.currentAGVPosition.lSquare());
+
+        List<Bin> bins = this.agvTask.bins();
+
+        Bin firstBin = bins.get(0);
+        int xBin = Math.toIntExact(firstBin.row().beginSquare().wSquare());
+        int yBin = Math.toIntExact(firstBin.row().beginSquare().lSquare());
+        int xNextBin, yNextBin, xDock, yDock;
+
+
+        LinkedList<Point2D> finalRoute = findPath(warehousePlant,xSource,ySource,xBin, yBin);
+
+        for (int i = 0; i < bins.size()-1; i++) {
+            xBin = Math.toIntExact(bins.get(i).row().beginSquare().wSquare());
+            yBin = Math.toIntExact(bins.get(i).row().beginSquare().lSquare());
+            xNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().wSquare());
+            yNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().lSquare());
+            LinkedList<Point2D> route = findPath(warehousePlant,xBin, yBin, xNextBin, yNextBin);
+            route.removeFirst();
+            finalRoute.addAll(route);
+        }
+
+        xBin = Math.toIntExact(bins.get(bins.size()-1).row().beginSquare().wSquare());
+        yBin = Math.toIntExact(bins.get(bins.size()-1).row().beginSquare().lSquare());
+
+        //final position of route: AGV Dock
+        xDock = Math.toIntExact(this.currentAGV.getAgvDock().beginSquare().wSquare());
+        yDock = Math.toIntExact(this.currentAGV.getAgvDock().beginSquare().lSquare());
+
+        LinkedList<Point2D> comingBackToDock = findPath(warehousePlant, xBin, yBin, xDock, yDock);
+        comingBackToDock.removeFirst();
+        finalRoute.addAll(comingBackToDock);
+
+        return finalRoute;
+    }
+
+
+    //only for test purposes
+    /*public static void main(String[] args)
     {
         String[][] matrix =
                 {
@@ -151,38 +220,5 @@ public class AgvRouteUtils {
         } else {
             System.out.println("Destination is not found");
         }
-    }
-
-
-
-    public static LinkedList<Point2D> computeFinalRoute(String[][] matrix, int xSource, int ySource, List<Bin> bins) {
-        Bin firstBin = bins.get(0);
-        int xBin = Math.toIntExact(firstBin.row().beginSquare().wSquare());
-        int yBin = Math.toIntExact(firstBin.row().beginSquare().lSquare());
-        int xNextBin, yNextBin;
-
-
-        LinkedList<Point2D> finalRoute = findPath(matrix,xSource,ySource,xBin, yBin);
-
-        for (int i = 0; i < bins.size()-1; i++) {
-            xBin = Math.toIntExact(bins.get(i).row().beginSquare().wSquare());
-            yBin = Math.toIntExact(bins.get(i).row().beginSquare().lSquare());
-            xNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().wSquare());
-            yNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().lSquare());
-            LinkedList<Point2D> route = findPath(matrix,xBin, yBin, xNextBin, yNextBin);
-            route.removeFirst();
-            finalRoute.addAll(route);
-        }
-
-        xBin = Math.toIntExact(bins.get(bins.size()-1).row().beginSquare().wSquare());
-        yBin = Math.toIntExact(bins.get(bins.size()-1).row().beginSquare().lSquare());
-        LinkedList<Point2D> comingBackToDock = findPath(matrix, xBin, yBin, xSource, ySource);
-        comingBackToDock.removeFirst();
-        finalRoute.addAll(comingBackToDock);
-
-        return finalRoute;
-
-
-
-    }
+    }*/
 }

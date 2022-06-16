@@ -16,7 +16,7 @@ import java.util.Map;
 public class JpaAGVRepository extends BaseJpaRepositoryBase<AGV, Long, Long> implements AGVRepository {
 
     JpaAGVRepository() {
-        super("AGV ID");
+        super("agvID");
     }
 
     @Override
