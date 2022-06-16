@@ -21,4 +21,11 @@ public class JpaBinRepository extends BaseJpaRepositoryBase<Bin, Long, Long> imp
         return matchOne("e.product=:product", params);
     }
 
+    @Override
+    public Iterable<Bin> findInStockByProduct(Product product) {
+        final Map<String,Object> params = new HashMap<>();
+        params.put("product", product);
+        return match("e.product=:product", params);
+    }
+
 }

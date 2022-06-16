@@ -209,6 +209,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<Orde
         this.status = status;
     }
 
+    public List<OrderItem> orderItems() {
+        return newOrderItems;
+    }
+
     @Override
     public int hashCode() {
         return DomainEntities.hashCode(this);

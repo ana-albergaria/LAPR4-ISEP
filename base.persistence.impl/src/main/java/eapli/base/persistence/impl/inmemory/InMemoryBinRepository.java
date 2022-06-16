@@ -6,6 +6,7 @@ import eapli.base.warehousemanagement.repositories.BinRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class InMemoryBinRepository extends InMemoryDomainRepository<Bin, Long> implements BinRepository {
 
@@ -16,6 +17,13 @@ public class InMemoryBinRepository extends InMemoryDomainRepository<Bin, Long> i
     @Override
     public Optional<Bin> findByProduct(Product product){
         return matchOne(e -> e.product().equals(product));
+    }
+
+    @Override
+    public Iterable<Bin> findInStockByProduct(Product product) {
+        Predicate<Bin> byProduct = e -> e.product().equals(product);
+        Predicate<Bin> byStatus = e -> e.status().equals(Bin.BinStatus.IN_STOCK);
+        return match(byProduct.and(byStatus));
     }
 
 }

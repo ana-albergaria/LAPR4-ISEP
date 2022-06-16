@@ -44,6 +44,13 @@ public class Bin implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public enum BinStatus{
+        IN_STOCK, OUT_OF_STOCK;
+    }
+
+    @Enumerated
+    BinStatus status;
+
     public Bin(final Double size, final Aisle aisle, final TheRow row, final Shelf shelf, final Product product){
         Preconditions.noneNull(size,aisle,row,shelf,product);
         this.size=size;
@@ -51,6 +58,7 @@ public class Bin implements AggregateRoot<Long>, Serializable {
         this.row=row;
         this.shelf=shelf;
         this.product=product;
+        this.status=BinStatus.IN_STOCK;
     }
 
     protected Bin(){}
@@ -73,6 +81,14 @@ public class Bin implements AggregateRoot<Long>, Serializable {
 
     public Product product() {
         return product;
+    }
+
+    public BinStatus status(){
+        return status;
+    }
+
+    public void changeStatus(BinStatus status) {
+        this.status = status;
     }
 
     @Override

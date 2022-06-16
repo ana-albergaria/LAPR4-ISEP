@@ -19,6 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.time.Period;
+import java.util.*;
+
 /**
  * @author Marta Ribeiro 1201592
  */
@@ -43,16 +46,32 @@ public class BinsBootstrapper implements Action {
         return shelfRepository.findByID(id).orElseThrow(IllegalAccessError::new);
     }
 
+    private Iterator<Aisle> getAisles() {
+        return aisleRepository.findAll().iterator();
+    }
+
+    private Iterator<Shelf> getShelves() {
+        return shelfRepository.findAll().iterator();
+    }
+
+    private List<TheRow> getRows() {
+        List<TheRow> list = new ArrayList<>();
+        Iterator<TheRow> rows = rowRepository.findAll().iterator();
+        rows.forEachRemaining(list::add);
+        return list;
+    }
+
     private Product getProduct(final Code id){
         return productRepository.ofIdentity(id).orElseThrow(IllegalAccessError::new);
     }
+
 
     @Override
     public boolean execute(){
 
         Double size1 = 0.000665;
         Double size2 = 0.00031;
-        Aisle aisle1 = getAisle(1L);
+        /*Aisle aisle1 = getAisle(1L);
         Aisle aisle2 = getAisle(2L);
         Aisle aisle3 = getAisle(3L);
         Aisle aisle4 = getAisle(4L);
@@ -92,44 +111,56 @@ public class BinsBootstrapper implements Action {
         Shelf shelf76 = getShelf(76L);
         Shelf shelf77 = getShelf(77L);
         Shelf shelf78 = getShelf(78L);
-        Shelf shelf79 = getShelf(79L);
+        Shelf shelf79 = getShelf(79L);*/
+
+
+        Iterator<Aisle> aisles = getAisles();
+        Aisle aisle1 = aisles.next();
+        Aisle aisle2 = aisles.next();
+
+        Iterator<Shelf> shelves = getShelves();
+        Shelf shelf1 = shelves.next();
+        Shelf shelf2 = shelves.next();
+        Shelf shelf3 = shelves.next();
+
+        List<TheRow> listRows = getRows();
 
         Product product1 = getProduct(Code.valueOf("lmsp.00001"));
         Product product2 = getProduct(Code.valueOf("apsp.00001"));
         Product product3 = getProduct(Code.valueOf("tnfs.00001"));
 
-        register(size1,aisle1,row1,shelf32,product1);
-        register(size1,aisle1,row1,shelf33,product1);
-        register(size1,aisle1,row1,shelf34,product1);
-        register(size1,aisle1,row2,shelf37,product1);
-        register(size1,aisle1,row2,shelf38,product1);
-        register(size1,aisle1,row2,shelf39,product1);
-        register(size1,aisle1,row2,shelf40,product1);
-        register(size1,aisle1,row3,shelf43,product1);
-        register(size1,aisle1,row3,shelf44,product1);
-        register(size1,aisle1,row3,shelf45,product1);
+        register(size1,aisle1,listRows.get(0),shelf1,product1);
+        register(size1,aisle1,listRows.get(1),shelf1,product1);
+        register(size1,aisle1,listRows.get(2),shelf1,product1);
+        register(size1,aisle1,listRows.get(3),shelf1,product1);
+        register(size1,aisle1,listRows.get(4),shelf1,product1);
+        register(size1,aisle1,listRows.get(5),shelf1,product1);
+        register(size1,aisle1,listRows.get(6),shelf1,product1);
+        register(size1,aisle1,listRows.get(7),shelf1,product1);
+        register(size1,aisle1,listRows.get(8),shelf1,product1);
+        register(size1,aisle1,listRows.get(9),shelf1,product1);
 
-        register(size1,aisle1,row3,shelf46,product2);
-        register(size1,aisle1,row3,shelf47,product2);
-        register(size1,aisle1,row3,shelf48,product2);
-        register(size1,aisle1,row3,shelf49, product2);
-        register(size1,aisle1,row3,shelf50,product2);
-        register(size1,aisle2,row4,shelf59,product2);
-        register(size1,aisle2,row4,shelf60,product2);
-        register(size1,aisle2,row4,shelf61,product2);
-        register(size1,aisle2,row4,shelf62,product2);
-        register(size1,aisle2,row4,shelf63,product2);
+        register(size1,aisle1,listRows.get(0),shelf2,product2);
+        register(size1,aisle1,listRows.get(1),shelf2,product2);
+        register(size1,aisle1,listRows.get(2),shelf2,product2);
+        register(size1,aisle1,listRows.get(3),shelf2, product2);
+        register(size1,aisle1,listRows.get(4),shelf2,product2);
+        register(size1,aisle2,listRows.get(5),shelf2,product2);
+        register(size1,aisle2,listRows.get(6),shelf2,product2);
+        register(size1,aisle2,listRows.get(7),shelf2,product2);
+        register(size1,aisle2,listRows.get(8),shelf2,product2);
+        register(size1,aisle2,listRows.get(9),shelf2,product2);
 
-        register(size2,aisle2,row5,shelf66,product3);
-        register(size2,aisle2,row6,shelf69,product3);
-        register(size2,aisle2,row6,shelf70,product3);
-        register(size2,aisle2,row6,shelf71,product3);
-        register(size2,aisle2,row6,shelf72,product3);
-        register(size2,aisle2,row7,shelf75,product3);
-        register(size2,aisle2,row7,shelf76,product3);
-        register(size2,aisle2,row7,shelf77,product3);
-        register(size2,aisle2,row7,shelf78,product3);
-        register(size2,aisle2,row7,shelf79,product3);
+        register(size2,aisle2,listRows.get(0),shelf3,product3);
+        register(size2,aisle2,listRows.get(1),shelf3,product3);
+        register(size2,aisle2,listRows.get(2),shelf3,product3);
+        register(size2,aisle2,listRows.get(3),shelf3,product3);
+        register(size2,aisle2,listRows.get(4),shelf3,product3);
+        register(size2,aisle2,listRows.get(5),shelf3,product3);
+        register(size2,aisle2,listRows.get(6),shelf3,product3);
+        register(size2,aisle2,listRows.get(7),shelf3,product3);
+        register(size2,aisle2,listRows.get(8),shelf3,product3);
+        register(size2,aisle2,listRows.get(9),shelf3,product3);
 
         return true;
     }
@@ -137,6 +168,7 @@ public class BinsBootstrapper implements Action {
     public void register(Double size, Aisle aisle, TheRow row, Shelf shelf, Product product){
         try{
             final var bin = new Bin(size,aisle,row,shelf,product);
+
             binRepository.save(bin);
             LOGGER.debug(String.valueOf(aisle), row, shelf);
         } catch (final IntegrityViolationException | ConcurrencyException | TransactionSystemException e){

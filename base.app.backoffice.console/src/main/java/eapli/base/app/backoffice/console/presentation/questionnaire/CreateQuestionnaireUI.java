@@ -1,13 +1,13 @@
 package eapli.base.app.backoffice.console.presentation.questionnaire;
 
+import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.surveymanagement.application.CreateQuestionnaireController;
+import eapli.base.surveymanagement.domain.TheRule;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.validations.Preconditions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CreateQuestionnaireUI extends AbstractUI {
     private final CreateQuestionnaireController controller = new CreateQuestionnaireController();
@@ -339,6 +339,91 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         controller.writeQuestionnaireTextFile("\n" + finalMessage, filePath);
 
+        //>>>>>>>>>> ADICIONAR RULES DA TARGET AUDIENCE
+
+        Set<TheRule> rules = new HashSet<>();
+        /*TheRule ruleToAdd;
+        TheRule.Rule rule;
+        boolean cont = true;
+        String opcao;
+        TheRule.Gender gender;
+        Long number;
+        Calendar date;
+        String string;
+        int j;
+
+        opcao = Console.readLine("Do you want to insert rules for the target audience?\n Yes or no?\n");
+        if(opcao.equalsIgnoreCase("no")) {
+            cont=false;
+        }
+
+        while (cont) {
+
+            j = 1;
+            System.out.println("\n>> PAYMENT:");
+            for (TheRule.Rule options : TheRule.Rule.values()) {
+                System.out.printf("%d. %s%n", j, options.name());
+                j++;
+            }
+
+            int optionRule = Console.readInteger("Select the option:") - 1;
+
+            if (optionRule >= j || optionRule < 0) {
+                throw new UnsupportedOperationException("Invalid Rule Option");
+            }
+
+            rule = TheRule.Rule.values()[optionRule];
+
+            if (rule.equals(TheRule.Rule.GENDER)){
+                System.out.println("Genders:");
+                for (TheRule.Gender options : TheRule.Gender.values()){
+                    System.out.printf("%d. %s%n", j , options.name());
+                    j++;
+                }
+                int optionGender = Console.readInteger("Select the option:") - 1;
+                if (optionGender >= j ||  optionGender < 0) {
+                    throw new UnsupportedOperationException("Invalid Gender Option");
+                }
+                gender = TheRule.Gender.values()[optionGender];
+                ruleToAdd = new TheRule(rule,gender,null,null,null);
+                rules.add(ruleToAdd);
+            } else if (rule.equals(TheRule.Rule.OLDER_THAN) || rule.equals(TheRule.Rule.YOUNGER_THAN) || rule.equals(TheRule.Rule.MORE_ORDERS_THAN) || rule.equals(TheRule.Rule.LESS_ORDERS_THAN) || rule.equals(TheRule.Rule.MONEY_SPENT_MORE_THAN) || rule.equals(TheRule.Rule.MONEY_SPENT_LESS_THAN)) {
+                number = Console.readLong("Number:");
+                ruleToAdd = new TheRule(rule,null,number,null,null);
+                rules.add(ruleToAdd);
+            } else if (rule.equals(TheRule.Rule.USER_REGISTATION_BEFORE_DATE) || rule.equals(TheRule.Rule.USER_REGISTATION_AFTER_DATE)){
+                date = Console.readCalendar("Date:","yyyy/MM/dd");
+                ruleToAdd = new TheRule(rule,null,null,date,null);
+                rules.add(ruleToAdd);
+            } else if (rule.equals(TheRule.Rule.CITY) || rule.equals(TheRule.Rule.COUNTRY)){
+                string = Console.readLine("String:");
+                ruleToAdd = new TheRule(rule,null,null,null,string);
+                rules.add(ruleToAdd);
+            } else if (rule.equals(TheRule.Rule.PRODUCT_BOUGHT)){
+                string = Console.readLine("String:");
+                if (controller.productExists(string)) { //se existe produto com esse id
+                    ruleToAdd = new TheRule(rule, null, null, null, string);
+                    rules.add(ruleToAdd);
+                } else {
+                    throw new UnsupportedOperationException("Product with given code does not exist");
+                }
+            } else if (rule.equals(TheRule.Rule.PRODUCT_CATEGORY_BOUGHT)){
+                string = Console.readLine("String:");
+                if (controller.productCategoryExists(string)) { //se existe categoria com esse id
+                    ruleToAdd = new TheRule(rule, null, null, null, string);
+                    rules.add(ruleToAdd);
+                } else {
+                    throw new UnsupportedOperationException("Product category with given code does not exist");
+                }
+            }
+
+            opcao = Console.readLine("Do you want to intercept another rule for the target audience with the existing ones?\n Yes or no?\n");
+            if(opcao.equalsIgnoreCase("no")) {
+                cont=false;
+            }
+
+        }*/
+
         System.out.printf("Questionnaire %s successfully created!\n\n", questionnaireTitle);
 
         System.out.println("The system will now validate if the questionnaire is valid...");
@@ -347,7 +432,7 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         if(isValidQuestionnaire){
             System.out.println("This questionnaire is valid! It will now be saved.");
-            controller.registerQuestionnaire(questionnaireID, questionnaireTitle, welcomeMessageParam.toString(), questionnaireContent.toString(), finalMessage);
+            controller.registerQuestionnaire(questionnaireID, questionnaireTitle, welcomeMessageParam.toString(), questionnaireContent.toString(), finalMessage, rules);
         }else{
             System.out.println("This questionnaire is not valid, thus it will not be saved.");
         }

@@ -53,4 +53,11 @@ public class JpaOrderRepository extends BaseJpaRepositoryBase<TheOrder, Long, Lo
         params.put("client", client);
         return match("e.status!=:orderStatus AND e.client=:client", params);
     }
+
+    @Override
+    public Iterable<TheOrder> findByClient(Client client) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("client", client);
+        return match("e.client=:client", params);
+    }
 }

@@ -11,4 +11,6 @@ public interface OrderRepository extends DomainRepository<Long, TheOrder> {
     Iterable<TheOrder> findByOrderStatus(OrderStatus orderStatus);
 
     Iterable<TheOrder> findClientOpenOrders(Client client, OrderStatus orderStatus);
+
+    Iterable<TheOrder> findByClient(Client client);
 }

@@ -16,4 +16,6 @@ public interface BinRepository extends DomainRepository<Long, Bin> {
 
     Optional<Bin> findByProduct(Product product);
 
+    Iterable<Bin> findInStockByProduct(Product product);
+
 }

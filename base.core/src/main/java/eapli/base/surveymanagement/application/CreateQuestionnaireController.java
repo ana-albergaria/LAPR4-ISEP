@@ -1,11 +1,17 @@
 package eapli.base.surveymanagement.application;
 
 import eapli.base.clientmanagement.domain.Client;
-import eapli.base.clientmanagement.domain.Email;
 import eapli.base.clientmanagement.repositories.ClientRepository;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.productmanagement.domain.AlphaNumericCode;
+import eapli.base.productmanagement.domain.Code;
+import eapli.base.productmanagement.domain.Product;
+import eapli.base.productmanagement.repositories.ProductCategoryRepository;
+import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.surveymanagement.antlr.SurveyMain;
+import eapli.base.surveymanagement.domain.GenderCriteria;
 import eapli.base.surveymanagement.domain.Questionnaire;
+import eapli.base.surveymanagement.domain.TheRule;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -23,6 +29,7 @@ import java.util.*;
  * @author Marcio Oliveira 1181472
  */
 public class CreateQuestionnaireController {
+
     /**
      *
      */
@@ -32,6 +39,8 @@ public class CreateQuestionnaireController {
      */
     private final SurveyQuestionnareRepository repository = PersistenceContext.repositories().questionnaries();
     private final ClientRepository clientRepository = PersistenceContext.repositories().clients();
+    private final ProductRepository productRepository = PersistenceContext.repositories().products();
+    private final ProductCategoryRepository productCategoryRepository = PersistenceContext.repositories().productCategories();
 
     private final String FILE_PATH = "base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/";
     private final String FILE_EXTENSION = ".txt";
@@ -41,19 +50,37 @@ public class CreateQuestionnaireController {
      * @param code
      * @param title
      * @param welcomeMessage
+     * @param questionnaireContent
      * @param finalMessage
+     * @param rules
      */
-    public void registerQuestionnaire(String code, String title, String welcomeMessage, String questionnaireContent, String finalMessage){
+    public void registerQuestionnaire(String code, String title, String welcomeMessage, String questionnaireContent, String finalMessage, Set<TheRule> rules){
 
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.SALES_MANAGER);
 
-        //at this moment it adds all clients in the system to all questionnaires -> fix this
-        Iterator<Client> targetAudience = clientRepository.findAll().iterator();
+        Iterator<Client> targetAudience;
         List<Client> list = new ArrayList<>();
-        targetAudience.forEachRemaining(list::add);
+
+        if (rules.isEmpty()) {
+            targetAudience = clientRepository.findAll().iterator();
+            targetAudience.forEachRemaining(list::add);
+        } /*else {
+
+            Criteria criteria = null;
+            for (TheRule theRule:
+                 rules) {
+                if (theRule.rule().equals(TheRule.Rule.GENDER))
+                    criteria = new GenderCriteria(Criteria);
+
+                            boolean condigiton = criteria.verofyu(client);
 
 
-        final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage, list);
+
+            }
+        }*/
+
+
+        final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage, list, rules);
 
         repository.save(questionnaire);
 
@@ -87,4 +114,19 @@ public class CreateQuestionnaireController {
     public boolean isQuestionnaireValid(String filePath) {
         return SurveyMain.parseWithVisitor(filePath);
     }
+
+    public boolean productExists(String id){
+        if (productRepository.ofIdentity(Code.valueOf(id)).isPresent()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean productCategoryExists(String id){
+        if (productCategoryRepository.ofIdentity(AlphaNumericCode.valueOf(id)).isPresent()){
+            return true;
+        }
+        return false;
+    }
+
 }
