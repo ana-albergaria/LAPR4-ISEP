@@ -26,4 +26,9 @@ public class InMemoryOrderRepository extends InMemoryDomainRepository<TheOrder, 
     public Iterable<TheOrder> findClientOpenOrders(Client client, OrderStatus orderStatus){
         return match(e -> !e.getOrderStatus().equals(orderStatus) && e.ofClient().equals(client));
     }
+
+    @Override
+    public Iterable<TheOrder> findByClient(Client client) {
+        return match(e -> e.ofClient().equals(client));
+    }
 }

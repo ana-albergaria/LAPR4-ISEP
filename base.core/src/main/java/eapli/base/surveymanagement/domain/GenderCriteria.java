@@ -6,7 +6,7 @@ import javax.persistence.Enumerated;
 
 public class GenderCriteria extends Criteria{
 
-    public enum Gender {
+    private enum Gender {
         FEMININE, MASCULINE, OTHER;
     }
 
@@ -19,7 +19,7 @@ public class GenderCriteria extends Criteria{
 
     @Override
     public boolean verifyCriteria(Client client) {
-        return false;
+        return client.gender().name().equals(this.gender.name());
     }
 
 

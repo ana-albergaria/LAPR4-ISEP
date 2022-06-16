@@ -2,12 +2,18 @@ package eapli.base.clientmanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.time.util.Calendars;
 import eapli.framework.validations.Preconditions;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Set;
+import java.util.TimeZone;
 
 @Entity
 public class Client implements AggregateRoot<Long>, Serializable {
@@ -109,7 +115,16 @@ public class Client implements AggregateRoot<Long>, Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    public Gender gender(){
+        return this.gender;
+    }
 
+    public int age(){
+        Calendar calendar = Calendar.getInstance();
+        TimeZone tz = calendar.getTimeZone();
+        ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
+        return Period.between(LocalDateTime.ofInstant(this.birthdate.getTime().toInstant(), zid).toLocalDate() , LocalDateTime.ofInstant(Calendars.now().getTime().toInstant(), zid).toLocalDate()).getYears();
+    }
 
     @Override
     public int hashCode() {

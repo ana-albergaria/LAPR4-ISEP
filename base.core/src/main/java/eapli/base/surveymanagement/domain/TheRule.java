@@ -13,7 +13,8 @@ public class TheRule implements ValueObject, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ElementCollection
+    @CollectionTable(name="rule_criteria")
+    @Column(name="criteria_type")
     private List<Criteria> criteria;
 
     public TheRule(final List<Criteria> criteria){
