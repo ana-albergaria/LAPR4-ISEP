@@ -1,7 +1,6 @@
 package eapli.base.app.user.console.presentation.questionnaire;
 
 import eapli.base.app.user.console.presentation.questionnaire.dto.QuestionnaireDTOPrinter;
-import eapli.base.app.user.console.presentation.route_planner.AgvRouteUtils;
 import eapli.base.surveymanagement.antlr.SurveyVisitorWithAnswer;
 import eapli.base.surveymanagement.antlr.questionnaireLexer;
 import eapli.base.surveymanagement.antlr.questionnaireParser;
