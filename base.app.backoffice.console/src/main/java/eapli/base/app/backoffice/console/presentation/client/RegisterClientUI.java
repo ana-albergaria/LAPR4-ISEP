@@ -1,6 +1,6 @@
 package eapli.base.app.backoffice.console.presentation.client;
 
-import eapli.base.app.backoffice.console.route_planner.AgvRoute;
+
 import eapli.base.clientmanagement.application.RegisterClientController;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.infrastructure.persistence.PersistenceContext;
