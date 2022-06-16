@@ -47,7 +47,7 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     //list<Client> targetAudience
 
     //set<Rule> rules
-    @ElementCollection
+    @OneToMany
     private Set<TheRule> rules;
 
     //createdOn
