@@ -8,6 +8,6 @@ BMS\AGVBatteryManagementSystem.class
 requests\AGVTwinServerRequest.class
 route_planner\Node.class
 srv\TcpSrvAGVTwinThread.class
+route_planner\AgvRoute.class
 srv\TcpSrvAGVTwin.class
-route_planner\AgvRouteUtils.class
 requests\SendAGVStatusRequest.class

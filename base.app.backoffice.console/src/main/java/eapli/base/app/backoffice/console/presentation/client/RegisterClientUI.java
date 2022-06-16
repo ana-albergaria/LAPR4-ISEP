@@ -1,6 +1,7 @@
 package eapli.base.app.backoffice.console.presentation.client;
 
 
+import eapli.base.app.backoffice.console.presentation.route_planner.AgvRoute;
 import eapli.base.clientmanagement.application.RegisterClientController;
 import eapli.base.clientmanagement.domain.Client;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -23,7 +24,7 @@ public class RegisterClientUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        /* ONLY TESTING
+
 
         AGV agv = PersistenceContext.repositories().agvs().ofIdentity(334L).get();
         Iterable<TheTask> listTask = PersistenceContext.repositories().tasks().findByAgv(agv);
@@ -52,8 +53,8 @@ public class RegisterClientUI extends AbstractUI {
 
         AgvRoute route = new AgvRoute(agv,agvPosition,task,matrix);
 
-        System.out.println(AgvRoute.findPath(matrix,0,0,5,8));
-        System.out.println(route.computeFinalRoute());*/
+
+        System.out.println(route.computeFinalRoute());
 
 
         Calendar birthDate = null;
