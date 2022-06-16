@@ -82,7 +82,7 @@ public class TcpSrvAGVTwin {
 }
 
 class TcpSrvAGVTwinThread implements Runnable {
-    private Socket s;
+    private SSLSocket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
 
@@ -92,7 +92,7 @@ class TcpSrvAGVTwinThread implements Runnable {
     //developing the input communication module of the AGV digital twin
     //to accept requests from the "AGVManager"
 
-    public TcpSrvAGVTwinThread(Socket cli_s){
+    public TcpSrvAGVTwinThread(SSLSocket cli_s){
         s=cli_s;
     }
 
@@ -128,11 +128,9 @@ class TcpSrvAGVTwinThread implements Runnable {
 
 
                 if(clientMessageUS[1] == 6){
-                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
-                }
-
-                if(clientMessageUS[1] == 6){
+                    MessageUtils.writeMessage((byte) 7, sOut);
                     sInputObject = new ObjectInputStream(this.s.getInputStream());
+                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
                 }
 
                 final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);

@@ -96,9 +96,8 @@ public class HTTPServerAGVS extends Thread{
 
     public static synchronized String showPositions(String ip) {
         /*positions = getPositions.getPositions(8, ip);
-        positions= new ArrayList<>();
+        positions= new ArrayList<>();*/
         allAgvsStatus = getPositions.getAgvStatus(6, ip);
-        int counter = 0;*/
 
         String buildInHtml = "<table>";
         /*for(AGVPosition pos: positions) {

@@ -21,7 +21,6 @@ public class SendAGVStatusRequest extends AGVTwinServerRequest{
     @Override
     public void execute() {
         try {
-            MessageUtils.writeMessage((byte) 7, sOut);
 
             AGV agv = null;
             TaskStatus agvStatus = null;

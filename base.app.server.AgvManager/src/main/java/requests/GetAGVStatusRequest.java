@@ -5,6 +5,8 @@ import eapli.base.warehousemanagement.application.AGVManagerServerController;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import java.util.Map;
 public class GetAGVStatusRequest extends AGVManagerServerRequest{
     private final int PORT = 2400;
     private final String IP_ADDRESS = "127.0.0.1";
-    private Socket socket;
+    private SSLSocket socket;
     public GetAGVStatusRequest(final AGVManagerServerController ctrl,
                                final byte request,
                                final ObjectOutputStream sOutObject,
@@ -33,7 +35,11 @@ public class GetAGVStatusRequest extends AGVManagerServerRequest{
 
         for(AGV agv : agvsInTheSystem){
             try{
-                socket = new Socket(IP_ADDRESS, PORT);
+                SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+
+                socket = (SSLSocket) sf.createSocket(IP_ADDRESS, PORT);
+
+                socket.startHandshake();
                 DataInputStream sIn = new DataInputStream(socket.getInputStream());
                 DataOutputStream sOut = new DataOutputStream(socket.getOutputStream());
 
