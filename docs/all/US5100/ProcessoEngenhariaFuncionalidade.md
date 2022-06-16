@@ -72,6 +72,21 @@ At least three routes have to be computed:
 
 3. From location of product B to the AGV dock location.
 
+[Question:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=17039)
+
+Dear Client,
+
+the statement says that an AGV has a total of 8 sensors, 2 in each corner of the AGV. Therefore, some doubts have arisen, such as:
+
+What is the difference between having one or two sensors, in each corner? How do we differentiate between them? Are they in the same position?
+
+
+[Answer:](https://moodle.isep.ipp.pt/mod/forum/discuss.php?d=17039)
+
+Each sensor is a source of information to signal (or not) the presence of an obstacle (e.g.: another AGV, an aisle, etc.).
+
+In each corner there is a sensor to evaluate obstacles in the front and another sensor  to evaluate obstacles on the side.
+
 
 
 # 2. Análise
