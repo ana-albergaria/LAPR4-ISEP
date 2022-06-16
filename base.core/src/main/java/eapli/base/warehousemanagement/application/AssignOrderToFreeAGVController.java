@@ -1,6 +1,7 @@
 package eapli.base.warehousemanagement.application;
 
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.OrderItem;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.domain.TheTask;
@@ -8,16 +9,15 @@ import eapli.base.ordermanagement.repositories.OrderRepository;
 import eapli.base.ordermanagement.repositories.TaskRepository;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.Bin;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 import eapli.base.warehousemanagement.repositories.AGVRepository;
+import eapli.base.warehousemanagement.repositories.BinRepository;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import org.springframework.scheduling.config.Task;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AssignOrderToFreeAGVController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -27,6 +27,8 @@ public class AssignOrderToFreeAGVController {
     private final OrderRepository orderRepository = PersistenceContext.repositories().orders();
 
     private final TaskRepository taskRepository = PersistenceContext.repositories().tasks();
+
+    private final BinRepository repository = PersistenceContext.repositories().bins();
 
     public Map<Integer, TheOrder> showPaidOrdersList(){
         authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.WAREHOUSE_EMPLOYEE);
@@ -72,7 +74,22 @@ public class AssignOrderToFreeAGVController {
     }
 
     public TheTask assignTask(final AGV selectedAGV, final TheOrder selectedOrder){
-        return taskRepository.save(new TheTask(selectedAGV,selectedOrder));
+        List<Bin> binsToSend = binsToSend(selectedOrder);
+        return taskRepository.save(new TheTask(selectedAGV,selectedOrder,binsToSend));
+    }
+
+    private List<Bin> binsToSend(TheOrder order){
+        List<Bin> result = new ArrayList<>();
+        Bin binToAdd;
+        for (OrderItem item:
+                order.orderItems()) {
+            for (int i = 0; i < item.quantity(); i++) {
+                binToAdd = repository.findInStockByProduct(item.product()).iterator().next();
+                binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
+                result.add(binToAdd);
+            }
+        }
+        return result;
     }
 
 }

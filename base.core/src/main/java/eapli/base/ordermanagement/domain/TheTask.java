@@ -37,26 +37,11 @@ public class TheTask implements AggregateRoot<Long>, Serializable {
     @OneToMany
     private List<Bin> bins;
 
-    public TheTask(final AGV agv, final TheOrder order) {
-        Preconditions.noneNull(agv, order);
+    public TheTask(final AGV agv, final TheOrder order, final List<Bin> binsToSend) {
+        Preconditions.noneNull(agv, order, binsToSend);
         this.agv=agv;
         this.order=order;
-        this.bins=binsToSend(order);
-    }
-
-    private List<Bin> binsToSend(TheOrder order){
-        BinRepository repository = PersistenceContext.repositories().bins();
-        List<Bin> result = new ArrayList<>();
-        Bin binToAdd;
-        for (OrderItem item:
-             order.orderItems()) {
-            for (int i = 0; i < item.quantity(); i++) {
-                binToAdd = repository.findInStockByProduct(item.product()).iterator().next();
-                binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
-                result.add(binToAdd);
-            }
-        }
-        return result;
+        this.bins=binsToSend;
     }
 
     public TheTask() {

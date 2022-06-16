@@ -8,8 +8,10 @@ import eapli.base.warehousemanagement.domain.*;
 import eapli.framework.general.domain.model.Money;
 import eapli.framework.infrastructure.authz.domain.model.*;
 import eapli.framework.time.util.Calendars;
+import org.h2.result.Row;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +38,12 @@ public class TheTaskTest {
     private AutonomyStatus autonomyStatus;
     private TaskStatus taskStatus;
     private AGV agv;
+    private Product product;
+    private List<Bin> binsToSend = new ArrayList<>();
+    private Bin binToAdd;
+    private Aisle aisle;
+    private TheRow row;
+    private Shelf shelf;
 
 
     @Before
@@ -47,12 +55,17 @@ public class TheTaskTest {
         roles.add(BaseRoles.SALES_CLERK);
         final SystemUserBuilder userBuilder = new SystemUserBuilder(new NilPasswordPolicy(), new PlainTextEncoder());
         salesClerk = userBuilder.with("sales_clerk", "duMMy1", "dummy", "dummy", "a@b.ro").withRoles(roles).build();
-        orderItem1 = new OrderItem(3,new Product(Code.valueOf("abcd.12345"), Barcode.valueOf("123456789012"), ShortDescription.valueOf("Short description."), ExtendedDescription.valueOf("Very very very very very very very extended description."),
-                Money.euros(1.5), Product.Status.AVAILABLE,Weight.valueOf(10),Volume.valueOf(5.3),Money.euros(3),new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category"))));
+        product = new Product(Code.valueOf("abcd.12345"), Barcode.valueOf("123456789012"), ShortDescription.valueOf("Short description."), ExtendedDescription.valueOf("Very very very very very very very extended description."),
+                Money.euros(1.5), Product.Status.AVAILABLE,Weight.valueOf(10),Volume.valueOf(5.3),Money.euros(3),new ProductCategory(AlphaNumericCode.valueOf("code"),CategoryDescription.valueOf("this is the description of a category")));
+        orderItem1 = new OrderItem(1,product);
         newOrderItems.add(orderItem1);
-
+        aisle = new Aisle(1L,new Square(5L,1L),new Square(16L,1L),new Square(16L,1L),new Accessibility("w+"));
+        row = new TheRow(1L,new Square(5L,1L),new Square(7L,1L),aisle);
+        shelf = new Shelf(row);
+        binToAdd = new Bin(5.4,aisle,row,shelf,product);
         order = new TheOrder(client,billingAddress,shippingAdddress,Shipment.BLUE,Payment.APPLE_PAY, TheOrder.SourceChannel.CALL, Calendars.now(),salesClerk,newOrderItems);
-
+        binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
+        binsToSend.add(binToAdd);
 
         beginSquare = new Square(1L, 1L);
         endSquare = new Square(1L, 6L);
@@ -66,18 +79,18 @@ public class TheTaskTest {
 
     @Test
     public void ensureTaskIsCreated(){
-        TheTask task = new TheTask(agv, order);
+        TheTask task = new TheTask(agv, order, binsToSend);
         assertNotNull(task);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureTaskAGVNotNull(){
-        TheTask task = new TheTask(null, order);
+        TheTask task = new TheTask(null, order, binsToSend);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void ensureTaskOrderNotNull(){
-        TheTask task = new TheTask(agv, null);
+        TheTask task = new TheTask(agv, null, binsToSend);
     }
 
 }

@@ -1,5 +1,6 @@
 package srv;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.ordermanagement.domain.OrderItem;
 import eapli.base.ordermanagement.domain.OrderStatus;
 import eapli.base.ordermanagement.domain.TheOrder;
 import eapli.base.ordermanagement.domain.TheTask;
@@ -39,6 +40,7 @@ class TcpSrvAgvManager {
         OrderRepository orderRepository = PersistenceContext.repositories().orders();
         TaskRepository taskRepository = PersistenceContext.repositories().tasks();
         AGVRepository agvRepository = PersistenceContext.repositories().agvs();
+        BinRepository binRepository = PersistenceContext.repositories().bins();
         TheOrder selectedOrder;
         AGV selectedAGV;
         Iterable<TheOrder> ordersToAssign = orderRepository.findByOrderStatus(OrderStatus.valueOf(OrderStatus.Status.TO_BE_PREPARED));
@@ -59,7 +61,17 @@ class TcpSrvAgvManager {
             do {
                 selectedOrder = ordersToAssignList.get(number);
                 selectedAGV = agvsAvailableList.get(number);
-                taskRepository.save(new TheTask(selectedAGV,selectedOrder));
+                List<Bin> binsToSend = new ArrayList<>();
+                Bin binToAdd;
+                for (OrderItem item:
+                        selectedOrder.orderItems()) {
+                    for (int i = 0; i < item.quantity(); i++) {
+                        binToAdd = binRepository.findInStockByProduct(item.product()).iterator().next();
+                        binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
+                        binsToSend.add(binToAdd);
+                    }
+                }
+                taskRepository.save(new TheTask(selectedAGV,selectedOrder,binsToSend));
                 selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
                 orderRepository.save(selectedOrder);
                 System.out.printf("[ASSIGN AGVS TO ORDERS]: AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
