@@ -1,5 +1,13 @@
+requests\UpdateMatrixRequest.class
 cli\TcpCliAGVTwinThread.class
+control_system\ControlSystem.class
+positioning\AGVCurrentPositions.class
+requests\AGVTwinServerMessageParser.class
 cli\TcpCliAGVTwin.class
-Positioning\AGVCurrentPositions.class
-srv\TcpSrvAGVTwin.class
+BMS\AGVBatteryManagementSystem.class
+requests\AGVTwinServerRequest.class
+route_planner\Node.class
 srv\TcpSrvAGVTwinThread.class
+srv\TcpSrvAGVTwin.class
+route_planner\AgvRouteUtils.class
+requests\SendAGVStatusRequest.class

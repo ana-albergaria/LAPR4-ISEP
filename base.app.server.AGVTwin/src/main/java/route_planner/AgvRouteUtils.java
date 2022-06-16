@@ -169,8 +169,6 @@ public class AgvRouteUtils {
             yBin = Math.toIntExact(bins.get(i).row().beginSquare().lSquare());
             xNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().wSquare());
             yNextBin = Math.toIntExact(bins.get(i+1).row().beginSquare().lSquare());
-            System.out.println(xNextBin);
-            System.out.println(yNextBin);
             LinkedList<Point2D> route = findPath(matrix,xBin, yBin, xNextBin, yNextBin);
             route.removeFirst();
             finalRoute.addAll(route);
