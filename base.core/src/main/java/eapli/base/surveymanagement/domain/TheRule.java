@@ -1,5 +1,6 @@
 package eapli.base.surveymanagement.domain;
 
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
@@ -8,13 +9,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Embeddable
-public class TheRule implements ValueObject, Serializable {
+@Entity
+public class TheRule implements AggregateRoot<Long>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @CollectionTable(name="rule_criteria")
-    @Column(name="criteria_type")
+    @Version
+    private Long version;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long ruleId;
+
+    @ElementCollection
     private List<Criteria> criteria;
 
     public TheRule(final List<Criteria> criteria){
@@ -39,5 +46,23 @@ public class TheRule implements ValueObject, Serializable {
         return (new HashCoder()).with(this.criteria).code();
     }
 
+    @Override
+    public boolean sameAs(Object other) {
+        if (!(other instanceof TheRule)) {
+            return false;
+        }
 
+        final var that = (TheRule) other;
+        if (this == that) {
+            return true;
+        }
+
+        return identity().equals(that.identity());
+    }
+
+
+    @Override
+    public Long identity() {
+        return null;
+    }
 }

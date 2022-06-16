@@ -1,11 +1,10 @@
 package eapli.base.app.backoffice.console.presentation.questionnaire;
 
-import eapli.base.ordermanagement.domain.Payment;
 import eapli.base.surveymanagement.application.CreateQuestionnaireController;
+import eapli.base.surveymanagement.domain.Criteria;
 import eapli.base.surveymanagement.domain.TheRule;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import eapli.framework.validations.Preconditions;
 
 import java.util.*;
 
@@ -343,13 +342,10 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         Set<TheRule> rules = new HashSet<>();
         /*TheRule ruleToAdd;
-        TheRule.Rule rule;
+        Criteria criteria;
         boolean cont = true;
         String opcao;
-        TheRule.Gender gender;
-        Long number;
-        Calendar date;
-        String string;
+
         int j;
 
         opcao = Console.readLine("Do you want to insert rules for the target audience?\n Yes or no?\n");
@@ -360,8 +356,8 @@ public class CreateQuestionnaireUI extends AbstractUI {
         while (cont) {
 
             j = 1;
-            System.out.println("\n>> PAYMENT:");
-            for (TheRule.Rule options : TheRule.Rule.values()) {
+            System.out.println("\n>> CRITERIA:");
+            for (Criteria options : Criteria.values()) {
                 System.out.printf("%d. %s%n", j, options.name());
                 j++;
             }
@@ -369,14 +365,14 @@ public class CreateQuestionnaireUI extends AbstractUI {
             int optionRule = Console.readInteger("Select the option:") - 1;
 
             if (optionRule >= j || optionRule < 0) {
-                throw new UnsupportedOperationException("Invalid Rule Option");
+                throw new UnsupportedOperationException("Invalid Criteria Option");
             }
 
-            rule = TheRule.Rule.values()[optionRule];
+            criteria = Criteria.values()[optionRule];
 
-            if (rule.equals(TheRule.Rule.GENDER)){
+            if (criteria.equals(Criteria.GENDER)){
                 System.out.println("Genders:");
-                for (TheRule.Gender options : TheRule.Gender.values()){
+                for (Criteria.Gender options : Criteria.Gender.values()){
                     System.out.printf("%d. %s%n", j , options.name());
                     j++;
                 }
