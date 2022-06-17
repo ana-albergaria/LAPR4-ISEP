@@ -8,15 +8,15 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
+import eapli.base.warehousemanagement.domain.AgvDock;
 import eapli.base.warehousemanagement.domain.Square;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.springframework.scheduling.config.Task;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.awt.geom.Point2D;
+import java.util.*;
 
 public class RegisterClientUI extends AbstractUI {
 
@@ -25,10 +25,17 @@ public class RegisterClientUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
+        Iterator<AgvDock> docks = PersistenceContext.repositories().agvDocks().findAll().iterator();
+        while(docks.hasNext()) {
+            AgvDock dock = docks.next();
+            System.out.println(dock);
+            System.out.println(dock.beginSquare().wSquare());
+            System.out.println(dock.beginSquare().lSquare());
+        }
 
         AGV agv = PersistenceContext.repositories().agvs().ofIdentity(334L).get();
         //Iterable<TheTask> listTask = PersistenceContext.repositories().tasks().findByAgv(agv);
-        TheTask task = PersistenceContext.repositories().tasks().findByAgv(agv).iterator().next();
+        //TheTask task = PersistenceContext.repositories().tasks().findByAgv(agv).iterator().next();
         TheTask task2 = PersistenceContext.repositories().tasks().ofIdentity(230L).get();
         AGVPosition agvPosition = new AGVPosition(new Square(1L,1L), agv);
         String[][] matrix =
@@ -46,8 +53,8 @@ public class RegisterClientUI extends AbstractUI {
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "D3", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "D6", "X", "X", "X", "X", "X", "X", "X", "X" },
-                        { "D4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
@@ -55,10 +62,14 @@ public class RegisterClientUI extends AbstractUI {
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                 };
 
-        AgvRoute route = new AgvRoute(agv,agvPosition,task,matrix);
+        AgvRoute route = new AgvRoute(agv,agvPosition,task2,matrix);
 
 
-        System.out.println(route.computeFinalRoute());
+        LinkedList<Point2D> finalRoute = route.computeFinalRoute();
+        System.out.println(finalRoute);
+        /*for (Point2D point : finalRoute) {
+            System.out.println(matrix[(int) point.getX()][(int) point.getY()]);
+        }*/
 
 
         Calendar birthDate = null;
