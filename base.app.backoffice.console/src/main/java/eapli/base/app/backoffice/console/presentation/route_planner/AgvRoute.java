@@ -52,7 +52,7 @@ public class AgvRoute {
     // The function returns false if (x, y) is not a valid position
     private static boolean isValid(int x, int y, int N, int M, String[][] matrix) {
         if((x >= 0 && x < N) && (y >= 0 && y < M)) {
-            if(!matrix[x][y].equals("X")) {
+            if(matrix[x][y].equals("X")) {
                 return true;
             }
         }

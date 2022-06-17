@@ -52,12 +52,11 @@ public class AgvRoute {
     // The function returns false if (x, y) is not a valid position
     private static boolean isValid(int x, int y, int N, int M, String[][] matrix) {
         if((x >= 0 && x < N) && (y >= 0 && y < M)) {
-            if(!matrix[x][y].equals("X")) {
+            if(matrix[x][y].equals("X")) {
                 return true;
             }
         }
         return false;
-        //return (x >= 0 && x < N) && (y >= 0 && y < N) /*&& (!matrix[x][y].equals("X"))*/; //the obstacles are marked as X in the matrix
     }
 
     // Utility function to find path from source to destination
@@ -188,21 +187,32 @@ public class AgvRoute {
     }
 
 
+
     //only for test purposes
-    /*public static void main(String[] args)
+    public static void main(String[] args)
     {
         String[][] matrix =
                 {
-                        { "1", "X", "6", "5", "5", "1", "1", "1", "7", "X" },
-                        { "3", "6", "2", "X", "6", "5", "7", "2", "6", "6" },
-                        { "1", "3", "6", "1", "1", "1", "7", "1", "X", "5" },
-                        { "7", "5", "6", "3", "1", "3", "3", "1", "1", "7" },
-                        { "3", "X", "6", "X", "7", "2", "6", "5", "X", "X" },
-                        { "3", "2", "5", "1", "2", "5", "1", "2", "3", "X" },
-                        { "4", "2", "2", "2", "5", "2", "3", "7", "7", "3" },
-                        { "7", "2", "X", "3", "5", "2", "2", "3", "6", "3" },
-                        { "5", "1", "X", "2", "6", "X", "6", "7", "3", "7" },
-                        { "1", "X", "1", "7", "5", "3", "6", "5", "3", "9" }
+                        { "X", "X", "X", "X", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D1", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "D5", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D2", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "A2", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D3", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "D6", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                 };
 
 
@@ -210,7 +220,7 @@ public class AgvRoute {
 
         // Find a route in the matrix from source cell (0, 0) to
         // destination cell (N-1, N-1)
-        LinkedList<Point2D> path = findPath(matrix, 0, 0, 3,9);
+        LinkedList<Point2D> path = findPath(matrix, 1, 1, 15,1);
 
 
         if (path != null && path.size() > 0) {
@@ -218,5 +228,5 @@ public class AgvRoute {
         } else {
             System.out.println("Destination is not found");
         }
-    }*/
+    }
 }
