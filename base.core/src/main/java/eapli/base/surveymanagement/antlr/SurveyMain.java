@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class SurveyMain {
     public static void main(String[] args) throws IOException {
-        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/Clinical Questionnaire.txt");
+        parseWithVisitor("base.core/src/main/java/eapli/base/surveymanagement/antlr/surveys/Jackets.txt");
     }
 
 
