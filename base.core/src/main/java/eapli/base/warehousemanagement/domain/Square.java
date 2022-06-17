@@ -17,8 +17,8 @@ public class Square implements AggregateRoot<Long>, Serializable {
     private Long wSquare;
 
     public Square(Long lSquare, Long wSquare){
-        Preconditions.isPositive(lSquare, "Length Square must be positive!");
-        Preconditions.isPositive(wSquare, "Width Square must be positive!");
+        Preconditions.ensure(lSquare >= 0, "Length Square must be 0 or positive!");
+        Preconditions.ensure(wSquare >= 0, "Width Square must be 0 or positive!");
         Preconditions.noneNull(lSquare, wSquare);
         this.lSquare = lSquare;
         this.wSquare = wSquare;

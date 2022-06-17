@@ -207,8 +207,8 @@ public class AgvRoute {
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "D3", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "D6", "X", "X", "X", "X", "X", "X", "X", "X" },
-                        { "D4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
+                        { "D4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
                         { "X", "X", "X", "X", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "A4", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X" },
@@ -219,11 +219,11 @@ public class AgvRoute {
 
         //fazer para na ultima route verificar que o destino é D?
         System.out.println(matrix[2][0]);
-        System.out.println(matrix[4][0]);
+        System.out.println(matrix[15][0]);
 
         // Find a route in the matrix from source cell (0, 0) to
         // destination cell (N-1, N-1)
-        LinkedList<Point2D> path = findPath(matrix, 2, 0, 4,0, "D2");
+        LinkedList<Point2D> path = findPath(matrix, 2, 0, 15,0, "D4");
 
 
         if (path != null && path.size() > 0) {
