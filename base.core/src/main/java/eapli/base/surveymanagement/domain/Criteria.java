@@ -34,27 +34,19 @@ public enum Criteria{
     public String productCategoryCode;
 
     public boolean verifyAgeCriteria(Client client){
-        if (this.signal.name().equalsIgnoreCase("GREATER_THAN")){
-            return client.age()>this.age.intValue();
-        } else {
-            return client.age()<this.age.intValue();
+        if (client.birthdate()!=null) {
+            if (this.signal.name().equalsIgnoreCase("GREATER_THAN")) {
+                return client.age() > this.age.intValue();
+            } else {
+                return client.age() < this.age.intValue();
+            }
         }
+        return false;
     }
 
     public boolean verifyGenderCriteria(Client client){
-        return client.gender().name().equalsIgnoreCase(this.gender.name());
-    }
-
-    public boolean verifyProductBoughtCriteria(Client client) {
-        OrderRepository repository = PersistenceContext.repositories().orders();
-        for (TheOrder order :
-                repository.findByClient(client)) {
-            for (OrderItem item :
-                    order.orderItems()) {
-                if (item.product().getProductCategory().identity().toString().equals(this.productCode)) {
-                    return true;
-                }
-            }
+        if (client.gender()!=null) {
+            return client.gender().name().equalsIgnoreCase(this.gender.name());
         }
         return false;
     }
@@ -65,7 +57,21 @@ public enum Criteria{
                 repository.findByClient(client)) {
             for (OrderItem item :
                     order.orderItems()) {
-                if (item.product().identity().code().equals(this.productCategoryCode)){
+                if (item.product().getProductCategory().identity().toString().equals(this.productCategoryCode)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean verifyProductBoughtCriteria(Client client) {
+        OrderRepository repository = PersistenceContext.repositories().orders();
+        for (TheOrder order :
+                repository.findByClient(client)) {
+            for (OrderItem item :
+                    order.orderItems()) {
+                if (item.product().identity().code().equals(this.productCode)){
                     return true;
                 }
             }

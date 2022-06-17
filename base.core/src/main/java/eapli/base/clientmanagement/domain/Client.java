@@ -119,6 +119,10 @@ public class Client implements AggregateRoot<Long>, Serializable {
         return this.gender;
     }
 
+    public Calendar birthdate(){
+        return this.birthdate;
+    }
+
     public int age(){
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = calendar.getTimeZone();

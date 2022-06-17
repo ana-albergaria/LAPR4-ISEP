@@ -72,8 +72,8 @@ public class CreateQuestionnaireController {
                  rules) {
                 for (Criteria criteria:
                      theRule.criteria()) {
-                    for (Iterator<Client> it = targetAudience; it.hasNext(); ) {
-                        client = it.next();
+                    while (targetAudience.hasNext()) {
+                        client = targetAudience.next();
                         if (criteria.equals(Criteria.GENDER)){
                             if (criteria.verifyGenderCriteria(client)){
                                 list3.add(client);
@@ -95,7 +95,7 @@ public class CreateQuestionnaireController {
                     if (cont>0) {
                         list2.retainAll(list3);
                     } else {
-                        list2 = list3;
+                        list2.addAll(list3);
                     }
                     list3.clear();
                     cont++;
