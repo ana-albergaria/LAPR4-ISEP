@@ -17,12 +17,12 @@ Type: single choice
 
 2. Product Feedback
 Section Obligatoriness: mandatory
-1. Would you recommend our clinical products to other person?(mandatory)
+4. Would you recommend our clinical products to other person?(mandatory)
 Type: single choice
 1)Ye
 2)No
 
-2. How would you rather our products?(mandatory)
+5. How would you rather our products?(mandatory)
 Type: scaling option
 Scale: Strongly disagree, disagree, neutral, agree, strongly agree
 1)Our products are the worse

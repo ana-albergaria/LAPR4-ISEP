@@ -223,7 +223,7 @@ public class AgvRoute {
 
         // Find a route in the matrix from source cell (0, 0) to
         // destination cell (N-1, N-1)
-        LinkedList<Point2D> path = findPath(matrix, 2, 0, 15,0, "D4");
+        LinkedList<Point2D> path = findPath(matrix, 2, 0, 10,29, "D4");
 
 
         if (path != null && path.size() > 0) {
