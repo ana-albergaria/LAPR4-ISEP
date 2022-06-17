@@ -8,6 +8,7 @@ import eapli.base.productmanagement.domain.Code;
 import eapli.base.productmanagement.repositories.ProductCategoryRepository;
 import eapli.base.productmanagement.repositories.ProductRepository;
 import eapli.base.surveymanagement.antlr.SurveyMain;
+import eapli.base.surveymanagement.domain.Criteria;
 import eapli.base.surveymanagement.domain.Questionnaire;
 import eapli.base.surveymanagement.domain.TheRule;
 import eapli.base.surveymanagement.repositories.SurveyQuestionnareRepository;
@@ -58,24 +59,56 @@ public class CreateQuestionnaireController {
 
         Iterator<Client> targetAudience;
         List<Client> list = new ArrayList<>();
+        List<Client> list2 = new ArrayList<>();
+        List<Client> list3 = new ArrayList<>();
+        targetAudience = clientRepository.findAll().iterator();
+        Client client;
+        int cont = 0;
 
-        /*if (rules.isEmpty()) {*/
-            targetAudience = clientRepository.findAll().iterator();
+        if (rules.isEmpty()) {
             targetAudience.forEachRemaining(list::add);
-        /*} else {
-
-            Criteria criteria = null;
+        } else {
             for (TheRule theRule:
                  rules) {
-                if (theRule.rule().equals(TheRule.Rule.GENDER))
-                    criteria = new GenderCriteria(Criteria);
-
-                            boolean condigiton = criteria.verofyu(client);
-
-
-
+                for (Criteria criteria:
+                     theRule.criteria()) {
+                    for (Iterator<Client> it = targetAudience; it.hasNext(); ) {
+                        client = it.next();
+                        if (criteria.equals(Criteria.GENDER)){
+                            if (criteria.verifyGenderCriteria(client)){
+                                list3.add(client);
+                            }
+                        } else if (criteria.equals(Criteria.AGE)){
+                            if (criteria.verifyAgeCriteria(client)){
+                                list3.add(client);
+                            }
+                        } else if (criteria.equals(Criteria.PRODUCT_BOUGHT)){
+                            if (criteria.verifyProductBoughtCriteria(client)){
+                                list3.add(client);
+                            }
+                        } else if (criteria.equals(Criteria.PRODUCT_CATEGORY_BOUGHT)){
+                            if (criteria.verifyProductCategoryBoughtCriteria(client)){
+                                list3.add(client);
+                            }
+                        }
+                    }
+                    if (cont>0) {
+                        list2.retainAll(list3);
+                    } else {
+                        list2 = list3;
+                    }
+                    list3.clear();
+                    cont++;
+                }
+                for (Client client1 : list2){
+                    if (!list.contains(client1))
+                        list.add(client1);
+                }
+                list2.clear();
+                cont=0;
             }
-        }*/
+
+        }
 
 
         final var questionnaire = new Questionnaire(code, title, welcomeMessage, questionnaireContent, finalMessage, list, rules);

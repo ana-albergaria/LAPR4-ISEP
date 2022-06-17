@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class QuestionnaireBootstrapper implements Action {
@@ -79,9 +80,11 @@ public class QuestionnaireBootstrapper implements Action {
                 "2)No\n" +
                 "3)Maybe";
 
-        register("BOOKS21-22", "Books Questionnaire", "Hello, welcome to the Books Questionnaire", booksContent, "Thanks for answering the Books Questionnaire",null);
-        register("DRI21-22", "Drinks Questionnaire", "Hello, welcome to the Drinks Questionnaire", drinksContent, "Thanks for answering the Drinks Questionnaire",null);
-        register("SPO21-22", "Sports Questionnaire", "Hello, welcome to the Sports Questionnaire", sportsContent, "Thanks for answering the Sports Questionnaire",null);
+        Set<TheRule> rules = new HashSet<>();
+
+        register("BOOKS21-22", "Books Questionnaire", "Hello, welcome to the Books Questionnaire", booksContent, "Thanks for answering the Books Questionnaire",rules);
+        register("DRI21-22", "Drinks Questionnaire", "Hello, welcome to the Drinks Questionnaire", drinksContent, "Thanks for answering the Drinks Questionnaire",rules);
+        register("SPO21-22", "Sports Questionnaire", "Hello, welcome to the Sports Questionnaire", sportsContent, "Thanks for answering the Sports Questionnaire",rules);
 
         return true;
     }
