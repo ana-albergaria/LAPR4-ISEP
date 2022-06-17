@@ -59,10 +59,10 @@ public class CreateQuestionnaireController {
         Iterator<Client> targetAudience;
         List<Client> list = new ArrayList<>();
 
-        if (rules.isEmpty()) {
+        /*if (rules.isEmpty()) {*/
             targetAudience = clientRepository.findAll().iterator();
             targetAudience.forEachRemaining(list::add);
-        } /*else {
+        /*} else {
 
             Criteria criteria = null;
             for (TheRule theRule:

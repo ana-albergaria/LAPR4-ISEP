@@ -8,8 +8,10 @@ import eapli.base.ordermanagement.repositories.OrderRepository;
 import javax.persistence.Enumerated;
 
 public enum Criteria{
-
-    GENDER, AGE, PRODUCT_BOUGHT, PRODUCT_CATEGORY_BOUGHT;
+    GENDER,
+    AGE,
+    PRODUCT_BOUGHT,
+    PRODUCT_CATEGORY_BOUGHT;
 
     public Long age;
 
@@ -18,51 +20,57 @@ public enum Criteria{
     }
 
     @Enumerated
-    Signal signal;
+    public Signal signal;
 
     public enum Gender {
         FEMININE, MASCULINE, OTHER;
     }
 
     @Enumerated
-    Gender gender;
+    public Gender gender;
 
     public String productCode;
 
     public String productCategoryCode;
 
-    public boolean verifyCriteria(Client client){
-        if (this.equals(AGE)){
-            if (this.signal.equals(Signal.GREATER_THAN)){
-                return client.age()>this.age.intValue();
-            }else{
-                return client.age()<this.age.intValue();
-            }
-        } else if (this.equals(GENDER)){
-            return client.gender().name().equals(this.gender.name());
-        } else if (this.equals(PRODUCT_BOUGHT)){
-            OrderRepository repository = PersistenceContext.repositories().orders();
-            for (TheOrder order:
-                    repository.findByClient(client)) {
-                for (OrderItem item:
-                        order.orderItems()) {
-                    if (item.product().getProductCategory().identity().toString().equals(this.productCode)){
-                        return true;
-                    }
-                }
-            }
-        } else if (this.equals(PRODUCT_CATEGORY_BOUGHT)){
-            OrderRepository repository = PersistenceContext.repositories().orders();
-            for (TheOrder order:
-                    repository.findByClient(client)) {
-                for (OrderItem item:
-                        order.orderItems()) {
-                    if (item.product().identity().code().equals(this.productCategoryCode)){
-                        return true;
-                    }
+    public boolean verifyAgeCriteria(Client client){
+        if (this.signal.name().equalsIgnoreCase("GREATER_THAN")){
+            return client.age()>this.age.intValue();
+        } else {
+            return client.age()<this.age.intValue();
+        }
+    }
+
+    public boolean verifyGenderCriteria(Client client){
+        return client.gender().name().equalsIgnoreCase(this.gender.name());
+    }
+
+    public boolean verifyProductBoughtCriteria(Client client) {
+        OrderRepository repository = PersistenceContext.repositories().orders();
+        for (TheOrder order :
+                repository.findByClient(client)) {
+            for (OrderItem item :
+                    order.orderItems()) {
+                if (item.product().getProductCategory().identity().toString().equals(this.productCode)) {
+                    return true;
                 }
             }
         }
         return false;
     }
+
+    public boolean verifyProductCategoryBoughtCriteria(Client client) {
+        OrderRepository repository = PersistenceContext.repositories().orders();
+        for (TheOrder order :
+                repository.findByClient(client)) {
+            for (OrderItem item :
+                    order.orderItems()) {
+                if (item.product().identity().code().equals(this.productCategoryCode)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
