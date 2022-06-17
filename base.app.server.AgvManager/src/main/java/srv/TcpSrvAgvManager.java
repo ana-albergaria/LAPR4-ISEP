@@ -65,11 +65,11 @@ class TcpSrvAgvManager {
                 Bin binToAdd;
                 for (OrderItem item:
                         selectedOrder.orderItems()) {
-                    for (int i = 0; i < item.quantity(); i++) {
+                    //for (int i = 0; i < item.quantity(); i++) {
                         binToAdd = binRepository.findInStockByProduct(item.product()).iterator().next();
                         binToAdd.changeStatus(Bin.BinStatus.OUT_OF_STOCK);
                         binsToSend.add(binToAdd);
-                    }
+                    //}
                 }
                 taskRepository.save(new TheTask(selectedAGV,selectedOrder,binsToSend));
                 selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
