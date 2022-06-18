@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor ":SalesManager" as SM
+participant ":GenerateReportUI" as UI
+participant ":GenerateReportController" as CTRL
+participant ":PersistenceContext" as Persistance
+participant ":RepositoryFactory" as Factory
+participant ":QuestionnaireRepository" as QuesRep
+participant ":Questionnaire" as Ques
+
+activate SM
+SM -> UI : requests to see a questionnaire's statistical report
+activate UI
+UI --> SM : asks for the questionnaire's ID
+deactivate UI
+SM -> UI : gives questionnaire's ID
+activate UI
+UI -> CTRL : create
+activate CTRL
+|||
+deactivate CTRL
+UI -> CTRL : getQuestionnaire
+activate CTRL
+CTRL -> Persistance : repositories()
+activate Persistance
+Persistance -> Factory : create
+activate Factory
+Factory -> QuesRep : create
+activate QuesRep
+|||
+deactivate QuesRep
+deactivate Factory
+deactivate Persistance
+CTRL -> QuesRep : findByID
+activate QuesRep
+QuesRep --> CTRL : questionnaire
+CTRL --> UI : questionnaire
+deactivate CTRL
+UI -> CTRL : getQuestionnaireReport(questionnaire)
+activate CTRL
+'NEED TO ADD THIS PART
+CTRL --> UI: questionnaireReport
+deactivate CTRL
+UI --> SM : show questionnaire's statistical report
+deactivate UI
+
+
+@enduml
