@@ -1,5 +1,6 @@
 package eapli.base.warehousemanagement.domain;
 
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.productmanagement.domain.Product;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;

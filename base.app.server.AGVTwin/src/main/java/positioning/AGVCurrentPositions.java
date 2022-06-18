@@ -33,22 +33,31 @@ public class AGVCurrentPositions {
         for(int i=0; i< warehousePlant.length; i++){
             for (int j=0; j< warehousePlant[0].length; j++){
                 if (warehousePlant[i][j].equalsIgnoreCase(String.valueOf(currentAGV.getAgvID()))){
-                    index = thisRoute.indexOf(new Point2D.Double((long) j, (long) i));
-                    nextPos = thisRoute.get(index+nextIndex);
-                    wsquare = Double.valueOf(nextPos.getX()).longValue();
-                    lsquare = Double.valueOf(nextPos.getY()).longValue();
-                    warehousePlant[i][j]= "X";
-                    warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
-                    counter++;
+                    index = thisRoute.indexOf(new Point2D.Double((long) i, (long) j));
+                    if(index<thisRoute.size() && index >=0){
+                        nextPos = thisRoute.get(index+nextIndex);
+                        wsquare = Double.valueOf(nextPos.getX()).longValue();
+                        lsquare = Double.valueOf(nextPos.getY()).longValue();
+                        counter++;
+
+                        if(!(warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)].charAt(0) == 'D')){
+                            warehousePlant[i][j]= "X";
+                            warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
+                        } else {
+                            warehousePlant[i][j]= "X";
+                        }
+                    }
                 }
             }
         }
 
         if(counter==0){
-            nextPos = thisRoute.get(nextIndex);
-            wsquare = Double.valueOf(nextPos.getX()).longValue();
-            lsquare = Double.valueOf(nextPos.getY()).longValue();
-            warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
+            if(nextIndex<thisRoute.size()) {
+                nextPos = thisRoute.get(nextIndex);
+                wsquare = Double.valueOf(nextPos.getX()).longValue();
+                lsquare = Double.valueOf(nextPos.getY()).longValue();
+                warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
+            }
         }
 
         return warehousePlant;

@@ -37,4 +37,11 @@ public class AGVManagerServerController {
     public Iterable<TheTask> taskByAGV(AGV agv) {
         return this.taskRepository.findByAgv(agv);
     }
+
+    public void savePositionInDataBase(AGV agv, int i, int j){
+        AGVPosition pos = this.agvPositionRepository.findByAGV(agv).get();
+        Square newSquare = new Square((long )j, (long) i);
+        pos.changePosition(newSquare);
+        this.agvPositionRepository.save(pos);
+    }
 }

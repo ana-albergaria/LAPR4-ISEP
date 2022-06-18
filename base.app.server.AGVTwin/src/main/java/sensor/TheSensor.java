@@ -69,7 +69,7 @@ public class TheSensor extends Thread {
     private void sendRightSide(){
         if(SimulationEngine.checkRight(i, j)){
             sendSignal(1);
-        }else if(SimulationEngine.checkRight(i, j - 1)){
+        }else if(SimulationEngine.checkRight(i, j + 1)){
             sendSignal(2);
         } else {
             sendSignal(3);
@@ -79,7 +79,7 @@ public class TheSensor extends Thread {
     private void sendUpSide(){
         if(SimulationEngine.checkUp(i, j)){
             sendSignal(1);
-        }else if(SimulationEngine.checkUp(i, j - 1)){
+        }else if(SimulationEngine.checkUp(i-1, j)){
             sendSignal(2);
         } else {
             sendSignal(3);
@@ -89,7 +89,7 @@ public class TheSensor extends Thread {
     private void sendDownSide(){
         if(SimulationEngine.checkDown(i, j)){
             sendSignal(1);
-        }else if(SimulationEngine.checkDown(i, j - 1)){
+        }else if(SimulationEngine.checkDown(i+1, j)){
             sendSignal(2);
         } else {
             sendSignal(3);

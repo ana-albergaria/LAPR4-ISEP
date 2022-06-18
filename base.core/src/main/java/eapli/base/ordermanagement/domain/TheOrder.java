@@ -79,8 +79,10 @@ public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<Orde
     @Enumerated(EnumType.STRING)
     private Payment payment;
 
+    @Embedded
     private OrderVolume orderVolume;
 
+    @Embedded
     private OrderWeight orderWeight;
 
     @Enumerated(EnumType.STRING)
@@ -89,17 +91,35 @@ public class TheOrder implements AggregateRoot<Long>, Serializable, DTOable<Orde
     @Temporal(TemporalType.DATE)
     private Calendar interactionDate;
 
+    @Embedded
     private AdditionalComment additionalComment;
 
     @ManyToOne
     private SystemUser salesClerk;
 
+    @Embedded
     private Notification notification;
 
     @OneToMany(cascade = CascadeType.ALL,
                 orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<OrderItem> newOrderItems;
+
+    public Notification getNotification() {
+        return notification;
+    }
+
+    public AdditionalComment getAdditionalComment() {
+        return additionalComment;
+    }
+
+    public OrderWeight getOrderWeight() {
+        return orderWeight;
+    }
+
+    public OrderVolume getOrderVolume() {
+        return orderVolume;
+    }
 
     public TheOrder(final Client client, final OrderAddress billingAddress, final OrderAddress shippingAddress, final Shipment shipment, final Payment payment, final SourceChannel sourceChannel, final Calendar interactionDate, final AdditionalComment additionalComment, final SystemUser salesClerk, final List<OrderItem> newOrderItems) {
         this.createdOn = Calendars.now();

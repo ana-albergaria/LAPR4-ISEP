@@ -85,6 +85,10 @@ public class HTTPServerAGVS extends Thread{
             for(int j=0; j<length; j++){
                 buildInHtml = buildInHtml + "<td>" + matrix[i][j] + "</td>";
 
+                if(matrix[i][j].equalsIgnoreCase("334")){
+                    System.out.println( "############################" +i + ", " + j);
+                }
+
             }
             buildInHtml = buildInHtml +"</tr>";
         }

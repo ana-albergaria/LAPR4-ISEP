@@ -56,10 +56,10 @@ public class CreateWarehouseMatrix {
         }
 
         for (AGVPosition pos: positions) {
-            beginL = Math.toIntExact(pos.lSquare())-1;
-            beginW = Math.toIntExact(pos.wSquare())-1;
+            beginL = Math.toIntExact(pos.lSquare()-1);
+            beginW = Math.toIntExact(pos.wSquare()-1);
 
-            warehouseMatrix[beginW][beginL] = "AGV" + String.valueOf(pos.agvID());
+            warehouseMatrix[beginW][beginL] = String.valueOf(pos.agvID());
         }
     }
 }

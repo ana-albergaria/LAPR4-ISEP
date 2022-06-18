@@ -100,6 +100,8 @@ public class CreateAndSendMatrixRequest extends AGVManagerServerRequest{
                         }catch (ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
+
+                        updatePositionsInDB(matrix, agv);
                     }
 
                     MessageUtils.writeMessage((byte) 1, sOut);
@@ -115,6 +117,16 @@ public class CreateAndSendMatrixRequest extends AGVManagerServerRequest{
             this.sOutputObject.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePositionsInDB(String[][] matrix, AGV agv){
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if (matrix[i][j].equalsIgnoreCase(String.valueOf(agv.getAgvID()))){
+                    this.agvManagerServerController.savePositionInDataBase(agv, i+1, j+1);
+                }
+            }
         }
     }
 }
