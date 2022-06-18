@@ -39,4 +39,19 @@ public class JpaAnswerQuestionnaireRepository extends BaseJpaRepositoryBase<Answ
         }
         return filteredByQuestionnaireList;
     }
+
+    @Override
+    public int findNumberOfQuestionnaireResponses(Questionnaire survey) {
+        final TypedQuery<Answer> query = entityManager().createQuery(
+                "SELECT a FROM Answer a",
+                Answer.class);
+        Iterable<Answer> answers = query.getResultList();
+        List<Client> clientsWhoAnswered = new LinkedList<>();
+        for (Answer a : answers){
+            if (a.questionnaire()==survey && !clientsWhoAnswered.contains(a.client())){
+                clientsWhoAnswered.add(a.client());
+            }
+        }
+        return clientsWhoAnswered.size();
+    }
 }

@@ -98,8 +98,12 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
         return questionnaireContent;
     }
 
+    public List<Client> targetAudience(){
+        return targetAudience;
+    }
+
     public QuestionnaireDTO toDTO(){
-        return new QuestionnaireDTO(this.code, this.title, this.welcomeMessage, this.questionnaireContent, this.finalMessage);
+        return new QuestionnaireDTO(this.code, this.title, this.welcomeMessage, this.questionnaireContent, this.finalMessage, this.targetAudience);
     }
 
     @Override

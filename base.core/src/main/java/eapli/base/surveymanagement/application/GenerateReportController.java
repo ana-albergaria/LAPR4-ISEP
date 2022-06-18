@@ -18,12 +18,12 @@ public class GenerateReportController {
 
     private final AuthorizationService authz= AuthzRegistry.authorizationService();
 
-    public Iterable<QuestionnaireDTO> answeredQuestionnaires(){
-        return this.answersRepository.findAnsweredQuestionnaires();
+    public int numberOfQuestionnaireResponses(QuestionnaireDTO survey){
+        return answersRepository.findNumberOfQuestionnaireResponses(questionnairesRepository.ofIdentity(survey.code()).orElseThrow(IllegalStateException::new));
     }
 
-    public boolean verifyIfQuestionnaireHasAnswers(QuestionnaireDTO survey){
-        throw new IllegalArgumentException("to develop");
+    public Iterable<QuestionnaireDTO> answeredQuestionnaires(){
+        return this.answersRepository.findAnsweredQuestionnaires();
     }
 
 }

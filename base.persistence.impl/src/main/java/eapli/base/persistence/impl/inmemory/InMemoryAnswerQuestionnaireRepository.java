@@ -22,4 +22,9 @@ public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainReposit
     public Iterable<QuestionnaireDTO> findAnsweredQuestionnaires() {
         throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
     }
+
+    @Override
+    public int findNumberOfQuestionnaireResponses(Questionnaire survey) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
+    }
 }
