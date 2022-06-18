@@ -23,11 +23,9 @@ public class GenerateReportUI extends AbstractUI {
             selector.show();
             survey = selector.selectedElement();
             String report = generateReport(survey);
-
-
-
+            System.out.println(report);
         } else {
-            System.out.println("There are no answered questionnaires to analyse.");
+            System.out.println("There are no questionnaires with responses to analyse.");
         }
         return false;
     }
@@ -42,7 +40,6 @@ public class GenerateReportUI extends AbstractUI {
         double answerPercentage = (double) answerNum/targetNum;
         text.append("Answering Percentage: " + answerPercentage + "\n");
 
-
         //para cada question do questionnaire
             //ver o tipo de question
                 //se for single-choice, multiple-choice, sorting-options ou scaling-options
@@ -52,8 +49,7 @@ public class GenerateReportUI extends AbstractUI {
                     //else if scaling-options: para cada opção, a % de cada scale level
                 //se não for
                     //printar also a dizer que o tipo de pergunta não é compatível com análise estatística
-
-
+        
         return text.toString();
     }
 
