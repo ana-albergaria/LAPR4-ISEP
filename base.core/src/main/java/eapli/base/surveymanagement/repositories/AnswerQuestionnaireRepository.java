@@ -11,4 +11,6 @@ public interface AnswerQuestionnaireRepository extends DomainRepository<Long, An
     Iterable<Answer> findAll();
 
     Iterable<Answer> findAnswersByClient(Client client, Questionnaire survey);
+
+    Iterable<QuestionnaireDTO> findAnsweredQuestionnaires();
 }

@@ -19,12 +19,7 @@ public class GenerateReportController {
     private final AuthorizationService authz= AuthzRegistry.authorizationService();
 
     public Iterable<QuestionnaireDTO> answeredQuestionnaires(){
-        /*final Iterable<Questionnaire> questionnaires = this.questionnairesRepository.findAnsweredQuestionnaires();
-
-        final List<QuestionnaireDTO> ret = new ArrayList<>();
-        questionnaires.forEach(e -> ret.add(e.toDTO()));
-        return ret;*/
-        throw new IllegalArgumentException("to develop");
+        return this.answersRepository.findAnsweredQuestionnaires();
     }
 
     public boolean verifyIfQuestionnaireHasAnswers(QuestionnaireDTO survey){
