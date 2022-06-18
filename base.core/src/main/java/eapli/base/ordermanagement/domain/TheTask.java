@@ -34,7 +34,7 @@ public class TheTask implements AggregateRoot<Long>, Serializable {
     @JoinColumn(name="orderID", referencedColumnName = "orderId")
     private TheOrder order;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bin> bins;
 
     public TheTask(final AGV agv, final TheOrder order, final List<Bin> binsToSend) {

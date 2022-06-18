@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.ordermanagement.repositories.TaskRepository;
+import eapli.base.warehousemanagement.domain.AGV;
 import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.AgvDock;
 import eapli.base.warehousemanagement.repositories.AgvDockRepository;
@@ -11,6 +12,7 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class InMemoryAgvPositionRepository extends InMemoryDomainRepository<AGVPosition, Long> implements AgvPositionRepository {
     static {
@@ -28,5 +30,10 @@ public class InMemoryAgvPositionRepository extends InMemoryDomainRepository<AGVP
         }
 
         return list;
+    }
+
+    @Override
+    public Optional<AGVPosition> findByAGV(AGV agv) {
+        return matchOne(e -> e.agvID().equals(agv.getAgvID()));
     }
 }

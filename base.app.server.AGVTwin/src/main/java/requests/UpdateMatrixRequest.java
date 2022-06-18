@@ -57,6 +57,8 @@ public class UpdateMatrixRequest extends AGVTwinServerRequest{
                         speed = REDUCED_AGV_SPEED;
                     }
 
+                    sharedMemoryAGV.resetSensors();
+
                     if(speed!=0.0){
                         AGVCurrentPositions newPosition = new AGVCurrentPositions(speed, receivedMatrix, agv, currentRoute, TIME_BETWEEN_MOVES);
                         receivedMatrix = newPosition.calculatePosition();

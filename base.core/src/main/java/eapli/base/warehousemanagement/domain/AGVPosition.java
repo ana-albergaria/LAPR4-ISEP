@@ -47,6 +47,10 @@ public class AGVPosition implements AggregateRoot<Long>, Serializable {
         return this.positionSquare.wSquare();
     }
 
+    public void changePosition(Square newSquare){
+        this.positionSquare = newSquare;
+    }
+
     public static AGVPosition valueOf(final Square positionSquare, final AGV agv){
 
         return new AGVPosition(positionSquare, agv);
