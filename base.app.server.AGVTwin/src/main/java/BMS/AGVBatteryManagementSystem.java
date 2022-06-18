@@ -32,7 +32,7 @@ public class AGVBatteryManagementSystem {
         return batteryDuration;
     }
 
-    public static synchronized void agvFinalAutonomyDuration(){
+    public synchronized void agvFinalAutonomyDuration(){
         Long initialBatteryDuration = agvInitialAutonomyDuration();
         double finalBatteryDuration = initialBatteryDuration;
 

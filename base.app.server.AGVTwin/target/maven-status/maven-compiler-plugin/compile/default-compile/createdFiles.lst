@@ -1,6 +1,5 @@
 requests\UpdateMatrixRequest.class
 cli\TcpCliAGVTwinThread.class
-control_system\ControlSystem.class
 positioning\AGVCurrentPositions.class
 requests\AGVTwinServerMessageParser.class
 cli\TcpCliAGVTwin.class
@@ -8,6 +7,9 @@ BMS\AGVBatteryManagementSystem.class
 requests\AGVTwinServerRequest.class
 route_planner\Node.class
 srv\TcpSrvAGVTwinThread.class
+shared_memory\SharedMemoryAGV.class
 route_planner\AgvRoute.class
 srv\TcpSrvAGVTwin.class
 requests\SendAGVStatusRequest.class
+sensor\TheSensor.class
+simulation_engine\SimulationEngine.class

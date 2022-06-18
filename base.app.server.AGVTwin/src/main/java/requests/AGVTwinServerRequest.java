@@ -1,6 +1,9 @@
 package requests;
 
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.warehousemanagement.application.AGVTwinServerController;
+import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,6 +18,10 @@ public abstract class AGVTwinServerRequest {
     protected final DataOutputStream sOut;
     protected byte[] clientMessageUS;
     protected final ObjectInputStream sInObject;
+    protected String[][] receivedMatrix=null;
+    protected AGV agv=null;
+    protected AGVPosition currentPosition=null;
+    protected TheTask currentTask=null;
 
     protected AGVTwinServerRequest(final AGVTwinServerController agvTwinServerController,
                                       final byte request,
@@ -22,7 +29,31 @@ public abstract class AGVTwinServerRequest {
                                       final DataInputStream sIn,
                                       final DataOutputStream sOut,
                                       final byte[] clientMessageUS,
-                                      final ObjectInputStream sInObject) {
+                                      final ObjectInputStream sInObject,
+                                      final String[][] receivedMatrix,
+                                      final AGV agv,
+                                      final AGVPosition currentPosition,
+                                      final TheTask currentTask) {
+        this.request = request;
+        this.agvTwinServerController = agvTwinServerController;
+        this.sOutputObject = sOutObject;
+        this.sIn = sIn;
+        this.sOut = sOut;
+        this.clientMessageUS = clientMessageUS;
+        this.sInObject = sInObject;
+        this.receivedMatrix=receivedMatrix;
+        this.agv=agv;
+        this.currentPosition=currentPosition;
+        this.currentTask=currentTask;
+    }
+
+    protected AGVTwinServerRequest(final AGVTwinServerController agvTwinServerController,
+                                   final byte request,
+                                   final ObjectOutputStream sOutObject,
+                                   final DataInputStream sIn,
+                                   final DataOutputStream sOut,
+                                   final byte[] clientMessageUS,
+                                   final ObjectInputStream sInObject) {
         this.request = request;
         this.agvTwinServerController = agvTwinServerController;
         this.sOutputObject = sOutObject;
