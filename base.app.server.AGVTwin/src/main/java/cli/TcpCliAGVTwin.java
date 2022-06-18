@@ -28,11 +28,8 @@ public class TcpCliAGVTwin {
     //server: waiting for request + send response
 
     static final int SERVER_PORT=3700;
-    static final String KEYSTORE_PASS="forgotten";
-    private static final String TRUSTED_STORE = System.getProperty("user.dir") + "/certificates/clientTwin_J.jks";
 
     static InetAddress serverIP;
-    static SSLSocket sock;
     private static Socket socket;
 
     static String address;

@@ -62,11 +62,32 @@ De um ponto de vista de alto nível, o processo de autenticação e estabelecime
 
 
     [...]
-        
+        static final int SERVER_PORT=3700;
+        static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/serverAgvManager_J.jks";
+        static final String KEYSTORE_PASS="forgotten";
+    [...]
+        SSLServerSocket sock = null;
+        SSLSocket cliSock;
+        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        try {
+            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
+            sock.setNeedClientAuth(true);
+            System.out.println("Server connection opened!");
+        }
+        catch(IOException ex) {
+            System.out.println("Failed to open server socket");
+            System.exit(1);
+        }
     [...]
 
 
-## 4.2. Classe TcpCliAGVTwin
+
+
+## 4.2. Classe TcpSrvAGVTwin
 
 
     [...]
@@ -75,12 +96,6 @@ De um ponto de vista de alto nível, o processo de autenticação e estabelecime
 
 
 # 5. Integração/Demonstração
-
-Connection success in the AGV Manager:
-![agvManager](agvManager.png)
-
-Connection success in the AGV Digital Twin:
-![agvDigitalTwin](agvDigitalTwin.png)
 
 Esta User Story depende da User Story 5002, uma vez que é necessário que a comunicação entre o AGV Manager e o AGV Digital Twin exista, para que esta seja protegida.
 
