@@ -25,6 +25,7 @@ public class CreateWarehouseMatrix {
         int endL;
         int depthW;
         int depthL;
+
         for (AgvDock dock : docks){
             Square beginSquare = dock.beginSquare();
             Square endSquare = dock.endSquare();
