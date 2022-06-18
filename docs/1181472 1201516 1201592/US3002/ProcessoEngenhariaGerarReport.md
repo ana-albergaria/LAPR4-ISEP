@@ -64,7 +64,7 @@ A interpretação feita deste requisito foi no sentido de permitir ao sales mana
 
 ### 3.1.2. Classes de Domínio:
 
-Controlador: GenerateReportsController
+Controlador: GenerateReportController
 
 
 ### 3.1.3. Diagrama de Sequência do Sistema:
