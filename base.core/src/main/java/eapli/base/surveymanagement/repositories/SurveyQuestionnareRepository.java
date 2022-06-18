@@ -10,4 +10,6 @@ public interface SurveyQuestionnareRepository extends DomainRepository<String, Q
     Iterable<Questionnaire>findAll();
 
     Iterable<Questionnaire> findAllQuestionnaireWithClient(Client client);
+
+    //Iterable<Questionnaire> findAnsweredQuestionnaires();
 }
