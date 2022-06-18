@@ -20,7 +20,8 @@ import java.util.Set;
  *
  * @author Marta Ribeiro 1201592
  */
-@Entity
+@Entity(name = "Questionnaire")
+@Table(name = "questionnaire")
 public class Questionnaire implements AggregateRoot<String>, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,7 +30,6 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     private Long version;
 
     @Id
-    @Column(name = "questionnaire_code")
     private String code;
 
     private String title;
@@ -46,8 +46,7 @@ public class Questionnaire implements AggregateRoot<String>, Serializable {
     private List<Client> targetAudience;
     //list<Client> targetAudience
 
-    //set<Rule> rules
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TheRule> rules;
 
     //createdOn

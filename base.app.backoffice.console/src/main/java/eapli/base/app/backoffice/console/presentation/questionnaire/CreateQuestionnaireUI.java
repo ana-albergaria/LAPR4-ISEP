@@ -341,10 +341,12 @@ public class CreateQuestionnaireUI extends AbstractUI {
         //>>>>>>>>>> ADICIONAR RULES DA TARGET AUDIENCE
 
         Set<TheRule> rules = new HashSet<>();
-        /*TheRule ruleToAdd;
-        Criteria criteria;
-        boolean cont = true;
-        String opcao;
+        TheRule ruleToAdd;
+        Criteria criteria = null;
+        boolean cont = true, cont2=true;
+        String opcao, opcao2, gender, signal, productCode, productCategoryCode;
+        int age;
+        List<Criteria> ruleCriteria = new ArrayList<>();
 
         int j;
 
@@ -355,70 +357,92 @@ public class CreateQuestionnaireUI extends AbstractUI {
 
         while (cont) {
 
-            j = 1;
-            System.out.println("\n>> CRITERIA:");
-            for (Criteria options : Criteria.values()) {
-                System.out.printf("%d. %s%n", j, options.name());
-                j++;
-            }
+            ruleToAdd = null;
 
-            int optionRule = Console.readInteger("Select the option:") - 1;
+            while (cont2) {
 
-            if (optionRule >= j || optionRule < 0) {
-                throw new UnsupportedOperationException("Invalid Criteria Option");
-            }
+                criteria = null;
 
-            criteria = Criteria.values()[optionRule];
-
-            if (criteria.equals(Criteria.GENDER)){
-                System.out.println("Genders:");
-                for (Criteria.Gender options : Criteria.Gender.values()){
-                    System.out.printf("%d. %s%n", j , options.name());
+                j = 1;
+                System.out.println("\n>> CRITERIA:");
+                for (Criteria options : Criteria.values()) {
+                    System.out.printf("%d. %s%n", j, options.name());
                     j++;
                 }
-                int optionGender = Console.readInteger("Select the option:") - 1;
-                if (optionGender >= j ||  optionGender < 0) {
-                    throw new UnsupportedOperationException("Invalid Gender Option");
+
+                int optionCriteria = Console.readInteger("Select the option:") - 1;
+
+                if (optionCriteria >= j || optionCriteria < 0) {
+                    throw new UnsupportedOperationException("Invalid Criteria Option");
                 }
-                gender = TheRule.Gender.values()[optionGender];
-                ruleToAdd = new TheRule(rule,gender,null,null,null);
-                rules.add(ruleToAdd);
-            } else if (rule.equals(TheRule.Rule.OLDER_THAN) || rule.equals(TheRule.Rule.YOUNGER_THAN) || rule.equals(TheRule.Rule.MORE_ORDERS_THAN) || rule.equals(TheRule.Rule.LESS_ORDERS_THAN) || rule.equals(TheRule.Rule.MONEY_SPENT_MORE_THAN) || rule.equals(TheRule.Rule.MONEY_SPENT_LESS_THAN)) {
-                number = Console.readLong("Number:");
-                ruleToAdd = new TheRule(rule,null,number,null,null);
-                rules.add(ruleToAdd);
-            } else if (rule.equals(TheRule.Rule.USER_REGISTATION_BEFORE_DATE) || rule.equals(TheRule.Rule.USER_REGISTATION_AFTER_DATE)){
-                date = Console.readCalendar("Date:","yyyy/MM/dd");
-                ruleToAdd = new TheRule(rule,null,null,date,null);
-                rules.add(ruleToAdd);
-            } else if (rule.equals(TheRule.Rule.CITY) || rule.equals(TheRule.Rule.COUNTRY)){
-                string = Console.readLine("String:");
-                ruleToAdd = new TheRule(rule,null,null,null,string);
-                rules.add(ruleToAdd);
-            } else if (rule.equals(TheRule.Rule.PRODUCT_BOUGHT)){
-                string = Console.readLine("String:");
-                if (controller.productExists(string)) { //se existe produto com esse id
-                    ruleToAdd = new TheRule(rule, null, null, null, string);
-                    rules.add(ruleToAdd);
-                } else {
-                    throw new UnsupportedOperationException("Product with given code does not exist");
+
+                criteria = Criteria.values()[optionCriteria];
+
+                if (criteria.equals(Criteria.GENDER)) {
+                    j=1;
+                    System.out.println("Genders:");
+                    for (Criteria.Gender options : Criteria.Gender.values()) {
+                        System.out.printf("%d. %s%n", j, options.name());
+                        j++;
+                    }
+                    int optionGender = Console.readInteger("Select the option:") - 1;
+                    if (optionGender >= j || optionGender < 0) {
+                        throw new UnsupportedOperationException("Invalid Gender Option");
+                    }
+                    criteria.gender = Criteria.Gender.values()[optionGender];
+                    ruleCriteria.add(criteria);
+                } else if (criteria.equals(Criteria.AGE)) {
+                    j=1;
+                    System.out.println("Signal:");
+                    for (Criteria.Signal options : Criteria.Signal.values()) {
+                        System.out.printf("%d. %s%n", j, options.name());
+                        j++;
+                    }
+                    int optionSignal = Console.readInteger("Select the option:") - 1;
+                    if (optionSignal >= j || optionSignal < 0) {
+                        throw new UnsupportedOperationException("Invalid Signal Option");
+                    }
+                    criteria.signal = Criteria.Signal.values()[optionSignal];
+                    try{
+                        criteria.age = Console.readLong("Age of reference:");
+                    } catch (Exception e){
+                        throw new UnsupportedOperationException("Age format is incorrect");
+                    }
+                    ruleCriteria.add(criteria);
+                } else if (criteria.equals(Criteria.PRODUCT_BOUGHT)) {
+                    productCode = Console.readLine("Product's Unique Internal Code:");
+                    if (controller.productExists(productCode)) { //se existe produto com esse id
+                        criteria.productCode = productCode;
+                    } else {
+                        throw new UnsupportedOperationException("Product with given code does not exist");
+                    }
+                    ruleCriteria.add(criteria);
+                } else if (criteria.equals(Criteria.PRODUCT_CATEGORY_BOUGHT)) {
+                    productCategoryCode = Console.readLine("Product Category's Alphanumeric Code:");
+                    if (controller.productCategoryExists(productCategoryCode)) { //se existe categoria com esse id
+                        criteria.productCategoryCode = productCategoryCode;
+                    } else {
+                        throw new UnsupportedOperationException("Product category with given code does not exist");
+                    }
+                    ruleCriteria.add(criteria);
                 }
-            } else if (rule.equals(TheRule.Rule.PRODUCT_CATEGORY_BOUGHT)){
-                string = Console.readLine("String:");
-                if (controller.productCategoryExists(string)) { //se existe categoria com esse id
-                    ruleToAdd = new TheRule(rule, null, null, null, string);
-                    rules.add(ruleToAdd);
-                } else {
-                    throw new UnsupportedOperationException("Product category with given code does not exist");
+
+                opcao2 = Console.readLine("Do you want to add another criteria for the current rule?\n Yes or no?\n");
+                if (opcao2.equalsIgnoreCase("no")) {
+                    cont2 = false;
                 }
+
             }
 
-            opcao = Console.readLine("Do you want to intercept another rule for the target audience with the existing ones?\n Yes or no?\n");
-            if(opcao.equalsIgnoreCase("no")) {
-                cont=false;
+            ruleToAdd = new TheRule(ruleCriteria);
+            rules.add(ruleToAdd);
+
+            opcao = Console.readLine("Do you want to add another rule for the target audience?\n Yes or no?\n");
+            if (opcao.equalsIgnoreCase("no")) {
+                cont = false;
             }
 
-        }*/
+        }
 
         System.out.printf("Questionnaire %s successfully created!\n\n", questionnaireTitle);
 

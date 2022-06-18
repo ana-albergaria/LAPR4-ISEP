@@ -1,7 +1,6 @@
 package eapli.base.surveymanagement.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.ValueObject;
 import eapli.framework.util.HashCoder;
 import eapli.framework.validations.Preconditions;
 
@@ -22,6 +21,8 @@ public class TheRule implements AggregateRoot<Long>, Serializable {
     private Long ruleId;
 
     @ElementCollection
+    @CollectionTable(name="rule_criteria")
+    @Column(name="criteria_type")
     private List<Criteria> criteria;
 
     public TheRule(final List<Criteria> criteria){

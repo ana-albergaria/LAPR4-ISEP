@@ -11,7 +11,7 @@ Type: numeric
 
 2. Product feedback
 Section Obligatoriness: mandatory
-1. Do you like our products?(mandatory)
+3. Do you like our products?(mandatory)
 Type: single choice
 1)Yes
 2)No
