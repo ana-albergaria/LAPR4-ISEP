@@ -50,7 +50,7 @@ public class ClientsBootstrapper implements Action {
         register("Ana", "de Castro Albergaria", "1201518@isep.ipp.pt", "+351918413784",
                 "PT999999999", addresses, null, null);
         Calendar calBirthDate1 = Calendar.getInstance();
-        calBirthDate1.setTime(new Date(1970, Calendar.NOVEMBER, 15));
+        calBirthDate1.setTime(new Date(70, Calendar.NOVEMBER, 15));
         register("Manuel", "Santos Oliveira", "123456@isep.ipp.pt", "+351918170262",
                 "PT999999999",addresses2, calBirthDate1, MASCULINE);
         /*register("Manuel António", "Santos Oliveira", "1201518@isep.ipp.pt", "+351918170262",
