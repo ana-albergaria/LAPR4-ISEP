@@ -3,9 +3,14 @@ package requests;
 import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.application.AGVTwinServerController;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.TaskStatus;
+import positioning.AGVCurrentPositions;
+import route_planner.AgvRoute;
 
+import java.awt.geom.Point2D;
 import java.io.*;
+import java.util.LinkedList;
 
 public class SendAGVStatusRequest extends AGVTwinServerRequest{
     public SendAGVStatusRequest(final AGVTwinServerController agvTwinServerController,

@@ -1,9 +1,11 @@
 package requests;
 
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.utils.CreateWarehouseMatrix;
 import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.application.AGVManagerServerController;
 import eapli.base.warehousemanagement.domain.*;
+import shared_memory.SharedMemoryAGV;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
@@ -31,6 +33,7 @@ public class CreateAndSendMatrixRequest extends AGVManagerServerRequest{
         List<AgvDock> agvDocks = (List<AgvDock>) this.agvManagerServerController.agvDocks();
         List<Aisle> aisles = (List<Aisle>) this.agvManagerServerController.aisles();
         List<AGVPosition> positions = (List<AGVPosition>) this.agvManagerServerController.positions();
+        Iterable<TheTask> agvTask = null;
 
         WarehousePlant warehousePlant = warehousePlants.iterator().next();
 
@@ -61,6 +64,35 @@ public class CreateAndSendMatrixRequest extends AGVManagerServerRequest{
 
                         matrixToUpdate.writeObject(matrix);
                         matrixToUpdate.flush();
+
+                        MessageUtils.writeMessage((byte) 12, sOut);
+
+                        byte[] wantsToReceiveAGV = new byte[4];
+                        MessageUtils.readMessage(wantsToReceiveAGV, sIn);
+
+                        byte[] test = new byte[4];
+                        MessageUtils.readMessage(test, sIn);
+
+                        if(test[1]==13){
+                            ObjectOutputStream sendAGVToTwin = new ObjectOutputStream(socket.getOutputStream());
+                            sendAGVToTwin.writeObject(agv);
+                            sendAGVToTwin.flush();
+
+                            MessageUtils.writeMessage((byte) 14, sOut);
+
+                            byte[] wantsToReceiveTask = new byte[4];
+                            MessageUtils.readMessage(wantsToReceiveTask, sIn);
+
+                            byte[] getTheTask = new byte[4];
+                            MessageUtils.readMessage(getTheTask, sIn);
+
+                            if(getTheTask[1]==15){
+                                agvTask = this.agvManagerServerController.taskByAGV(agv);
+                                ObjectOutputStream sendTaskToTwin = new ObjectOutputStream(socket.getOutputStream());
+                                sendTaskToTwin.writeObject(agvTask);
+                                sendTaskToTwin.flush();
+                            }
+                        }
 
                         ObjectInputStream updatedMatrix = new ObjectInputStream(socket.getInputStream());
                         try {

@@ -1,10 +1,12 @@
 package srv;
 
 import cli.TcpCliAGVTwin;
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.utils.MessageUtils;
 import eapli.base.warehousemanagement.application.AGVManagerServerController;
 import eapli.base.warehousemanagement.application.AGVTwinServerController;
 import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 import eapli.base.warehousemanagement.domain.TaskStatus;
 import requests.AGVTwinServerMessageParser;
 import requests.AGVTwinServerRequest;
@@ -126,20 +128,71 @@ class TcpSrvAGVTwinThread implements Runnable {
                 byte[] clientMessageUS = new byte[4];
                 MessageUtils.readMessage(clientMessageUS,sIn);
 
-
                 if(clientMessageUS[1] == 6){
                     MessageUtils.writeMessage((byte) 7, sOut);
                     sInputObject = new ObjectInputStream(this.s.getInputStream());
-                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+
                 }
+
+                String[][] receivedMatrix = null;
+                AGV agv=null;
+                AGVPosition currentPosition=null;
+                TheTask currentTask=null;
 
                 if(clientMessageUS[1] == 10){
                     MessageUtils.writeMessage((byte) 11, this.sOut);
                     sInputObject = new ObjectInputStream(this.s.getInputStream());
-                    sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+
+                    try {
+                        receivedMatrix = (String[][]) sInputObject.readObject();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    byte[] asksNextCode = new byte[4];
+                    MessageUtils.readMessage(asksNextCode, this.sIn);
+
+                    if(asksNextCode[1]==12){
+                        MessageUtils.writeMessage((byte)13, this.sOut); //get AGV
+                        MessageUtils.writeMessage((byte)13, this.sOut);
+
+                        sInputObject = new ObjectInputStream(this.s.getInputStream());
+
+                        try {
+                            agv = (AGV) sInputObject.readObject();
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+                        byte[] asksNextCode2 = new byte[4];
+                        MessageUtils.readMessage(asksNextCode2, sIn);
+
+                        if(asksNextCode2[1]==14){
+                            MessageUtils.writeMessage((byte)15, sOut); //get Task
+                            MessageUtils.writeMessage((byte)15, sOut); //get Task
+
+                            sInputObject = new ObjectInputStream(this.s.getInputStream());
+
+                            Iterable<TheTask> agvTask = null;
+                            try {
+                                agvTask = (Iterable<TheTask>) sInputObject.readObject();
+                            } catch (ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            if(agvTask.iterator().hasNext()){
+                                currentTask=agvTask.iterator().next();
+                            }
+                        }
+                    }
                 }
 
-                final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject);
+                //ObjectOutputStream sendMatrixBack = new ObjectOutputStream(this.s.getOutputStream());
+
+                sOutputObject = new ObjectOutputStream(this.s.getOutputStream());
+
+                final AGVTwinServerRequest request = parser.parse(clientMessageUS[1], sOutputObject, sIn, sOut, clientMessageUS, sInputObject, receivedMatrix, agv, currentPosition, currentTask);
                 request.execute();
 
                 /*if(clientMessageUS[1] == 6){

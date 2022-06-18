@@ -1,6 +1,9 @@
 package requests;
 
+import eapli.base.ordermanagement.domain.TheTask;
 import eapli.base.warehousemanagement.application.AGVTwinServerController;
+import eapli.base.warehousemanagement.domain.AGV;
+import eapli.base.warehousemanagement.domain.AGVPosition;
 
 import java.io.*;
 
@@ -20,7 +23,11 @@ public class AGVTwinServerMessageParser {
                                          final DataInputStream sIn,
                                          final DataOutputStream sOut,
                                          final byte[] clientMessageUS,
-                                         final ObjectInputStream sInObject) throws IOException {
+                                         final ObjectInputStream sInObject,
+                                         final String[][] receivedMatrix,
+                                         final AGV agv,
+                                         final AGVPosition currentPosition,
+                                         final TheTask currentTask) throws IOException {
 
         AGVTwinServerRequest request = null;
 
@@ -29,7 +36,7 @@ public class AGVTwinServerMessageParser {
         }
 
         if(messageRequest == 10) { //Update the Matrix
-            request = new UpdateMatrixRequest(agvTwinServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject);
+            request = new UpdateMatrixRequest(agvTwinServerController, messageRequest, sOutObject, sIn, sOut, clientMessageUS, sInObject, receivedMatrix, agv, currentPosition, currentTask);
         }
 
         if(request == null)

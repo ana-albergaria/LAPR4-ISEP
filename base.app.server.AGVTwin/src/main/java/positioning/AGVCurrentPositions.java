@@ -14,8 +14,9 @@ public class AGVCurrentPositions {
     private static LinkedList<Point2D> thisRoute;
     private static int timeSpent;
 
-
-    public AGVCurrentPositions (Double currentSpeed, String[][] matrix, AGV agv, LinkedList<Point2D> route, int time) {
+    public AGVCurrentPositions (Double currentSpeed, String[][] matrix,
+                                AGV agv,
+                                LinkedList<Point2D> route, int time) {
         speed=currentSpeed;
         warehousePlant=matrix;
         currentAGV=agv;
@@ -23,13 +24,11 @@ public class AGVCurrentPositions {
         timeSpent=time;
     }
 
-    public static synchronized AGVPosition calculatePosition() {
-        AGVPosition currentPosition=null;
+    public synchronized String[][] calculatePosition() {
         int nextIndex = (int) (speed * timeSpent);
-        int index;
+        int index, counter=0;
         Point2D nextPos;
         long wsquare, lsquare;
-
 
         for(int i=0; i< warehousePlant.length; i++){
             for (int j=0; j< warehousePlant[0].length; j++){
@@ -38,19 +37,20 @@ public class AGVCurrentPositions {
                     nextPos = thisRoute.get(index+nextIndex);
                     wsquare = Double.valueOf(nextPos.getX()).longValue();
                     lsquare = Double.valueOf(nextPos.getY()).longValue();
-                    currentPosition = new AGVPosition(new Square(wsquare, lsquare), currentAGV);
+                    warehousePlant[i][j]= "X";
+                    warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
+                    counter++;
                 }
             }
         }
 
-        if(currentPosition==null){
-            index = thisRoute.indexOf(new Point2D.Double(0L, 0L));
-            nextPos = thisRoute.get(index+nextIndex);
+        if(counter==0){
+            nextPos = thisRoute.get(nextIndex);
             wsquare = Double.valueOf(nextPos.getX()).longValue();
             lsquare = Double.valueOf(nextPos.getY()).longValue();
-            currentPosition = new AGVPosition(new Square(wsquare, lsquare), currentAGV);
+            warehousePlant[Math.toIntExact(wsquare)][Math.toIntExact(lsquare)] = String.valueOf(currentAGV.getAgvID());
         }
 
-        return currentPosition;
+        return warehousePlant;
     }
 }
