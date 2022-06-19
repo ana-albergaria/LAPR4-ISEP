@@ -42,19 +42,27 @@ Todos os certificados, tanto do servidor como do cliente, de forma a estabelecer
     [...]
         SSLServerSocket sock = null;
         SSLSocket cliSock;
+
         System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
         System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+        
         System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
         System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+        
         SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         try {
             sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
             sock.setNeedClientAuth(true);
-            System.out.println("Server connection opened!");
+
         }
         catch(IOException ex) {
             System.out.println("Failed to open server socket");
             System.exit(1);
+        }
+
+        while(true) {
+        cliSock=sock.accept();
+        new Thread(new TcpSrvOrderThread(cliSock)).start();
         }
     [...]
 
@@ -64,27 +72,45 @@ Todos os certificados, tanto do servidor como do cliente, de forma a estabelecer
 ## 4.2. Cliente
 
 
-    [...]
-        static final int SERVER_PORT=10000;
-        static final String TRUSTED_STORE= System.getProperty("user.dir") + "/certificates/clientOrder_J.jks";
-        static final String KEYSTORE_PASS="forgotten";
-    [...]
-        SSLServerSocket sock = null;
-        SSLSocket cliSock;
-        System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
-        System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
-        System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
-        System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
-        SSLServerSocketFactory sslF = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-        try {
-            sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
-            sock.setNeedClientAuth(true);
-            System.out.println("Server connection opened!");
+    public void connect(final String address, final int port) throws IOException {
+
+            // Trust these certificates provided by servers
+            System.setProperty("javax.net.ssl.trustStore", TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.trustStorePassword",KEYSTORE_PASS);
+
+            // Use this certificate and private key for client certificate when requested by the server
+            System.setProperty("javax.net.ssl.keyStore",TRUSTED_STORE);
+            System.setProperty("javax.net.ssl.keyStorePassword",KEYSTORE_PASS);
+
+            SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+
+            try {
+                serverIP = InetAddress.getByName(address);
+            } catch (UnknownHostException ex) {
+                System.out.println("Invalid server specified: " + serverIP);
+                System.exit(1);
+            }
+
+            try {
+                sock = (SSLSocket) sf.createSocket(serverIP,SERVER_PORT); }
+            catch(IOException ex) {
+                System.out.println("Failed to establish TCP connection");
+                System.exit(1);
+            }
+
+            System.out.println("Connected to: " + serverIP + ":" + port);
+
+            sock.startHandshake();
+
+            sOutData = new DataOutputStream(sock.getOutputStream());
+            sInData = new DataInputStream(sock.getInputStream());
         }
-        catch(IOException ex) {
-            System.out.println("Failed to open server socket");
-            System.exit(1);
+
+        public void stop() throws IOException {
+            sock.close();
         }
+
+    }
     [...]
 
 # 5. Integração/Demonstração
