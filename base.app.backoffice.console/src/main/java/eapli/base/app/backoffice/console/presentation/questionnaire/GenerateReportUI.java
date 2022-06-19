@@ -14,6 +14,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Marta Ribeiro 1201592
+ */
 public class GenerateReportUI extends AbstractUI {
 
     private GenerateReportController controller = new GenerateReportController();
@@ -37,24 +40,25 @@ public class GenerateReportUI extends AbstractUI {
     private void generateReport(QuestionnaireDTO survey){
         System.out.println(survey.code() + " " + survey.title() + "\n");
         int targetNum = survey.targetAudience().size();
-        System.out.println("Target Audience: " + targetNum + "\n");
+        System.out.print("Target Audience: " + targetNum + "\n");
         int answerNum = controller.numberOfQuestionnaireResponses(survey);
-        System.out.println("Questionnaire's Answers: " + answerNum + "\n");
+        System.out.print("Questionnaire's Answers: " + answerNum + "\n");
         double answerPercentage = (double) answerNum*100/targetNum;
-        System.out.println("Answering Percentage: " + answerPercentage + "\n");
+        System.out.println("Answering Percentage: " + answerPercentage + "%\n");
         Map<String, List<List<String>>> questionsAnswers = controller.questionnaireQuestionsAnswers(survey);
         boolean questionsAndAnswersCollectedSuccessfully = parseSurveyQuestionsWithVisitor(survey, questionsAnswers);
         if (questionsAndAnswersCollectedSuccessfully){
-            System.out.println("End of Report. Report has been successfuly generated!");
+            System.out.println();
+            System.out.println("End of Report.");
         }
     }
 
     private String extractSurvey(QuestionnaireDTO survey) {
         StringBuilder text = new StringBuilder();
-        text.append(survey.code() + " " + survey.title() + "\n");
+        text.append(survey.code()).append(" ").append(survey.title()).append("\n");
         if(!survey.welcomeMessage().isEmpty())
-            text.append(survey.welcomeMessage() + "\n\n");
-        text.append(survey.questionnaireContent() + "\n\n\n\n");
+            text.append(survey.welcomeMessage()).append("\n\n");
+        text.append(survey.questionnaireContent()).append("\n\n\n\n");
         text.append(survey.finalMessage());
         return text.toString();
     }

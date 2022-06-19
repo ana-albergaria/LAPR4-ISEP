@@ -27,7 +27,7 @@ public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainReposit
     }
 
     @Override
-    public int findNumberOfQuestionnaireResponses(Questionnaire survey) {
+    public int findNumberOfQuestionnaireResponses(QuestionnaireDTO survey) {
         throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
     }
 

@@ -17,7 +17,7 @@ public interface AnswerQuestionnaireRepository extends DomainRepository<Long, An
 
     Iterable<QuestionnaireDTO> findAnsweredQuestionnaires();
 
-    int findNumberOfQuestionnaireResponses(Questionnaire survey);
+    int findNumberOfQuestionnaireResponses(QuestionnaireDTO survey);
 
     Map<String, List<List<String>>> findQuestionnaireQuestionsAnswers(Questionnaire survey);
 }

@@ -28,24 +28,31 @@ public class JpaAnswerQuestionnaireRepository extends BaseJpaRepositoryBase<Answ
                 "SELECT a FROM Answer a",
                 Answer.class);
         Iterable<Answer> answers = query.getResultList();
-        List<QuestionnaireDTO> filteredByQuestionnaireList = new LinkedList<>();
+        List<Questionnaire> filteredByQuestionnaireList = new LinkedList<>();
         for (Answer a : answers){
-            if (!filteredByQuestionnaireList.contains(a.questionnaire().toDTO())){
-                filteredByQuestionnaireList.add(a.questionnaire().toDTO());
+            if (!filteredByQuestionnaireList.contains(a.questionnaire())){
+                filteredByQuestionnaireList.add(a.questionnaire());
             }
         }
-        return filteredByQuestionnaireList;
+        List<QuestionnaireDTO> filteredByQuestionnaireListDTO = new LinkedList<>();
+        QuestionnaireDTO questDTO;
+        for (Questionnaire quest:
+             filteredByQuestionnaireList) {
+            questDTO = quest.toDTO();
+            filteredByQuestionnaireListDTO.add(questDTO);
+        }
+        return filteredByQuestionnaireListDTO;
     }
 
     @Override
-    public int findNumberOfQuestionnaireResponses(Questionnaire survey) {
+    public int findNumberOfQuestionnaireResponses(QuestionnaireDTO survey) {
         final TypedQuery<Answer> query = entityManager().createQuery(
                 "SELECT a FROM Answer a",
                 Answer.class);
         Iterable<Answer> answers = query.getResultList();
         List<Client> clientsWhoAnswered = new LinkedList<>();
         for (Answer a : answers){
-            if (a.questionnaire()==survey && !clientsWhoAnswered.contains(a.client())){
+            if (a.questionnaire().code().equalsIgnoreCase(survey.code()) && !clientsWhoAnswered.contains(a.client())){
                 clientsWhoAnswered.add(a.client());
             }
         }
