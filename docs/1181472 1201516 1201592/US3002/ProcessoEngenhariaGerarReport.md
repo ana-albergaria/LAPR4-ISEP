@@ -64,7 +64,13 @@ A interpretação feita deste requisito foi no sentido de permitir ao sales mana
 
 ### 3.1.2. Classes de Domínio:
 
-Controlador: GenerateReportController
+* Questionnaire
+* Answer
+* Controlador:
+  * GenerateReportController
+* Repository:
+  * AnswerQuestionnaireRepository
+  * SurveyQuestionnaireRepository
 
 
 ### 3.1.3. Diagrama de Sequência do Sistema:
@@ -85,15 +91,56 @@ Controlador: GenerateReportController
 
 # 4. Implementação
 
-## 4.1. Classe ...
+## 4.1. Classe SurveyQuestionsVisitor
 
 
+    [...]
+      @Override
+      public Boolean visitFree_text(questionnaireParser.Free_textContext ctx) {
+          String questionID = ctx.numeric_id().getText();
+          System.out.println("Question " + questionID + " is a free text question. Therefore, there are no statistical analysis available.\n");
+          return true;
+      }
+    [...]
+      @Override
+      public Boolean visitSingle_choice(questionnaireParser.Single_choiceContext ctx) {
+          String questionID = ctx.numeric_id().getText();
+          System.out.println("Question " + questionID + " is a single choice question.");
+          List<List<String>> answers = questionsAnswers.get(ctx.numeric_id().getText());
+          Map<Integer, Integer> responses = new HashMap<>();
+          int optionsNumber = ctx.option().size();
+          for (int i = 0; i < optionsNumber; i++) {
+              responses.put(optionsNumber,0);
+          }
+          Integer response;
+          for (List<String> answer:
+               answers) {
+              response = Integer.valueOf(answer.get(0));
+              if (!responses.containsKey(response)){
+                  responses.put(response,1);
+              } else {
+                  responses.replace(response,responses.get(response)+1);
+              }
+          }
+          int totalAnswers = answers.size();
+          for (Map.Entry<Integer, Integer> entry :
+                  responses.entrySet()) {
+              System.out.print("Option " + entry.getKey() + " = " + (double)((entry.getValue()*100/totalAnswers)* 10d)/10d + "%, ");
+          }
+          System.out.println("\n");
+          return true;
+      }
+    [...]
+
+Methods visitNumeric(ctx), +visitSingle_choice_with_input(ctx) and visitMultiple_choice_with_input(ctx) have similar implementations to the one of visitFree_text(ctx).
+
+Methods visitMultiple_choice(ctx), visitSorting_option(ctx) and visitScaling_option(ctx) have similar implementations to the one of visitSingle_choice(ctx).
 
 
 # 3. Integração/Demonstração
 
-Esta User Story depende da User Story 3001 e 3501, uma vez que é necessária a existência de questionários, que por sua vez podem ser respondidos por clientes, para que possam ser gerados relatórios com os resultados obtidos.
+Esta User Story depende da User Story 3001 e 3501, uma vez que é necessária a existência de questionários, que podem ser respondidos por clientes, para que possam ser gerados relatórios com os resultados obtidos.
 
 # 4. Observações
 
-n/a
+A User Story foi implementada na totalidade, com sucesso.
