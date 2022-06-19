@@ -100,19 +100,6 @@ public class GetPositions {
 
                     matrix = (String[][]) sInObject.readObject();
 
-                    //positions = (List<AGVPosition>) sInObject.readObject();
-
-                    /*for(AGVPosition pos: positions){
-                        System.out.println(pos.toString());
-
-                    }*/
-
-                    /*byte[] statusMessage = {(byte) 0, (byte) 7, (byte) 0, (byte) 0};
-
-                    String allStatus = MessageUtils.getDataFromMessage(statusMessage, socket.sInData);
-
-                    System.out.println(allStatus);*/
-
                     byte[] endMessage = {(byte) 0, (byte) 1, (byte) 0, (byte) 0};
                     socket.sOutData.write(endMessage);
                     socket.sOutData.flush();
