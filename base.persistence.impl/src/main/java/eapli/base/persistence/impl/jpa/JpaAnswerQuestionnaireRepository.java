@@ -7,10 +7,7 @@ import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
 
 import javax.persistence.TypedQuery;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JpaAnswerQuestionnaireRepository extends BaseJpaRepositoryBase<Answer, Long, Long> implements AnswerQuestionnaireRepository {
     JpaAnswerQuestionnaireRepository(){
@@ -53,5 +50,25 @@ public class JpaAnswerQuestionnaireRepository extends BaseJpaRepositoryBase<Answ
             }
         }
         return clientsWhoAnswered.size();
+    }
+
+    @Override
+    public Map<String, List<List<String>>> findQuestionnaireQuestionsAnswers(Questionnaire survey) {
+        final TypedQuery<Answer> query = entityManager().createQuery(
+                "SELECT a FROM Answer a",
+                Answer.class);
+        Iterable<Answer> answers = query.getResultList();
+        Map<String, List<List<String>>> questionsAndAnswers = new HashMap<>();
+
+        for (Answer a : answers){
+            if (!questionsAndAnswers.containsKey(a.questionID())){
+                questionsAndAnswers.put(a.questionID(), new ArrayList<>());
+                questionsAndAnswers.get(a.questionID()).add(a.answers());
+            } else {
+                questionsAndAnswers.get(a.questionID()).add(a.answers());
+            }
+        }
+
+        return questionsAndAnswers;
     }
 }

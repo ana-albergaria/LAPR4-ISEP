@@ -7,6 +7,9 @@ import eapli.base.surveymanagement.dto.QuestionnaireDTO;
 import eapli.base.surveymanagement.repositories.AnswerQuestionnaireRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
+import java.util.List;
+import java.util.Map;
+
 public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainRepository<Answer, Long> implements AnswerQuestionnaireRepository {
     static {
         InMemoryInitializer.init();
@@ -27,4 +30,10 @@ public class InMemoryAnswerQuestionnaireRepository extends InMemoryDomainReposit
     public int findNumberOfQuestionnaireResponses(Questionnaire survey) {
         throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
     }
+
+    @Override
+    public Map<String, List<List<String>>> findQuestionnaireQuestionsAnswers(Questionnaire survey) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED YET");
+    }
+
 }

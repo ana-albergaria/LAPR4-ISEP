@@ -10,6 +10,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GenerateReportController {
 
@@ -24,6 +25,10 @@ public class GenerateReportController {
 
     public Iterable<QuestionnaireDTO> answeredQuestionnaires(){
         return this.answersRepository.findAnsweredQuestionnaires();
+    }
+
+    public Map<String, List<List<String>>> questionnaireQuestionsAnswers(QuestionnaireDTO survey) {
+        return answersRepository.findQuestionnaireQuestionsAnswers(questionnairesRepository.ofIdentity(survey.code()).orElseThrow(IllegalStateException::new));
     }
 
 }
