@@ -89,47 +89,46 @@ In each corner there is a sensor to evaluate obstacles in the front and another 
 
 
 
-# 2. Análise
+# 3. Dados dos Servidores envolvidos
 
-## 2.1 Excerto do Modelo de Domínio
+##3.1. Dados do Servidor do AGV Manager
+| Servidor        | Port  |
+|--------------|-------|
+| 127.0.0.1    | 3700 |
 
-![DM_RegisterOrderClient.svg](./DM_RegisterOrderClient.svg)
+##3.2. Dados do Servidor do AGV Digital Twin
+| Servidor        | Port  |
+|--------------|-------|
+| 127.0.0.1    | 2400 |
 
-## 2.2 System Sequence Diagram (SSD)
+# 4. Fluxo de Troca de Mensagens entre o Servidor e o Cliente
 
-![SSD_RegisterOrderClient.svg](./SSD_RegisterOrderClient.svg)
-
-# 3. Design
-
-## 3.1. Realização da Funcionalidade
-
-## 3.1.1 Sequence Diagram (SD)
-
-![SD_RegisterOrderClient.svg](./SD_RegisterOrderClient.svg)
-
-## 3.2. Diagrama de Classes
-
-![CD_RegisterOrderClient.svg](./CD_RegisterOrderClient.svg)
-
-## 3.3. Padrões Aplicados
+![SD_Scomp.svg](./SD_US5100.svg)
 
 
+# 4. Requests
 
+No âmbito desta US, são efetuados os seguintes requests:
 
-## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
-
-
-	
-
-# 4. Implementação
-
-
-# 5. Integração/Demonstração
+| Código | Request  |
+|--------|-------|
+| 6      | Pedido do HTTPServer para AGVManager e do AGVManager para o Digital Twin de uma lista de AGV Status |
+| 7      | Envio do AGV para o Digital Twin |
+| 10     | Pedido do HTTPServer para AGVManager e do AGVManager para o Digital Twin da WarehousePlant atualizada com as Posições dos AGVs |
+| 11     | Confirmação do Digital Twin para AGVManager enviar WarehousePlant |
+| 12     | AGVManager confirma que enviou WarehousePlant para Digital Twin |
+| 13     | Confirmação do Digital Twin para AGVManager enviar o AGV |
+| 14     | AGVManager confirma que enviou AGV para Digital Twin |
+| 15     | Confirmação do Digital Twin para AGVManager enviar a Task do AGV |
 
 
 
-# 6. Observações
+#5 Observações
+
+### 5.1 Servidores desta US na Cloud
+
+Para este Sprint, foi criado um ambiente virtual destinado ao AGVManager e ao Digital Twin.  
+Apesar de o jar correr de forma bem sucedida nos servidores do isep, ao chamar os repositórios das bases de dados necessários à execução desta US, dá erro.
 
 
 

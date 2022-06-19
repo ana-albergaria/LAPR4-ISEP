@@ -33,14 +33,19 @@ US1901 - As Project Manager, I want that the "OrdersServer" component supports p
 
 No âmbito desta US, são efetuados os seguintes requests:
 
-| Código | Request  |
-|--------|-------|
-| 4      | Mostrar Catálogo de Produtos |
-| 3      | Verificar se o Produto desejado existe |
-| 5      | Adicionar o Produto ao Carrinho de Compras|
+| Código | Request                                          |
+|--------|--------------------------------------------------|
+| 4      | Mostrar Catálogo de Produtos                     |
+| 3      | Verificar se o Produto desejado existe           |
+| 5      | Adicionar o Produto ao Carrinho de Compras       |
+| 13     | Mostrar Open Orders do Cliente                   |
+| 12     | Mostrar Questionários ao Cliente                 |
+| 14     | Guardar as respostas ao Questionário do Cliente  |
+| 16     | Verificar se o Cliente respondeu ao Questionário |
 
 
-#5 Observações 
+
+# 5. Observações 
 
 ### 5.1 Order Server na Cloud
 

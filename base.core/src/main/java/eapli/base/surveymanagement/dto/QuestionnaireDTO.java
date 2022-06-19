@@ -1,6 +1,11 @@
 package eapli.base.surveymanagement.dto;
 
+import eapli.base.clientmanagement.domain.Client;
+import eapli.base.surveymanagement.domain.TheRule;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 public class QuestionnaireDTO implements Serializable {
     private String code;
@@ -13,12 +18,15 @@ public class QuestionnaireDTO implements Serializable {
 
     private String finalMessage;
 
-    public QuestionnaireDTO(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage){
+    private List<Client> targetAudience;
+
+    public QuestionnaireDTO(final String code, final String title, final String welcomeMessage, final String questionnaireContent, final String finalMessage, final List<Client> targetAudience){
         this.code = code;
         this.title = title;
         this.welcomeMessage = welcomeMessage;
         this.questionnaireContent = questionnaireContent;
         this.finalMessage = finalMessage;
+        this.targetAudience = targetAudience;
     }
 
 
@@ -40,6 +48,10 @@ public class QuestionnaireDTO implements Serializable {
 
     public String finalMessage() {
         return this.finalMessage;
+    }
+
+    public List<Client> targetAudience(){
+        return this.targetAudience;
     }
 
     @Override

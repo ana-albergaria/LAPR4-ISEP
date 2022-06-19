@@ -69,10 +69,6 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized  String getMatrix(String ip){
-        //plant = getPositions.getPlant(10, ip);
-        //docks = getPositions.getDocks(11, ip);
-        //aisles = getPositions.getAisles(12, ip);
-        //positions = getPositions.getPositions(8, ip);
         positions= new ArrayList<>();
         String[][] matrix = getPositions.getPositions(10, ip);
 
@@ -98,23 +94,14 @@ public class HTTPServerAGVS extends Thread{
     }
 
     public static synchronized String showPositions(String ip) {
-        /*positions = getPositions.getPositions(8, ip);
-        positions= new ArrayList<>();*/
         allAgvsStatus = getPositions.getAgvStatus(6, ip);
 
         String buildInHtml = "<table>";
-        /*for(AGVPosition pos: positions) {
-            for(Long id: allAgvsStatus.keySet()){
-                if(Objects.equals(id, pos.agvID())){
-                    buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
-                            "<td>" + pos.agvID() + "</td>" +
-                            "<td>" + pos.lSquare() + "</td>" +
-                            "<td>" + pos.wSquare() + "</td>" +
+        for(Long id: allAgvsStatus.keySet()){
+                buildInHtml = buildInHtml + "<tr class=\"active-row\">" +
+                            "<td>" + id + "</td>" +
                             "<td>" + allAgvsStatus.get(id) + "</td>";
                 }
-            }
-
-        }*/
 
         buildInHtml = buildInHtml + "</table>";
         return buildInHtml;

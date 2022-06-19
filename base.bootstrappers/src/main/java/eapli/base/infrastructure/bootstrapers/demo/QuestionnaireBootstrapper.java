@@ -83,6 +83,42 @@ public class QuestionnaireBootstrapper implements Action {
                 "2)No\n" +
                 "3)Maybe";
 
+        String serviceContent = "1. About you\n" +
+                "Section Obligatoriness: mandatory\n" +
+                "1. How old are you?(mandatory)\n" +
+                "Type: numeric\n" +
+                "\n" +
+                "2. Where are you from?(mandatory)\n" +
+                "Type: free text\n" +
+                "\n" +
+                "\n" +
+                "2. Product feedback\n" +
+                "Section Obligatoriness: mandatory\n" +
+                "3. Would you recommend our tuna to another person?(mandatory)\n" +
+                "Type: single choice\n" +
+                "1)Yes\n" +
+                "2)No\n" +
+                "3)Maybe\n" +
+                "\n" +
+                "4. How do you rate our shampoos?(mandatory)\n" +
+                "Type: scaling option\n" +
+                "Scale: Strongly agree, agree, neutral, disagree, strongly disagree\n" +
+                "1)Our shampoos are the best on the market\n" +
+                "2)Our shampoos are delievered as fast as desired\n" +
+                "3)Our shampoos have nice scents\n" +
+                "\n" +
+                "5. Which of our products have you tried?(mandatory)\n" +
+                "Type: multiple choice\n" +
+                "1)Lemon scent shampoo from Bobbles\n" +
+                "2)Apple scent shampoo from Bobbles\n" +
+                "3)Can of tuna from Freshy\n" +
+                "\n" +
+                "6. Which of our products do you prefer?(mandatory)\n" +
+                "Type: sorting option\n" +
+                "1)Lemon scent shampoo from Bobbles\n" +
+                "2)Apple scent shampoo from Bobbles\n" +
+                "3)Can of tuna from Freshy";
+
         Set<TheRule> rules = new HashSet<>();
         Set<TheRule> rules1 = new HashSet<>();
         Set<TheRule> rules2 = new HashSet<>();
@@ -104,6 +140,7 @@ public class QuestionnaireBootstrapper implements Action {
         register("BOOKS21-22", "Books Questionnaire", "Hello, welcome to the Books Questionnaire", booksContent, "Thanks for answering the Books Questionnaire",rules);
         register("DRI21-22", "Drinks Questionnaire", "Hello, welcome to the Drinks Questionnaire", drinksContent, "Thanks for answering the Drinks Questionnaire",rules1);
         register("SPO21-22", "Sports Questionnaire", "Hello, welcome to the Sports Questionnaire", sportsContent, "Thanks for answering the Sports Questionnaire",rules2);
+        register("SRV21-22", "Service Questionnaire", "Hello, welcome to the Sports Questionnaire", serviceContent, "Thanks for answering the Books Questionnaire",rules);
 
         return true;
     }

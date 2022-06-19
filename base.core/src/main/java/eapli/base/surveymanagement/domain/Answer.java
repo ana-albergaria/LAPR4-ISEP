@@ -52,6 +52,14 @@ public class Answer implements AggregateRoot<Long>, Serializable {
         return questionnaire;
     }
 
+    public String questionID(){
+        return questionID;
+    }
+
+    public List<String> answers(){
+        return answers;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         if (!(other instanceof Answer)) {
