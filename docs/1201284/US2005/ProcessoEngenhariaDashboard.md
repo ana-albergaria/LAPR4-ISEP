@@ -33,7 +33,7 @@ A interpretação feita deste requisito foi a de recuperar os estados e posiçõ
 * The dashboard web page is kept updated without reloading.
 
 
-# 3. Dados do Servidor da Order
+# 3. Dados do Servidor do HTTP Server
 
 | Servidor        | Port  |
 |--------------|-------|
