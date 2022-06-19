@@ -81,6 +81,8 @@ public class CreateQuestionnaireUI extends AbstractUI {
                 c++;
                 welcomeMessageParam.append(welMes);
             }
+        }else{
+            controller.writeQuestionnaireTextFile("\n", filePath);
         }
 
         System.out.println("How many sections do you want to have?");
