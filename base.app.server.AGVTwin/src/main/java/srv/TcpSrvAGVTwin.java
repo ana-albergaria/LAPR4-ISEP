@@ -140,6 +140,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                 TheTask currentTask=null;
 
                 if(clientMessageUS[1] == 10){
+                    System.out.println("[INFO] Recebido código (10) a Mandar Código de Entendido (11) ao Cliente.");
                     MessageUtils.writeMessage((byte) 11, this.sOut);
                     sInputObject = new ObjectInputStream(this.s.getInputStream());
 
@@ -153,6 +154,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                     MessageUtils.readMessage(asksNextCode, this.sIn);
 
                     if(asksNextCode[1]==12){
+                        System.out.println("[INFO] Recebido código (12) a Mandar Código de Entendido (13) ao Cliente.");
                         MessageUtils.writeMessage((byte)13, this.sOut); //get AGV
                         MessageUtils.writeMessage((byte)13, this.sOut);
 
@@ -169,6 +171,7 @@ class TcpSrvAGVTwinThread implements Runnable {
                         MessageUtils.readMessage(asksNextCode2, sIn);
 
                         if(asksNextCode2[1]==14){
+                            System.out.println("[INFO] Recebido código (14) a Mandar Código de Entendido (15) ao Cliente.");
                             MessageUtils.writeMessage((byte)15, sOut); //get Task
                             MessageUtils.writeMessage((byte)15, sOut); //get Task
 

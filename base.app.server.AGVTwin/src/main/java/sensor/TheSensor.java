@@ -43,15 +43,19 @@ public class TheSensor extends Thread {
         switch (sensorSide) {
             case 1:
                 sharedMemoryAGV.changeLeftSignal(incomeSignal);
+                System.out.println("#################### Left sensor detected an obstacle " + incomeSignal + " squares away! ####################");
                 break;
             case 2:
                 sharedMemoryAGV.changeRightSignal(incomeSignal);
+                System.out.println("#################### Right sensor detected an obstacle " + incomeSignal + " squares away! ####################");
                 break;
             case 3:
                 sharedMemoryAGV.changeUpSignal(incomeSignal);
+                System.out.println("#################### Up sensor detected an obstacle " + incomeSignal + " squares away! ####################");
                 break;
             case 4:
                 sharedMemoryAGV.changeDownSignal(incomeSignal);
+                System.out.println("#################### Down sensor detected an obstacle " + incomeSignal + " squares away! ####################");
                 break;
         }
     }
