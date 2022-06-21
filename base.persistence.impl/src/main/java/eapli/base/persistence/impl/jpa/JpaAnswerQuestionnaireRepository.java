@@ -68,11 +68,13 @@ public class JpaAnswerQuestionnaireRepository extends BaseJpaRepositoryBase<Answ
         Map<String, List<List<String>>> questionsAndAnswers = new HashMap<>();
 
         for (Answer a : answers){
-            if (!questionsAndAnswers.containsKey(a.questionID())){
-                questionsAndAnswers.put(a.questionID(), new ArrayList<>());
-                questionsAndAnswers.get(a.questionID()).add(a.answers());
-            } else {
-                questionsAndAnswers.get(a.questionID()).add(a.answers());
+            if (a.questionnaire().sameAs(survey)) {
+                if (!questionsAndAnswers.containsKey(a.questionID())) {
+                    questionsAndAnswers.put(a.questionID(), new ArrayList<>());
+                    questionsAndAnswers.get(a.questionID()).add(a.answers());
+                } else {
+                    questionsAndAnswers.get(a.questionID()).add(a.answers());
+                }
             }
         }
 
