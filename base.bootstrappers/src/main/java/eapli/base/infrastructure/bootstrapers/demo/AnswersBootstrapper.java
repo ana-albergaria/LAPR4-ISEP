@@ -49,7 +49,7 @@ public class AnswersBootstrapper implements Action {
         Client client2 = getClient("22");
         String question1 = "1", question2 = "2", question3 = "3", question4 = "4", question5 = "5", question6 = "6";
         String answer1 = "Portugal", answer2a = "24", answer2b = "51", answer3a = "1", answer3b = "3";
-        String answer4aa = "2", answer4ab = "2", answer4ac = "1", answer4ba = "3", answer4bb = "1", answer4bc = "5";
+        String answer4aa = "agree", answer4ab = "agree", answer4ac = "Strongly agree", answer4ba = "neutral", answer4bb = "Strongly agree", answer4bc = "strongly disagree";
         String answer5aa = "1", answer5ab = "2", answer5ba = "3";
         String answer6a = "2, 1, 3", answer6b = "3, 1, 2";
         List<String> answers1 = new ArrayList<>();

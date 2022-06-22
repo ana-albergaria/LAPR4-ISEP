@@ -207,22 +207,32 @@ public class SurveyQuestionsVisitor extends questionnaireBaseVisitor{
             }
         }
         int i=1;
+        int j;
+        int stringNum = 0;
         for (List<String> clientAnswers:
              answers) {
             for (String answer:
                  clientAnswers) {
+                j=1;
+                for (String level:
+                        ctx.frase().getText().split(", ")) {
+                    if (answer.equalsIgnoreCase(level)){
+                        stringNum = j;
+                    }
+                    j++;
+                }
                 if (!responses.containsKey(i)){
                     responses.put(i,new HashMap<>());
-                    if (!responses.get(i).containsKey(Integer.valueOf(answer))){
-                        responses.get(i).put(Integer.valueOf(answer),1);
+                    if (!responses.get(i).containsKey(stringNum)){
+                        responses.get(i).put(stringNum,1);
                     } else {
-                        responses.get(i).replace(Integer.valueOf(answer),responses.get(i).get(Integer.valueOf(answer))+1);
+                        responses.get(i).replace(stringNum,responses.get(i).get(stringNum)+1);
                     }
                 } else {
-                    if (!responses.get(i).containsKey(Integer.valueOf(answer))){
-                        responses.get(i).put(Integer.valueOf(answer),1);
+                    if (!responses.get(i).containsKey(stringNum)){
+                        responses.get(i).put(stringNum,1);
                     } else {
-                        responses.get(i).replace(Integer.valueOf(answer),responses.get(i).get(Integer.valueOf(answer))+1);
+                        responses.get(i).replace(stringNum,responses.get(i).get(stringNum)+1);
                     }
                 }
                 i++;
