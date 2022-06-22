@@ -46,7 +46,11 @@ public class AGVBatteryManagementSystem {
             finalBatteryDuration = initialBatteryDuration * BATTERY_INCREASE_WHILE_CHARGING;
         }
 
+
+
         agv.changeBattery(new AutonomyStatus(convertFinalAutonomyDuration(finalBatteryDuration)));
+
+        System.out.println("############## The AGV has a battery of " + agv.getAutonomyStatus().toString() + " at this moment! ##############");
     }
 
     private static String convertFinalAutonomyDuration(double finalBatteryDuration){

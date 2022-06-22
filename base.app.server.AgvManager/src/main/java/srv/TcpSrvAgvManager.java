@@ -74,6 +74,8 @@ class TcpSrvAgvManager {
                 taskRepository.save(new TheTask(selectedAGV,selectedOrder,binsToSend));
                 selectedOrder.setStatus(OrderStatus.valueOf(OrderStatus.Status.BEING_PREPARED_ON_WAREHOUSE));
                 orderRepository.save(selectedOrder);
+                selectedAGV.setTaskStatus( new TaskStatus(TaskStatus.TaskStatusEnum.OCCUPIED));
+                agvRepository.save(selectedAGV);
                 System.out.printf("[ASSIGN AGVS TO ORDERS]: AGV (ID: %d) successfully assigned to the Order (ID: %d). The Order (ID: %d) is now being prepared in the Warehouse!\n", selectedAGV.getAgvID(), selectedOrder.getOrderId(), selectedOrder.getOrderId());
                 number++;
             } while (number + 1 <= ordersToAssignSize && number + 1 <= agvsAvailableSize);
